@@ -1,5 +1,4 @@
 .idea/*
-node_modules/
 build/.idea/*
 solution/.idea/*
 .project
