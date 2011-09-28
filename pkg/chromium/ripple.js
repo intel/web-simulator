@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.6.1 :: Built On Wed Sep 28 2011 10:42:38 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.6.1 :: Built On Wed Sep 28 2011 11:30:39 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -34373,7 +34373,8 @@ function _populateWindow(domObject) {
 
     _img = document.createElement("img");
     _img.setAttribute("id", "jil-camera-window");
-    _img.setAttribute("src", document.querySelector("#extension-url").innerHTML + constants.CAMERA.WINDOW_ANIMATION);
+    //_img.setAttribute("src", document.querySelector("#extension-url").innerHTML + constants.CAMERA.WINDOW_ANIMATION);
+    _img.setAttribute("src", document.documentURI.replace(/index\.html$/, "") + constants.CAMERA.WINDOW_ANIMATION);
     _img.setAttribute("width", "100%");
     _currentlySet = domObject;
     domObject.appendChild(_img);
@@ -35299,7 +35300,7 @@ require.define('ripple/platform/wac/1.0/spec/ui', function (require, module, exp
 module.exports = {
     plugins: [
         "accelerometer",
-        "deviceSettings",
+        //"deviceSettings",
         "fileSystem",
         "geoView",
 /*
