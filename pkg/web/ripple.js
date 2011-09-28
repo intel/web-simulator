@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.6.1 :: Built On Wed Sep 28 2011 09:25:22 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.6.1 :: Built On Wed Sep 28 2011 10:42:38 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -32424,7 +32424,7 @@ _self = {
             message += "Note: the application requested is not part of the common values specified by the WAC API.";
         }
 
-        notifications.openNotification(constants.NOTIFICATIONS.TYPES.NORMAL, message);
+        notifications.openNotification("normal", message);
         _console.log(message);
     },
 
@@ -32455,7 +32455,7 @@ _self = {
 
     vibrate: function (duration) {
         utils.validateArgumentType(duration, "number", ExceptionTypes.INVALID_PARAMETER, "duration paramter is not a number", new Exception());
-        notifications.openNotification(constants.NOTIFICATIONS.TYPES.NORMAL, "Vibrating for " + duration + " second(s).");
+        notifications.openNotification("normal", "Vibrating for " + duration + " second(s).");
     }
 
 };
@@ -33502,7 +33502,7 @@ module.exports = {
         var message = "Sent " + msg.messageType + " " + msg.messageId + " to " + msg.destinationAddress;
 
         // insert fail check here
-        notifications.openNotification(constants.NOTIFICATIONS.TYPES.NORMAL, message);
+        notifications.openNotification("normal", message);
         _console.log(message);
     },
     moveMessageToFolder: function () {
@@ -33718,12 +33718,12 @@ var utils = require('ripple/utils'),
 
         setDefaultRingtone: function (ringtoneUrl) {
             utils.validateArgumentType(ringtoneUrl, "string", ExceptionTypes.INVALID_PARAMETER, "ringtoneUrl paramter is not a string", new Exception());
-            notifications.openNotification(constants.NOTIFICATIONS.TYPES.NORMAL, "Setting default ringtone to: " + ringtoneUrl);
+            notifications.openNotification("normal", "Setting default ringtone to: " + ringtoneUrl);
         },
 
         setAsWallpaper: function (wallpaperUrl) {
             utils.validateArgumentType(wallpaperUrl, "string", ExceptionTypes.INVALID_PARAMETER, "wallpaperUrl paramter is not a string", new Exception());
-            notifications.openNotification(constants.NOTIFICATIONS.TYPES.NORMAL, "Setting wallpaper to: " + wallpaperUrl);
+            notifications.openNotification("normal", "Setting wallpaper to: " + wallpaperUrl);
         }
     };
 
@@ -34415,7 +34415,7 @@ _self = {
         _verifySetWindow("captureImage");
         var msg = constants.CAMERA.WARNING_TEXT;
         msg = msg.replace("{file}", fileName);
-        notifications.openNotification(constants.NOTIFICATIONS.TYPES.NORMAL, msg);
+        notifications.openNotification("normal", msg);
         _console.log("simulated saved image as: " + fileName);
         if (_self.onCameraCaptured) {
             _self.onCameraCaptured.apply(_self, [fileName]);
@@ -34459,7 +34459,7 @@ _self = {
                 window.clearInterval(interval);
                 var msg = constants.CAMERA.WARNING_TEXT;
                 msg = msg.replace("{file}", fileName);
-                notifications.openNotification(constants.NOTIFICATIONS.TYPES.NORMAL, msg);
+                notifications.openNotification("normal", msg);
                 if (_self.onCameraCaptured) {
                     _self.onCameraCaptured.apply(_self, [fileName]);
                 }
@@ -35299,9 +35299,7 @@ require.define('ripple/platform/wac/1.0/spec/ui', function (require, module, exp
 module.exports = {
     plugins: [
         "accelerometer",
-/*
         "deviceSettings",
-*/
         "fileSystem",
         "geoView",
 /*
