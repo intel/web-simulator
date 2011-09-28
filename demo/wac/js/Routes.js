@@ -91,6 +91,7 @@
                     repeat = jQuery("#audio-repeat");
 
                 _setNavBackAndHome();
+                filePath.val($.Routes.getUrl() + "assets/sax.mp3");
 
                 audioPlayer.onStateChange = function (state) {
                     //update some fields here
@@ -370,6 +371,10 @@
 
         setUrl: function(url) {
             _baseUrl = url;
+        },
+ 
+        getUrl: function() {
+            return _baseUrl;
         },
         
 		load: function(view){
