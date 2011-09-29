@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.6.1 :: Built On Wed Sep 28 2011 11:30:39 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.6.1 :: Built On Thu Sep 29 2011 10:29:16 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -34879,6 +34879,14 @@ module.exports = {
 
         return valid;
     },
+    combinePlatformPersistencePrefix: function(id) {
+/*
+        var currentPlatform = db.retrieveObject(constants.PLATFORM.SAVED_KEY);
+        var platformInfo = require('ripple/platform/' + currentPlatform.name + "/" + currentPlatform.version + "/spec");
+        return platformInfo.persistencePrefix + id + "-";
+*/
+        return "wac-" + id + "-";
+    },
     extractInfo: function (configValidationObject) {
         if (!configValidationObject) {
             return null;
@@ -34896,6 +34904,7 @@ module.exports = {
 
         configPreferences = configValidationObject.widget.children.preference.validationResult;
 
+        var dbPrefix = this.combinePlatformPersistencePrefix(widgetInfo.id);
         utils.forEach(configPreferences, function (preference) {
             preferenceName = preference.attributes.name.value;
             if (preferenceName) {
@@ -34907,7 +34916,8 @@ module.exports = {
 
                 db.save(preferenceName,
                         widgetInfo.preferences[preferenceName].value,
-                        platform.getPersistencePrefix(widgetInfo.id));
+                        dbPrefix);
+                        // platform.getPersistencePrefix(widgetInfo.id));
             }
         });
 
@@ -35310,7 +35320,7 @@ module.exports = {
 */
         "platformEvents",
         "storage",
-        //"widgetConfig"
+        "widgetConfig"
     ]
 };
 
@@ -39021,7 +39031,7 @@ function _updateInformationView() {
     infoList.push('<section id=\"information-banner\" style=\"display:none\"><img id=\"information-banner-icon\" width=\"16px\" height=\"16px\"/> <span id=\"information-banner-count\"></span></section>');
 
     if (widgetInfo.icon) {
-        infoList.push('<section class="information-widgeticon"><img class="ui-corner-all" width="64" src="' + widgetInfo.icon + '" alt="widget icon"/></section>');
+        infoList.push('<section class="information-widgeticon"><img class="ui-corner-all" width="64" src="' + "../../demo/wac/" + widgetInfo.icon + '" alt="widget icon"/></section>');
     }
     if (widgetInfo.name) {
         infoList.push('<section class="information-widgetname">' + widgetInfo.name + '</section>');
@@ -45022,7 +45032,7 @@ module.exports = {
         }
 
         try {
-            xmlHttp.open("GET", fileName, false);
+            xmlHttp.open("GET", document.documentURI.replace(/index\.html$/, "") + "../../demo/wac/" + fileName, false);
             xmlHttp.send();
             if (xmlHttp.responseXML) {
                 results = _validate(xmlHttp.responseXML);
