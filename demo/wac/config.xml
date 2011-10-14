@@ -22,6 +22,15 @@
     <feature name="http://jil.org/jil/api/1.1/accelerometerinfo"/>
     <feature name="http://jil.org/jil/api/1.1/positioninfo"/>
     <feature name="http://jil.org/jil/api/1.1.5/applicationtypes"/>
+    <feature name="http://jil.org/jil/api/1.1/multimedia"/>
+    <feature name="http://jil.org/jil/api/1.1.2/camera"/>
+    <feature name="http://jil.org/jil/api/1.1/audioplayer"/>
+    <feature name="http://jil.org/jil/api/1.1.2/videoplayer"/>
+    <feature name="http://jil.org/jil/api/1.1.5/exceptiontypes"/>
+    <feature name="http://jil.org/jil/api/1.1.5/exception"/>
+    <feature name="http://jil.org/jil/api/1.1.1/file"/>
+    <feature name="http://jil.org/jil/api/1.1/config"/>
+    <feature name="http://jil.org/jil/api/1.1.1/widgetmanager"/>
     <name>Ripple Demo Widget</name>
     <description>The Ripple Emulator Demo Widget</description>
     <license  href="http://www.opensource.org/licenses/mit-license.php">MIT</license>
