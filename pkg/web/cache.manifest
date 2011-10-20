@@ -2,6 +2,7 @@ CACHE MANIFEST
 NETWORK:
 *
 CACHE:
+package.json
 ripple.css
 themes/light/theme.css
 themes/light/images/device.png
@@ -67,4 +68,4 @@ images/Icon_128x128.png
 images/getstarted.png
 index.html
 ripple.js
-# Manifest build date: Thu Oct 20 2011 10:50:08 GMT+0800 (CST)
+# Manifest build date: Thu Oct 20 2011 11:21:25 GMT+0800 (CST)

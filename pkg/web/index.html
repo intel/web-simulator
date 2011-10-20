@@ -49,15 +49,17 @@
                             <span class="ui-icon ui-icon-wrench"></span>
                         </div>
                         <ul id="options-menu">
-                            <li id="options-menu-build" class="not-ready"><a>Build</a></li>
-                            <li id="options-menu-sign" class="not-ready"><a>Build &amp; Sign</a></li>
-                            <li id="options-menu-launch" class="not-ready"><a>Build &amp; Launch</a></li>
+                            <li id="options-menu-build" class="not-ready"><a>Package</a></li>
+                            <li id="options-menu-sign" class="not-ready"><a>Package &amp; Sign</a></li>
+                            <li id="options-menu-launch" class="not-ready"><a>Package &amp; Launch</a></li>
                             <li><hr></li>
                             <li id="options-menu-settings" class="not-ready"><a>Settings...</a></li>
                             <li><hr></li>
                             <li id="options-menu-about"><a>About Ripple Emulator</a></li>
                         </ul>
                     </span>
+
+                    <div id="options-progress" class="progress"></div>
                 </section>
             </section>
 
@@ -945,14 +947,28 @@
 </section>
 
 </section>
-            <section id="dialog-views" class="irrelevant"><div id="about-dialog">
-    Stuff about the version and things will go here!
+            <section id="dialog-views" class="irrelevant"><div id="about-dialog" class="ui-state-default">
+    <div class="about-logo"></div>
+    <span><strong>Ripple Mobile Emulator</strong>
+        <span id="about-dialog-ripple-version">(v0.9.0)</span>
+    </span><br/>
+    <ul style="font-size: 0.8em">
+        <li>Ripple UI 
+            <span id="about-dialog-ripple-ui-version">(checking...)</span>
+        </li>
+        <li>Ripple Framework 
+            <span id="about-dialog-ripple-framework-version">(v0.9.0)</span>
+        </li>
+        <li>Ripple Build &amp; Deploy 
+            <span id="about-dialog-ripple-build-deploy-version">(checking...)</span>
+        </li>
+    </ul>
 </div>
 
 <section id="settings-dialog">
 	<div id="settings-tabs">
 		<ul>
-            <li><a href="#settings-tabs-build">Build</a></li>
+            <li><a href="#settings-tabs-build">Package</a></li>
 		</ul>
         <div id="settings-tabs-build">
         </div>

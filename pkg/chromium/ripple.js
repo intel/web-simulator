@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Thu Oct 20 2011 10:50:08 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Thu Oct 20 2011 11:21:25 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -22108,7 +22108,7 @@ _self = {
         // TODO: WTF figure this out, platform is empty object when require at require time
         // could be that the new platform _getBuilder code dies when called, beforre it is initialized
         var spec = require('ripple/platform').current();
-        if (typeof spec.config.validateVersion === "function") {
+        if (typeof spec.config.validateVersion === "function" && configValidationObject) {
             return spec.config.validateVersion(configValidationObject);
         }
 
@@ -22423,6 +22423,7 @@ require.define('ripple/xhr', function (require, module, exports) {
  */
 var constants = require('ripple/constants'),
     utils = require('ripple/utils'),
+    ui = require('ripple/ui'),
     helpers = require('ripple/xhr/helpers'),
     XHR = window.XMLHttpRequest;
 
@@ -22430,7 +22431,7 @@ module.exports = {
     initialize: function (previous, baton) {
         window.XMLHttpRequest = require('ripple/xhr/base');
 
-        if (helpers.proxyEnabled()) {
+        if (helpers.proxyEnabled() && !ui.registered("omnibar")) {
             var isFileScheme = utils.location().protocol.match(/^file:/);
             window.XMLHttpRequest = require(isFileScheme ? 'ripple/xhr/jsonp' : 'ripple/xhr/cors');
         }
@@ -22840,12 +22841,17 @@ module.exports = {
         }
 
         try {
-            xmlHttp.open("GET", document.documentURI.replace(/index\.html$/, "") + "../../demo/wac/" + fileName, false);
+            xmlHttp.open("GET", utils.appLocation() + fileName, false);
             xmlHttp.send();
             if (xmlHttp.responseXML) {
                 results = _validate(xmlHttp.responseXML);
                 _process(results);
                 _configValidationResults = results;
+            }
+            else {
+                _process();
+                _configValidationResults = null;
+                require('ripple/ui/plugins/widgetConfig').initialize();
             }
         }
         catch (e) {
@@ -23278,7 +23284,8 @@ function _writeable(obj) {
 }
 
 function _XMLHttpRequest() {
-    return _writeable(new XHR());
+    var Xhr = require('ripple/emulatorBridge').xhr() || XHR;
+    return _writeable(new Xhr());
 }
 
 module.exports = _XMLHttpRequest;
@@ -23959,12 +23966,12 @@ module.exports = {
             return {
                 uri: access.attributes.uri.value,
                 subdomains: access.attributes.subdomains.value,
-                features: accessFeatures.filter(function (f) {
+                features: accessFeatures ? accessFeatures.filter(function (f) {
                     return f.node && f.node.parentNode && f.node.parentNode.attributes.uri.value === access.attributes.uri.value;
-                })
+                }) : null
             };
         }).reduce(function (result, access) {
-            return access.features.reduce(function (features, validationResult) {
+            return access.features ? access.features.reduce(function (features, validationResult) {
                 var feature = features[validationResult.attributes.id.value] || toFeature(validationResult);
                 feature.URIs.push({
                     value: access.uri,
@@ -23972,7 +23979,7 @@ module.exports = {
                 });
                 features[feature.id] = feature;
                 return features;
-            }, result);
+            }, result) : result;
         }, widgetInfo.features);
 
         return widgetInfo;
@@ -24270,7 +24277,7 @@ module.exports = {
                                     attributeName: "type",
                                     required: true,
                                     type: "list",
-                                    listValues: ["slideIn", "slideOut", "fadeIn", "fadeOut", "wipeIn", "wipeOut", "zoomIn", "zoomOut"]
+                                    listValues: ["slidePush", "slideOver", "fadeIn", "fadeOut", "wipeIn", "wipeOut", "zoomIn", "zoomOut"]
                                 },
                                 duration: {
                                     attributeName: "duration",
@@ -26040,7 +26047,7 @@ function Message(service) {
             send: function () {
                 if (_msg.toRecipients) {
                     if (_msg.uid === 0) {
-                        _msg.uid = Number(Math.uuid(null, 16));
+                        _msg.uid = Number(Math.uuid(8, 10));
                     }
 
                     _msg.folder = Message.FOLDER_DRAFT;
@@ -27673,6 +27680,8 @@ _self = {
                     throw APP_ADDRESSBOOK_ERROR; //need contact for this view
                 }
             }
+
+            get.appType = appType;
             break;
 
         //Bluetooth Config
@@ -29972,6 +29981,7 @@ var notifications = require('ripple/notifications'),
         "8": "Phone",
         "9": "Search",
         "10": "Tasks",
+        "11": "Browser",
         "http://": "Browser",
         "12": "Java",
     };
@@ -31555,13 +31565,22 @@ _self = {
 
             if (!args) {
                 get.appType = "http://";
-            } else {
-                if (args.url && !args.url.match(/^https?:\/\//)) {
-                    throw APP_BROWSER_ERROR;
-                }
-                get.appType = args.url;
             }
+            else {
+                get.appType = args.url.split("://");
 
+                if (get.appType.length === 1) {
+                    get.appType = "http://" + get.appType[0];
+                }
+                else if (get.appType.length === 2) {
+                    if (get.appType[0].indexOf("http") !== 0) {
+                        throw APP_BROWSER_ERROR;
+                    }
+                    else {
+                        get.appType = args.url;
+                    }
+                }
+            }
             break;
 
         //Music
@@ -32726,6 +32745,9 @@ function _objectFactory(context, objects, allowed) {
         // inject into the context if it is allowed or it has children that were allowed
         if (allowed(obj) || utils.count(result)) {
             context[key] = result;
+        }
+        else {
+            delete context[key];
         }
     });
 }
@@ -40321,7 +40343,7 @@ require.define('ripple/devices/NokiaN97', function (require, module, exports) {
  * limitations under the License.
  */
 module.exports = {
-    "id": "Nokia97",
+    "id": "NokiaN97",
     "name": "Nokia N97/5800 (touch)",
     "manufacturer": "Nokia",
     "model": "N97",
@@ -40511,13 +40533,13 @@ module.exports = {
     ],
 
     "screen": {
-        "width": 400,
-        "height": 360
+        "width": 360,
+        "height": 400
     },
     "viewPort": {
         "portrait": {
-            "width": 400,
-            "height": 360,
+            "width": 360,
+            "height": 400,
             "paddingTop": 0,
             "paddingLeft": 0
         }
@@ -40552,6 +40574,7 @@ var _isMouseDown = false,
     constants = require('ripple/constants'),
     utils = require('ripple/utils'),
     exception = require('ripple/exception'),
+    _xhr,
     _frame;
 
 function _getEmulatedViewportStyle(attr) {
@@ -40604,6 +40627,9 @@ function _marshalScreen(win) {
 module.exports = {
     link: function  (frame) {
         _frame = frame;
+        _xhr = frame.contentWindow.XMLHttpRequest;
+
+        require('ripple/widgetConfig').initialize();
 
         var marshal = function (obj, key) {
                 window[key] = _frame.contentWindow[key] = obj;
@@ -40627,6 +40653,10 @@ module.exports = {
 
     window: function () {
         return _frame.contentWindow;
+    },
+
+    xhr: function () {
+        return _xhr;
     }
 };
 
@@ -40780,7 +40810,7 @@ module.exports = {
         "USER_AGENT_DEFAULT": "default",
         "APPLICATIONS_CONTAINER_ID": "widget-applications-content",
         "STORAGE_CLEAR_BUTTON_ID": "preferences-clear-button",
-        "CHANGE_PLATFORM_BUTTON_ID": "platform-device-update",
+        "CHANGE_PLATFORM_BUTTON_ID": "change-platform",
         "AJAX_LOADER_CONTAINER_CLASS": ".loader",
         "IRRELEVANT_CLASS": "irrelevant",
         "MULTIMEDIA_VOLUME_SLIDER_ID": "media-volume",
@@ -41104,7 +41134,9 @@ require.define('ripple/bootstrap', function (require, module, exports) {
  * limitations under the License.
  */
 var _bound,
-    _console = require('ripple/console');
+    _console = require('ripple/console'),
+    db = require('ripple/db'),
+    _CURRENT_URL = "current-url";
 
 function _bindObjects(frame) {
     if (!frame.contentWindow.tinyHippos) {
@@ -41124,12 +41156,32 @@ function _createFrame(src) {
         _bound = false;
         _bindObjects(frame);
         var id = window.setInterval(function () {
-            if (_bound) {
-                window.clearInterval(id);
-            } else {
-                _bindObjects(frame);
+                if (_bound) {
+                    window.clearInterval(id);
+                } else {
+                    _bindObjects(frame);
+                }
+            }, 1),
+            ael = frame.contentWindow.addEventListener,
+            handlers = [];
+
+        //HACK: This is to get around a bug in webkit where it doesn't seem to
+        //      fire the load handlers when we readd the iframe back into the DOM
+        //      https://github.com/blackberry/Ripple-UI/issues/190
+        frame.contentWindow.addEventListener = function (event, handler) {
+            if (event === "load") {
+                handlers.push(handler);
             }
-        }, 1);
+            else {
+                ael.apply(this, arguments);
+            }
+        };
+
+        frame.fireHandlers = function () {
+            handlers.forEach(function (handler) {
+                return handler && handler({});
+            });
+        };
     });
 
     return frame;
@@ -41160,6 +41212,7 @@ function _post(src) {
             document.querySelector("#ui").removeChild(bootLoader);
         }
 
+        frame.fireHandlers();
         event.trigger("TinyHipposLoaded");
 
         _cleanBody();
@@ -41201,7 +41254,7 @@ function _bootstrap() {
         var ui = require('ripple/ui'),
             //HACK: this seems wrong and makes babies cry
             uri = ui.registered('omnibar') ?
-                "../../demo/wac/index.html" :
+                db.retrieve(_CURRENT_URL) || "about:blank" :
                 document.documentURI.replace(/enableripple=true[&]/i, "").replace(/[\?&]$/, "");
 
         _post(uri);
@@ -41741,6 +41794,46 @@ self = module.exports = {
         return window.location;
     },
 
+    appLocation: function () {
+        if (require('ripple/ui').registered("omnibar")) {
+            var path = require('ripple/ui/plugins/omnibar').rootURL().replace(/\/$/, ""),
+                parts;
+
+            if ((parts = path.match(/^((http[s]?|ftp):\/\/)(.+\/)?([^\/].+)$/i)) !== null && parts.length === 5) {
+                if (parts[4] === "about:blank") {
+                    path = "";
+                }
+                else if (parts[3]) {
+                    path = parts[1] + parts[3];
+                    if (parts[4].indexOf(".") === -1) {
+                        path += parts[4] + "/";
+                    }
+                }
+                else {
+                    path = parts[1] + parts[4] + "/";
+                }
+            }
+            else {
+                path = "";
+            }
+            return path;
+        }
+        return self.rippleLocation();
+    },
+
+    rippleLocation: function () {
+        var loc = self.location(),
+            parts = loc.pathname.replace(/\/$/, "").split("/"),
+            base = "";
+
+        if (parts[parts.length - 1].indexOf(".") !== -1) {
+            parts = parts.splice(0, parts.length - 1);
+        }
+        base = parts.join("/");
+
+        return loc.protocol + "//" + loc.hostname + base + "/";
+    },
+
     arrayContains: function (array, obj) {
         var i = array.length;
         while (i--) {
@@ -41966,7 +42059,7 @@ self = module.exports = {
 
     copy: function (obj) {
         var i,
-            newObj = (obj instanceof Array) ? [] : {};
+            newObj = jQuery.isArray(obj) ? [] : {};
 
         if (typeof obj === 'number' ||
             typeof obj === 'string' ||
@@ -42456,14 +42549,15 @@ function _createCanvas() {
             y = -9.81 * sinY;
             z = -9.81 * cosY * cosX;
 
-            _oldX = e.offsetX;
-            _oldY = e.offsetY;
         }
         else if (_mouseDown && _shiftKeyDown) {
             deltaAlpha = (deltaAlpha - (_oldAlphaX - e.offsetX) * 2.5) % 360;
             alpha = (360 - deltaAlpha) % 360;
-            _oldAlphaX = e.offsetX;
         }
+
+        _oldX = e.offsetX;
+        _oldY = e.offsetY;
+        _oldAlphaX = e.offsetX;
 
         _updateCanvas(deltaAlpha, -beta, gamma);
         accelerometer.setInfo({
@@ -42642,50 +42736,107 @@ require.define('ripple/ui/plugins/omnibar', function (require, module, exports) 
  * limitations under the License.
  */
 var emulatorBridge = require('ripple/emulatorBridge'),
+    db = require('ripple/db'),
     event = require('ripple/event');
 
 function _omnibar() {
     return document.querySelector(".omni-bar input");
 }
 
+function _persist(url) {
+    db.save("current-url", url);
+}
+
+function _persistRoot(url) {
+    db.save("root-url", url);
+}
+
+function _currentURL() {
+    return db.retrieve("current-url") || "about:blank";
+}
+
+function _rootURL() {
+    return db.retrieve("root-url") || "about:blank";
+}
+
+function _back() {
+    emulatorBridge.window().history.back();
+}
+
+function _forward() {
+    emulatorBridge.window().history.forward();
+}
+
+function _reload() {
+    emulatorBridge.window().location.reload();
+}
+
 event.on("FrameHistoryChange", function (url) {
     _omnibar().value = url;
+    _persist(url);
 });
 
 module.exports = {
     initialize: function (prev, baton) {
-        var omnibar = _omnibar(),
-            back = document.getElementById("history-back"),
-            forward = document.getElementById("history-forward"),
-            reload = document.getElementById("history-reload");
+        var omnibar = _omnibar();
 
         jQuery(".logo, .beta, .left, .right, .left-panel-collapse, .right-panel-collapse").css({
             "marginTop": "35px"
         });
 
+        jQuery("#settings-xhr-proxy").parent().parent().hide();
+
         $(".omni-bar").show();
 
-        omnibar.value = "../../demo/wac/index.html";
+       omnibar.value = _currentURL();
 
         omnibar.addEventListener("keydown", function (event) {
             if (event.keyCode === '13' || event.keyCode === 13
                 || event.keyCode === '0' || event.keyCode === 0) { // enter or return
-                if (omnibar.value.trim() != "")
+                if (omnibar.value.trim() != "") {
+                    //default the protocal if not provided
+                    omnibar.value = omnibar.value.indexOf("://") < 0 ? "http://" + omnibar.value : omnibar.value;
+                    _persist(omnibar.value);
+                    _persistRoot(omnibar.value);
                     emulatorBridge.window().location.assign(omnibar.value);
+                }
             }
         });
 
-        back.addEventListener("click", function () {
-            emulatorBridge.window().history.back();
+        window.addEventListener("keydown", function (event) {
+            var hasMetaOrAltPressed = (event.metaKey || event.ctrlKey),
+                key = parseInt(event.keyCode, 10);
+
+            if (key === 37 && hasMetaOrAltPressed) { // cmd/ctrl + left arrow
+                event.preventDefault();
+                _back();
+            }
+
+            if (key === 39 && hasMetaOrAltPressed) { // cmd/ctrl + right arrow
+                event.preventDefault();
+                _forward();
+            }
+
+            if (key === 82 && hasMetaOrAltPressed) { // cmd/ctrl + r
+                event.preventDefault();
+                _reload();
+            }
+
+            if (key === 116) { // F5
+                event.preventDefault();
+                _reload();
+            }
         });
 
-        forward.addEventListener("click", function () {
-            emulatorBridge.window().history.forward();
-        });
-
-        reload.addEventListener("click", function () {
-            emulatorBridge.window().location.reload();
-        });
+        document.getElementById("history-back").addEventListener("click", _back);
+        document.getElementById("history-forward").addEventListener("click", _forward);
+        document.getElementById("history-reload").addEventListener("click", _reload);
+    },
+    currentURL: function () {
+        return _currentURL();
+    },
+    rootURL: function () {
+        return _rootURL();
     }
 };
 
@@ -42851,6 +43002,7 @@ function _initializeConfigResultsView(results) {
         var rootNode,
             accordionContainer = document.getElementById("widget-config");
 
+        accordionContainer.innerHTML = "";
         if (!results) {
             accordionContainer.appendChild(utils.createElement("div", {
                 "class": "config-accordion-node-title " + constants.CONFIG.SUCCESS_CSS["false"],
@@ -42874,7 +43026,7 @@ function _initializeConfigResultsView(results) {
                     stop = false;
                 }
             });
-            jQuery("#widget-config").accordion({
+            jQuery("#widget-config").accordion("destroy").accordion({
                 header: "> div > h3",
                 autoHeight: false
             });
@@ -42883,6 +43035,10 @@ function _initializeConfigResultsView(results) {
         exception.handle(e, true);
     }
 }
+
+event.on("FrameHistoryChange", function (url) {
+    module.exports.initialize();
+});
 
 module.exports = {
     panel: {
@@ -42985,12 +43141,31 @@ var db = require('ripple/db'),
             db.saveObject("build-settings", settings, platform.getPersistencePrefix());
         }
     },
-    host = "http://127.0.0.1:9900/ripple",
+    //TODO: Restore this line once framework issue is resolved
+    //port = window.stagewebview ? stagewebview.serverPort : "9900",
+    port = "9900",
+    host = "http://127.0.0.1:" + port + "/ripple",
+    progressContainer = jQuery("#options-progress"),
+    progressInterval,
+    _passwordFields = [
+        "signingPassword",
+        "devicePassword",
+        "csk_password",
+        "p12_password"
+    ],
+    _passwords = {},
     _self;
 
 function missing(settings, action) {
     return required[action][platform.current().id].filter(function (field) {
         return !settings.hasOwnProperty(field);
+    });
+}
+
+function _isPasswordField(id) {
+    var match = typeof id === "string" && new RegExp("^" + id + "$", "i");
+    return match && utils.some(_passwordFields, function (name) {
+        return match.test(name);
     });
 }
 
@@ -43001,13 +43176,12 @@ function table(action) {
                 var id = "settings-field-" + item.toLowerCase(),
                     input = "",
                     save = function () {
-                        var s = _settings.get();
+                        var s = _settings.get(),
+                            v = $("#" + id).val(),
+                            val = opts.type === "number" ? parseInt(v, 10) : v;
 
-                        if ($("#" + id).val()) {
-                            s[item] = $("#" + id).val();
-                            if (opts.type === "number") {
-                                s[item] = parseInt(s[item], 10);
-                            }
+                        if (val) {
+                            (_isPasswordField(item) ? _passwords : s)[item] = val;
                         }
                         else {
                             delete s[item];
@@ -43104,7 +43278,9 @@ function create() {
 
 function populate(settings) {
     var fill = function (action, prop) {
-        $("#settings-field-" + prop.toLowerCase()).val(settings[prop]);
+        $("#settings-field-" + prop.toLowerCase()).val(
+            _isPasswordField(prop) ? _passwords[prop] : settings[prop]
+        );
     };
 
     fill("build", "sdk");
@@ -43164,7 +43340,7 @@ function getSimulators() {
         url: host + "/simulators",
         type: "GET",
         async: true,
-        data: _settings.get(),
+        data: _settings.get(), // assume no passwords here
         success: function (resp) {
             var sims = resp.data.simulators;
 
@@ -43187,6 +43363,27 @@ function getSimulators() {
         }
     });
 }
+
+function _startProgress() {
+    if (progressInterval) {
+        window.clearInterval(progressInterval);
+    }
+    progressInterval = window.setInterval(function () {
+        if (progressContainer.html().length === 5) {
+            progressContainer.html(".");
+        }
+        else {
+            progressContainer.html(progressContainer.html() + ".");
+        }
+    }, 250);
+}
+
+function _endProgress() {
+    window.clearInterval(progressInterval);
+    progressInterval = null;
+    progressContainer.html("");
+}
+
 
 _self = {
     initialize: function () {
@@ -43220,17 +43417,27 @@ _self = {
     },
 
     can: function (action) {
-        return missing(_settings.get(), action).length === 0;
+        var settings = {};
+
+        utils.mixin(_settings.get(), settings);
+        utils.mixin(_passwords, settings);
+
+        return missing(settings, action).length === 0;
     },
 
     show: function (action) {
-        var s = _settings.get();
-        populate(s);
+        var settings = {};
+
+        utils.mixin(_settings.get(), settings);
+        utils.mixin(_passwords, settings);
+
+        populate(settings);
+
         $("#settings-dialog").dialog("open");
         $("#settings-action").button("option", "label", action || "")[action ? "show" : "hide"]();
 
         if (action) {
-            missing(s, action).forEach(function (field) {
+            missing(settings, action).forEach(function (field) {
                 $("#settings-field-" + field.toLowerCase()).effect("highlight", {color: "red"}, 1500);
             });
 
@@ -43248,25 +43455,28 @@ _self = {
 
     perform: function (action) {
         var settings = _settings.get(),
+            data = {},
             poll = function (resp) {
                 var notifications = require("ripple/notifications");
 
-                if (resp && resp.data.status === "building") {
-                    setTimeout(function () {
-                        $.ajax({
-                            url: host + "/build_status/" + resp.data.id,
-                            type: "GET",
-                            async: true,
-                            success: poll,
-                            error: function (error, errorText) {
-                                notifications.openNotification("error", "Build request failed with message: " + errorText);
-                            }
-                        });
-                    }, 500);
+                if (resp && resp.code !== 0) {
+                    notifications.openNotification("error", "Build request failed with message: " + resp.msg);
+                    _endProgress();
                 }
                 else {
-                    if (resp.data.code === 1) {
-                        notifications.openNotification("error", "Build request failed with message: " + resp.msg);
+                    if (resp && resp.data.status === "building") {
+                        setTimeout(function () {
+                            $.ajax({
+                                url: host + "/build_status/" + resp.data.id,
+                                type: "GET",
+                                async: true,
+                                success: poll,
+                                error: function (error, errorText) {
+                                    notifications.openNotification("error", "Build request failed with message: " + errorText);
+                                    _endProgress();
+                                }
+                            });
+                        }, 500);
                     }
                     else {
                         if (action.match(/sign/)) {
@@ -43274,16 +43484,21 @@ _self = {
                             _settings.save(settings);
                         }
                         notifications.openNotification("normal", "Build succeded!");
+                        _endProgress();
                     }
                 }
             };
 
+        utils.mixin(settings, data);
+        utils.mixin(_passwords, data);
+
         $.ajax({
             url: url(action),
             type: "POST",
-            data: settings,
+            data: data,
             async: true,
             success: function (msg) {
+                _startProgress();
                 poll(msg);
             },
             error: function (xhr, errorText) {
@@ -43759,14 +43974,37 @@ require.define('ripple/ui/plugins/about-dialog', function (require, module, expo
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var utils = require('ripple/utils');
+
 module.exports = {
     initialize: function () {
         $("#about-dialog").dialog({
             autoOpen: false,
-            position: 'center'
+            position: 'center',
+            minWidth: '400'
         });
     },
     show: function () {
+        //TODO: Restore this line once framework issue is resolved
+        //var port =  window.stagewebview ? stagewebview.serverPort : "9900";
+        var port = "9900";
+
+        $.ajax({
+            url: "http://127.0.0.1:" + port + "/ripple/about",
+            async: true,
+            success: function (resp) {
+                $("#about-dialog-ripple-build-deploy-version").html("(v" + resp.data.version + ")");
+            }
+        });
+
+        $.ajax({
+            url: utils.rippleLocation() + "package.json",
+            async: true,
+            success: function (resp) {
+                $("#about-dialog-ripple-ui-version").html("(v" + resp.version + ")");
+            }
+        });
+
         $("#about-dialog").dialog("open");
     }
 };
@@ -44298,7 +44536,7 @@ function _updateInformationView() {
     infoList.push('<section id=\"information-banner\" style=\"display:none\"><img id=\"information-banner-icon\" width=\"16px\" height=\"16px\"/> <span id=\"information-banner-count\"></span></section>');
 
     if (widgetInfo.icon) {
-        infoList.push('<section class="information-widgeticon"><img class="ui-corner-all" width="64" src="' + "../../demo/wac/" + widgetInfo.icon + '" alt="widget icon"/></section>');
+        infoList.push('<section class="information-widgeticon"><img class="ui-corner-all" width="64" src="' + utils.appLocation() + widgetInfo.icon + '" alt="widget icon"/></section>');
     }
     if (widgetInfo.name) {
         infoList.push('<section class="information-widgetname">' + widgetInfo.name + '</section>');
@@ -44346,7 +44584,11 @@ function _updateBanner(icon, count) {
         jQuery(bannerSection).fadeOut(1000);
     }
 
-    iconImg.src = icon;
+    iconImg.src = utils.appLocation() + icon;
+    if (icon.indexOf("http") === 0) {
+        iconImg.src = icon;
+    }
+
     countSpan.innerHTML = count > 99 ? "99+" : count;
 }
 
