@@ -1,5 +1,5 @@
 {
-    "version": "0.6.1",
+    "version": "0.9.0",
     "name": "Ripple Mobile Environment Emulator (Beta)",
     "background_page":"views/background.html",
     "icons":{

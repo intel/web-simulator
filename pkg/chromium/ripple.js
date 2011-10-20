@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.6.1 :: Built On Thu Oct 13 2011 16:31:00 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Thu Oct 20 2011 10:50:08 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -36320,20 +36320,13 @@ module.exports = {
 
         return valid;
     },
-    combinePlatformPersistencePrefix: function(id) {
-/*
-        var currentPlatform = db.retrieveObject(constants.PLATFORM.SAVED_KEY);
-        var platformInfo = require('ripple/platform/' + currentPlatform.name + "/" + currentPlatform.version + "/spec");
-        return platformInfo.persistencePrefix + id + "-";
-*/
-        return "wac-" + id + "-";
-    },
     extractInfo: function (configValidationObject) {
         if (!configValidationObject) {
             return null;
         }
 
         var widgetInfo = {},
+            configFeatures,
             configPreferences,
             preferenceName;
 
@@ -36341,11 +36334,21 @@ module.exports = {
         widgetInfo.name = configValidationObject.widget.children.name.validationResult[0].value;
         widgetInfo.icon = configValidationObject.widget.children.icon.validationResult[0].attributes.src.value;
         widgetInfo.version = configValidationObject.widget.validationResult[0].attributes.version.value;
+
+        widgetInfo.features = {};
+
+        configFeatures = configValidationObject.widget.children.feature.validationResult;
+        utils.forEach(configFeatures, function (f) {
+            var feature = {id: f.attributes.name.value,
+                     required: f.attributes.required.valid};
+            widgetInfo.features[feature.id] = feature;
+        });
+
         widgetInfo.preferences = {};
 
         configPreferences = configValidationObject.widget.children.preference.validationResult;
 
-        var dbPrefix = this.combinePlatformPersistencePrefix(widgetInfo.id);
+        var platform = require('ripple/platform');
         utils.forEach(configPreferences, function (preference) {
             preferenceName = preference.attributes.name.value;
             if (preferenceName) {
@@ -36357,8 +36360,7 @@ module.exports = {
 
                 db.save(preferenceName,
                         widgetInfo.preferences[preferenceName].value,
-                        dbPrefix);
-                        // platform.getPersistencePrefix(widgetInfo.id));
+                        platform.getPersistencePrefix(widgetInfo.id));
             }
         });
 
@@ -38342,22 +38344,28 @@ module.exports = {
             path: "w3c/1.0/navigator"
         },
         WidgetManager: {
-            path: "wac/1.0/WidgetManager"
+            path: "wac/1.0/WidgetManager",
+            feature: "http://jil.org/jil/api/1.1.1/widgetmanager"
         },
         Widget: {
             path: "wac/1.0/Widget",
+            feature: "http://jil.org/jil/api/1.1/widget",
             children: {
                 Device: {
                     path: "wac/1.0/Device",
+                    feature: "http://jil.org/jil/api/1.1/device",
                     children: {
                         AccountInfo: {
-                            path: "wac/1.0/AccountInfo"
+                            path: "wac/1.0/AccountInfo",
+                            feature: "http://jil.org/jil/api/1.1/accountinfo"
                         },
                         ApplicationTypes: {
-                            path: "wac/1.0/ApplicationTypes"
+                            path: "wac/1.0/ApplicationTypes",
+                            feature: "http://jil.org/jil/api/1.1.5/applicationtypes"
                         },
                         DataNetworkInfo: {
                             path: "wac/1.0/DataNetworkInfo",
+                            feature: "http://jil.org/jil/api/1.1.1/datanetworkinfo",
                             children: {
                                 DataNetworkConnectionTypes: {
                                     path: "wac/1.0/DataNetworkConnectionTypes"
@@ -38365,103 +38373,132 @@ module.exports = {
                             }
                         },
                         DeviceInfo: {
-                            path: "wac/1.0/DeviceInfo"
+                            path: "wac/1.0/DeviceInfo",
+                            feature: "http://jil.org/jil/api/1.1/deviceinfo"
                         },
                         DeviceStateInfo: {
                             path: "wac/1.0/DeviceStateInfo",
+                            feature: "http://jil.org/jil/api/1.1/devicestateinfo",
                             children: {
                                 Config: {
-                                    path: "wac/1.0/Config"
+                                    path: "wac/1.0/Config",
+                                    feature: "http://jil.org/jil/api/1.1/config"
                                 },
                                 AccelerometerInfo: {
-                                    path: "wac/1.0/AccelerometerInfo"
+                                    path: "wac/1.0/AccelerometerInfo",
+                                    feature: "http://jil.org/jil/api/1.1/accelerometerinfo"
                                 }
                             }
                         },
                         File: {
-                            path: "wac/1.0/File"
+                            path: "wac/1.0/File",
+                            feature: "http://jil.org/jil/api/1.1.1/file"
                         },
                         PositionInfo: {
-                            path: "wac/1.0/PositionInfo"
+                            path: "wac/1.0/PositionInfo",
+                            feature: "http://jil.org/jil/api/1.1/positioninfo"
                         },
                         RadioInfo: {
                             path: "wac/1.0/RadioInfo",
+                            feature: "http://jil.org/jil/api/1.1.1/radioinfo",
                             children: {
                                 RadioSignalSourceTypes: {
-                                    path: "wac/1.0/RadioSignalSourceTypes"
+                                    path: "wac/1.0/RadioSignalSourceTypes",
+                                    feature: "http://jil.org/jil/api/1.1.5/radiosignalsourcetypes"
                                 }
                             }
                         },
                         PowerInfo: {
-                            path: "wac/1.0/PowerInfo"
+                            path: "wac/1.0/PowerInfo",
+                            feature: "http://jil.org/jil/api/1.1/powerinfo"
                         }
                     }
                 },
                 ExceptionTypes: {
-                    path: "wac/1.0/ExceptionTypes"
+                    path: "wac/1.0/ExceptionTypes",
+                    feature: "http://jil.org/jil/api/1.1.5/exceptiontypes"
                 },
                 Exception: {
-                    path: "wac/1.0/Exception"
+                    path: "wac/1.0/Exception",
+                    feature: "http://jil.org/jil/api/1.1.5/exception"
                 },
                 Multimedia: {
                     path: "wac/1.0/Multimedia",
+                    feature: "http://jil.org/jil/api/1.1/multimedia",
                     children: {
                         Camera: {
-                            path: "wac/1.0/Camera"
+                            path: "wac/1.0/Camera",
+                            feature: "http://jil.org/jil/api/1.1.2/camera"
                         },
                         AudioPlayer: {
-                            path: "wac/1.0/AudioPlayer"
+                            path: "wac/1.0/AudioPlayer",
+                            feature: "http://jil.org/jil/api/1.1/audioplayer"
                         },
                         VideoPlayer: {
-                            path: "wac/1.0/VideoPlayer"
+                            path: "wac/1.0/VideoPlayer",
+                            feature: "http://jil.org/jil/api/1.1.2/videoplayer"
                         }
                     }
                 },
                 Telephony: {
                     path: "wac/1.0/Telephony",
+                    feature: "http://jil.org/jil/api/1.1.1/telephony",
                     children: {
                         CallRecord: {
-                            path: "wac/1.0/CallRecord"
+                            path: "wac/1.0/CallRecord",
+                            feature: "http://jil.org/jil/api/1.1/callrecord"
                         },
                         CallRecordTypes: {
-                            path: "wac/1.0/CallRecordTypes"
+                            path: "wac/1.0/CallRecordTypes",
+                            feature: "http://jil.org/jil/api/1.1.1/callrecordtypes"
                         }
                     }
                 },
                 PIM: {
                     path: "wac/1.0/PIM",
+                    feature: "http://jil.org/jil/api/1.1.1/pim",
                     children: {
                         AddressBookItem: {
-                            path: "wac/1.0/AddressBookItem"
+                            path: "wac/1.0/AddressBookItem",
+                            feature: "http://jil.org/jil/api/1.1/addressbookitem"
                         },
                         CalendarItem: {
-                            path: "wac/1.0/CalendarItem"
+                            path: "wac/1.0/CalendarItem",
+                            feature: "http://jil.org/jil/api/1.1/calendaritem"
                         },
                         EventRecurrenceTypes: {
-                            path: "wac/1.0/EventRecurrenceTypes"
+                            path: "wac/1.0/EventRecurrenceTypes",
+                            feature: "http://jil.org/jil/api/1.1/eventrecurrencetypes"
                         }
                     }
                 },
                 Messaging: {
                     path: "wac/1.0/Messaging",
+                    feature: "http://jil.org/jil/api/1.1/messaging",
                     children: {
                         Account: {
-                            path: "wac/1.0/Account"
+                            path: "wac/1.0/Account",
+                            feature: "http://jil.org/jil/api/1.1/account"
                         },
                         Attachment: {
-                            path: "wac/1.0/Attachment"
+                            path: "wac/1.0/Attachment",
+                            feature: "http://jil.org/jil/api/1.1/attachment"
                         },
                         Message: {
-                            path: "wac/1.0/Message"
+                            path: "wac/1.0/Message",
+                            feature: "http://jil.org/jil/api/1.1/message"
                         },
                         MessageFolderTypes: {
-                            path: "wac/1.0/MessageFolderTypes"
+                            path: "wac/1.0/MessageFolderTypes",
+                            feature: "http://jil.org/jil/api/1.1.4/messagefoldertypes"
                         },
                         MessageQuantities: {
-                            path: "wac/1.0/MessageQuantities"
+                            path: "wac/1.0/MessageQuantities",
+                            feature: "http://jil.org/jil/api/1.1/messagequantities"
                         },
                         MessageTypes: {
-                            path: "wac/1.0/MessageTypes"
+                            path: "wac/1.0/MessageTypes",
+                            feature: "http://jil.org/jil/api/1.1/messagetypes"
                         }
                     }
                 }
@@ -41535,7 +41572,7 @@ _self = {
     initialize: function (previous, baton) {
         baton.take();
 
-        _db = openDatabase('tinyHippos', '1.0', 'tiny Hippos persistence', 2 * 1024 * 1024);
+        _db = openDatabase('tinyHippos', '1.0', 'tiny Hippos persistence', 1024 * 1024);
         _db.transaction(function (tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS persistence (id unique, key, value, prefix)');
 
@@ -42631,8 +42668,10 @@ module.exports = {
         omnibar.value = "../../demo/wac/index.html";
 
         omnibar.addEventListener("keydown", function (event) {
-            if (event.keyCode === '13' || event.keyCode === 13) { // enter
-                emulatorBridge.window().location.assign(omnibar.value);
+            if (event.keyCode === '13' || event.keyCode === 13
+                || event.keyCode === '0' || event.keyCode === 0) { // enter or return
+                if (omnibar.value.trim() != "")
+                    emulatorBridge.window().location.assign(omnibar.value);
             }
         });
 
@@ -45063,7 +45102,7 @@ module.exports = {
             utils.forEach(themes, function (theme) {
                 node.append(utils.createElement("option", {
                     "value": theme,
-                    "innerHTML": theme
+                    "innerHTML": theme.charAt(0).toUpperCase() + theme.slice(1)
                 }));
             });
 
