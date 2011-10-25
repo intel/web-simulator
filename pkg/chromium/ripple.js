@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Thu Oct 20 2011 15:19:07 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Tue Oct 25 2011 13:46:02 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -34935,8 +34935,117 @@ require.define('ripple/platform/wac/2.0/accelerometer', function (require, modul
  * limitations under the License.
  */
 
-module.exports = {
+var utils = require('ripple/utils'),
+    event = require('ripple/event'),
+    Acceleration = function (x, y, z) {
+        return {
+            xAxis: x || 0,
+            yAxis: y || 0,
+            zAxis: z || 0
+        };
+    },
+    errorcode = require('ripple/platform/wac/2.0/errorcode'),
+    deviceapierror = require('ripple/platform/wac/2.0/deviceapierror'),
+    _accelerometerInfo = new Acceleration(),
+    defaultInterval = 100,
+    _watches = {},
+    _self;
+
+module.exports = _self = {
+    getCurrentAcceleration: function (onSuccess, onError) {
+
+        utils.validateNumberOfArguments(1, 2, arguments.length, null, "getCurrentAcceleration invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        if (onSuccess) {
+            utils.validateArgumentType(onSuccess, "function", null, "getCurrentAcceleration invalid successCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+        if (onError) {
+            utils.validateArgumentType(onError, "function", null, "getCurrentAcceleration invalid errorCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+
+        if (onSuccess) {
+            setTimeout(function () {
+                onSuccess(utils.copy(_accelerometerInfo));
+            }, 1);
+            return null;
+        } else {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new deviceapierror(errorcode.INVALID_VALUES_ERR));
+                }, 1);
+            }
+        };
+
+        return undefined;
+    },
+
+    watchAcceleration: function (accelerometerSuccess, accelerometerError, options) {
+
+        utils.validateNumberOfArguments(2, 3, arguments.length, null, "watchAcceleration invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        if (accelerometerSuccess) {
+            utils.validateArgumentType(accelerometerSuccess, "function", null, "watchAcceleration invalid successCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+        if (accelerometerError) {
+            utils.validateArgumentType(accelerometerError, "function", null, "watchAcceleration invalid errorCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+        if (options) {
+            utils.validateArgumentType(options, "object", null, "watchAcceleration invalid options parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+            utils.validateArgumentType(options.minNotificationInterval, "number", null, "watchAcceleration invalid options parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+
+        if (accelerometerSuccess) {
+            var watchId = (new Date()).getTime(),
+                watchObj = {},
+                accelerometerInterval = defaultInterval;
+
+            if (options &&
+                options.minNotificationInterval === Math.floor(options.minNotificationInterval) &&
+                options.minNotificationInterval > 0) {
+                accelerometerInterval = options.minNotificationInterval;
+            }
+
+            watchObj = {
+                onSuccess: accelerometerSuccess,
+                onError: accelerometerError,
+                interval: accelerometerInterval
+            };
+
+            _watches[watchId] = watchObj;
+
+            _watches[watchId].intervalId = setInterval(function () {
+                _self.getCurrentAcceleration(_watches[watchId].onSuccess, _watches[watchId].onError);
+            }, _watches[watchId].interval);
+
+            return watchId;
+        } else {
+            if (accelerometerError) {
+                setTimeout(function () {
+                    accelerometerError(new deviceapierror(errorcode.INVALID_VALUES_ERR));
+                }, 1);
+            }
+        };
+
+        return undefined;
+    },
+
+    clearWatch: function (watchId) {
+
+        utils.validateNumberOfArguments(1, 1, arguments.length, null, "clearWatch invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateArgumentType(watchId, "number", null, "clearWatch invalid watchId parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+
+        if (_watches[watchId]) {
+            clearInterval(_watches[watchId].intervalId);
+            return null;
+        }
+
+        return undefined;
+    }
 };
+
+event.on("AccelerometerInfoChangedEvent", function (accelerometerInfo) {
+    _accelerometerInfo.xAxis = accelerometerInfo.accelerationIncludingGravity.x;
+    _accelerometerInfo.yAxis = accelerometerInfo.accelerationIncludingGravity.y;
+    _accelerometerInfo.zAxis = accelerometerInfo.accelerationIncludingGravity.z;
+});
 
 
 });
@@ -34984,6 +35093,31 @@ module.exports = {
 
 
 });
+require.define('ripple/platform/wac/2.0/pendingoperation', function (require, module, exports) {
+/*
+ *  Copyright 2011 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports = function () {
+    this.cancel = function () {
+        return false;
+    };
+};
+
+
+});
 require.define('ripple/platform/wac/2.0/spec/ui', function (require, module, exports) {
 /*
  *  Copyright 2011 Intel Corporation.
@@ -35002,6 +35136,7 @@ require.define('ripple/platform/wac/2.0/spec/ui', function (require, module, exp
  */
 module.exports = {
     plugins: [
+        "accelerometer",
         "geoView"
     ]
 };
@@ -35407,11 +35542,11 @@ module.exports = {
 };
 
 });
-require.define('ripple/platform/wac/2.0/filesystem', function (require, module, exports) {
+require.define('ripple/platform/wac/2.0/errorcode', function (require, module, exports) {
 /*
  *  Copyright 2011 Intel Corporation.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License"),
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -35424,12 +35559,116 @@ require.define('ripple/platform/wac/2.0/filesystem', function (require, module, 
  * limitations under the License.
  */
 
-module.exports = {
+var _self = {
+    message : []
 };
+
+_self.__defineGetter__("UNKNOWN_ERR", function () {
+    return 0;
+});
+
+_self.__defineGetter__("INDEX_SIZE_ERR", function () {
+    return 1;
+});
+
+_self.__defineGetter__("DOMSTRING_SIZE_ERR", function () {
+    return 2;
+});
+
+_self.__defineGetter__("HIERARCHY_REQUEST_ERR", function () {
+    return 3;
+});
+
+_self.__defineGetter__("WRONG_DOCUMENT_ERR", function () {
+    return 4;
+});
+
+_self.__defineGetter__("INVALID_CHARACTER_ERR", function () {
+    return 5;
+});
+
+_self.__defineGetter__("NO_DATA_ALLOWED_ERR", function () {
+    return 6;
+});
+
+_self.__defineGetter__("NO_MODIFICATION_ALLOWED_ERR", function () {
+    return 7;
+});
+
+_self.__defineGetter__("NOT_FOUND_ERR", function () {
+    return 8;
+});
+
+_self.__defineGetter__("NOT_SUPPORTED_ERR", function () {
+    return 9;
+});
+
+_self.__defineGetter__("INUSE_ATTRIBUTE_ERR", function () {
+    return 10;
+});
+
+_self.__defineGetter__("INVALID_STATE_ERR", function () {
+    return 11;
+});
+
+_self.__defineGetter__("SYNTAX_ERR", function () {
+    return 12;
+});
+
+_self.__defineGetter__("INVALID_MODIFICATION_ERR", function () {
+    return 13;
+});
+
+_self.__defineGetter__("NAMESPACE_ERR", function () {
+    return 14;
+});
+
+_self.__defineGetter__("INVALID_ACCESS_ERR", function () {
+    return 15;
+});
+
+_self.__defineGetter__("VALIDATION_ERR", function () {
+    return 16;
+});
+
+_self.__defineGetter__("TYPE_MISMATCH_ERR", function () {
+    return 17;
+});
+
+_self.__defineGetter__("SECURITY_ERR", function () {
+    return 18;
+});
+
+_self.__defineGetter__("NETWORK_ERR", function () {
+    return 19;
+});
+
+_self.__defineGetter__("ABORT_ERR", function () {
+    return 20;
+});
+
+_self.__defineGetter__("TIMEOUT_ERR", function () {
+    return 21;
+});
+
+_self.__defineGetter__("INVALID_VALUES_ERR", function () {
+    return 22;
+});
+
+(function(_self) {
+    for (var c in _self) {
+        var g = _self.__lookupGetter__(c);
+        if (g) {
+            _self.message[g()] = c;
+        }
+    }
+})(_self);
+
+module.exports = _self;
 
 
 });
-require.define('ripple/platform/wac/2.0/devcieinteraction', function (require, module, exports) {
+require.define('ripple/platform/wac/2.0/filesystem', function (require, module, exports) {
 /*
  *  Copyright 2011 Intel Corporation.
  *
@@ -35534,8 +35773,117 @@ require.define('ripple/platform/wac/2.0/orientation', function (require, module,
  * limitations under the License.
  */
 
-module.exports = {
+var utils = require('ripple/utils'),
+    event = require('ripple/event'),
+    Rotation = function (alpha, beta, gamma) {
+        return {
+            alpha: alpha || 0,
+            beta:  beta  || 0,
+            gamma: gamma || 0
+        };
+    },
+    errorcode = require('ripple/platform/wac/2.0/errorcode'),
+    deviceapierror = require('ripple/platform/wac/2.0/deviceapierror'),
+    _rotationInfo = new Rotation(),
+    defaultInterval = 100,
+    _watches = {},
+    _self;
+
+module.exports = _self = {
+    getCurrentOrientation: function (onSuccess, onError) {
+
+        utils.validateNumberOfArguments(1, 2, arguments.length, null, "getCurrentOrientation invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        if (onSuccess) {
+            utils.validateArgumentType(onSuccess, "function", null, "getCurrentOrientation invalid successCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+        if (onError) {
+            utils.validateArgumentType(onError, "function", null, "getCurrentOrientation invalid errorCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+
+        if (onSuccess) {
+            setTimeout(function () {
+                onSuccess(utils.copy(_rotationInfo));
+            }, 1);
+            return null;
+        } else {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new deviceapierror(errorcode.INVALID_VALUES_ERR));
+                }, 1);
+            }
+        };
+
+        return undefined;
+    },
+
+    watchOrientation: function (orientationSuccess, orientationError, options) {
+
+        utils.validateNumberOfArguments(2, 3, arguments.length, null, "watchOrientation invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        if (orientationSuccess) {
+            utils.validateArgumentType(orientationSuccess, "function", null, "watchOrientation invalid successCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+        if (orientationError) {
+            utils.validateArgumentType(orientationError, "function", null, "watchOrientation invalid errorCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+        if (options) {
+            utils.validateArgumentType(options, "object", null, "watchOrientation invalid options parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+            utils.validateArgumentType(options.minNotificationInterval, "number", null, "watchOrientation invalid options parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        };
+
+        if (orientationSuccess) {
+            var watchId = (new Date()).getTime(),
+                watchObj = {},
+                orientationInterval = defaultInterval;
+
+            if (options &&
+                options.minNotificationInterval === Math.floor(options.minNotificationInterval) &&
+                options.minNotificationInterval > 0) {
+                orientationInterval = options.minNotificationInterval;
+            }
+
+            watchObj = {
+                onSuccess: orientationSuccess,
+                onError: orientationError,
+                interval: orientationInterval
+            };
+
+            _watches[watchId] = watchObj;
+
+            _watches[watchId].intervalId = setInterval(function () {
+                _self.getCurrentOrientation(_watches[watchId].onSuccess, _watches[watchId].onError);
+            }, _watches[watchId].interval);
+
+            return watchId;
+        } else {
+            if (orientationError) {
+                setTimeout(function () {
+                    orientationError(new deviceapierror(errorcode.INVALID_VALUES_ERR));
+                }, 1);
+            }
+        };
+
+        return undefined;
+    },
+
+    clearWatch: function (watchId) {
+
+        utils.validateNumberOfArguments(1, 1, arguments.length, null, "clearWatch invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateArgumentType(watchId, "number", null, "clearWatch invalid watchId parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+
+        if (_watches[watchId]) {
+            clearInterval(_watches[watchId].intervalId);
+            return null;
+        }
+
+        return undefined;
+    }
 };
+
+event.on("AccelerometerInfoChangedEvent", function (orientationInfo) {
+    _rotationInfo.alpha = orientationInfo.orientation.alpha;
+    _rotationInfo.beta  = orientationInfo.orientation.beta;
+    _rotationInfo.gamma = orientationInfo.orientation.gamma;
+});
 
 
 });
@@ -35557,6 +35905,93 @@ require.define('ripple/platform/wac/2.0/devicestatus', function (require, module
  */
 
 module.exports = {
+};
+
+
+});
+require.define('ripple/platform/wac/2.0/deviceapierror', function (require, module, exports) {
+/*
+ *  Copyright 2011 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var errorcode = require('ripple/platform/wac/2.0/errorcode');
+
+module.exports = function (code) {
+    for (var c in errorcode) {
+        var g = errorcode.__lookupGetter__(c);
+        if (g) {
+            this.__defineGetter__(c, g);
+        }
+    }
+
+    this.code = code;
+    this.message = errorcode.message[code];
+    this.type =  "";
+
+    this.toString = function () {
+        var result = this.type + ': "' + this.message + '"';
+
+        if (this.stack) {
+            result += "\n" + this.stack;
+        }
+        return result;
+    };
+};
+
+
+});
+require.define('ripple/platform/wac/2.0/deviceinteraction', function (require, module, exports) {
+/*
+ *  Copyright 2011 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var notifications = require('ripple/notifications'),
+
+module.exports = {
+    startNotify : function (onSuccess, onError, duration) {
+    },
+
+    stopNotify : function () {
+    },
+
+    startVibrate : function (onSuccess, onError, duration, pattern) {
+    },
+    
+    stopVibrate : function () {
+    },
+
+    lightOn : function (onSuccess, onError, duration) {
+    },
+
+    lightOff : function () {
+    },
+
+    setWallpaper : function (onSuccess, onError, fileName) {
+    }
 };
 
 
@@ -42535,7 +42970,7 @@ self = module.exports = {
             var path = require('ripple/ui/plugins/omnibar').rootURL().replace(/\/$/, ""),
                 parts;
 
-            if ((parts = path.match(/^((http[s]?|ftp):\/\/)(.+\/)?([^\/].+)$/i)) !== null && parts.length === 5) {
+            if ((parts = path.match(/^((http[s]?|ftp|file):\/\/)(.+\/)?([^\/].+)$/i)) !== null && parts.length === 5) {
                 if (parts[4] === "about:blank") {
                     path = "";
                 }

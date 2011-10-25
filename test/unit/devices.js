@@ -27,26 +27,8 @@ describe("devices", function () {
         devices.initialize();
     });
 
-    it("getDevice returns a copied device object", function () {
-        var device = devices.getDevice("iPhone3"),
-            originalDevice;
-        device.name = "test device";
-        originalDevice = devices.getDevice("iPhone3");
-        expect(device.name).not.toBe(originalDevice.name);
-    });
-
     it("getCurrentDevice should return an object", function () {
         expect(devices.getCurrentDevice()).toBeDefined();
-    });
-
-    it("getDevice should return overridden device values for platform and version", function () {
-        //HACK this is a integration test
-        devices.getDevice("iPhone3", "phonegap", "0.9");
-    });
-
-    it("getDevice should return device with device.overrides if API param not provided", function () {
-        var device = devices.getDevice("iPhone3");
-        expect(device.overrides).not.toEqual(undefined);
     });
 
     it("getDevice should return null when a device is not found", function () {
