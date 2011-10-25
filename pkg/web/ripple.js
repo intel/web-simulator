@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Tue Oct 25 2011 13:46:02 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Tue Oct 25 2011 13:56:40 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -35969,7 +35969,7 @@ require.define('ripple/platform/wac/2.0/deviceinteraction', function (require, m
  * limitations under the License.
  */
 
-var notifications = require('ripple/notifications'),
+var notifications = require('ripple/notifications');
 
 module.exports = {
     startNotify : function (onSuccess, onError, duration) {
