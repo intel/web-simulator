@@ -1,0 +1,275 @@
+/* -------------------------- Global & Resets -------------------------- */
+
+    html, body{
+        margin: 0;
+        padding: 0;
+        border: 0;
+        width: 100%;
+        height: 100%;
+        background: #FFFFFF;
+    }
+    body{ font: 1em Helvetica, Verdana, Sans-serif; }
+
+	@media all and (min-resolution: 50dpi) {
+	  body {
+		font-size: 0.5em;
+	  }
+	}
+
+    @media all and (min-resolution: 150dpi) {
+      body {
+        font-size: 0.63em;
+      }
+    }
+
+    @media all and (min-resolution: 200dpi) {
+	  body {
+		font-size: 0.88em;
+	  }
+	}
+
+    @media all and (min-resolution: 240dpi) {
+	  body {
+		font-size: 1.5em;
+	  }
+	}
+
+    a {
+        outline: none;
+        text-decoration: underline;
+        cursor: pointer;
+        color: #1E1E1E;
+    }
+
+    a:hover {
+		text-decoration: none;
+    }
+
+    img {  border: 0; margin: 0; padding: 0; }
+
+    table, tr, td {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+	label {
+		margin-right: 1em;
+	}
+
+    input:hover, .textarea:hover, .select:hover, button:hover {
+        color: #777777;
+        background: #F0F0F0;
+        cursor: pointer;
+    }
+
+    textarea, input, button, select{
+        background: #EEEEEE;
+        color: #1E1E1E;
+        padding: 0.5em 1em;
+        border: 1px solid #CCCCCC;
+        font-size: 1em;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    .layout h1, .layout h2, .layout h3{
+        margin: 0 0 1em 0;
+    }
+    
+    .layout h1, .layout h2, .layout h3 {
+        text-transform: capitalize;
+        font-weight: bold;
+        color: #333333;
+    }
+
+    .layout h1 { font-size: 1.33em; }
+
+    .layout h2{ font-size: 1.14em; }
+
+    .layout h3{ font-size: 1.00em; }
+
+    .irrelevant{ display: none; }
+
+    .hidden{ visibility: hidden; }
+
+/* -------------------------- Main Layout -------------------------- */
+
+    .layout{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background: #FFFFFF;
+    }
+
+    .layout .centered-content{
+		text-align: center;
+    }
+
+/* -------------------------- Header -------------------------- */
+    .layout .header{
+        background: #1e1e1e;
+        height: 4.38em;
+        width: 100%;
+        z-index: 100;
+        position: relative;
+    }
+
+    .layout .header h1{
+        color: #F0F0F0;
+        text-align: center;
+        position: relative;
+        z-index: 100;
+        top: 32%;
+        font-size: 1.69em;
+    }
+
+    .layout .header div.nav_left, .layout .header div.nav_right{
+        position: relative;
+        z-index: 101;
+        font-weight: bold;
+        text-align: center;
+        top: 1.2em;
+        height: 2.31em;
+        width: 4em;
+    }
+
+    .layout .header div.nav_left{
+        float: left;
+        margin: 0 0 0 0.75em;
+    }
+
+    .layout .header div.nav_right{
+        float: right;
+        margin: 0 0.75em 0 0;
+    }
+
+    #nav_left, #nav_right{
+        display: block;
+        cursor: pointer;
+        width: 100%;
+        padding-top: 0.4em;
+        padding-bottom: 0.4em;
+        text-align: center;
+        font-size: 1.22em;
+        color: #FFFFFF;
+        background: transparent;
+        text-shadow: gray 1px 1px 1px;  
+        text-decoration: none;
+    }
+
+    .#nav_left:hover, .#nav_right:hover {
+		opacity: 0.75;
+		color: #CCCCCC;
+	}
+
+    #nav_left link a, #nav_right .link a{
+        display: block;
+        position: relative;
+        width: 100%;
+    }
+
+
+/* -------------------------- View Container -------------------------- */
+
+    .layout .view{
+        padding: 1em;
+        overflow: auto;
+        color: #000000;
+        z-index: 60;
+        background: #FFFFFF;
+    }
+
+    .content {
+        text-align: center;
+        padding: 0 1em;
+    }
+
+    .content a {
+        color: #DDDDDD;
+    }
+
+    .content h1{
+        margin-top: 0.5em;
+    }
+
+    .content ul, .content ol{
+        text-align: left;
+    }
+
+
+/* -------------------------- Ajax Loader -------------------------- */
+
+    .ajax_loader{
+        background: url('../images/ajax-loader.gif') no-repeat;
+        width: 35px;
+        height: 35px;
+        margin: 50% auto;
+        position: relative;
+    }
+
+
+/* -------------------------- global overrides -------------------------- */
+
+.forced_wrap {
+    word-break: break-all;
+}
+
+
+/* -------------------------- Persistence View Loader -------------------------- */
+
+	#formTable {
+		width: 70%;
+		margin: 0 auto;
+	}
+
+/* -------------------------- Telephony View Loader -------------------------- */
+
+	#telephonySearchResults {
+		width: 70%;
+		margin: 0 auto;
+	}
+
+/* -------------------------- index.hml View -------------------------- */
+
+	.view .option-list{
+		margin-top: 2em;
+	}
+	
+	.view .option-list button {
+		margin-bottom: 1em;
+	}
+
+/* -------------------------- Generic Info Pop Up -------------------------- */
+
+	.info-popup {
+		background: #EEEEEE;
+		-webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin: 2em 1em 0 1em;
+        padding: 1em;
+	}
+
+		
+/* -------------------------- Wizard CSS -------------------------- */
+
+	.wizard-padding {
+		padding-bottom: 4em;
+		position: relative;
+	}
+
+	.epic-wizard {
+		position: absolute;
+		bottom: .5em;
+		right: .5em;
+	}
+
+/* -------------------------- Form CSS -------------------------- */
+
+    .form-label {
+        float: left;
+        padding-top: .7em;
+        width: 5em;
+    }
