@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Tue Oct 25 2011 13:56:40 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Fri Oct 28 2011 10:46:55 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -32732,10 +32732,27 @@ var utils = require('ripple/utils'),
 
 function _objectFactory(context, objects, allowed) {
     utils.forEach(objects, function (obj, key) {
-        var result = {};
+        var result = {}, objFeatures = {};
 
         if (allowed(obj)) {
             result = obj.path ? require('ripple/platform/' + obj.path) : {};
+            if (typeof result === "function") {
+                rst = new result();
+                if (obj.feature) {
+                    objFeatures = obj.feature.split('|');
+                    if (rst.handleSubFeatures) {
+                        var widgetFeatures = app.getInfo().features; // features in confi.xml
+                        var f = {};
+                        utils.forEach(objFeatures, function (o) {
+                            if (!!widgetFeatures[o]) {
+                                f[widgetFeatures[o].id] = widgetFeatures[o];
+                            }
+                        });
+                        rst.handleSubFeatures(f);
+                    }
+                }
+                result = rst;
+            }
         }
 
         if (obj.children) {
@@ -34945,7 +34962,7 @@ var utils = require('ripple/utils'),
         };
     },
     errorcode = require('ripple/platform/wac/2.0/errorcode'),
-    deviceapierror = require('ripple/platform/wac/2.0/deviceapierror'),
+    DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror'),
     _accelerometerInfo = new Acceleration(),
     defaultInterval = 100,
     _watches = {},
@@ -34954,13 +34971,13 @@ var utils = require('ripple/utils'),
 module.exports = _self = {
     getCurrentAcceleration: function (onSuccess, onError) {
 
-        utils.validateNumberOfArguments(1, 2, arguments.length, null, "getCurrentAcceleration invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateNumberOfArguments(1, 2, arguments.length, null, "getCurrentAcceleration invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         if (onSuccess) {
-            utils.validateArgumentType(onSuccess, "function", null, "getCurrentAcceleration invalid successCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(onSuccess, "function", null, "getCurrentAcceleration invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
         if (onError) {
-            utils.validateArgumentType(onError, "function", null, "getCurrentAcceleration invalid errorCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(onError, "function", null, "getCurrentAcceleration invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
 
         if (onSuccess) {
             setTimeout(function () {
@@ -34970,27 +34987,27 @@ module.exports = _self = {
         } else {
             if (onError) {
                 setTimeout(function () {
-                    onError(new deviceapierror(errorcode.INVALID_VALUES_ERR));
+                    onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
                 }, 1);
             }
-        };
+        }
 
         return undefined;
     },
 
     watchAcceleration: function (accelerometerSuccess, accelerometerError, options) {
 
-        utils.validateNumberOfArguments(2, 3, arguments.length, null, "watchAcceleration invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateNumberOfArguments(2, 3, arguments.length, null, "watchAcceleration invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         if (accelerometerSuccess) {
-            utils.validateArgumentType(accelerometerSuccess, "function", null, "watchAcceleration invalid successCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(accelerometerSuccess, "function", null, "watchAcceleration invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
         if (accelerometerError) {
-            utils.validateArgumentType(accelerometerError, "function", null, "watchAcceleration invalid errorCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(accelerometerError, "function", null, "watchAcceleration invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
         if (options) {
-            utils.validateArgumentType(options, "object", null, "watchAcceleration invalid options parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-            utils.validateArgumentType(options.minNotificationInterval, "number", null, "watchAcceleration invalid options parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(options, "object", null, "watchAcceleration invalid options parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+            utils.validateArgumentType(options.minNotificationInterval, "number", null, "watchAcceleration invalid options parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
 
         if (accelerometerSuccess) {
             var watchId = (new Date()).getTime(),
@@ -35019,18 +35036,18 @@ module.exports = _self = {
         } else {
             if (accelerometerError) {
                 setTimeout(function () {
-                    accelerometerError(new deviceapierror(errorcode.INVALID_VALUES_ERR));
+                    accelerometerError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
                 }, 1);
             }
-        };
+        }
 
         return undefined;
     },
 
     clearWatch: function (watchId) {
 
-        utils.validateNumberOfArguments(1, 1, arguments.length, null, "clearWatch invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        utils.validateArgumentType(watchId, "number", null, "clearWatch invalid watchId parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateNumberOfArguments(1, 1, arguments.length, null, "clearWatch invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateArgumentType(watchId, "number", null, "clearWatch invalid watchId parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
 
         if (_watches[watchId]) {
             clearInterval(_watches[watchId].intervalId);
@@ -35655,14 +35672,17 @@ _self.__defineGetter__("INVALID_VALUES_ERR", function () {
     return 22;
 });
 
-(function(_self) {
-    for (var c in _self) {
-        var g = _self.__lookupGetter__(c);
+function _setMessage(_self) {
+    var c, g;
+    for (c in _self) {
+        g = _self.__lookupGetter__(c);
         if (g) {
             _self.message[g()] = c;
         }
     }
-})(_self);
+}
+
+_setMessage(_self);
 
 module.exports = _self;
 
@@ -35707,8 +35727,72 @@ require.define('ripple/platform/wac/2.0/deviceapis', function (require, module, 
  * limitations under the License.
  */
 
-module.exports = {
-};
+var platform = require('ripple/platform'),
+    app = require('ripple/app'),
+    utils = require('ripple/utils');
+
+module.exports = function () {
+    var init_done = false,
+        _activatedSet = {},
+        _activatedFeatures = [],
+        _availableSet = {},
+        _availableFeatures = [],
+        _features = utils.copy(app.getInfo().features);
+
+    populateFeatures = function (objects) {
+        utils.forEach(objects, function (obj, key) {
+            var objFeatures = {};
+            if (obj.feature) {
+                objFeatures = obj.feature.split('|');
+                utils.forEach(objFeatures, function(feature) {
+                    var avail = {uri: feature,
+                                 required: false,
+                                 param: null};
+                    _availableSet[feature]= avail;
+                });
+                if (_features) {
+                    var rpt = objFeatures.length, j = 0;
+                    for (var i = 0; i < rpt; i++) {
+                        if(!_features[objFeatures[j]]) {
+                            objFeatures.splice(j, 1);
+                        } else {
+                            j++;
+                        }
+                    }
+                }
+                utils.forEach(objFeatures, function(feature) {
+                    var avail = {uri: feature,
+                                 required: true,
+                                 param: null};
+                    _activatedSet[feature]= avail;
+                });
+            }
+            if (obj.children) {
+                populateFeatures (obj.children);
+            }
+        });
+    }
+
+    initFeaturesSet = function () {
+        populateFeatures(platform.current().objects);
+        utils.forEach(_activatedSet, function(obj, key) {
+             _activatedFeatures.push(obj);});
+        utils.forEach(_availableSet, function(o, k) {
+             _availableFeatures.push(o);});
+        init_done = true;
+    }();
+
+    this.listAvailableFeatures = function () {
+        if (!init_done)
+            initFeaturesSet();
+        return _availableFeatures;
+    };
+    this.listActivatedFeatures = function () {
+        if (!init_done)
+            initFeaturesSet();
+        return _activatedFeatures;
+    }
+}
 
 
 });
@@ -35783,7 +35867,7 @@ var utils = require('ripple/utils'),
         };
     },
     errorcode = require('ripple/platform/wac/2.0/errorcode'),
-    deviceapierror = require('ripple/platform/wac/2.0/deviceapierror'),
+    DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror'),
     _rotationInfo = new Rotation(),
     defaultInterval = 100,
     _watches = {},
@@ -35792,13 +35876,13 @@ var utils = require('ripple/utils'),
 module.exports = _self = {
     getCurrentOrientation: function (onSuccess, onError) {
 
-        utils.validateNumberOfArguments(1, 2, arguments.length, null, "getCurrentOrientation invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateNumberOfArguments(1, 2, arguments.length, null, "getCurrentOrientation invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         if (onSuccess) {
-            utils.validateArgumentType(onSuccess, "function", null, "getCurrentOrientation invalid successCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(onSuccess, "function", null, "getCurrentOrientation invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
         if (onError) {
-            utils.validateArgumentType(onError, "function", null, "getCurrentOrientation invalid errorCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(onError, "function", null, "getCurrentOrientation invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
 
         if (onSuccess) {
             setTimeout(function () {
@@ -35808,27 +35892,27 @@ module.exports = _self = {
         } else {
             if (onError) {
                 setTimeout(function () {
-                    onError(new deviceapierror(errorcode.INVALID_VALUES_ERR));
+                    onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
                 }, 1);
             }
-        };
+        }
 
         return undefined;
     },
 
     watchOrientation: function (orientationSuccess, orientationError, options) {
 
-        utils.validateNumberOfArguments(2, 3, arguments.length, null, "watchOrientation invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateNumberOfArguments(2, 3, arguments.length, null, "watchOrientation invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         if (orientationSuccess) {
-            utils.validateArgumentType(orientationSuccess, "function", null, "watchOrientation invalid successCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(orientationSuccess, "function", null, "watchOrientation invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
         if (orientationError) {
-            utils.validateArgumentType(orientationError, "function", null, "watchOrientation invalid errorCallback parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(orientationError, "function", null, "watchOrientation invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
         if (options) {
-            utils.validateArgumentType(options, "object", null, "watchOrientation invalid options parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-            utils.validateArgumentType(options.minNotificationInterval, "number", null, "watchOrientation invalid options parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        };
+            utils.validateArgumentType(options, "object", null, "watchOrientation invalid options parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+            utils.validateArgumentType(options.minNotificationInterval, "number", null, "watchOrientation invalid options parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
 
         if (orientationSuccess) {
             var watchId = (new Date()).getTime(),
@@ -35857,18 +35941,18 @@ module.exports = _self = {
         } else {
             if (orientationError) {
                 setTimeout(function () {
-                    orientationError(new deviceapierror(errorcode.INVALID_VALUES_ERR));
+                    orientationError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
                 }, 1);
             }
-        };
+        }
 
         return undefined;
     },
 
     clearWatch: function (watchId) {
 
-        utils.validateNumberOfArguments(1, 1, arguments.length, null, "clearWatch invalid number of parameters", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
-        utils.validateArgumentType(watchId, "number", null, "clearWatch invalid watchId parameter", new deviceapierror(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateNumberOfArguments(1, 1, arguments.length, null, "clearWatch invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        utils.validateArgumentType(watchId, "number", null, "clearWatch invalid watchId parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
 
         if (_watches[watchId]) {
             clearInterval(_watches[watchId].intervalId);
@@ -36066,7 +36150,7 @@ module.exports = {
         },
         deviceapis: {
             path: "wac/2.0/deviceapis",
-            feature: "http://wacapps.org/api/deviceapis",
+            feature: "http://wacapps.net/api/deviceapis",
             /*
              * Before we inject those cloned objects into the simulated application
              * namespace, we will handle the feature requests from config.xml.
@@ -36091,7 +36175,7 @@ module.exports = {
                 },
                 camera: {
                     path: "wac/2.0/camera",
-                    feature: "http://wacapps.net/api/camera"
+                    feature: "http://wacapps.net/api/camera|http://wacapps.net/api/camera.show|http://wacapps.net/api/camera.capture"
                 },
                 devicestatus: {
                     path: "wac/2.0/devicestatus",

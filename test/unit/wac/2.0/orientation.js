@@ -40,7 +40,7 @@ describe("wac_2.0_orientation", function () {
     });
 
     it("getCurrentOrientation calls the error callback when success callback is null", function () {
-        var error = function(e) {
+        var error = function (e) {
             expect(e.code).toEqual(e.INVALID_VALUES_ERR);
         };
         orient.getCurrentOrientation(null, error);
@@ -79,7 +79,7 @@ describe("wac_2.0_orientation", function () {
     });
 
     it("watchOrientation calls the error callback when success callback is null", function () {
-        var error = function(e) {
+        var error = function (e) {
             expect(e.code).toEqual(e.INVALID_VALUES_ERR);
         };
         orient.watchOrientation(null, error);

@@ -40,7 +40,7 @@ describe("wac_2.0_accelerometer", function () {
     });
 
     it("getCurrentAcceleration calls the error callback when success callback is null", function () {
-        var error = function(e) {
+        var error = function (e) {
             expect(e.code).toEqual(e.INVALID_VALUES_ERR);
         };
         accel.getCurrentAcceleration(null, error);
@@ -79,7 +79,7 @@ describe("wac_2.0_accelerometer", function () {
     });
 
     it("watchAcceleration calls the error callback when success callback is null", function () {
-        var error = function(e) {
+        var error = function (e) {
             expect(e.code).toEqual(e.INVALID_VALUES_ERR);
         };
         accel.watchAcceleration(null, error);
