@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Fri Oct 28 2011 10:46:55 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Wed Nov 02 2011 10:30:30 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -22865,6 +22865,36 @@ module.exports = {
 };
 
 });
+require.define('ripple/appcache', function (require, module, exports) {
+/*
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+module.exports = {
+    initialize: function () {
+        window.addEventListener('load', function (e) {
+            window.applicationCache.addEventListener('updateready', function (e) {
+                if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+                    window.applicationCache.swapCache();
+                    window.location.reload();
+                }
+            }, false);
+        }, false);
+    }
+};
+
+});
 require.define('ripple/deviceMotionEmulator', function (require, module, exports) {
 /*
  *  Copyright 2011 Research In Motion Limited.
@@ -24687,13 +24717,6 @@ module.exports = {
     },
 
     blobToString: function (blob, encoding) {
-        var file = new FileReader();
-
-        file.onloadend = function () {
-            _hate[blob.uuid] = file.result;
-        };
-        file.readAsText(blob);
-
         return _hate[blob.uuid];
     },
 
@@ -25000,7 +25023,7 @@ require.define('ripple/platform/webworks.core/2.0.0/fsCache', function (require,
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var fs = require('ripple/fs'),
+var fs = require('ripple/dbfs'),
     utils = require('ripple/utils'),
     _console = require('ripple/console'),
     constants = require('ripple/constants'),
@@ -25010,13 +25033,39 @@ var fs = require('ripple/fs'),
     _cache = {},
     _self;
 
+function _createPath(path) {
+    var parts = path.replace(/^\//, '').split("/"),
+        workflow = jWorkflow.order();
+
+    parts.forEach(function (part, index) {
+        var dir = "/" + utils.copy(parts).splice(0, index + 1).join("/");
+
+        workflow.andThen(function (prev, baton) {
+            baton.take();
+            fs.mkdir(dir, baton.pass, baton.pass);
+        });
+    });
+
+    workflow.start(_self.refresh);
+}
 event.on("FileSystemInitialized", function () {
-    jWorkflow.order(function (prev, baton) {
-        baton.take();
-        fs.mkdir("/SDCard", function () {
-            fs.mkdir("/store", baton.pass, baton.pass);
-        }, baton.pass);
-    }).start(_self.refresh);
+    _createPath("/SDCard");
+    _createPath("/store/home/user/music");
+    _createPath("/store/home/user/pictures");
+    _createPath("/store/home/user/videos");
+    _createPath("/store/home/user/videos");
+    _createPath("/accounts/1000/appdata/emulatedapp/data");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/bookmarks");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/books");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/camera");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/documents");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/downloads");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/misc");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/music");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/photo");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/print");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/videos");
+    _createPath("/accounts/1000/appdata/emulatedapp/shared/voice");
 });
 
 function _fsError(e) {
@@ -25054,7 +25103,7 @@ function _walk(path, parent) {
 
 function _get(path) {
     return path.replace(/^\//, '').split("/").reduce(function (obj, token) {
-        return token === "" ? obj : (obj.children ? obj.children[token] || null : null);
+        return token === "" ? obj : (obj && obj.children ? obj.children[token] || null : null);
     }, _cache);
 }
 
@@ -25120,7 +25169,6 @@ _self = {
         copy: function (from, to) {
             var fromEntry = _get(from);
 
-            _delete(from);
             _set(to, {
                 fullPath: to,
                 properties: fromEntry.properties,
@@ -25166,15 +25214,16 @@ _self = {
             if (!async) {
                 success(bbUtils.stringToBlob(entry.data));
             }
-
-            fs.read(path, function (data) {
-                var blob = bbUtils.stringToBlob(data);
-                if (async) {
-                    success(blob);
-                }
-                entry.data = data;
-                _set(path, entry);
-            }, _fsError);
+            else {
+                fs.read(path, function (data) {
+                    var blob = bbUtils.stringToBlob(data);
+                    if (async) {
+                        success(blob);
+                    }
+                    entry.data = data;
+                    _set(path, entry);
+                }, _fsError);
+            }
         },
 
         saveFile: function (path, blob) {
@@ -25203,10 +25252,13 @@ _self = {
     },
     dir: {
         createNewDir: function (path) {
-            var entry = _get(path);
+            var entry = _get(path),
+                info = _getInfo(path);
 
             if (!entry) {
                 _set(path, {
+                    name: info.name,
+                    isDirectory: true,
                     fullPath: path
                 });
             }
@@ -25278,11 +25330,13 @@ _self = {
             var dir = _get(path),
                 files = [];
 
-            utils.forEach(dir.children, function (item) {
-                if (!item.isDirectory) {
-                    files.push(item.name);
-                }
-            });
+            if (dir) {
+                utils.forEach(dir.children, function (item) {
+                    if (!item.isDirectory) {
+                        files.push(item.name);
+                    }
+                });
+            }
 
             fs.ls(path, function () {}, _fsError);
 
@@ -25298,7 +25352,8 @@ _self = {
 
             _delete(from);
             _set(to, {
-                fullPath: to
+                name: info.name,
+                fullPath: path
             });
 
             fs.mv(from, to, function (entry) {
@@ -31796,6 +31851,76 @@ _self.__defineGetter__("PIN", function () {
 module.exports = _self;
 
 });
+require.define('ripple/platform/webworks.tablet/2.0.0/client/io/dir', function (require, module, exports) {
+/*
+ * Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var dir = require('ripple/platform/webworks.core/2.0.0/client/io/dir'),
+    utils = require('ripple/utils'),
+    _self = {};
+
+utils.mixin({
+    appDirs: {
+        "app": {
+            "storage" : {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/data"
+            }
+        },
+        "shared": {
+            "bookmarks": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/bookmarks"
+            },
+            "books": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/books"
+            },
+            "camera": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/camera"
+            },
+            "documents": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/documents"
+            },
+            "downloads": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/downloads"
+            },
+            "misc": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/misc"
+            },
+            "music": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/music"
+            },
+            "photos": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/photos"
+            },
+            "print": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/print"
+            },
+            "videos": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/videos"
+            },
+            "voice": {
+                "path" : "file:///accounts/1000/appdata/emulatedapp/shared/voice"
+            }
+        }
+    }
+}, _self);
+
+utils.mixin(dir, _self);
+
+module.exports = _self;
+
+});
 require.define('ripple/platform/webworks.tablet/2.0.0/server', function (require, module, exports) {
 /*
  *  Copyright 2011 Research In Motion Limited.
@@ -32345,7 +32470,7 @@ module.exports = {
                 io: {
                     children: {
                         dir: {
-                            path: "webworks.core/2.0.0/client/io/dir",
+                            path: "webworks.tablet/2.0.0/client/io/dir",
                             feature: "blackberry.io.dir"
                         },
                         file: {
@@ -32732,17 +32857,17 @@ var utils = require('ripple/utils'),
 
 function _objectFactory(context, objects, allowed) {
     utils.forEach(objects, function (obj, key) {
-        var result = {}, objFeatures = {};
+        var result = {}, objFeatures = {}, rst, f, widgetFeatures;
 
         if (allowed(obj)) {
             result = obj.path ? require('ripple/platform/' + obj.path) : {};
-            if (typeof result === "function") {
+            if (typeof result === "function" && obj.handleSubfeatures && obj.handleSubfeatures === true) {
                 rst = new result();
                 if (obj.feature) {
                     objFeatures = obj.feature.split('|');
                     if (rst.handleSubFeatures) {
-                        var widgetFeatures = app.getInfo().features; // features in confi.xml
-                        var f = {};
+                        widgetFeatures = app.getInfo().features; // features in confi.xml
+                        f = {};
                         utils.forEach(objFeatures, function (o) {
                             if (!!widgetFeatures[o]) {
                                 f[widgetFeatures[o].id] = widgetFeatures[o];
@@ -34964,14 +35089,13 @@ var utils = require('ripple/utils'),
     errorcode = require('ripple/platform/wac/2.0/errorcode'),
     DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror'),
     _accelerometerInfo = new Acceleration(),
-    defaultInterval = 100,
+    _defaultInterval = 100,
     _watches = {},
     _self;
 
 module.exports = _self = {
     getCurrentAcceleration: function (onSuccess, onError) {
 
-        utils.validateNumberOfArguments(1, 2, arguments.length, null, "getCurrentAcceleration invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         if (onSuccess) {
             utils.validateArgumentType(onSuccess, "function", null, "getCurrentAcceleration invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         }
@@ -34997,27 +35121,22 @@ module.exports = _self = {
 
     watchAcceleration: function (accelerometerSuccess, accelerometerError, options) {
 
-        utils.validateNumberOfArguments(2, 3, arguments.length, null, "watchAcceleration invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         if (accelerometerSuccess) {
             utils.validateArgumentType(accelerometerSuccess, "function", null, "watchAcceleration invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         }
         if (accelerometerError) {
             utils.validateArgumentType(accelerometerError, "function", null, "watchAcceleration invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         }
-        if (options) {
-            utils.validateArgumentType(options, "object", null, "watchAcceleration invalid options parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-            utils.validateArgumentType(options.minNotificationInterval, "number", null, "watchAcceleration invalid options parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
 
         if (accelerometerSuccess) {
-            var watchId = (new Date()).getTime(),
+            var watchId = (new Date()).getTime() | 0,
                 watchObj = {},
-                accelerometerInterval = defaultInterval;
+                opt = Object(options),
+                minNotificationInterval = opt.minNotificationInterval | 0,
+                accelerometerInterval = _defaultInterval;
 
-            if (options &&
-                options.minNotificationInterval === Math.floor(options.minNotificationInterval) &&
-                options.minNotificationInterval > 0) {
-                accelerometerInterval = options.minNotificationInterval;
+            if (minNotificationInterval > 0) {
+                accelerometerInterval = minNotificationInterval;
             }
 
             watchObj = {
@@ -35046,11 +35165,11 @@ module.exports = _self = {
 
     clearWatch: function (watchId) {
 
-        utils.validateNumberOfArguments(1, 1, arguments.length, null, "clearWatch invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        utils.validateArgumentType(watchId, "number", null, "clearWatch invalid watchId parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        var id = watchId | 0;
 
-        if (_watches[watchId]) {
-            clearInterval(_watches[watchId].intervalId);
+        if (_watches[id]) {
+            clearInterval(_watches[id].intervalId);
+            delete(_watches[id]);
             return null;
         }
 
@@ -35154,7 +35273,8 @@ require.define('ripple/platform/wac/2.0/spec/ui', function (require, module, exp
 module.exports = {
     plugins: [
         "accelerometer",
-        "geoView"
+        "geoView",
+        "widgetConfig"
     ]
 };
 
@@ -35184,8 +35304,8 @@ module.exports = {
     fileName: "config.xml",
     validateVersion: function (configValidationObject) {
         var valid = true;
-        valid = !((!configValidationObject.widget.validationResult[0].attributes.xmlns.valid) ||
-            (!configValidationObject.widget.validationResult[0].attributes["xmlns:JIL"].valid));
+        // no xmlns:JIL in wac 2.0 spec
+        valid = !!configValidationObject.widget.validationResult[0].attributes.xmlns.valid;
 
         return valid;
     },
@@ -35197,7 +35317,8 @@ module.exports = {
         var widgetInfo = {},
             configFeatures,
             configPreferences,
-            preferenceName;
+            preferenceName,
+            platform;
 
         widgetInfo.id = configValidationObject.widget.validationResult[0].attributes.id.value || "";
         widgetInfo.name = configValidationObject.widget.children.name.validationResult[0].value;
@@ -35208,16 +35329,18 @@ module.exports = {
 
         configFeatures = configValidationObject.widget.children.feature.validationResult;
         utils.forEach(configFeatures, function (f) {
-            var feature = {id: f.attributes.name.value,
-                     required: f.attributes.required.valid};
-            widgetInfo.features[feature.id] = feature;
+            if (f.valid == true) {
+                var feature = {id: f.attributes.name.value,
+                         required: f.attributes.required.valid};
+                widgetInfo.features[feature.id] = feature;
+            }
         });
 
         widgetInfo.preferences = {};
 
         configPreferences = configValidationObject.widget.children.preference.validationResult;
 
-        var platform = require('ripple/platform');
+        platform = require('ripple/platform');
         utils.forEach(configPreferences, function (preference) {
             preferenceName = preference.attributes.name.value;
             if (preferenceName) {
@@ -35241,7 +35364,7 @@ module.exports = {
             nodeName: "widget",
             required: true,
             occurrence: 1,
-            helpText: "\"widget\" element describes widget information in configuration documents and serves as a container for other elements. It must be used in configuration document and may have following child elments: name,description,icon,author,license,content,maximum_display_mode,update,feature,access,billing. \"widget\" element MAY have following attributes: id,version,height,width,xml:lang",
+            helpText: "\"widget\" element describes widget information in configuration documents and serves as a container for other elements. It must be used in configuration document and may have following child elments: name,description,icon,author,license,content,feature and preference. \"widget\" element MAY have following attributes: id,version,height,width, defaultlocale, xml:lang and dir",
             attributes: {
                 xmlns: {
                     attributeName: "xmlns",
@@ -35249,91 +35372,93 @@ module.exports = {
                     type: "list",
                     listValues: ["http://www.w3.org/ns/widgets"]
                 },
-                "xmlns:JIL": {
-                    attributeName: "xmlns:JIL",
-                    required: true,
-                    type: "list",
-                    listValues: ["http://www.jil.org/ns/widgets1.2"]
-                },
-                "xmlns:its": {
-                    attributeName: "xmlns:its",
-                    helpText: "Indicates Text Directionality can be used. According to W3C spec, this feature is at risk, therefore we don't currently validate this.",
+                "xml:lang": {
+                    attributeName: "xml:lang",
                     required: false,
-                    type: "string"
+                    type: "iso-language"
+                },
+                dir: {
+                    attributeName: "dir",
+                    required: false,
+                    type: "list",
+                    listValues: ["ltr", "rtl", "lro", "rlo"]
                 },
                 id: {
                     attributeName: "id",
-                    required: true,
+                    required: false,
                     type: "string"
                 },
                 version: {
                     attributeName: "version",
-                    helpText: "Version must be in the following format: jil-rec-version-tag = major-version \".\" minor-version [\".\" version-desc]",
-                    required: true,
-                    type: "regex",
-                    regex: /^\d{1,2}\.\d{1,2}(\.[A-Za-z0-9]{1,10})?$/
+                    required: false,
+                    type: "string"
                 },
                 height: {
                     attributeName: "height",
-                    required: true,
+                    required: false,
                     type: "integer"
                 },
                 width: {
                     attributeName: "width",
-                    required: true,
+                    required: false,
                     type: "integer"
                 },
                 viewmodes: {
                     attributeName: "viewmodes",
                     required: false,
                     type: "list",
-                    listValues: ["floating", "fullscreen"]
+                    listValues: ["windowed", "floating", "fullscreen", "maximized", "minimized"]
                 },
-                "xml:lang": {
-                    attributeName: "xml:lang",
+                defaultlocale: {
+                    attributeName: "defaultlocale",
                     required: false,
                     type: "iso-language"
-                }
+                },
             },
             children: {
-                preference: {
-                    nodeName: "preference",
-                    required: false,
-                    occurrence: 0,
-                    attributes: {
-                        name: {
-                            attributeName: "name",
-                            type: "string",
-                            required: true
-                        },
-                        value: {
-                            type: "string",
-                            attributeName: "value",
-                            required: false
-                        },
-                        readonly: {
-                            attributeName: "readonly",
-                            type: "boolean",
-                            required: false
-                        }
-                    }
-                },
                 name: {
                     nodeName: "name",
                     required: false,
                     occurrence: 0,
                     type: "string",
                     attributes: {
-                        "short": {
-                            attributeName: "short",
-                            type: "string",
-                            required: false
-                        },
                         "xml:lang": {
                             attributeName: "xml:lang",
-                            type: "string",
                             required: false,
+                            type: "iso-language",
                             unique: true
+                        },
+                        dir: {
+                            attributeName: "dir",
+                            required: false,
+                            type: "list",
+                            listValues: ["ltr", "rtl", "lro", "rlo"]
+                        },
+                        "short": {
+                            attributeName: "short",
+                            required: false,
+                            type: "string"
+                        }
+                    },
+                    children: {
+                        span: {
+                            nodeName: "span",
+                            required: false,
+                            type: "string",
+                            attributes:{
+                                "xml:lang": {
+                                    attributeName: "xml:lang",
+                                    required: false,
+                                    type: "iso-language",
+                                    unique: true
+                                },
+                                dir: {
+                                    attributeName: "dir",
+                                    required: false,
+                                    type: "list",
+                                    listValues: ["ltr", "rtl", "lro", "rlo"]
+                                }
+                            }
                         }
                     }
                 },
@@ -35345,9 +35470,134 @@ module.exports = {
                     attributes: {
                         "xml:lang": {
                             attributeName: "xml:lang",
-                            type: "string",
                             required: false,
+                            type: "iso-language",
                             unique: true
+                        },
+                        dir: {
+                            attributeName: "dir",
+                            required: false,
+                            type: "list",
+                            listValues: ["ltr", "rtl", "lro", "rlo"]
+                        }
+                    },
+                    children: {
+                        span: {
+                            nodeName: "span",
+                            required: false,
+                            type: "string",
+                            attributes:{
+                                "xml:lang": {
+                                    attributeName: "xml:lang",
+                                    required: false,
+                                    type: "iso-language",
+                                    unique: true
+                                },
+                                dir: {
+                                    attributeName: "dir",
+                                    required: false,
+                                    type: "list",
+                                    listValues: ["ltr", "rtl", "lro", "rlo"]
+                                }
+                            }
+                        }
+                    }
+                },
+                author: {
+                    nodeName: "author",
+                    required: false,
+                    occurrence: 0,
+                    type: "string",
+                    attributes: {
+                        "xml:lang": {
+                            attributeName: "xml:lang",
+                            required: false,
+                            type: "iso-language",
+                        },
+                        dir: {
+                            attributeName: "dir",
+                            required: false,
+                            type: "list",
+                            listValues: ["ltr", "rtl", "lro", "rlo"]
+                        },
+                        href: {
+                            attributeName: "href",
+                            required: false,
+                            type: "regex",
+                            regex: constants.REGEX.URL
+                        },
+                        email: {
+                            attributeName: "email",
+                            required: false,
+                            type: "regex",
+                            regex: constants.REGEX.EMAIL
+                        }
+                    },
+                    children: {
+                        span: {
+                            nodeName: "span",
+                            required: false,
+                            type: "string",
+                            attributes:{
+                                "xml:lang": {
+                                    attributeName: "xml:lang",
+                                    required: false,
+                                    type: "iso-language",
+                                    unique: true
+                                },
+                                dir: {
+                                    attributeName: "dir",
+                                    required: false,
+                                    type: "list",
+                                    listValues: ["ltr", "rtl", "lro", "rlo"]
+                                }
+                            }
+                        }
+                    }
+                },
+                license: {
+                    nodeName: "license",
+                    required: false,
+                    occurrence: 0,
+                    type: "string",
+                    attributes: {
+                        "xml:lang": {
+                            attributeName: "xml:lang",
+                            required: false,
+                            type: "iso-language",
+                        },
+                        dir: {
+                            attributeName: "dir",
+                            required: false,
+                            type: "list",
+                            listValues: ["ltr", "rtl", "lro", "rlo"]
+                        },
+                        href: {
+                            attributeName: "href",
+                            type: "regex",
+                            required: false,
+                            regex: constants.REGEX.URL
+                        }
+                    },
+                    children: {
+                        span: {
+                            nodeName: "span",
+                            required: false,
+                            type: "string",
+                            attributes:{
+                                "xml:lang": {
+                                    attributeName: "xml:lang",
+                                    required: false,
+                                    type: "iso-language",
+                                    unique: true
+                                },
+                                dir: {
+                                    attributeName: "dir",
+                                    required: false,
+                                    type: "list",
+                                    listValues: ["ltr", "rtl", "lro", "rlo"]
+                                }
+                            }
                         }
                     }
                 },
@@ -35356,72 +35606,31 @@ module.exports = {
                     required: false,
                     occurrence: 0,
                     attributes: {
+                        "xml:lang": {
+                            attributeName: "xml:lang",
+                            required: false,
+                            type: "iso-language",
+                        },
+                        dir: {
+                            attributeName: "dir",
+                            required: false,
+                            type: "list",
+                            listValues: ["ltr", "rtl", "lro", "rlo"]
+                        },
                         src: {
                             attributeName: "src",
-                            type: "string",
-                            required: true
-                        },
-                        height: {
-                            attributeName: "height",
-                            required: false,
-                            type: "integer"
+                            required: true,
+                            type: "string"
                         },
                         width: {
                             attributeName: "width",
                             required: false,
                             type: "integer"
                         },
-                        "xml:lang": {
-                            attributeName: "xml:lang",
-                            type: "string",
+                        height: {
+                            attributeName: "height",
                             required: false,
-                            unique: true
-                        }
-                    }
-                },
-                author: {
-                    nodeName: "author",
-                    required: false,
-                    occurrence: 1,
-                    type: "string",
-                    attributes: {
-                        email: {
-                            attributeName: "email",
-                            type: "regex",
-                            required: false,
-                            regex: constants.REGEX.EMAIL
-                        },
-                        href: {
-                            attributeName: "href",
-                            type: "regex",
-                            required: false,
-                            regex: constants.REGEX.URL
-                        },
-                        "xml:lang": {
-                            attributeName: "xml:lang",
-                            type: "string",
-                            required: false,
-                            unique: true
-                        }
-                    }
-                },
-                license: {
-                    nodeName: "license",
-                    required: false,
-                    occurrence: 1,
-                    type: "string",
-                    attributes: {
-                        href: {
-                            attributeName: "href",
-                            type: "regex",
-                            required: false,
-                            regex: constants.REGEX.URL
-                        },
-                        "xml:lang": {
-                            attributeName: "xml:lang",
-                            type: "string",
-                            required: false,
-                            unique: true
+                            type: "integer"
                         }
                     }
                 },
@@ -35430,20 +35639,32 @@ module.exports = {
                     required: false,
                     occurrence: 1,
                     attributes: {
+                        "xml:lang": {
+                            attributeName: "xml:lang",
+                            required: false,
+                            type: "iso-language",
+                            unique: true
+                        },
+                        dir: {
+                            attributeName: "dir",
+                            required: false,
+                            type: "list",
+                            listValues: ["ltr", "rtl", "lro", "rlo"]
+                        },
                         src: {
                             attributeName: "src",
-                            type: "string",
-                            required: true
+                            required: true,
+                            type: "string"
                         },
                         encoding: {
                             attributeName: "encoding",
-                            type: "string",
-                            required: false
+                            required: false,
+                            type: "string"
                         },
                         type: {
                             attributeName: "type",
-                            type: "string",
-                            required: false
+                            required: false,
+                            type: "string"
                         }
                     }
                 },
@@ -35452,104 +35673,100 @@ module.exports = {
                     required: false,
                     occurrence: 0,
                     attributes: {
+                        "xml:lang": {
+                            attributeName: "xml:lang",
+                            required: false,
+                            type: "iso-language",
+                        },
+                        dir: {
+                            attributeName: "dir",
+                            required: false,
+                            type: "list",
+                            listValues: ["ltr", "rtl", "lro", "rlo"]
+                        },
                         name: {
                             attributeName: "name",
-                            type: "list",
                             required: true,
-                            listValues: ["http://jil.org/jil/api/1.1/widget", "http://jil.org/jil/api/1.1.5/exception",
-                                            "http://jil.org/jil/api/1.1.5/exceptiontypes", "http://jil.org/jil/api/1.1/device",
-                                            "http://jil.org/jil/api/1.1/accountinfo", "http://jil.org/jil/api/1.1/deviceinfo",
-                                            "http://jil.org/jil/api/1.1.1/datanetworkinfo", "http://jil.org/jil/api/1.1/devicestateinfo",
-                                            "http://jil.org/jil/api/1.1/accelerometerinfo", "http://jil.org/jil/api/1.1/config",
-                                            "http://jil.org/jil/api/1.1.1/file", "http://jil.org/jil/api/1.1/positioninfo",
-                                            "http://jil.org/jil/api/1.1/powerinfo", "http://jil.org/jil/api/1.1.1/radioinfo",
-                                            "http://jil.org/jil/api/1.1.5/radiosignalsourcetypes", "http://jil.org/jil/api/1.1.5/applicationtypes",
-                                            "http://jil.org/jil/api/1.1/messaging", "http://jil.org/jil/api/1.1/account",
-                                            "http://jil.org/jil/api/1.1/attachment", "http://jil.org/jil/api/1.1/message",
-                                            "http://jil.org/jil/api/1.1.4/messagefoldertypes", "http://jil.org/jil/api/1.1/messagequantities",
-                                            "http://jil.org/jil/api/1.1/messagetypes", "http://jil.org/jil/api/1.1/multimedia",
-                                            "http://jil.org/jil/api/1.1/audioplayer", "http://jil.org/jil/api/1.1.2/camera",
-                                            "http://jil.org/jil/api/1.1.2/videoplayer", "http://jil.org/jil/api/1.1.1/pim",
-                                            "http://jil.org/jil/api/1.1/addressbookitem", "http://jil.org/jil/api/1.1/calendaritem",
-                                            "http://jil.org/jil/api/1.1/eventrecurrencetypes", "http://jil.org/jil/api/1.1.1/telephony",
-                                            "http://jil.org/jil/api/1.1/callrecord", "http://jil.org/jil/api/1.1.1/callrecordtypes",
-                                            "http://jil.org/jil/api/1.1.1/widgetmanager"]
+                            type: "list",
+                            listValues: ["http://wacapps.net/api/deviceapis", "http://wacapps.net/api/accelerometer",
+                                            "http://wacapps.net/api/orientation", "http://wacapps.net/api/camera",
+                                            "http://wacapps.net/api/camera.show", "http://wacapps.net/api/camera.capture",
+                                            "http://wacapps.net/api/devicestatus", "http://wacapps.net/api/devicestatus.deviceinfo",
+                                            "http://wacapps.net/api/devicestatus.networkinfo", "http://wacapps.net/api/filesystem",
+                                            "http://wacapps.net/api/filesystem.read", "http://wacapps.net/api/filesystem.write",
+                                            "http://wacapps.net/api/messaging", "http://wacapps.net/api/messaging.send", 
+                                            "http://wacapps.net/api/messaging.find", "http://wacapps.net/api/messaging.subscribe",
+                                            "http://wacapps.net/api/messaging.write", "http://wacapps.net/api/pim.contact",
+                                            "http://wacapps.net/api/pim.calendar", "http://wacapps.net/api/pim.task",
+                                            "http://wacapps.net/api/deviceinteraction"]
                         },
                         required: {
                             attributeName: "required",
                             type: "boolean",
                             required: false
                         }
-                    }
-                },
-                "JIL:maximum_display_mode": {
-                    nodeName: "JIL:maximum_display_mode",
-                    required: false,
-                    occurrence: 1,
-                    attributes: {
-                        height: {
-                            attributeName: "height",
-                            type: "integer",
-                            required: false
-                        },
-                        width: {
-                            attributeName: "width",
-                            type: "integer",
-                            required: false
+                    },
+                    children: {
+                        param: {
+                            nodeName: "param",
+                            required: false,
+                            occurrence: 0,
+                            attributes: {
+                                "xml:lang": {
+                                    attributeName: "xml:lang",
+                                    required: false,
+                                    type: "iso-language",
+                                },
+                                dir: {
+                                    attributeName: "dir",
+                                    required: false,
+                                    type: "list",
+                                    listValues: ["ltr", "rtl", "lro", "rlo"]
+                                },
+                                name: {
+                                    attributeName: "name",
+                                    required: true,
+                                    type: "string",
+                                },
+                                value: {
+                                    attributeName: "value",
+                                    required: true,
+                                    type: "string",
+                                }
+                            }
                         }
                     }
                 },
-                "JIL:update": {
-                    nodeName: "JIL:update",
+                preference: {
+                    nodeName: "preference",
                     required: false,
-                    occurrence: 1,
+                    occurrence: 0,
                     attributes: {
-                        href: {
-                            attributeName: "href",
-                            type: "regex",
-                            required: true,
-                            regex: constants.REGEX.URL
+                        "xml:lang": {
+                            attributeName: "xml:lang",
+                            required: false,
+                            type: "iso-language",
                         },
-                        period: {
-                            attributeName: "period",
-                            helpText: "Possible values for the period attribute are: 0, 1, 2, 3 meaning: every time the widget is opened in maximum display mode, every day, every week, every month; respectivly",
+                        dir: {
+                            attributeName: "dir",
+                            required: false,
                             type: "list",
+                            listValues: ["ltr", "rtl", "lro", "rlo"]
+                        },
+                        name: {
+                            attributeName: "name",
                             required: true,
-                            listValues: ["0", "1", "2", "3"]
-                        }
-                    }
-                },
-                "JIL:access": {
-                    nodeName: "JIL:access",
-                    required: false,
-                    occurrence: 1,
-                    attributes: {
-                        network: {
-                            attributeName: "network",
-                            type: "boolean",
-                            required: false
+                            type: "string"
                         },
-                        localfs: {
-                            attributeName: "localfs",
-                            type: "boolean",
-                            required: false
+                        value: {
+                            type: "string",
+                            required: false,
+                            attributeName: "value"
                         },
-                        remote_scripts: {
-                            attributeName: "remote_scripts",
+                        readonly: {
+                            attributeName: "readonly",
                             type: "boolean",
                             required: false
-                        }
-                    }
-                },
-                "JIL:billing": {
-                    nodeName: "JIL:billing",
-                    required: false,
-                    occurrence: 1,
-                    attributes: {
-                        required: {
-                            attributeName: "required",
-                            type: "boolean",
-                            required: true
                         }
                     }
                 }
@@ -35729,70 +35946,75 @@ require.define('ripple/platform/wac/2.0/deviceapis', function (require, module, 
 
 var platform = require('ripple/platform'),
     app = require('ripple/app'),
-    utils = require('ripple/utils');
-
-module.exports = function () {
-    var init_done = false,
-        _activatedSet = {},
-        _activatedFeatures = [],
-        _availableSet = {},
-        _availableFeatures = [],
-        _features = utils.copy(app.getInfo().features);
+    utils = require('ripple/utils'),
+    init_done = false,
+    _activatedSet = {},
+    _activatedFeatures = [],
+    _availableSet = {},
+    _availableFeatures = [],
+    _features = utils.copy(app.getInfo().features),
+    initFeaturesSet,
+    populateFeatures;
 
     populateFeatures = function (objects) {
         utils.forEach(objects, function (obj, key) {
-            var objFeatures = {};
+            var objFeatures = {}, rpt, i, j;
             if (obj.feature) {
                 objFeatures = obj.feature.split('|');
-                utils.forEach(objFeatures, function(feature) {
+                utils.forEach(objFeatures, function (feature) {
                     var avail = {uri: feature,
                                  required: false,
                                  param: null};
-                    _availableSet[feature]= avail;
+                    _availableSet[feature] = avail;
                 });
                 if (_features) {
-                    var rpt = objFeatures.length, j = 0;
-                    for (var i = 0; i < rpt; i++) {
-                        if(!_features[objFeatures[j]]) {
+                    rpt = objFeatures.length;
+                    j = 0;
+                    for (i = 0; i < rpt; i++) {
+                        if (!_features[objFeatures[j]]) {
                             objFeatures.splice(j, 1);
                         } else {
                             j++;
                         }
                     }
                 }
-                utils.forEach(objFeatures, function(feature) {
+                utils.forEach(objFeatures, function (feature) {
                     var avail = {uri: feature,
                                  required: true,
                                  param: null};
-                    _activatedSet[feature]= avail;
+                    _activatedSet[feature] = avail;
                 });
             }
             if (obj.children) {
-                populateFeatures (obj.children);
+                populateFeatures(obj.children);
             }
         });
-    }
+    };
 
     initFeaturesSet = function () {
         populateFeatures(platform.current().objects);
-        utils.forEach(_activatedSet, function(obj, key) {
-             _activatedFeatures.push(obj);});
-        utils.forEach(_availableSet, function(o, k) {
-             _availableFeatures.push(o);});
+        utils.forEach(_activatedSet, function (obj, key) {
+                _activatedFeatures.push(obj);
+            });
+        utils.forEach(_availableSet, function (obj, key) {
+                _availableFeatures.push(obj);
+            });
         init_done = true;
-    }();
+    };
 
-    this.listAvailableFeatures = function () {
+module.exports = {
+    listAvailableFeatures: function () {
         if (!init_done)
             initFeaturesSet();
         return _availableFeatures;
-    };
-    this.listActivatedFeatures = function () {
+    },
+
+    listActivatedFeatures: function () {
         if (!init_done)
             initFeaturesSet();
         return _activatedFeatures;
     }
-}
+};
 
 
 });
@@ -35816,6 +36038,212 @@ require.define('ripple/platform/wac/2.0/camera', function (require, module, expo
 module.exports = {
 };
 
+
+});
+require.define('ripple/platform/wac/2.0/geolocation', function (require, module, exports) {
+/*
+ *  Copyright 2011 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var geo = require('ripple/geo'),
+    Position = require('ripple/platform/w3c/1.0/Position'),
+    PositionError = require('ripple/platform/w3c/1.0/PositionError'),
+    lastPosition = null,
+    _watches = {},
+    defaultInterval = 100,
+    _self;
+
+function _createPosition() {
+    var position = new Position(),
+        positionInfo = geo.getPositionInfo();
+
+    position.coords.latitude = positionInfo.latitude;
+    position.coords.longitude = positionInfo.longitude;
+    position.coords.altitude = positionInfo.altitude;
+    position.coords.altitudeAccuracy = positionInfo.altitudeAccuracy;
+    position.coords.accuracy = positionInfo.accuracy;
+    position.coords.heading = positionInfo.heading;
+    position.coords.speed = positionInfo.speed;
+    position.timestamp = positionInfo.timeStamp.getTime();
+
+    return position;
+}
+
+function _isValid(onSuccess, onError, options, argLength) {
+    if (argLength < 1 || argLength > 3)
+        return false;
+
+    if (typeof onSuccess !== "function")   // imply onSuccess == null
+        return false;
+
+    if (onError
+        && typeof onError !== "function")
+        return false;
+
+    if (options
+        && (typeof options !== "object"
+        || typeof options.enableHighAccuracy !== "boolean"
+        || typeof options.timeout !== "number"
+        || typeof options.maximumAge !== "number"))
+        return false;
+
+    return true;
+}
+
+function _processOptions(options) {
+    var validOptions = {
+        enableHighAccuracy: false,
+        timeout: 0,
+        maximumAge: 0
+    };
+
+    if (options
+        && options.maximumAge
+        && options.maximumAge === Math.floor(options.maximumAge)
+        && options.maximumAge >= 0) {
+        validOptions.maximumAge = options.maximumAge;
+    }
+    else {
+        validOptions.maximumAge = 0;
+    }
+
+    if (options
+        && options.timeout
+        && options.timeout === Math.floor(options.timeout)) {
+        validOptions.timeout = (options.timeout >= 0) ? options.timeout : 0;
+    }
+    else {
+        validOptions.timeout = Infinity;
+    }
+
+    if (options && options.enableHighAccuracy) {
+        validOptions.enableHighAccuracy = options.enableHighAccuracy;
+    }
+    else {
+        validOptions.enableHighAccuracy = false;
+    }
+
+    validOptions.delay = geo.delay * 1000 || 1;
+
+    return validOptions;
+}
+
+function _execute(data) {
+    return function () {
+        window.setTimeout(function () {
+            if ((data.delay <= data.timeout) && (data.timeout !== 0)) {
+                if (lastPosition === null
+                    || ((new Date()).getTime() - lastPosition.timestamp > data.maximumAge))
+                    lastPosition = _createPosition();
+
+                if (lastPosition) {
+                    data.onSuccess(lastPosition);
+                }
+                else {
+                    _errorOccur(PositionError.POSITION_UNAVAILABLE, data.onError);
+                }
+            }
+            else {
+                _errorOccur(PositionError.TIMEOUT, data.onError);
+            }
+        }, Math.min(data.delay, data.timeout));
+    };
+}
+
+function _errorOccur(code, onError) {
+    if (!onError)
+        return;
+
+    var error = new PositionError();
+
+    error.code = code;
+    switch (code)
+    {
+    case PositionError.POSITION_UNAVAILABLE:
+        error.message = "Position unavailable";
+        break;
+
+    case PositionError.TIMEOUT:
+        error.message = "Position timed out";
+        break;
+    }
+
+    onError(error);
+}
+
+function _interval(k, n) { 
+    return k * Math.floor((n + k - 1) / k) || k;
+}
+
+_self = {
+    getCurrentPosition: function (onSuccess, onError, options) {
+        if (!_isValid(onSuccess, onError, options, arguments.length))
+            return;
+
+        var validData = _processOptions(options);
+
+        validData.onSuccess = onSuccess;
+        validData.onError   = onError;
+
+        _execute(validData)();
+    },
+
+    watchPosition: function (geolocationSuccess, geolocationError, geolocationOptions) {
+        if (!_isValid(geolocationSuccess, geolocationError, geolocationOptions, arguments.length))
+            return undefined;
+
+        var validData = _processOptions(geolocationOptions),
+            watchId = (new Date()).getTime(),
+            watchObj = {
+                onSuccess:          geolocationSuccess,
+                onError:            geolocationError,
+                enableHighAccuracy: validData.enableHighAccuracy,
+                timeout:            validData.timeout,
+                maximumAge:         validData.maximumAge,
+                delay:              validData.delay,
+                interval:           _interval(validData.maximumAge || defaultInterval,
+                                        Math.min(validData.delay, validData.timeout)),
+            };
+
+        _watches[watchId] = watchObj;
+
+        _watches[watchId].intervalId = window.setInterval(_execute(_watches[watchId]),
+            _watches[watchId].interval);
+
+        return watchId;
+    },
+
+    clearWatch: function (watchId) {
+        if (arguments.length != 1)
+            return undefined;
+
+        if (typeof watchId !== "number")
+            return undefined;
+
+        if (_watches[watchId]) {
+            window.clearInterval(_watches[watchId].intervalId);
+            delete _watches[watchId];
+
+            return null;
+        }
+
+        return undefined;
+    }
+};
+
+module.exports = _self;
 
 });
 require.define('ripple/platform/wac/2.0/task', function (require, module, exports) {
@@ -35869,14 +36297,13 @@ var utils = require('ripple/utils'),
     errorcode = require('ripple/platform/wac/2.0/errorcode'),
     DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror'),
     _rotationInfo = new Rotation(),
-    defaultInterval = 100,
+    _defaultInterval = 100,
     _watches = {},
     _self;
 
 module.exports = _self = {
     getCurrentOrientation: function (onSuccess, onError) {
 
-        utils.validateNumberOfArguments(1, 2, arguments.length, null, "getCurrentOrientation invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         if (onSuccess) {
             utils.validateArgumentType(onSuccess, "function", null, "getCurrentOrientation invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         }
@@ -35902,27 +36329,22 @@ module.exports = _self = {
 
     watchOrientation: function (orientationSuccess, orientationError, options) {
 
-        utils.validateNumberOfArguments(2, 3, arguments.length, null, "watchOrientation invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         if (orientationSuccess) {
             utils.validateArgumentType(orientationSuccess, "function", null, "watchOrientation invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         }
         if (orientationError) {
             utils.validateArgumentType(orientationError, "function", null, "watchOrientation invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
         }
-        if (options) {
-            utils.validateArgumentType(options, "object", null, "watchOrientation invalid options parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-            utils.validateArgumentType(options.minNotificationInterval, "number", null, "watchOrientation invalid options parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
 
         if (orientationSuccess) {
-            var watchId = (new Date()).getTime(),
+            var watchId = (new Date()).getTime() | 0,
                 watchObj = {},
-                orientationInterval = defaultInterval;
+                opt = Object(options),
+                minNotificationInterval = opt.minNotificationInterval | 0,
+                orientationInterval = _defaultInterval;
 
-            if (options &&
-                options.minNotificationInterval === Math.floor(options.minNotificationInterval) &&
-                options.minNotificationInterval > 0) {
-                orientationInterval = options.minNotificationInterval;
+            if (minNotificationInterval > 0) {
+                orientationInterval = minNotificationInterval;
             }
 
             watchObj = {
@@ -35951,11 +36373,10 @@ module.exports = _self = {
 
     clearWatch: function (watchId) {
 
-        utils.validateNumberOfArguments(1, 1, arguments.length, null, "clearWatch invalid number of parameters", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        utils.validateArgumentType(watchId, "number", null, "clearWatch invalid watchId parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-
+        var id = watchId | 0;
         if (_watches[watchId]) {
             clearInterval(_watches[watchId].intervalId);
+            delete(_watches[watchId]);
             return null;
         }
 
@@ -36144,7 +36565,8 @@ module.exports = {
             path: "w3c/1.0/navigator",
             children: {
                 geolocation: {
-                    path: "w3c/1.0/geolocation"
+                    path: "wac/2.0/geolocation",
+                    feature: "http://www.w3.org/TR/geolocation-API/"
                 }
             }
         },
@@ -36175,7 +36597,8 @@ module.exports = {
                 },
                 camera: {
                     path: "wac/2.0/camera",
-                    feature: "http://wacapps.net/api/camera|http://wacapps.net/api/camera.show|http://wacapps.net/api/camera.capture"
+                    feature: "http://wacapps.net/api/camera|http://wacapps.net/api/camera.show|http://wacapps.net/api/camera.capture",
+                    handleSubfeatures: true
                 },
                 devicestatus: {
                     path: "wac/2.0/devicestatus",
@@ -37605,7 +38028,8 @@ module.exports = {
         var widgetInfo = {},
             configFeatures,
             configPreferences,
-            preferenceName;
+            preferenceName,
+            platform;
 
         widgetInfo.id = configValidationObject.widget.validationResult[0].attributes.id.value || "";
         widgetInfo.name = configValidationObject.widget.children.name.validationResult[0].value;
@@ -37616,16 +38040,18 @@ module.exports = {
 
         configFeatures = configValidationObject.widget.children.feature.validationResult;
         utils.forEach(configFeatures, function (f) {
-            var feature = {id: f.attributes.name.value,
-                     required: f.attributes.required.valid};
-            widgetInfo.features[feature.id] = feature;
+            if (f.valid == true) {
+                var feature = {id: f.attributes.name.value,
+                         required: f.attributes.required.valid};
+                widgetInfo.features[feature.id] = feature;
+            }
         });
 
         widgetInfo.preferences = {};
 
         configPreferences = configValidationObject.widget.children.preference.validationResult;
 
-        var platform = require('ripple/platform');
+        platform = require('ripple/platform');
         utils.forEach(configPreferences, function (preference) {
             preferenceName = preference.attributes.name.value;
             if (preferenceName) {
@@ -42372,6 +42798,229 @@ _self = {
 module.exports = _self;
 
 });
+require.define('ripple/dbfs', function (require, module, exports) {
+/*
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var db = require('ripple/db'),
+    utils = require('ripple/utils'),
+    event = require('ripple/event'),
+    _cache = {},
+    _self;
+
+function _get(path) {
+    return path.replace(/^\//, '').split("/").reduce(function (obj, token) {
+        return token === "" ? obj : (obj.children ? obj.children[token] || null : null);
+    }, _cache);
+}
+
+function _getInfo(path) {
+    var parent = ("/" + path.replace(/^\//, '').replace(/\/$/, '')).split("/"),
+        name = parent.splice(parent.length - 1, 1).join(""),
+        ext = name.split(".");
+
+    return {
+        name: name,
+        extension: ext.length > 1 ? ext[ext.length - 1] : "",
+        hidden: (name.length > 0 && name[0] === ".") || false,
+        parent: parent.join("/") || "/"
+    };
+}
+
+function _set(path, obj) {
+    var parent = _cache,
+        tokens = path.replace(/^\//, '').split("/"),
+        child = tokens.splice(tokens.length - 1, 1).join("");
+
+    tokens.forEach(function (token) {
+        parent = parent.children[token];
+    });
+
+    parent.children = parent.children || {};
+    obj.properties = obj.properties || {};
+    parent.children[child] = obj;
+}
+
+function _delete(path) {
+    var parent = _cache,
+        tokens = path.replace(/^\//, '').split("/"),
+        child = tokens.splice(tokens.length - 1, 1).join("");
+
+    tokens.forEach(function (token) {
+        parent = parent.children[token];
+    });
+
+    delete parent.children[child];
+}
+
+function _save() {
+    db.saveObject("db-filesystem", _cache);
+}
+
+_self = {
+
+    initialize: function (prev, baton) {
+        _cache = db.retrieveObject("db-filesystem") || {};
+        event.trigger("FileSystemInitialized", null, true);
+    },
+
+    ls: function (path, success, error) {
+        try {
+            var dir = _get(path),
+                items = [];
+
+            if (dir) {
+                utils.forEach(dir.children, function (item) {
+                    if (!item.isDirectory) {
+                        item.file = function (callback) {
+                            callback({});
+                        };
+                    }
+                    items.push(item);
+                });
+            }
+            else {
+                items = {};
+            }
+
+            success(utils.copy(items));
+        }
+        catch (e) {
+            e.code = 1;
+            error(e);
+        }
+    },
+
+    rm: function (path, success, error, options) {
+        _delete(path);
+        _save();
+        success();
+    },
+
+    rmdir: function (path, success, error, options) {
+        _delete(path);
+        _save();
+        success();
+    },
+
+    mkdir: function (path, success, error) {
+        var entry = _get(path),
+            info = _getInfo(path);
+
+        if (!entry) {
+            _set(path, {
+                name: info.name,
+                isDirectory: true,
+                fullPath: path
+            });
+            entry = _get(path);
+        }
+        
+        _save();
+        if (entry) {
+            success(utils.copy(entry));
+        }
+        else {
+            error({code: 1});
+        }
+    },
+
+    mv: function (from, to, success, error) {
+        try {
+            var fromEntry = _get(from),
+                toInfo = _getInfo(to);
+
+            fromEntry.fullPath = to;
+            fromEntry.name = toInfo.name;
+
+            _set(to, fromEntry);
+            _delete(from);
+            _save();
+            success(utils.copy(_get(to)));
+        }
+        catch (e) {
+            e.code = 1;
+            error(e);
+        }
+    },
+
+    touch: function (path, success, error) {
+        if (!_get(path)) {
+            _set(path, {
+                fullPath: path
+            });
+        }
+        _save();
+        success(utils.copy(_get(path)));
+    },
+
+    cp: function (from, to, success, error) {
+        try {
+            var fromEntry = _get(from);
+            fromEntry.fullPath = to;
+            _set(to, fromEntry);
+            _save();
+            success(utils.copy(_get(to)));
+        }
+        catch (e) {
+            e.code = 1;
+            error(e);
+        }
+    },
+
+    stat: function (path, success, error) {
+        var entry = _get(path);
+        success(utils.copy(entry));
+    },
+
+    write: function (path, contents, success, error, options) {
+        var info = _getInfo(path);
+
+        _set(path, {
+            lastModifiedDate: new Date(),
+            name: info.name,
+            fullPath: path,
+            isDirectory: false,
+            properties: {
+                type: "",
+                size: contents.size
+            },
+            data: contents,
+            file: function (callback) {
+                callback({});
+            }
+        });
+
+        success(utils.copy(_get(path)));
+    },
+
+    read: function (path, success, error) {
+        var entry = _get(path);
+
+        if (entry) {
+            success(utils.copy(entry.data));
+        }
+        else {
+            error({code: 1});
+        }
+    }
+};
+
+module.exports = _self;
+
+});
 require.define('ripple/bootstrap', function (require, module, exports) {
 /*
  *  Copyright 2011 Research In Motion Limited.
@@ -42418,23 +43067,30 @@ function _createFrame(src) {
                 }
             }, 1),
             ael = frame.contentWindow.addEventListener,
-            handlers = [];
+            handlers = {
+                load: [],
+                DOMContentLoaded: []
+            };
 
         //HACK: This is to get around a bug in webkit where it doesn't seem to
         //      fire the load handlers when we readd the iframe back into the DOM
         //      https://github.com/blackberry/Ripple-UI/issues/190
         frame.contentWindow.addEventListener = function (event, handler) {
-            if (event === "load") {
-                handlers.push(handler);
+            if (handlers[event]) {
+                handlers[event].push(handler);
             }
             else {
                 ael.apply(this, arguments);
             }
         };
 
-        frame.fireHandlers = function () {
-            handlers.forEach(function (handler) {
-                return handler && handler({});
+        frame.fireHandlers = function (event) {
+            handlers[event].forEach(function (handler) {
+                try {
+                    return handler && handler({});
+                } catch (e) {
+                    _console.error(e);
+                }
             });
         };
     });
@@ -42467,7 +43123,8 @@ function _post(src) {
             document.querySelector("#ui").removeChild(bootLoader);
         }
 
-        frame.fireHandlers();
+        frame.fireHandlers("DOMContentLoaded");
+        frame.fireHandlers("load");
         event.trigger("TinyHipposLoaded");
 
         _cleanBody();
@@ -44388,8 +45045,8 @@ var db = require('ripple/db'),
     _settings = {
         get: function () {
             var settings = db.retrieveObject("build-settings", platform.getPersistencePrefix()) || {};
-            //Always set debug to true
-            settings.debug = true;
+            settings.debug = !!settings["remoteInspector"];
+
             return settings;
         },
         save: function (settings) {
@@ -44408,6 +45065,9 @@ var db = require('ripple/db'),
         "csk_password",
         "p12_password"
     ],
+    _checkboxFields = [
+        "remoteInspector"
+    ],
     _passwords = {},
     _self;
 
@@ -44424,6 +45084,13 @@ function _isPasswordField(id) {
     });
 }
 
+function _isCheckboxField(id) {
+    var match = typeof id === "string" && new RegExp("^" + id + "$", "i");
+    return match && utils.some(_checkboxFields, function (name) {
+        return match.test(name);
+    });
+}
+
 function table(action) {
     var _table = $("<table class='panel-table'>"),
         _row = {
@@ -44435,7 +45102,10 @@ function table(action) {
                             v = $("#" + id).val(),
                             val = opts.type === "number" ? parseInt(v, 10) : v;
 
-                        if (val) {
+                        if (_isCheckboxField(item)) {
+                            s[item] = $("#" + id).prop("checked");
+                        }
+                        else if (val) {
                             (_isPasswordField(item) ? _passwords : s)[item] = val;
                         }
                         else {
@@ -44492,6 +45162,9 @@ function create() {
         .row("projectPath", "Project Root")
         .row("projectName", "Archive Name")
         .row("outputPath", "Output Folder")
+        .row("remoteInspector", "Enable Remote Web Inspector", {
+            type: "checkbox"
+        })
         .appendTo("#settings-tabs-build");
 
     if (platform.current().id === "webworks.handset") {
@@ -44533,15 +45206,24 @@ function create() {
 
 function populate(settings) {
     var fill = function (action, prop) {
-        $("#settings-field-" + prop.toLowerCase()).val(
-            _isPasswordField(prop) ? _passwords[prop] : settings[prop]
-        );
+        var element = $("#settings-field-" + prop.toLowerCase());
+
+        if (_isPasswordField(prop)) {
+            element.val(_passwords[prop]);
+        }
+        else if (_isCheckboxField(prop)) {
+            element.prop("checked", settings[prop]);
+        }
+        else {
+            element.val(settings[prop]);
+        }
     };
 
     fill("build", "sdk");
     fill("build", "projectPath");
     fill("build", "outputPath");
     fill("build", "projectName");
+    fill("build", "remoteInspector");
 
     fill("sign", "signingPassword");
     fill("sign", "csk_password");
@@ -44678,6 +45360,13 @@ _self = {
         utils.mixin(_passwords, settings);
 
         return missing(settings, action).length === 0;
+    },
+
+    value: function (prop) {
+        var settings = {};
+
+        utils.mixin(_settings.get(), settings);
+        return settings[prop];
     },
 
     show: function (action) {
@@ -45287,11 +45976,11 @@ var db = require('ripple/db'),
 
 function _saveAndReload(key, value) {
     jWorkflow.order(function (prev, baton) {
-                baton.take();
-                db.save(key, value, null, baton.pass);
-            }).start(function () {
-                        location.assign(location.href);
-                    });
+        baton.take();
+        db.save(key, value, null, baton.pass);
+    }).start(function () {
+        location.assign(location.href);
+    });
 }
 
 function _initialize(prev, baton) {
@@ -46369,10 +47058,19 @@ require.define('ripple/ui/plugins/options', function (require, module, exports) 
 var wrench = document.getElementById('options-button'),
     about = require('ripple/ui/plugins/about-dialog'),
     settings = require('ripple/ui/plugins/settings-dialog'),
+    tooltip = require('ripple/ui/plugins/tooltip'),
     hide,
     show;
 
 show = function () {
+    if (settings.value("remoteInspector")) {
+        $("#options-menu-build-warning").show();
+        tooltip.create("#options-menu-build-warning", "Remote Web Inspector should be disabled when packaging for App World release");
+    }
+    else {
+        $("#options-menu-build-warning").hide();
+    }
+
     $("#options-window").show();
     $("#options-menu").show();
     wrench.onclick = hide;
@@ -46851,24 +47549,26 @@ var omgwtf = require('ripple/omgwtf'),
     db = require('ripple/db'),
     xhr = require('ripple/xhr'),
     geo = require('ripple/geo'),
-    fs = require('ripple/fs'),
     fileSystem = require('ripple/fileSystem'),
+    fs = require('ripple/dbfs'),
     platform = require('ripple/platform'),
     devices = require('ripple/devices'),
     widgetConfig = require('ripple/widgetConfig'),
     deviceSettings = require('ripple/deviceSettings'),
     ui = require('ripple/ui'),
+    appcache = require('ripple/appcache'),
     _self = {
         boot: function (booted) {
             // techdebt (event registration timing)
             require('ripple/platform/webworks.core/2.0.0/fsCache');
 
             jWorkflow.order(omgwtf.initialize, omgwtf)
+                 .andThen(appcache.initialize, appcache)
                  .andThen(db.initialize, db)
                  .andThen(xhr.initialize, xhr)
                  .andThen(geo.initialize, geo)
-                 .andThen(fs.initialize, fs)
                  .andThen(fileSystem.initialize, fileSystem)
+                 .andThen(fs.initialize, fs)
                  .andThen(devices.initialize, devices)
                  .andThen(platform.initialize, platform)
                  .andThen(widgetConfig.initialize, widgetConfig)
