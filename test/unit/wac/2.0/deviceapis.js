@@ -53,7 +53,7 @@ describeBrowser("wac_2.0_deviceapis", function () {
         activeCount = utils.count(info.features);
     };
 
-    beforeEach (function () {
+    beforeEach(function () {
         spyOn(platform, "current").andReturn(require('ripple/platform/wac/2.0/spec'));
         _setUserConfigXML("test/assets/config/config_wac_2.0.xml");
     });
