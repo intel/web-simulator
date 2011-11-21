@@ -45,6 +45,8 @@ describe("wac_2.0_accelerometer", function () {
         };
         accel.getCurrentAcceleration(null, error);
         waits(1);
+        runs(function () {
+        });
     });
 
     it("getCurrentAcceleration calls the success callback", function () {
@@ -84,6 +86,8 @@ describe("wac_2.0_accelerometer", function () {
         };
         accel.watchAcceleration(null, error);
         waits(1);
+        runs(function () {
+        });
     });
 
     it("watchAcceleration calls the callback on the given interval", function () {
