@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Wed Nov 02 2011 10:30:30 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Mon Nov 21 2011 15:16:53 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -32866,14 +32866,15 @@ function _objectFactory(context, objects, allowed) {
                 if (obj.feature) {
                     objFeatures = obj.feature.split('|');
                     if (rst.handleSubFeatures) {
-                        widgetFeatures = app.getInfo().features; // features in confi.xml
+                        widgetFeatures = app.getInfo().features; // features in config.xml
                         f = {};
                         utils.forEach(objFeatures, function (o) {
-                            if (!!widgetFeatures[o]) {
+                            if (widgetFeatures && !!widgetFeatures[o]) {
                                 f[widgetFeatures[o].id] = widgetFeatures[o];
                             }
                         });
                         rst.handleSubFeatures(f);
+                        delete rst.handleSubFeatures;
                     }
                 }
                 result = rst;
@@ -35086,8 +35087,7 @@ var utils = require('ripple/utils'),
             zAxis: z || 0
         };
     },
-    errorcode = require('ripple/platform/wac/2.0/errorcode'),
-    DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror'),
+    validate = require('ripple/platform/wac/2.0/validate'),
     _accelerometerInfo = new Acceleration(),
     _defaultInterval = 100,
     _watches = {},
@@ -35095,40 +35095,18 @@ var utils = require('ripple/utils'),
 
 module.exports = _self = {
     getCurrentAcceleration: function (onSuccess, onError) {
-
-        if (onSuccess) {
-            utils.validateArgumentType(onSuccess, "function", null, "getCurrentAcceleration invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
-        if (onError) {
-            utils.validateArgumentType(onError, "function", null, "getCurrentAcceleration invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
-
-        if (onSuccess) {
+        function _getCurrentAcceleration() {
             setTimeout(function () {
                 onSuccess(utils.copy(_accelerometerInfo));
             }, 1);
             return null;
-        } else {
-            if (onError) {
-                setTimeout(function () {
-                    onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
-                }, 1);
-            }
         }
 
-        return undefined;
+        return validate.validateTypeMismatch(onSuccess, onError, "getCurrentAcceleration", _getCurrentAcceleration); 
     },
 
     watchAcceleration: function (accelerometerSuccess, accelerometerError, options) {
-
-        if (accelerometerSuccess) {
-            utils.validateArgumentType(accelerometerSuccess, "function", null, "watchAcceleration invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
-        if (accelerometerError) {
-            utils.validateArgumentType(accelerometerError, "function", null, "watchAcceleration invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
-
-        if (accelerometerSuccess) {
+        function _watchAcceleration() {
             var watchId = (new Date()).getTime() | 0,
                 watchObj = {},
                 opt = Object(options),
@@ -35152,15 +35130,9 @@ module.exports = _self = {
             }, _watches[watchId].interval);
 
             return watchId;
-        } else {
-            if (accelerometerError) {
-                setTimeout(function () {
-                    accelerometerError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
-                }, 1);
-            }
         }
 
-        return undefined;
+        return validate.validateTypeMismatch(accelerometerSuccess, accelerometerError, "watchAcceleration", _watchAcceleration); 
     },
 
     clearWatch: function (watchId) {
@@ -35246,10 +35218,76 @@ require.define('ripple/platform/wac/2.0/pendingoperation', function (require, mo
  * limitations under the License.
  */
 
-module.exports = function () {
+module.exports = function (pendingObj) {
+    var pending = true;
     this.cancel = function () {
-        return false;
+        if (pending === true) {
+            if (typeof (pendingObj.getCancelFlag) === "function" && pendingObj.getCancelFlag() === false) {
+                pending = false;
+                // this clearTimeout is for the case when a 3rd party is invoked to do the task, and it's finished sooner than the intended timeout. therefore, the 3rd party set CancelFlag false, and this cancel is called before timeout
+                clearTimeout(pendingObj.pendingID);
+                return false;
+            }
+            if (typeof (pendingObj.userCancel) === "function") {
+                pendingObj.userCancel();
+            }
+            clearTimeout(pendingObj.pendingID);
+            pending = false;
+            return true;
+        } else {
+            return false;
+        }
     };
+};
+
+
+});
+require.define('ripple/platform/wac/2.0/validate', function (require, module, exports) {
+/*
+ *  Copyright 2011 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var utils = require('ripple/utils'),
+    errorcode = require('ripple/platform/wac/2.0/errorcode'),
+    DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror');
+
+module.exports = {
+    validateTypeMismatch: function (onSuccess, onError, name, callback) {
+        if (onSuccess) {
+            utils.validateArgumentType(onSuccess, "function", null,
+                                       name + " invalid successCallback parameter",
+                                       new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+
+        if (onError) {
+            utils.validateArgumentType(onError, "function", null,
+                                       name + " invalid errorCallback parameter",
+                                       new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+
+        if (onSuccess) {
+            return callback && callback();
+        } else {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                }, 1);
+            }
+        }
+        return undefined;
+    }
 };
 
 
@@ -35329,7 +35367,7 @@ module.exports = {
 
         configFeatures = configValidationObject.widget.children.feature.validationResult;
         utils.forEach(configFeatures, function (f) {
-            if (f.valid == true) {
+            if (f.valid === true) {
                 var feature = {id: f.attributes.name.value,
                          required: f.attributes.required.valid};
                 widgetInfo.features[feature.id] = feature;
@@ -35445,7 +35483,7 @@ module.exports = {
                             nodeName: "span",
                             required: false,
                             type: "string",
-                            attributes:{
+                            attributes: {
                                 "xml:lang": {
                                     attributeName: "xml:lang",
                                     required: false,
@@ -35486,7 +35524,7 @@ module.exports = {
                             nodeName: "span",
                             required: false,
                             type: "string",
-                            attributes:{
+                            attributes: {
                                 "xml:lang": {
                                     attributeName: "xml:lang",
                                     required: false,
@@ -35538,7 +35576,7 @@ module.exports = {
                             nodeName: "span",
                             required: false,
                             type: "string",
-                            attributes:{
+                            attributes: {
                                 "xml:lang": {
                                     attributeName: "xml:lang",
                                     required: false,
@@ -35584,7 +35622,7 @@ module.exports = {
                             nodeName: "span",
                             required: false,
                             type: "string",
-                            attributes:{
+                            attributes: {
                                 "xml:lang": {
                                     attributeName: "xml:lang",
                                     required: false,
@@ -35688,7 +35726,8 @@ module.exports = {
                             attributeName: "name",
                             required: true,
                             type: "list",
-                            listValues: ["http://wacapps.net/api/deviceapis", "http://wacapps.net/api/accelerometer",
+                            listValues: ["http://www.w3.org/TR/geolocation-API/",
+                                            "http://wacapps.net/api/deviceapis", "http://wacapps.net/api/accelerometer",
                                             "http://wacapps.net/api/orientation", "http://wacapps.net/api/camera",
                                             "http://wacapps.net/api/camera.show", "http://wacapps.net/api/camera.capture",
                                             "http://wacapps.net/api/devicestatus", "http://wacapps.net/api/devicestatus.deviceinfo",
@@ -35889,6 +35928,10 @@ _self.__defineGetter__("INVALID_VALUES_ERR", function () {
     return 22;
 });
 
+_self.__defineGetter__("IO_ERR", function () {
+    return 100;
+});
+
 function _setMessage(_self) {
     var c, g;
     for (c in _self) {
@@ -35900,6 +35943,285 @@ function _setMessage(_self) {
 }
 
 _setMessage(_self);
+
+module.exports = _self;
+
+
+});
+require.define('ripple/platform/wac/2.0/dbfs', function (require, module, exports) {
+/*
+ *  Copyright 2011 Research In Motion Limited.
+ *  Copyright 2011 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* We know the dbfs is not an accurate simulation of WAC 2.0 filesystem.
+ *
+ * 1) We have tried W3C File API, as some of WAC filesystem APIs are synchronous, 
+ * it is impossible to simulate them by using the asynchronous API in the main
+ * UI thread and although we could use synchronous W3C API in a worker, it is
+ * not reasonable to limit WAC filesystem API usage in a worker.
+ *
+ * 2) The problem is partially solved by using database to simulate the filesystem,
+ * For the asynchronous aspect, actually all the files are read into memory (cache 
+ * object in this file) and the cache operation is synchronous. It is not perfect.
+ * And the database has 5MB limitation when running in Chrome.
+ *
+ * In the future, we might use ajax or NPAPI to get a better simulation.
+ */
+
+/* Note: The entry object is shared between this module and filesystem */
+
+var db = require('ripple/db'),
+    utils = require('ripple/utils'),
+    _cache = {},
+    _self;
+
+function _get(path) {
+    return path.replace(/^\//, '').split("/").reduce(function (obj, token) {
+        return token === "" ? obj : (obj.children ? obj.children[token] || null : null);
+    }, _cache);
+}
+
+function _getInfo(path) {
+    var parent = ("/" + path.replace(/^\//, '').replace(/\/$/, '')).split("/"),
+        name = parent.splice(parent.length - 1, 1).join("");
+
+    return {
+        name: name,
+        parent: parent.join("/") || "/"
+    };
+}
+
+function _set(path, obj) {
+    var parent = _cache,
+        tokens = path.replace(/^\//, '').split("/"),
+        child = tokens.splice(tokens.length - 1, 1).join("");
+
+    tokens.forEach(function (token) {
+        parent = parent.children[token];
+    });
+
+    parent.children = parent.children || {};
+    parent.children[child] = obj;
+}
+
+function _delete(path) {
+    var parent = _cache,
+        tokens = path.replace(/^\//, '').split("/"),
+        child = tokens.splice(tokens.length - 1, 1).join("");
+
+    tokens.forEach(function (token) {
+        parent = parent.children[token];
+    });
+
+    delete parent.children[child];
+}
+
+function _save() {
+    db.saveObject("wac2-db-filesystem", _cache);
+}
+
+function _walk(path, parent) { 
+    _self.ls(path, function (entries) { 
+        parent.children = parent.children || {}; 
+ 
+        entries.forEach(function (entry) { 
+            parent.children[entry.name] = entry; 
+ 
+            if (entry.isDirectory) { 
+                _walk(entry.fullPath, entry); 
+            } else { 
+                _self.read(entry.fullPath, function (data) { 
+                    parent.children[entry.name].data = data; 
+                }, function (e) { 
+                    console.error(e); 
+                }); 
+            } 
+        }); 
+    }, function (e) { 
+        console.error(e); 
+    }); 
+} 
+ 
+function _createPath(path) { 
+    var parts = path.replace(/^\//, '').split("/"), 
+        workflow = jWorkflow.order(); 
+ 
+    parts.forEach(function (part, index) { 
+        var dir = "/" + utils.copy(parts).splice(0, index + 1).join("/"); 
+ 
+        workflow.andThen(function (prev, baton) { 
+            baton.take(); 
+            _self.mkdir(dir, baton.pass, baton.pass); 
+        }); 
+    }); 
+ 
+    workflow.start(); 
+}
+
+_self = {
+    // The order is consistent with _virtualRoots in filesystem.js
+    roots: ["/opt/documents", "/opt/images", "/opt/music", "/opt/videos", "/opt/downloads", "/home/user/appdata/simulatedapp/wgt-package", "/home/user/appdata/simulatedapp/wgt-private", "/home/user/appdata/simulatedapp/wgt-private-tmp", "/SDCard"],
+    initialize: function () {
+        // TODO: Initialize at bootstrap and emulatorBridge.link 
+        _cache = db.retrieveObject("wac2-db-filesystem") || {};
+        // create real root paths if empty
+        _self.roots.every(function (root) {
+            _createPath(root);
+            return true;
+        }); 
+       // build the file system cache so that we could access information synchronously
+        _walk("/", _cache);
+    },
+    ls: function (path, success, error) {
+        try {
+            var dir = _get(path),
+                items = [];
+
+            if (dir) {
+                utils.forEach(dir.children, function (item) {
+                   items.push(item);
+                });
+            }
+            else {
+                items = {};
+            }
+
+            success(items);
+        }
+        catch (e) {
+            e.code = 1;
+            error(e);
+        }
+    },
+    rm: function (path, success, error, options) {
+        _delete(path);
+        _save();
+        success();
+    },
+    rmdir: function (path, success, error, options) {
+        _delete(path);
+        _save();
+        success();
+    },
+    mkdir: function (path, success, error) {
+        var entry = _get(path),
+            info = _getInfo(path);
+
+        if (!entry) {
+            _set(path, {
+                name: info.name,
+                isDirectory: true,
+                fullPath: path
+            });
+            entry = _get(path);
+            _save();
+        }
+        
+        if (entry) {
+            success(entry);
+        }
+        else {
+            error({code: 1});
+        }
+    },
+    mv: function (from, to, success, error) {
+        try {
+            var fromEntry = _get(from),
+                toInfo = _getInfo(to);
+
+            fromEntry.fullPath = to;
+            fromEntry.name = toInfo.name;
+
+            _set(to, fromEntry);
+            _delete(from);
+            _save();
+            success();
+        }
+        catch (e) {
+            e.code = 1;
+            error(e);
+        }
+    },
+    touch: function (path, success, error) {
+        var entry = _get(path),
+            info  = _getInfo(path);
+
+        if (!entry) {
+            _set(path, {
+                lastModifiedDate: new Date(),
+                name: info.name,
+                isDirectory: false,
+                fullPath: path,
+                data: ""
+            });
+            entry = _get(path);
+        }
+        _save();
+        success(entry);
+    },
+    cp: function (from, to, success, error) {
+        try {
+            var fromEntry = _get(from),
+                copied = utils.copy(fromEntry);
+
+            copied.name  = _getInfo(to).name;
+            copied.fullPath = to;
+            _set(to, copied);
+            _save();
+            success();
+        }
+        catch (e) {
+            e.code = 1;
+            error(e);
+        }
+    },
+    stat: function (path, success, error) {
+        var entry = _get(path);
+        
+        if (entry) {
+            success(entry);
+        } else {
+            error({code: 1});
+        }
+    },
+    write: function (path, contents, success, error, options) {
+        var entry = _get(path),
+            info = _getInfo(path);
+
+        if (entry) {
+            entry.lastModifiedDate = new Date();
+            entry.data = contents;
+            _save();
+            success();
+        } else {
+            error({code: 1});
+        }
+
+    },
+    read: function (path, success, error) {
+        var entry = _get(path);
+
+        if (entry) {
+            success(utils.copy(entry.data));
+        }
+        else {
+            error({code: 1});
+        }
+    }
+};
 
 module.exports = _self;
 
@@ -35922,7 +36244,871 @@ require.define('ripple/platform/wac/2.0/filesystem', function (require, module, 
  * limitations under the License.
  */
 
-module.exports = {
+var errorcode = require('ripple/platform/wac/2.0/errorcode'),
+    DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror'),
+    utils = require('ripple/utils'),
+    dbfs  = require('ripple/platform/wac/2.0/dbfs'),
+    validate = require('ripple/platform/wac/2.0/validate'),
+    _console = require('ripple/console'),
+    _maxPathLength = 256,
+    _virtualRoots = ["documents", "images", "music", "videos", "downloads", "wgt-package", "wgt-private", "wgt-private-tmp", "removable"],
+    _realRoots = dbfs.roots,
+    _r2vmap = {},
+    _v2rmap = {},
+    _initialized = false,
+    _readOnly  = false,
+    _writeOnly = false,
+    _defaultMode = "rw",
+    File, 
+    FileStream;
+
+function _isValidChar(c) {
+    return  (c >= '0' && c <= '9') || 
+        (c >= 'a' && c <= 'z') || 
+        (c >= 'A' && c <= 'Z') || 
+        (c === ' ') || 
+        (c === '_') ||
+        (c === '-') ||
+        (c === '.');
+}
+
+function _isValidFileName(name) {
+    var _valid = true,
+        _c;
+
+    if (name === '' || name === '.' || name === '..' || (name.length > _maxPathLength)) {
+        _valid = false;
+    } else {
+        for (_c = 0; _c < name.length; _c++) {
+            if (!_isValidChar(name[_c])) {
+                _valid = false;
+                break;
+            }
+        }
+    }
+    
+    return _valid;
+}
+
+function _initialize() {
+    var _i;
+
+    dbfs.initialize();
+    
+    // set up the map between real path and virtual path
+    for (_i = 0; _i < _virtualRoots.length; _i++) {
+        _r2vmap[_realRoots[_i]] = _virtualRoots[_i];
+    }
+
+    utils.forEach(_r2vmap, function (value, key) {
+        _v2rmap[value] = key;
+    });
+}
+
+function _resolveSync(srcLocation, onSuccess, onError, accessMode) {
+    var _parts = srcLocation.replace(/\/$/, '').split("/"),
+        _header, _fullPath,
+        _i;
+
+    // TODO: Initialize at bootstrap and emulatorBridge.link 
+    if (!_initialized) {
+        _initialize();
+        _initialized = true;
+    }
+
+    for (_i = 0; _i < _parts.length; _i++) {
+        if (!_isValidFileName(_parts[_i])) {
+            if (onError) {
+                onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+            }
+            return;
+        }
+    }
+
+    _header = _v2rmap[_parts[0]];
+    if (_header === undefined) {
+        if (onError) {
+            onError(new DeviceApiError(errorcode.NOT_FOUND_ERR));
+        }
+        return;
+    }
+
+    if (_parts.length === 1) {
+        _fullPath = _header;
+    } else {
+        _fullPath = _header + "/" + _parts.splice(1, _parts.length - 1).join("/");
+    }
+
+    dbfs.stat(_fullPath, 
+            function (entry) {
+                onSuccess(new File(entry, accessMode));
+            }, 
+            function () {
+                if (onError) {
+                    onError(new DeviceApiError(errorcode.NOT_FOUND_ERR));
+                }    
+            });
+}
+
+function _resolveAsync(onSuccess, onError, srcLocation, accessMode) {
+    _resolveSync(srcLocation,
+                function (file) {
+                    setTimeout(function () {
+                        onSuccess(file);
+                    }, 1);
+                },
+                function (e) {
+                    setTimeout(function () {
+                        onError(e);
+                    }, 1);
+                },
+                accessMode);
+}
+
+File = function (entry, mode) {
+    var _entry = entry,
+        _mode = mode,
+        _parent,
+        _self;
+
+    function _r2v(rpath) {
+        var i, v, r, regExp;
+
+        for (i = 0; i < _virtualRoots.length; i++) {
+            v = _virtualRoots[i];
+            r = _v2rmap[v];
+            if (rpath.match("^" + r)) {
+                regExp = new RegExp("^" + r);
+                return rpath.replace(regExp, v);
+            }
+        }
+
+        return ""; 
+    }
+
+    function _v2r(vpath) {
+        var i, v, r, regExp;
+
+        for (i = 0; i < _virtualRoots.length; i++) {
+            v = _virtualRoots[i];
+            r = _v2rmap[v];
+            if (vpath.match("^" + v)) {
+                regExp = new RegExp("^" + v);
+                return vpath.replace(regExp, r);
+            }
+        }
+
+        return ""; 
+    }
+
+    function _copyMoveInternal(onSuccess, onError, src, dst, overwrite, func) {
+        var _srcName = String(src),
+            _dstName = String(dst),
+            _src = null,
+            _dst = null,
+            _error = false,
+            _dstParent = null,
+            _dstParts  = _dstName.split("/"),
+            _dstParentName = _dstParts.splice(0, _dstParts.length - 1).join("/");
+
+        if (!_entry.isDirectory) {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.IO_ERR));
+                }, 1);
+            }
+            return undefined;
+        }
+
+        _resolveSync(_srcName, 
+                function (file) {
+                    _src = file;
+                },
+                function (e) {
+                    setTimeout(function () {
+                        onError(e);
+                    }, 1);
+                },
+                _mode);
+
+        if (_src) {
+            if (_src.parent.fullPath === _self.fullPath) {
+                if (!_readOnly && _mode !== "r") {
+                    _resolveSync(_dstParentName, 
+                            function (file) {
+                                _dstParent = file;
+                            },
+                            function (e) {
+                                setTimeout(function () {
+                                    onError(e);
+                                }, 1);
+                            },
+                            _mode);
+
+                    if (_dstParent === null) {
+                        return undefined;
+                    }
+
+                    _resolveSync(_dstName, 
+                            function (file) {
+                                _dst = file;
+                            },
+                            function (e) {
+                                if (e.code !== errorcode.NOT_FOUND_ERR) {
+                                    setTimeout(function () {
+                                        onError(e);
+                                    }, 1);
+                                    _error = true;
+                                } 
+                            },
+                            _mode);
+
+                    if (_error) {
+                        return undefined;
+                    }
+
+                    if (_src.isFile) {
+                        if (_dst === null) {
+                            func(_v2r(_srcName), _v2r(_dstName),
+                                    function () {
+                                        setTimeout(function () {
+                                            onSuccess();
+                                        }, 1);
+                                    },
+                                    function () {});
+                            return null;
+                        } else {
+                            if (_dst.isFile && Boolean(overwrite) && (_srcName !== _dstName)) {
+                                func(_v2r(_srcName), _v2r(_dstName),
+                                        function () {
+                                            setTimeout(function () {
+                                                onSuccess();
+                                            }, 1);
+                                        },
+                                        function () {});
+                                return null;
+                            } else {
+                                setTimeout(function () {
+                                    onError(new DeviceApiError(errorcode.IO_ERR));
+                                }, 1);
+                            }
+                        }
+                    } else {
+                        if (_dst === null) {
+                            func(_v2r(_srcName), _v2r(_dstName),
+                                function () {
+                                    setTimeout(function () {
+                                        onSuccess();
+                                    }, 1);
+                                },
+                                function () {});
+                            return null;
+                        } else {
+                            setTimeout(function () {
+                                onError(new DeviceApiError(errorcode.IO_ERR));
+                            }, 1);
+                        } 
+                    }
+                } else {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.SECURITY_ERR));
+                        }, 1);
+                    }
+                }
+            } else {
+                if (onError) {
+                    setTimeout(function () {
+                        onError(new DeviceApiError(errorcode.IO_ERR));
+                    }, 1);
+                }
+            }
+        }
+
+        return undefined;
+    }
+
+    _self = {
+        toURI: function () {
+            return "file://" + _entry.fullPath;
+        },
+        listFiles: function (onSuccess, onError, filter) {
+            var _filter = Object(filter),
+                _filterName = _filter.name,
+                _startModified = _filter.startModified,
+                _endModified   = _filter.endModified;
+
+            function _matchName(fileName) {
+                var _matched = true, 
+                    _name1 = String(_filterName).toLowerCase(),
+                    _name2 = fileName.toLowerCase(),
+                    _pattern, _r;
+
+                if (_filterName !== undefined && _filterName !== null) {
+                    if (!_name1.match("\\\\%")) {
+                        if (_name1.match("%")) {
+                            _pattern = new RegExp(_name1.replace(/%/g, ".*"));
+                            _r = _name2.match(_pattern);    
+                            _matched = _r ? (_r[0] === _name2) : false;
+                        } else {
+                            _matched = (_name1 === _name2);
+                        }
+                    } else {
+                        // % is not allowed as a part of file name
+                        _matched = false;
+                    }
+                }
+                
+                return _matched;
+            }
+
+            function _matchDate(date) {
+                var _matched = true;
+
+                if (_startModified !== undefined && _startModified !== null) {
+                    _matched = (date.getTime() >= _startModified.getTime());
+                }
+
+                if (_matched && (_endModified !== undefined && _endModified !== null)) {
+                    _matched = (date.getTime() <= _endModified.getTime());
+                }
+
+                return _matched;
+            }
+
+            function _matchFilter(entry) {
+                return _matchName(entry.name) && _matchDate(entry.lastModifiedDate);
+            } 
+
+            function _listFiles() {
+                var _files = [];
+
+                if ((_startModified !== undefined && !_startModified instanceof Date) ||
+                    (_endModified !== undefined && !_endModified instanceof Date)) {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                        }, 1);
+                    }
+                    return undefined;
+                }
+
+                if (!_entry.isDirectory) {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.IO_ERR));
+                        }, 1);
+                    }
+                    return undefined;
+                }
+
+                utils.forEach(_entry.children, function (child) {
+                    if (_matchFilter(child)) {
+                        _files.push(new File(child, _mode));
+                    }
+                });
+
+                setTimeout(function () {
+                    onSuccess(_files);
+                }, 1);
+
+                return null;
+            }
+
+            return validate.validateTypeMismatch(onSuccess, onError, "listFiles", _listFiles);
+        },
+        openStream: function (onSuccess, onError, mode, encoding) {
+            function _openStream() {
+                var  _openMode = String(mode),
+                    _encoding = encoding ? String(encoding) : "UTF-8";
+
+                if (_openMode !== "r" && _openMode !== "w" && _openMode !== "a") {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                        }, 1);
+                    }
+                    return undefined;
+                }
+                if (_encoding !== "UTF-8" && _encoding !== "ISO-8859-1") {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                        }, 1);
+                    }
+                    return undefined;
+                }
+                
+                if (((_readOnly || _mode === "r") && (_openMode === "w" || _openMode === "a")) ||
+                    (_writeOnly && _openMode === "r")) {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.SECURITY_ERR));
+                        }, 1);
+                    }
+                    return undefined;
+                }
+                 
+                setTimeout(function () {
+                    onSuccess(new FileStream(_entry, _openMode, _encoding));
+                }, 1);
+
+                return null;
+            }
+
+            return validate.validateTypeMismatch(onSuccess, onError, "openStream", _openStream);
+        },
+        readAsText: function (onSuccess, onError, encoding) {
+            function _readAsText() {
+                var _encoding = encoding ? String(encoding) : "UTF-8";
+                if (_encoding !== "UTF-8" && _encoding !== "ISO-8859-1") {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                        }, 1);
+                    }
+                    return undefined;
+                }
+
+                if (_writeOnly) {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.SECURITY_ERR));
+                        }, 1);
+                    }
+                    return undefined;
+                }
+
+                if (_self.isFile) {
+                    dbfs.read(_entry.fullPath, 
+                            function (data) {
+                                setTimeout(function () {
+                                    onSuccess(data);
+                                }, 1);
+                            },
+                            function () {});
+                    return null;
+                } else {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.IO_ERR));
+                        }, 1);
+                    }
+                }
+
+                return undefined;
+            }
+
+            return validate.validateTypeMismatch(onSuccess, onError, "readAsText", _readAsText);
+        },
+        copyTo: function (onSuccess, onError, src, dst, overwrite) {
+            function _copyTo() {
+                return _copyMoveInternal(onSuccess, onError, src, dst, overwrite, dbfs.cp);
+            }
+            
+            return validate.validateTypeMismatch(onSuccess, onError, "copyTo", _copyTo);
+        },
+        moveTo: function (onSuccess, onError, src, dst, overwrite) {
+            function _moveTo() {
+                return _copyMoveInternal(onSuccess, onError, src, dst, overwrite, dbfs.mv);
+            }
+
+            return validate.validateTypeMismatch(onSuccess, onError, "moveTo", _moveTo);
+        },
+        createDirectory: function (dirPath) {
+            var _path  = String(dirPath),
+                _parts = _path.replace(/\/$/, "").split("/"),
+                _dir   = null,
+                _exist = null,
+                _current = _entry.fullPath,
+                _i;
+
+            function onSuccess(entry) {
+                _dir = entry;
+            }
+
+            for (_i = 0; _i < _parts.length; _i++) {
+                if (!_isValidFileName(_parts[_i])) {
+                    throw new DeviceApiError(errorcode.INVALID_VALUES_ERR);
+                }
+            }
+      
+            if (!entry.isDirectory) {
+                throw new DeviceApiError(errorcode.IO_ERR);
+            }
+
+            _exist = _parts.reduce(function (obj, token) {
+                return token === "" ? obj : (obj.children ? obj.children[token] || null : null);
+            }, _entry);
+
+            if (_exist) {
+                throw new DeviceApiError(errorcode.IO_ERR);
+            }
+
+            if (_readOnly || _mode === "r") {
+                throw new DeviceApiError(errorcode.SECURITY_ERR);
+            }
+
+            for (_i = 0; _i < _parts.length; _i++) {
+                _current = _current + "/" + _parts[_i];
+                dbfs.mkdir(_current, onSuccess);
+            }
+            
+            return new File(_dir, _mode);
+        },
+        createFile: function (filePath) {
+            var _name = String(filePath),
+                _file = null;
+
+            if (!_isValidFileName(_name)) {
+                throw new DeviceApiError(errorcode.INVALID_VALUES_ERR);
+            }
+
+            if (!entry.isDirectory || _entry.children[_name]) {
+                throw new DeviceApiError(errorcode.IO_ERR);
+            }
+
+            if (_readOnly || _mode === "r") {
+                throw new DeviceApiError(errorcode.SECURITY_ERR);
+            }
+
+            dbfs.touch(_entry.fullPath + "/" + _name,
+                        function (entry) {
+                            _file = new File(entry, _mode);
+                        },
+                        function () {});
+            
+            return _file;
+        },
+        resolve: function (filePath) {
+            var _fullPath = _self.fullPath + "/" + String(filePath),
+                _file = null;
+ 
+            if (!_entry.isDirectory) {
+                throw new DeviceApiError(errorcode.IO_ERR); 
+            }
+
+            _resolveSync(_fullPath,
+                    function (file) {
+                        _file = file;
+                    },
+                    function (e) {
+                        throw (e);
+                    },
+                    _mode);
+
+            return _file;
+        }, 
+        deleteDirectory: function (onSuccess, onError, directory, recursive) {
+            function _deleteDirectory() {
+                var _dir = null,
+                    _dirName = String(directory);
+                _resolveSync(_dirName, 
+                        function (file) {
+                            _dir = file;
+                        },
+                        function (e) {
+                            setTimeout(function () {
+                                onError(e);
+                            }, 1);
+                        },
+                        _mode);
+
+                if (_dir) {
+                    if (_dir.isDirectory && 
+                        _dir.parent.fullPath === _self.fullPath &&
+                        (!recursive && _dir.length === 0)) {
+                        if (!_readOnly && _mode !== "r") {
+                            dbfs.rmdir(_v2r(_dirName),
+                                    function () {
+                                        setTimeout(function () {
+                                            onSuccess();
+                                        }, 1);
+                                    },
+                                    function () {});
+                            return null;
+                        } else {
+                            if (onError) {
+                                setTimeout(function () {
+                                    onError(new DeviceApiError(errorcode.SECURITY_ERR));
+                                }, 1);
+                            }
+                        }
+                    } else {
+                        if (onError) {
+                            setTimeout(function () {
+                                onError(new DeviceApiError(errorcode.IO_ERR));
+                            }, 1);
+                        }
+                    }
+                }
+
+                return undefined; 
+            }
+
+            return validate.validateTypeMismatch(onSuccess, onError, "deleteDirectory", _deleteDirectory);
+        },
+        deleteFile: function (onSuccess, onError, fileName) {
+            function _deleteFile() {
+                var _file = null;
+                _resolveSync(String(fileName),
+                        function (file) {
+                            _file = file;
+                        },
+                        function (e) {
+                            if (onError) {
+                                setTimeout(function () {
+                                    onError(e);
+                                }, 1);
+                            }
+                        },
+                        _mode);
+
+                if (_file) {
+                    if (_file.isFile && _file.parent.fullPath === _self.fullPath) {
+                        if (!_readOnly && _mode !== "r") {
+                            dbfs.rm(_v2r(fileName),
+                                    function () {
+                                        setTimeout(function () {
+                                            onSuccess();
+                                        }, 1);
+                                    },
+                                    function () {});
+                            return null;
+                        } else {
+                            if (onError) {
+                                setTimeout(function () {
+                                    onError(new DeviceApiError(errorcode.SECURITY_ERR));
+                                }, 1);
+                            }
+                        }
+                    } else {
+                        if (onError) {
+                            setTimeout(function () {
+                                onError(new DeviceApiError(errorcode.IO_ERR));
+                            }, 1);
+                        }
+                    }
+                }
+
+                return undefined; 
+            }
+
+            return validate.validateTypeMismatch(onSuccess, onError, "deleteFile", _deleteFile);
+        }
+    };
+
+    _self.__defineGetter__("parent", function () {
+        var _parts = _self.fullPath.split("/");
+
+        if (_parent === undefined) {
+            if (_parts.length === 1) {
+                // virtual root's parent is null
+                _parent = null;
+            } else {
+                _resolveSync(_parts.splice(0, _parts.length - 1).join("/"), 
+                        function (file) {
+                            _parent = file;
+                        },
+                        function () {},
+                        _mode);
+            }
+            return _parent;
+        } else { 
+            return _parent;
+        }
+    });
+
+    _self.__defineGetter__("readOnly", function () {
+        return false;
+    });
+
+    _self.__defineGetter__("isFile", function () {
+        return !_entry.isDirectory;
+    });
+
+    _self.__defineGetter__("isDirectory", function () {
+        return _entry.isDirectory;
+    });
+
+    _self.__defineGetter__("created", function () {
+        return undefined;
+    });
+
+    _self.__defineGetter__("modified", function () {
+        if (_entry.isDirectory) {
+            return undefined;
+        } else {
+            return _entry.lastModifiedDate;
+        }
+    });
+
+    _self.__defineGetter__("path", function () {
+        var _parts = _self.fullPath.split("/");
+
+        if (_parts.length === 1) {
+            // virtual root
+            return _parts.join("");
+        } else {
+            return _parts.splice(0, _parts.length - 1).join("/") + "/";
+        }
+    });
+
+    _self.__defineGetter__("name", function () {
+        return _entry.name;
+    });
+
+    _self.__defineGetter__("fullPath", function () {
+        return _r2v(_entry.fullPath);
+    });
+
+    _self.__defineGetter__("fileSize", function () {
+        if (_entry.isDirectory) {
+            return undefined;
+        } else {
+            return _entry.data.length;
+        }
+    });
+
+    _self.__defineGetter__("length", function () {
+        var _l = 0;
+        if (_entry.isDirectory) {
+            utils.forEach(_entry.children, function () {
+                _l++;
+            });
+            return _l;
+        } else {
+            return undefined;
+        }
+    });
+
+    return _self;
+};
+
+FileStream = function (entry, mode, encoding) {
+    var _entry = entry,
+        _data = entry.data,
+        _mode = mode,
+        _position = (_mode === "a" ? _data.length : 0),
+        _self;
+
+    _self = {
+        close: function () {
+            var _element;
+            if (mode === "a" || mode === "w") {
+                dbfs.write(_entry.fullPath, _data, function () {}, function () {});
+            }
+            for (_element in _self) {
+                delete _self[_element];
+            }
+        },
+        read: function (charCount) {
+            var _count  = charCount | 0,
+                _substr = _data.substring(_position, _position + _count);
+
+            if (_position + _count > _data.length) {
+                _position = _data.length;
+            } else {
+                _position += _count;
+            }
+
+            return _substr; 
+        },
+        readBytes: function (byteCount) {
+            var _substr = _self.read(byteCount),
+                _bytes = [],
+                _i;
+
+            for (_i = 0; _i < _substr.length; _i++) {
+                _bytes.push(_substr.charCodeAt(_i));
+            }
+
+            return _bytes;
+        },
+        readBase64: function (byteCount) {
+            var _substr = _self.read(byteCount);
+
+            return window.atob(_substr);
+        },
+        write: function (stringData) {
+            var _stringData = String(stringData),
+                _substr = _data.substring(0, _position);
+
+            _data = _substr.concat(_stringData);
+            _position = _data.length;
+        },
+        writeBytes: function (byteData) {
+            _self.write(String.fromCharCode.apply(String, byteData));
+        },
+        writeBase64: function (base64Data) {
+            _self.write(window.btoa(String(base64Data)));
+        }
+    };
+
+    _self.__defineGetter__("eof", function () {
+        return _position === _data.length;
+    });
+
+    _self.__defineGetter__("position", function () {
+        return _position;
+    });
+
+    _self.__defineSetter__("position", function (value) {
+        var _value = value | 0;
+
+        if (_value >= 0 && _value <= _data.length) {
+            _position = _value;
+        } else {
+            throw new DeviceApiError(errorcode.INVALID_VALUES_ERR);
+        }
+    });
+
+    _self.__defineGetter__("bytesAvailable", function () {
+        return (_data.length - _position) || -1;
+    });
+
+    return _self;
+};
+
+module.exports = function () {
+    return {
+        maxPathLength: _maxPathLength,
+        resolve: function (onSuccess, onError, srcLocation, accessMode) {
+            function _resolve() {
+                var _mode = accessMode ? String(accessMode) : _defaultMode;
+
+                if (_mode === "r" || _mode === "rw") {
+                    _resolveAsync(onSuccess, onError, String(srcLocation), _mode);
+                    return null;
+                } else {
+                    if (onError) {
+                        setTimeout(function () {
+                            onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                        }, 1);
+                    }
+                }
+                return undefined;
+            }
+
+            return validate.validateTypeMismatch(onSuccess, onError, "resolve", _resolve);
+        },
+        handleSubFeatures: function (subFeatures) {
+            if (subFeatures["http://wacapps.net/api/filesystem"] ||
+               (subFeatures["http://wacapps.net/api/filesystem.read"] &&
+                subFeatures["http://wacapps.net/api/filesystem.write"])) {
+                return;
+            }
+            if (subFeatures["http://wacapps.net/api/filesystem.read"]) {
+                _readOnly = true;
+                return;
+            }
+            if (subFeatures["http://wacapps.net/api/filesystem.write"]) {
+                _writeOnly = true;
+                return;
+            }
+            _console.warn("WAC-2.0-Filesystem: something wrong in handleSubFeatures");
+        }
+    }; 
 };
 
 
@@ -35952,55 +37138,56 @@ var platform = require('ripple/platform'),
     _activatedFeatures = [],
     _availableSet = {},
     _availableFeatures = [],
-    _features = utils.copy(app.getInfo().features),
+    _features = {},
     initFeaturesSet,
     populateFeatures;
 
-    populateFeatures = function (objects) {
-        utils.forEach(objects, function (obj, key) {
-            var objFeatures = {}, rpt, i, j;
-            if (obj.feature) {
-                objFeatures = obj.feature.split('|');
-                utils.forEach(objFeatures, function (feature) {
-                    var avail = {uri: feature,
-                                 required: false,
-                                 param: null};
-                    _availableSet[feature] = avail;
-                });
-                if (_features) {
-                    rpt = objFeatures.length;
-                    j = 0;
-                    for (i = 0; i < rpt; i++) {
-                        if (!_features[objFeatures[j]]) {
-                            objFeatures.splice(j, 1);
-                        } else {
-                            j++;
-                        }
+populateFeatures = function (objects) {
+    utils.forEach(objects, function (obj, key) {
+        var objFeatures = {}, rpt, i, j;
+        if (obj.feature) {
+            objFeatures = obj.feature.split('|');
+            utils.forEach(objFeatures, function (feature) {
+                var avail = {uri: feature,
+                             required: false,
+                             param: null};
+                _availableSet[feature] = avail;
+            });
+            if (_features) {
+                rpt = objFeatures.length;
+                j = 0;
+                for (i = 0; i < rpt; i++) {
+                    if (!_features[objFeatures[j]]) {
+                        objFeatures.splice(j, 1);
+                    } else {
+                        j++;
                     }
                 }
-                utils.forEach(objFeatures, function (feature) {
-                    var avail = {uri: feature,
-                                 required: true,
-                                 param: null};
-                    _activatedSet[feature] = avail;
-                });
             }
-            if (obj.children) {
-                populateFeatures(obj.children);
-            }
-        });
-    };
+            utils.forEach(objFeatures, function (feature) {
+                var avail = {uri: feature,
+                             required: true,
+                             param: null};
+                _activatedSet[feature] = avail;
+            });
+        }
+        if (obj.children) {
+            populateFeatures(obj.children);
+        }
+    });
+};
 
-    initFeaturesSet = function () {
-        populateFeatures(platform.current().objects);
-        utils.forEach(_activatedSet, function (obj, key) {
-                _activatedFeatures.push(obj);
-            });
-        utils.forEach(_availableSet, function (obj, key) {
-                _availableFeatures.push(obj);
-            });
-        init_done = true;
-    };
+initFeaturesSet = function () {
+    _features = utils.copy(app.getInfo().features);
+    populateFeatures(platform.current().objects);
+    utils.forEach(_activatedSet, function (obj, key) {
+            _activatedFeatures.push(obj);
+        });
+    utils.forEach(_availableSet, function (obj, key) {
+            _availableFeatures.push(obj);
+        });
+    init_done = true;
+};
 
 module.exports = {
     listAvailableFeatures: function () {
@@ -36035,9 +37222,298 @@ require.define('ripple/platform/wac/2.0/camera', function (require, module, expo
  * limitations under the License.
  */
 
-module.exports = {
-};
+var utils = require('ripple/utils'),
+    constants = require('ripple/constants'),
+    errorcode = require('ripple/platform/wac/2.0/errorcode'),
+    PendingOperation = require('ripple/platform/wac/2.0/pendingoperation'),
+    PendingObject = require('ripple/platform/wac/2.0/pendingObject'),
+    DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror');
 
+module.exports = function () {
+    var _cameraArray, Camera, _videoStatus = {},
+        _captureImage, _startVideoCapture,
+        _doCaptureImage, _doStartVideoCapture,
+        _doGetPreview, _doGetCameras,
+        _stopVideoCapture, _createPreviewNode,
+        _FAKEWAITTIME = 3000,
+        _defaultHighRes = true,
+        _defaultImageFilename = "_capture.jpg",
+        _defaultVideoFilename = "_capture.avi",
+        _captureImageAllowed = true,
+        _startVideoCaptureAllowed = true,
+        _stopVideoCaptureAllowed = true,
+        _createPreviewNodeAllowed = true;
+
+    _doCaptureImage = function (onSuccess, onError, capFilename, capHighRes, pendingObj) {
+        pendingObj.pendingID = setTimeout(function () {
+            //pretend to do sth.
+            pendingObj.setCancelFlag(false);  // too late to cancel
+            if (capHighRes) {
+                onSuccess("high-" + capFilename);
+            } else {
+                onSuccess("low-" + capFilename);
+            }
+        }, _FAKEWAITTIME);
+    };
+
+    _captureImage = function (onSuccess, onError, options) {
+        var pendingOperation = {}, pendingObj,
+            filename = this.id + _defaultImageFilename,
+            highRes = _defaultHighRes, opt;
+
+        if (onSuccess) {
+            utils.validateArgumentType(onSuccess, "function", null, "captureImage: invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+        if (onError) {
+            utils.validateArgumentType(onError, "function", null, "captureImage: invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+        if (options) {
+            opt = new Object(options);
+            /* NOTE: if desktinationFilename or highRes is not provided by
+               user, i.e. undefined or null, a default value is used.
+             */
+            if (opt.destinationFilename !== null && opt.destinationFilename !== undefined) {
+            // TODO: validate filename via Filesystem.resolve()
+                filename = String(opt.destinationFilename);
+            }
+            if (opt.highRes !== null && opt.highRes !== undefined) {
+                highRes = Boolean(opt.highRes);
+            }
+        }
+        if (!_captureImageAllowed) {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.SECURITY_ERR));
+                }, 1);
+            }
+            return undefined;
+        }
+
+        if (onSuccess) {
+            pendingObj = new PendingObject();
+            _doCaptureImage(onSuccess, onError, filename, highRes, pendingObj);
+            pendingOperation = new PendingOperation(pendingObj);
+            return pendingOperation;
+        } else {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                }, 1);
+            }
+        }
+        return undefined;
+    };
+
+    _stopVideoCapture = function () {
+        if (_videoStatus[this.id]) {
+            if (_videoStatus[this.id].capHighRes) {
+                _videoStatus[this.id].capSuccess("high-" + _videoStatus[this.id].capFilename);
+            } else {
+                _videoStatus[this.id].capSuccess("low-" + _videoStatus[this.id].capFilename);
+            }
+            delete _videoStatus[this.id];
+        }
+    };
+
+    _doStartVideoCapture = function (camID, onSuccess, onError, filename, highRes, pendingObj) {
+        var videoStatus = {};
+        _videoStatus[camID] = videoStatus;
+        pendingObj.userCancel = function () {
+            delete _videoStatus[camID];
+        };
+        pendingObj.getCancelFlag = function () {
+            return !!_videoStatus[camID];
+        };
+        pendingObj.pendingID = setTimeout(function () {
+            // waiting to be cancelled
+            videoStatus = {
+                capSuccess: onSuccess,
+                capError: onError,
+                capFilename: filename,
+                capHighRes: highRes
+            };
+            _videoStatus[camID] = videoStatus;
+        }, _FAKEWAITTIME);
+    };
+
+    _startVideoCapture = function (onSuccess, onError, options) {
+        var pendingOperation = {}, pendingObj,
+            filename = this.id + _defaultVideoFilename,
+            highRes = _defaultHighRes, opt;
+
+        if (onSuccess) {
+            utils.validateArgumentType(onSuccess, "function", null, "startVideoCapture: invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+        if (onError) {
+            utils.validateArgumentType(onError, "function", null, "startVideoCapture: invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+        if (options) {
+            opt = new Object(options);
+            /* NOTE: if desktinationFilename or highRes is not provided by
+               user, i.e. undefined or null, a default value is used.
+             */
+            if (opt.destinationFilename !== null && opt.destinationFilename !== undefined) {
+            // TODO: validate filename via Filesystem.resolve()
+                filename = String(opt.destinationFilename);
+            }
+            if (opt.highRes !== null && opt.highRes !== undefined) {
+                highRes = Boolean(opt.highRes);
+            }
+        }
+        if (!_captureImageAllowed) {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.SECURITY_ERR));
+                }, 1);
+            }
+            return undefined;
+        }
+        if (_videoStatus[this.id]) { 
+            // capture already started
+            console.warn("WAC-2.0-startVideoCapture: capture already started");
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.UNKNOWN_ERR));
+                }, 1);
+            }
+            return undefined;
+        }
+
+        if (onSuccess) {
+            pendingObj = new PendingObject();
+            _doStartVideoCapture(this.id, onSuccess, onError, filename, highRes, pendingObj);
+            
+            pendingOperation = new PendingOperation(pendingObj);
+            return pendingOperation;
+        } else {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                }, 1);
+            }
+        }
+        return undefined;
+    };
+
+    _doGetPreview = function (onSuccess, onError, pendingObj) {
+        var container, demoImg;
+        container = document.createElement("div");
+        container.setAttribute("id", this.id + "-wac-2-0-camera-preview-container");
+        demoImg = document.createElement("img");
+        demoImg.setAttribute("id", this.id + "-wac-2-0-camera-demo-image");
+        demoImg.setAttribute("src", document.documentURI.replace(/index\.html$/, "") + constants.CAMERA.WINDOW_ANIMATION);
+        demoImg.setAttribute("width", "100%");
+        container.appendChild(demoImg);
+        
+        pendingObj.pendingID = setTimeout(function () {
+            pendingObj.setCancelFlag(false);  // too late to cancel
+            onSuccess(container);
+        }, _FAKEWAITTIME);
+    };
+
+    _createPreviewNode = function (onSuccess, onError) {
+        var pendingOperation, pendingObj = {};
+        if (onSuccess) {
+            utils.validateArgumentType(onSuccess, "function", null, "createPreviewNode: invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+        if (onError) {
+            utils.validateArgumentType(onError, "function", null, "createPreviewNode: invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+        if (!_createPreviewNodeAllowed) {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.SECURITY_ERR));
+                }, 1);
+            }
+            return undefined;
+        }
+        if (onSuccess) {
+            pendingObj = new PendingObject();
+            _doGetPreview(onSuccess, onError, pendingObj);
+            pendingOperation = new PendingOperation(pendingObj);
+            return pendingOperation;
+        } else {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                }, 1);
+            }
+        }
+        return undefined;
+    };
+
+    Camera = function (cameraID) {
+        return {
+            id: cameraID,
+            captureImage: _captureImage,
+            startVideoCapture: _startVideoCapture,
+            stopVideoCapture: _stopVideoCapture,
+            createPreviewNode: _createPreviewNode
+        };
+    };
+
+    _cameraArray = [new Camera("rear"), new Camera("front")];
+
+    _doGetCameras = function (onSuccess, onError, pendingObj) {
+        pendingObj.pendingID = setTimeout(function () {
+            pendingObj.setCancelFlag(false);  // too late to cancel
+            if (_cameraArray.length !== 0) {
+                onSuccess(utils.copy(_cameraArray));
+            } else {
+                // no camera
+                if (onError) {
+                    setTimeout(function () {
+                        onError(new DeviceApiError(errorcode.UNKNOWN_ERR));
+                    }, 1);
+                }
+            }
+        }, _FAKEWAITTIME);
+    };
+
+    this.getCameras = function (onSuccess, onError) {
+        var pendingOperation, pendingObj = {};
+        if (onSuccess) {
+            utils.validateArgumentType(onSuccess, "function", null, "getCameras: invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+        if (onError) {
+            utils.validateArgumentType(onError, "function", null, "getCameras: invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
+        }
+        if (onSuccess) {
+            pendingObj = new PendingObject();
+            _doGetCameras(onSuccess, onError, pendingObj);
+            pendingOperation = new PendingOperation(pendingObj);
+            return pendingOperation;
+        } else {
+            if (onError) {
+                setTimeout(function () {
+                    onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                }, 1);
+            }
+        }
+        return undefined;
+    };
+
+    this.handleSubFeatures = function (subFeatures) {
+        if (subFeatures["http://wacapps.net/api/camera"] ||
+           (subFeatures["http://wacapps.net/api/camera.capture"] &&
+            subFeatures["http://wacapps.net/api/camera.show"])) {
+            return;
+        }
+        if (subFeatures["http://wacapps.net/api/camera.show"] &&
+           !subFeatures["http://wacapps.net/api/camera.capture"]) {
+            _captureImageAllowed = false;
+            _startVideoCaptureAllowed = false;
+            _stopVideoCaptureAllowed = false;
+            return;
+        }
+        if (subFeatures["http://wacapps.net/api/camera.capture"] &&
+           !subFeatures["http://wacapps.net/api/camera.show"]) {
+            _createPreviewNodeAllowed = false;
+            return;
+        }
+        console.warn("WAC-2.0-handleSubFeatures: something wrong");
+    };
+};
 
 });
 require.define('ripple/platform/wac/2.0/geolocation', function (require, module, exports) {
@@ -36060,9 +37536,10 @@ require.define('ripple/platform/wac/2.0/geolocation', function (require, module,
 var geo = require('ripple/geo'),
     Position = require('ripple/platform/w3c/1.0/Position'),
     PositionError = require('ripple/platform/w3c/1.0/PositionError'),
-    lastPosition = null,
+    _lastPosition = null,
     _watches = {},
-    defaultInterval = 100,
+    _defaultInterval = 100,
+    _defaultDelay = 50,
     _self;
 
 function _createPosition() {
@@ -36088,15 +37565,14 @@ function _isValid(onSuccess, onError, options, argLength) {
     if (typeof onSuccess !== "function")   // imply onSuccess == null
         return false;
 
-    if (onError
-        && typeof onError !== "function")
+    if (onError !== undefined && typeof onError !== "function")
         return false;
 
-    if (options
-        && (typeof options !== "object"
-        || typeof options.enableHighAccuracy !== "boolean"
-        || typeof options.timeout !== "number"
-        || typeof options.maximumAge !== "number"))
+    if (options !== undefined &&
+        (typeof options !== "object" ||
+        typeof options.enableHighAccuracy !== "boolean" ||
+        typeof options.timeout !== "number" ||
+        typeof options.maximumAge !== "number"))
         return false;
 
     return true;
@@ -36109,57 +37585,35 @@ function _processOptions(options) {
         maximumAge: 0
     };
 
-    if (options
-        && options.maximumAge
-        && options.maximumAge === Math.floor(options.maximumAge)
-        && options.maximumAge >= 0) {
-        validOptions.maximumAge = options.maximumAge;
+    if (options !== undefined &&
+        options.maximumAge !== undefined &&
+        options.maximumAge === Math.floor(options.maximumAge) &&
+        options.maximumAge >= 0) {
+        validOptions.maximumAge = options.maximumAge | 0;
     }
     else {
         validOptions.maximumAge = 0;
     }
 
-    if (options
-        && options.timeout
-        && options.timeout === Math.floor(options.timeout)) {
-        validOptions.timeout = (options.timeout >= 0) ? options.timeout : 0;
+    if (options !== undefined &&
+        options.timeout !== undefined &&
+        options.timeout === Math.floor(options.timeout)) {
+        validOptions.timeout = (options.timeout >= 0) ? (options.timeout | 0) : 0;
     }
     else {
         validOptions.timeout = Infinity;
     }
 
-    if (options && options.enableHighAccuracy) {
+    if (options !== undefined && options.enableHighAccuracy !== undefined) {
         validOptions.enableHighAccuracy = options.enableHighAccuracy;
     }
     else {
         validOptions.enableHighAccuracy = false;
     }
 
-    validOptions.delay = geo.delay * 1000 || 1;
+    validOptions.delay = geo.delay * 1000 || _defaultDelay;
 
     return validOptions;
-}
-
-function _execute(data) {
-    return function () {
-        window.setTimeout(function () {
-            if ((data.delay <= data.timeout) && (data.timeout !== 0)) {
-                if (lastPosition === null
-                    || ((new Date()).getTime() - lastPosition.timestamp > data.maximumAge))
-                    lastPosition = _createPosition();
-
-                if (lastPosition) {
-                    data.onSuccess(lastPosition);
-                }
-                else {
-                    _errorOccur(PositionError.POSITION_UNAVAILABLE, data.onError);
-                }
-            }
-            else {
-                _errorOccur(PositionError.TIMEOUT, data.onError);
-            }
-        }, Math.min(data.delay, data.timeout));
-    };
 }
 
 function _errorOccur(code, onError) {
@@ -36181,6 +37635,39 @@ function _errorOccur(code, onError) {
     }
 
     onError(error);
+}
+
+function _execute(data) {
+    return function () {
+        if (data.timeout === 0) {
+            _errorOccur(PositionError.TIMEOUT, data.onError);
+            return;
+        }
+
+        if (_lastPosition !== null &&
+            ((new Date()).getTime() - _lastPosition.timestamp <= data.maximumAge)) {
+            window.setTimeout(function () {
+                data.onSuccess(_lastPosition);
+            }, 1);
+        }
+        else {
+            window.setTimeout(function () {
+                if (data.delay <= data.timeout) {
+                    _lastPosition = _createPosition();
+
+                    if (_lastPosition !== null) {
+                        data.onSuccess(_lastPosition);
+                    }
+                    else {
+                        _errorOccur(PositionError.POSITION_UNAVAILABLE, data.onError);
+                    }
+                }
+                else {
+                    _errorOccur(PositionError.TIMEOUT, data.onError);
+                }
+            }, Math.min(data.delay, data.timeout));
+        }
+    };
 }
 
 function _interval(k, n) { 
@@ -36205,7 +37692,7 @@ _self = {
             return undefined;
 
         var validData = _processOptions(geolocationOptions),
-            watchId = (new Date()).getTime(),
+            watchId = (new Date()).getTime() | 0,
             watchObj = {
                 onSuccess:          geolocationSuccess,
                 onError:            geolocationError,
@@ -36213,7 +37700,7 @@ _self = {
                 timeout:            validData.timeout,
                 maximumAge:         validData.maximumAge,
                 delay:              validData.delay,
-                interval:           _interval(validData.maximumAge || defaultInterval,
+                interval:           _interval(validData.maximumAge || _defaultInterval,
                                         Math.min(validData.delay, validData.timeout)),
             };
 
@@ -36226,15 +37713,14 @@ _self = {
     },
 
     clearWatch: function (watchId) {
-        if (arguments.length != 1)
+        if (arguments.length !== 1)
             return undefined;
 
-        if (typeof watchId !== "number")
-            return undefined;
+        var id = watchId | 0;
 
-        if (_watches[watchId]) {
-            window.clearInterval(_watches[watchId].intervalId);
-            delete _watches[watchId];
+        if (_watches[id]) {
+            window.clearInterval(_watches[id].intervalId);
+            delete _watches[id];
 
             return null;
         }
@@ -36294,8 +37780,7 @@ var utils = require('ripple/utils'),
             gamma: gamma || 0
         };
     },
-    errorcode = require('ripple/platform/wac/2.0/errorcode'),
-    DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror'),
+    validate = require('ripple/platform/wac/2.0/validate'),
     _rotationInfo = new Rotation(),
     _defaultInterval = 100,
     _watches = {},
@@ -36303,40 +37788,18 @@ var utils = require('ripple/utils'),
 
 module.exports = _self = {
     getCurrentOrientation: function (onSuccess, onError) {
-
-        if (onSuccess) {
-            utils.validateArgumentType(onSuccess, "function", null, "getCurrentOrientation invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
-        if (onError) {
-            utils.validateArgumentType(onError, "function", null, "getCurrentOrientation invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
-
-        if (onSuccess) {
+        function _getCurrentOrientation() {
             setTimeout(function () {
                 onSuccess(utils.copy(_rotationInfo));
             }, 1);
             return null;
-        } else {
-            if (onError) {
-                setTimeout(function () {
-                    onError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
-                }, 1);
-            }
         }
 
-        return undefined;
+        return validate.validateTypeMismatch(onSuccess, onError, "getCurrentOrientation", _getCurrentOrientation);
     },
 
     watchOrientation: function (orientationSuccess, orientationError, options) {
-
-        if (orientationSuccess) {
-            utils.validateArgumentType(orientationSuccess, "function", null, "watchOrientation invalid successCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
-        if (orientationError) {
-            utils.validateArgumentType(orientationError, "function", null, "watchOrientation invalid errorCallback parameter", new DeviceApiError(errorcode.TYPE_MISMATCH_ERR));
-        }
-
-        if (orientationSuccess) {
+        function _watchOrientation() {
             var watchId = (new Date()).getTime() | 0,
                 watchObj = {},
                 opt = Object(options),
@@ -36360,23 +37823,17 @@ module.exports = _self = {
             }, _watches[watchId].interval);
 
             return watchId;
-        } else {
-            if (orientationError) {
-                setTimeout(function () {
-                    orientationError(new DeviceApiError(errorcode.INVALID_VALUES_ERR));
-                }, 1);
-            }
         }
 
-        return undefined;
+        return validate.validateTypeMismatch(orientationSuccess, orientationError, "watchOrientation", _watchOrientation);
     },
 
     clearWatch: function (watchId) {
 
         var id = watchId | 0;
-        if (_watches[watchId]) {
-            clearInterval(_watches[watchId].intervalId);
-            delete(_watches[watchId]);
+        if (_watches[id]) {
+            clearInterval(_watches[id].intervalId);
+            delete(_watches[id]);
             return null;
         }
 
@@ -36455,6 +37912,36 @@ module.exports = function (code) {
     };
 };
 
+
+});
+require.define('ripple/platform/wac/2.0/pendingObject', function (require, module, exports) {
+/*
+ *  Copyright 2011 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports = function (pendingObj) {
+    var cancelFlag = true;
+    this.setCancelFlag = function (flag) {
+        cancelFlag = flag;
+    };
+    this.getCancelFlag = function () {
+        return cancelFlag;
+    };
+    this.userCancel = null;
+    this.pendingID = null;
+};
 
 });
 require.define('ripple/platform/wac/2.0/deviceinteraction', function (require, module, exports) {
@@ -36606,7 +38093,8 @@ module.exports = {
                 },
                 filesystem: {
                     path: "wac/2.0/filesystem",
-                    feature: "http://wacapps.net/api/filesystem"
+                    feature: "http://wacapps.net/api/filesystem|http://wacapps.net/api/filesystem.read|http://wacapps.net/api/filesystem.write",
+                    handleSubfeatures: true
                 },
                 messaging: {
                     path: "wac/2.0/messaging",
@@ -38040,7 +39528,7 @@ module.exports = {
 
         configFeatures = configValidationObject.widget.children.feature.validationResult;
         utils.forEach(configFeatures, function (f) {
-            if (f.valid == true) {
+            if (f.valid === true) {
                 var feature = {id: f.attributes.name.value,
                          required: f.attributes.required.valid};
                 widgetInfo.features[feature.id] = feature;
@@ -47560,7 +49048,7 @@ var omgwtf = require('ripple/omgwtf'),
     _self = {
         boot: function (booted) {
             // techdebt (event registration timing)
-            require('ripple/platform/webworks.core/2.0.0/fsCache');
+            // require('ripple/platform/webworks.core/2.0.0/fsCache');
 
             jWorkflow.order(omgwtf.initialize, omgwtf)
                  .andThen(appcache.initialize, appcache)
