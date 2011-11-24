@@ -17,7 +17,13 @@
 //debugger;
 describe("wac_2.0_filesystem", function () {
     var Filesystem = require('ripple/platform/wac/2.0/filesystem'),
+        db = require('ripple/db'),
         fs = new Filesystem();
+
+    beforeEach(function () {
+        spyOn(db, "retrieveObject");
+        spyOn(db, "saveObject");
+    });
 
     it("fs: maxPathLength is 256", function () {
         expect(fs.maxPathLength).toEqual(256);
