@@ -45,8 +45,6 @@ describe("wac_2.0_orientation", function () {
         };
         orient.getCurrentOrientation(null, error);
         waits(1);
-        runs(function () {
-        });
     });
 
     it("getCurrentOrientation calls the success callback", function () {
@@ -86,8 +84,6 @@ describe("wac_2.0_orientation", function () {
         };
         orient.watchOrientation(null, error);
         waits(1);
-        runs(function () {
-        });
     });
 
     it("watchOrientation calls the callback on the given interval", function () {

@@ -47,8 +47,6 @@ describe("wac_2.0_filesystem", function () {
 
         fs.resolve(null, error);
         waits(2);
-        runs(function () {
-        });
     });
 
     it("fs: resolve the right parameter", function () {
@@ -63,8 +61,6 @@ describe("wac_2.0_filesystem", function () {
 
         fs.resolve(success, error, "images", "rw");
         waits(2);
-        runs(function () {
-        });
     });
 
     it("fs: resolve the wrong parameter", function () {
@@ -75,8 +71,6 @@ describe("wac_2.0_filesystem", function () {
 
         fs.resolve(success, error, "image", "rw");
         waits(2);
-        runs(function () {
-        });
     });
 
     it("file: createDirectory and deleteDirectory", function () {
@@ -105,14 +99,10 @@ describe("wac_2.0_filesystem", function () {
             }
             file.deleteDirectory(deleteSuccess, null, "images/createTmp", false);
             waits(2);
-            runs(function () {
-            });
         };
         
         fs.resolve(success, error, "images", "rw");
         waits(2);
-        runs(function () {
-        });
     });
 
     it("file: createFile and deleteFile", function () {
@@ -142,14 +132,10 @@ describe("wac_2.0_filesystem", function () {
 
             file.deleteFile(deleteSuccess, null, "images/createTmpFile");
             waits(2);
-            runs(function () {
-            });
         };
 
         fs.resolve(success, error, "images", "rw");
         waits(2);
-        runs(function () {
-        });
     });
 
     it("file: resolve", function () {
@@ -183,14 +169,10 @@ describe("wac_2.0_filesystem", function () {
 
             file.deleteFile(deleteSuccess, null, "images/createTmpFile");
             waits(2);
-            runs(function () {
-            });
         };
 
         fs.resolve(success, error, "images", "rw");
         waits(2);
-        runs(function () {
-        });
     });
 
     it("file: listFiles", function () {
@@ -229,8 +211,6 @@ describe("wac_2.0_filesystem", function () {
 
             file.listFiles(listSuccess, null);
             waits(2);
-            runs(function () {
-            });
         };
 
         fs.resolve(success, error, "images", "rw");
@@ -279,8 +259,6 @@ describe("wac_2.0_filesystem", function () {
 
             file.listFiles(listSuccess, null, {name: "c%"});
             waits(2);
-            runs(function () {
-            });
         };
 
         fs.resolve(success, error, "images", "rw");
@@ -288,8 +266,6 @@ describe("wac_2.0_filesystem", function () {
         runs(function () {
             _file.deleteFile(deleteSuccess, null, "images/createListFile");
             waits(2);
-            runs(function () {
-            });
         });
     });
 
@@ -329,8 +305,6 @@ describe("wac_2.0_filesystem", function () {
 
             file.copyTo(cpSuccess, null, "images/createListFile", "images/createListFile2", false);
             waits(2);
-            runs(function () {
-            });
         };
 
         fs.resolve(success, error, "images", "rw");
@@ -341,8 +315,6 @@ describe("wac_2.0_filesystem", function () {
             runs(function () {
                 _file.deleteFile(delete2Success, null, "images/createListFile2");
                 waits(2);
-                runs(function () {
-                });
             });
         });
     });
@@ -380,8 +352,6 @@ describe("wac_2.0_filesystem", function () {
 
             file.moveTo(mvSuccess, error, "images/createListFile", "images/createListFile2", false);
             waits(2);
-            runs(function () {
-            });
         };
 
         fs.resolve(success, error, "images", "rw");
@@ -389,8 +359,6 @@ describe("wac_2.0_filesystem", function () {
         runs(function () {
             _file.deleteFile(deleteSuccess, null, "images/createListFile2");
             waits(2);
-            runs(function () {
-            });
         });
     });
 
@@ -425,8 +393,6 @@ describe("wac_2.0_filesystem", function () {
 
             _newFile.readAsText(readSuccess, error);
             waits(2);
-            runs(function () {
-            });
         };
 
         fs.resolve(success, error, "images", "rw");
@@ -434,8 +400,6 @@ describe("wac_2.0_filesystem", function () {
         runs(function () {
             _file.deleteFile(deleteSuccess, null, "images/createListFile");
             waits(2);
-            runs(function () {
-            });
         });
     });
 
@@ -482,8 +446,6 @@ describe("wac_2.0_filesystem", function () {
             runs(function () {
                 _newFile.readAsText(readSuccess, error);
                 waits(2);
-                runs(function () {
-                });
             });
         };
 
@@ -492,8 +454,6 @@ describe("wac_2.0_filesystem", function () {
         runs(function () {
             _file.deleteFile(deleteSuccess, null, "images/createListFile");
             waits(2);
-            runs(function () {
-            });
         });
     });
 
@@ -559,8 +519,6 @@ describe("wac_2.0_filesystem", function () {
             runs(function () {
                 _newFile.openStream(stream2Success, error, "r");
                 waits(2);
-                runs(function () {
-                });
             });
         };
 
@@ -569,8 +527,6 @@ describe("wac_2.0_filesystem", function () {
         runs(function () {
             _file.deleteFile(deleteSuccess, null, "images/createListFile");
             waits(2);
-            runs(function () {
-            });
         });
     });
 
@@ -641,8 +597,6 @@ describe("wac_2.0_filesystem", function () {
             runs(function () {
                 _newFile.openStream(stream2Success, error, "r");
                 waits(2);
-                runs(function () {
-                });
             });
         };
 
@@ -651,8 +605,6 @@ describe("wac_2.0_filesystem", function () {
         runs(function () {
             _file.deleteFile(deleteSuccess, null, "images/createListFile");
             waits(2);
-            runs(function () {
-            });
         });
     });
 });
