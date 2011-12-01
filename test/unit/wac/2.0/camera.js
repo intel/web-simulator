@@ -18,7 +18,7 @@
 describe("wac_2.0_camera", function () {
     var Camera = require('ripple/platform/wac/2.0/camera'),
         platform = require('ripple/platform'),
-        camera,
+        camera, CAM_WAIT_TIME = 21,
 
     _featureSetup = function (feature) {
         var f = {},
@@ -57,12 +57,12 @@ describe("wac_2.0_camera", function () {
                     };
                 cam0 = cams[0];
                 cam0.captureImage(capImgSuccess, securityError);
-                waits(3001);
+                waits(CAM_WAIT_TIME);
                 cam0.createPreviewNode(success, securityError);
             };
         _featureSetup("http://wacapps.net/api/camera.capture");
         camera.getCameras(getCameraOK, null);
-        waits(3001);
+        waits(CAM_WAIT_TIME);
     });
 
 });
