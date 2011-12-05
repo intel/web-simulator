@@ -4,35 +4,20 @@ NETWORK:
 CACHE:
 package.json
 beep.wav
-images/Bold9700.png
-images/Bold9900.png
 images/circle.png
 images/compass.png
-images/Curve9300.png
-images/Curve9350-9360-9370.png
-images/dance.gif
 images/dontPanic.png
 images/getstarted.png
 images/Icon_128x128.png
 images/Icon_150x150.png
 images/Icon_16x16.png
 images/Icon_48x48.png
-images/load.gif
 images/load2.gif
 images/NOTICE
-images/Pearl9100.png
-images/Playbook.png
-images/Playbook_landscape.png
 images/README.md
-images/ripplelogo.png
-images/ripplelogo_large.png
-images/Style9670.png
-images/Torch9800.png
-images/Torch9800_landscape.png
-images/Torch9810.png
-images/Torch9810_landscape.png
-images/Torch9860-9850.png
-images/Torch9860-9850_landscape.png
+images/tizen-wave.gif
+images/tizenlogo.png
+images/tizenlogo_large.png
 images/ui-bg-hashed.png
 index.html
 ripple.css
@@ -69,4 +54,4 @@ themes/light/images/ui-icons_454545_256x240.png
 themes/light/images/ui-icons_888888_256x240.png
 themes/light/images/ui-icons_cd0a0a_256x240.png
 themes/light/theme.css
-# Manifest build date: Fri Dec 02 2011 15:13:53 GMT+0800 (CST)
+# Manifest build date: Mon Dec 05 2011 13:42:44 GMT+0800 (CST)

@@ -855,7 +855,7 @@ section.left { left: 0; }
 }
 
     .error-logo {
-        background: url("images/ripplelogo_large.png") no-repeat 10px 10px;
+        background: url("images/tizenlogo_large.png") no-repeat 10px 10px;
         background-size: 100% 100%;
         position: absolute;
         width: 122px;
@@ -871,7 +871,7 @@ section.left { left: 0; }
         width: 230px;
         height: 284px;
         top: -242px;
-        left: 268px;
+        left: 218px;
     }
 
     .error-dialog > button {
@@ -916,7 +916,7 @@ section.left { left: 0; }
 }
 
     .platform-select-logo {
-        background: url("images/ripplelogo_large.png") no-repeat 10px 10px;
+        background: url("images/tizenlogo_large.png") no-repeat 10px 10px;
         background-size: 100% 100%;
         position: absolute;
         width: 122px;

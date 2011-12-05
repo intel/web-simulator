@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Fri Dec 02 2011 15:13:53 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Mon Dec 05 2011 13:42:44 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -22506,7 +22506,7 @@ module.exports = {
     },
 
     "CAMERA": {
-        "WINDOW_ANIMATION": "images/dance.gif",
+        "WINDOW_ANIMATION": "images/tizen-wave.gif",
         "WARNING_TEXT": "The runtime simulated saving the camera file to {file}. If you need to access this file in your application, please copy a file to the saved location"
     },
 
@@ -23066,7 +23066,7 @@ _self = {
         _motion = _bind("ondevicemotion", widgetWindow);
         _orientation = _bind("ondeviceorientation", widgetWindow);
 
-        widgetWindow.addEventListener = function (event, callback) {
+        widgetWindow.addEventListener = function (event, callback, useCapture) {
             if (event === "deviceorientation") {
                 _orientation.set(callback);
             }
@@ -23074,14 +23074,14 @@ _self = {
                 _motion.set(callback);
             }
             else {
-                add(event, callback);
+                add.call(widgetWindow, event, callback, useCapture);
             }
         };
 
         widgetWindow.removeEventListener = function (event, callback) {
             _motion.unbind(callback);
             _orientation.unbind(callback);
-            remove(callback);
+            remove.call(widgetWindow, event, callback);
         };
 
         event.on("DeviceMotionEvent", function (motion) {
@@ -25791,14 +25791,14 @@ var db = require('ripple/db'),
     event = require('ripple/event'),
     utils = require('ripple/utils'),
     _positionInfo = {
-        "latitude": 43.465187,
-        "longitude": -80.522372,
-        "altitude": 100,
+        "latitude": 39.968362,
+        "longitude": 116.410186,
+        "altitude": 50,
         "accuracy": 150,
         "altitudeAccuracy": 80,
         "heading": 0,
         "speed": 0,
-        "cellID": 321654
+        "cellID": 1130433
     },
     self;
 
@@ -33193,21 +33193,24 @@ function _errorOccurred(onError, code) {
 }
 
 function _pendingOperate(operate, scope) {
-    var pendingObj, pendingOperation, i, argumentVector = [];
+    var i, argumentVector = [];
 
     for (i = 0; i < arguments.length - 2; i++)
         argumentVector[i] = arguments[i + 2];
 
-    pendingObj = new PendingObject();
+    return function () {
+        var pendingObj, pendingOperation;
 
-    pendingObj.pendingID = window.setTimeout(function () {
-        pendingObj.setCancelFlag(false);
-        operate.apply(scope, argumentVector);
-    }, _PENDING_TIME);
+        pendingObj = new PendingObject();
+        pendingObj.pendingID = window.setTimeout(function () {
+            pendingObj.setCancelFlag(false);
+            operate.apply(scope, argumentVector);
+        }, _PENDING_TIME);
 
-    pendingOperation = new PendingOperation(pendingObj);
+        pendingOperation = new PendingOperation(pendingObj);
 
-    return pendingOperation;
+        return pendingOperation;
+    };
 }
 
 function _defaultContacts() {
@@ -33516,7 +33519,7 @@ ContactProperties = {
 };
 
 Contact = function () {
-    var id = (new Date()).getTime() | 0;
+    var id = Math.uuid(null, 16);
 
     this.__defineGetter__("id", function () {
         return id;
@@ -33858,8 +33861,7 @@ _self = {
         }
     },
     write: function (path, contents, success, error, options) {
-        var entry = _get(path),
-            info = _getInfo(path);
+        var entry = _get(path);
 
         if (entry) {
             entry.lastModifiedDate = new Date();
@@ -35082,7 +35084,7 @@ File = function (entry, mode) {
                 var _matched = true, 
                     _name1 = String(_filterName).toLowerCase(),
                     _name2 = fileName.toLowerCase(),
-                    _pattern, _r;
+                    _pattern;
 
                 if (_filterName !== undefined && _filterName !== null) {
                     if (!_name1.match("\\\\%")) {
@@ -37229,24 +37231,27 @@ var db = require('ripple/db'),
 
 module.exports = function () {
     var _taskListArray = [],
-        _PENDING_TIME = 1000;
+        _PENDING_TIME = 10;
 
     function _pendingOperate(operate) {
-        var pendingObj, pendingOperation, i, argumentVector = [];
+        var i, argumentVector = [];
 
         for (i = 0; i < arguments.length - 1; i++)
             argumentVector[i] = arguments[i + 1];
 
-        pendingObj = new PendingObject();
+        return function () {
+            var pendingObj, pendingOperation, i, argumentVector = [];
+            pendingObj = new PendingObject();
 
-        pendingObj.pendingID = window.setTimeout(function () {
-            pendingObj.setCancelFlag(false);
-            operate.apply(this, argumentVector);
-        }, _PENDING_TIME);
+            pendingObj.pendingID = window.setTimeout(function () {
+                pendingObj.setCancelFlag(false);
+                operate.apply(this, argumentVector);
+            }, _PENDING_TIME);
 
-        pendingOperation = new PendingOperation(pendingObj);
+            pendingOperation = new PendingOperation(pendingObj);
 
-        return pendingOperation;
+            return pendingOperation;
+        };
     }
 
     /* taskProperties attribute check & paste */
@@ -37281,6 +37286,15 @@ module.exports = function () {
             if (!wac2_utils.isValidDate(p.dueDate))
                 return false;
             dst.dueDate = new Date(p.dueDate);
+        }
+
+        /* dueDate is a option properties.
+           "The default value is undefined.
+             If no value is provided, the task has no due date."
+           If p.dueDate is set its default value 'undefined',
+           we assign default value to dst.dueDate */
+        if (p.dueDate === undefined) {
+            dst.dueDate = undefined;
         }
 
         return true;
