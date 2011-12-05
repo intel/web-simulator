@@ -23,24 +23,49 @@
 
     <section id="messaging" class="info ui-widget-content ui-corner-all" style="display: none;">
         <section class="messaging-info">
+        	<h4>Messaging Sending</h4>
             <table id="messaging-sms-fields" class="panel-table">
                 <tr>
                     <td><label class="ui-text-label">From</label></td>
                     <td><input id="messaging-sms-number" type="text" class="ui-state-default ui-corner-all"></td>
                 </tr>
-            </table>
-
-            <table class="panel-table">
+                
+                <tr>
+                    <td><label class="ui-text-label">Type</label></td>
+                    <td><select id="messaging-type" class="ui-state-default ui-corner-all"></select></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">Text</label></td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td colspan="2">
                         <textarea class="ui-state-default ui-corner-all" id="messaging-text" rows="4" style="width: 90%;"></textarea>
                     </td>
                 </tr>
-
-                <tr>
-                    <td colspan="2">
+                <td>
                         <button id="messaging-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span class="ui-button-text">Send SMS</span>
+                            <span class="ui-button-text">Send</span>
+                        </button>
+                    </td>
+            </table>
+
+			<h4>Messaging Receiving</h4>
+            <table class="panel-table">
+                <tr>
+                    <td><label class="ui-text-label">Recipients</label></td>
+                    <td><input id="messaging-recipients" type="text" class="ui-state-default ui-corner-all"></td>
+                </tr>
+            </table>
+
+            <table class="panel-table">
+                <tr>
+                    <td colspan="6">
+                        <span id="messaging-received"></span>
+                    </td>
+                    <td colspan="2">
+                        <button id="messaging-read" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                            <span class="ui-button-text">Read</span>
                         </button>
                     </td>
                 </tr>
