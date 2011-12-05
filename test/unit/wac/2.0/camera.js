@@ -18,7 +18,7 @@
 describe("wac_2.0_camera", function () {
     var Camera = require('ripple/platform/wac/2.0/camera'),
         platform = require('ripple/platform'),
-        camera, CAM_WAIT_TIME = 21,
+        camera, CAM_WAIT_TIME = 6,
 
     _featureSetup = function (feature) {
         var f = {},
