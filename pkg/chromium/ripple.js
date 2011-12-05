@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Mon Dec 05 2011 13:42:44 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Mon Dec 05 2011 17:14:13 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -22453,7 +22453,7 @@ module.exports = {
     },
 
     "DEVICE":  {
-        "SAVED_KEY": "device-key",
+        "SAVED_KEY": "device-key"
     },
 
     "ENCAPSULATOR":  {
@@ -22463,7 +22463,8 @@ module.exports = {
         "DISPLAY_LAYOUT": {
             "LANDSCAPE": "landscape",
             "PORTRAIT": "portrait"
-        }
+        },
+        "ZOOMING": "screen-zooming"
     },
 
     "GEO":  {
@@ -28277,8 +28278,7 @@ module.exports = {
     "webworks.tablet": {"2.0.0": require('ripple/platform/webworks.tablet/2.0.0/spec')},
     "web": {"default": require('ripple/platform/web/default/spec')},
 */
-    "wac": {"1.0": require('ripple/platform/wac/1.0/spec'), 
-            "2.0": require('ripple/platform/wac/2.0/spec')}
+    "wac": {"2.0": require('ripple/platform/wac/2.0/spec')}
 };
 
 });
@@ -32266,7 +32266,7 @@ var db = require('ripple/db'),
     _TENTATIVE_STATUS = 0, _CONFIRMED_STATUS = 1, _CANCELLED_STATUS = 2,
     _NO_ALARM = 0, _SILENT_ALARM = 1, _SOUND_ALARM = 2,
     _calendars = [], _DB_CALENDARS_KEY = "wac2-db-calendars",
-    _FAKEWAITTIME = 20, _FAKE_LONG_WAITTIME = 2000,
+    _FAKEWAITTIME = 5, _FAKE_LONG_WAITTIME = 10,
     _save_calendars, _eventPropCheck, _eventFilterCheck,
     _addEventAllowed = true, _deleteEventAllowed = true,
     _updateEventAllowed = true, _findEventsAllowed = true,
@@ -32321,14 +32321,25 @@ _eventPropCheck = function (prop, dst) {
             return false;
         }
     }
-    if (dst.recurrence !== _NO_RECURRENCE && prop.expires !== null && prop.expires !== undefined) {
-        if (!wac2_utils.isValidDate(prop.expires)) {
-            return false;
+    if (dst.recurrence === _NO_RECURRENCE) {
+        dst.expires = null;
+        dst.interval = null;
+    } else {
+        // expires and interval matters when recurrence is not NO_RECURRENCE
+        if (prop.expires !== null && prop.expires !== undefined) {
+            if (!wac2_utils.isValidDate(prop.expires)) {
+                return false;
+            }
+            dst.expires = new Date(prop.expires);
         }
-        dst.expires = new Date(prop.expires);
-    }
-    if (dst.recurrence !== _NO_RECURRENCE && prop.interval !== null && prop.interval !== undefined) {
-        dst.interval = prop.interval | 0;
+        // expires === undefined -> to recur indefinitely
+        // expires === null -> keep dst.expires unchanged, even it's null
+        if (prop.expires === undefined) {
+            dst.expires = null;
+        }
+        if (prop.interval !== null && prop.interval !== undefined) {
+            dst.interval = prop.interval | 0;
+        }
     }
 
     if (prop.status !== null && prop.status !== undefined) {
@@ -32681,9 +32692,9 @@ Calendar = function (type, name, events) {
                     if (_eventFilter.initialStartDate !== undefined ||
                         _eventFilter.endStartDate !== undefined) {
                         if (valid_tmp) {
-                            tmp = wac2_utils.matchOptionDate(tmp, "startTime", _eventFilter.endStartDate, _eventFilter.endStartDate);
+                            tmp = wac2_utils.matchOptionDate(tmp, "startTime", _eventFilter.initialStartDate, _eventFilter.endStartDate);
                         } else {
-                            tmp = wac2_utils.matchOptionDate(_events, "startTime", _eventFilter.endStartDate, _eventFilter.endStartDate);
+                            tmp = wac2_utils.matchOptionDate(_events, "startTime", _eventFilter.initialStartDate, _eventFilter.endStartDate);
                             valid_tmp = true;
                         }
                     }
@@ -32783,7 +32794,7 @@ module.exports = function () {
                             }
                             if ((cal[i].events[e].expires !== undefined) &&
                                 cal[i].events[e].expires !== null) {
-                                cal[i].events[e].expires = new Date(cal[e].events[i].expires);
+                                cal[i].events[e].expires = new Date(cal[i].events[e].expires);
                             }
                         }
                         _calendars.push(new Calendar(cal[i].type, cal[i].name, cal[i].events));
@@ -32844,6 +32855,7 @@ require.define('ripple/platform/wac/2.0/camera', function (require, module, expo
 
 var utils = require('ripple/utils'),
     constants = require('ripple/constants'),
+    _console = require('ripple/console'),
     errorcode = require('ripple/platform/wac/2.0/errorcode'),
     PendingOperation = require('ripple/platform/wac/2.0/pendingoperation'),
     PendingObject = require('ripple/platform/wac/2.0/pendingObject'),
@@ -32855,7 +32867,7 @@ module.exports = function () {
         _doCaptureImage, _doStartVideoCapture,
         _doGetPreview, _doGetCameras,
         _stopVideoCapture, _createPreviewNode,
-        _FAKEWAITTIME = 20,
+        _FAKEWAITTIME = 5,
         _defaultHighRes = true,
         _defaultImageFilename = "_capture.jpg",
         _defaultVideoFilename = "_capture.avi",
@@ -32990,7 +33002,7 @@ module.exports = function () {
         }
         if (_videoStatus[this.id]) { 
             // capture already started
-            console.warn("WAC-2.0-startVideoCapture: capture already started");
+            _console.warn("WAC-2.0-startVideoCapture: capture already started");
             if (onError) {
                 setTimeout(function () {
                     onError(new DeviceApiError(errorcode.UNKNOWN_ERR));
@@ -33015,12 +33027,12 @@ module.exports = function () {
         return undefined;
     };
 
-    _doGetPreview = function (onSuccess, onError, pendingObj) {
+    _doGetPreview = function (camID, onSuccess, onError, pendingObj) {
         var container, demoImg;
         container = document.createElement("div");
-        container.setAttribute("id", this.id + "-wac-2-0-camera-preview-container");
+        container.setAttribute("id", camID + "-wac-2-0-camera-preview-container");
         demoImg = document.createElement("img");
-        demoImg.setAttribute("id", this.id + "-wac-2-0-camera-demo-image");
+        demoImg.setAttribute("id", camID + "-wac-2-0-camera-demo-image");
         demoImg.setAttribute("src", document.documentURI.replace(/index\.html$/, "") + constants.CAMERA.WINDOW_ANIMATION);
         demoImg.setAttribute("width", "100%");
         container.appendChild(demoImg);
@@ -33049,7 +33061,7 @@ module.exports = function () {
         }
         if (onSuccess) {
             pendingObj = new PendingObject();
-            _doGetPreview(onSuccess, onError, pendingObj);
+            _doGetPreview(this.id, onSuccess, onError, pendingObj);
             pendingOperation = new PendingOperation(pendingObj);
             return pendingOperation;
         } else {
@@ -33131,7 +33143,7 @@ module.exports = function () {
             _createPreviewNodeAllowed = false;
             return;
         }
-        console.warn("WAC-2.0-handleSubFeatures: something wrong");
+        _console.warn("WAC-2.0-handleSubFeatures: something wrong");
     };
 };
 
@@ -47586,13 +47598,55 @@ require.define('ripple/ui/plugins/devices', function (require, module, exports) 
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var constants = require('ripple/constants'),
+    db = require('ripple/db');
+
+function _getTextZooming(zooming) {
+    return zooming + '%';
+}
+
 module.exports = {
     panel: {
         domId: "devices-container",
         collapsed: true,
         pane: "left"
+    },
+
+    initialize: function () {
+        var zooming = document.getElementById(constants.ENCAPSULATOR.ZOOMING);
+
+        function updateZoomingValues() {
+            var zoomingText, scaleFactor, scaleString;
+            
+            zoomingText = _getTextZooming(zooming.value);
+            jQuery('#screen-zooming-label').html(zoomingText);
+
+            // Zooming device skin
+            scaleFactor = zooming.value/100;
+            scaleString = "scale(" + scaleFactor + ")";
+            jQuery('#device-container').css('-webkit-transform', scaleString);
+            jQuery('#device-container').css('-webkit-transform-origin', 'center top');
+	}
+
+        function initializeValues() {
+            var zoomingValue =  db.retrieve(constants.ENCAPSULATOR.ZOOMING);
+
+            if (!zoomingValue) {
+		zoomingValue = 100;
+	    }
+            jQuery("#" + constants.ENCAPSULATOR.ZOOMING).val(zoomingValue);
+            updateZoomingValues();
+	}
+
+        jQuery("#" + constants.ENCAPSULATOR.ZOOMING).bind("change", function () {
+            updateZoomingValues();
+            db.save(constants.ENCAPSULATOR.ZOOMING, zooming.value);
+        });
+
+        initializeValues();
     }
 };
+
 
 });
 require.define('ripple/ui/plugins/deviceSettings', function (require, module, exports) {
