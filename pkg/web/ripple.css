@@ -1097,80 +1097,136 @@ fieldset {
  */
 
 /* ------------------------------>
-    Torch9810 Skin (591x1048) offset (55x191)*/
+    Torch 9860-9850 Skin (602x1149) offset (59x159)*/
 
-.viewport-wrapper-Torch9810 {
+.viewport-wrapper-Torch9860-9850 {
     width: 480px;
-    height: 640px;
+    height: 800px;
     border: none;
 }
 
-.device-wrapper-Torch9810 {
+.device-wrapper-Torch9860-9850 {
     position: relative;
-    padding: 191px 0 0 55px;
-    width: 536px;
-    height: 857px;
+    padding: 159px 0 0 59px;
+    width: 543px;
+    height: 990px;
     margin: 0 auto;
     border: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    background: url('images/Torch9810.png') no-repeat;
+    background: url('images/Torch9860-9850.png') no-repeat;
 }
 
-.menu-button-wrapper-Torch9810 {
+.menu-button-wrapper-Torch9860-9850 {
     position: relative;
     display: inline-block;
-    margin: 45px 0 0 100px;
-    width: 75px;
-    height: 85px;
+    margin: 40px 0 0 98px;
+    width: 80px;
+    height: 62px;
     cursor: pointer;
 }
 
-.back-button-wrapper-Torch9810 {
+.back-button-wrapper-Torch9860-9850 {
     position: relative;
     display: inline-block;
-    margin: 0 0 0 118px;
-    width: 75px;
-    height: 85px;
+    margin: 0 0 0 123px;
+    width: 80px;
+    height: 62px;
     cursor: pointer;
 }
 
-.viewport-wrapper-landscape-Torch9810 {
+.viewport-wrapper-landscape-Torch9860-9850 {
+    margin: -99px 0 0 103px;
+    width: 800px;
+    height: 480px;
+    border: none;
+}
+
+.device-wrapper-landscape-Torch9860-9850 {
+    position: relative;
+    padding: 159px 0 0 60px;
+    width: 1089px;
+    height: 443px;
+    margin: 0 auto;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background: url('images/Torch9860-9850_landscape.png') no-repeat;
+}
+
+.menu-button-wrapper-landscape-Torch9860-9850 {
+    position: relative;
+    margin: -175px 0 0 940px;
+    width: 60px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.back-button-wrapper-landscape-Torch9860-9850 {
+    position: relative;
+    margin: -288px 0 0 940px;
+    width: 60px;
+    height: 80px;
+    cursor: pointer;
+}
+ 
+
+/*
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* ------------------------------>
+    Bold9900 (726x1258) offset (41x196)*/
+
+.viewport-wrapper-Bold9900 {
     width: 640px;
     height: 480px;
     border: none;
 }
 
-.device-wrapper-landscape-Torch9810 {
+.menu-button-wrapper-Bold9900{
     position: relative;
-    padding: 55px 0 0 191px;
-    width: 857px;
-    height: 536px;
+    display: inline-block;
+    margin: 30px 0 0 145px;
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+}
+
+.back-button-wrapper-Bold9900 {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 0 170px;
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+}
+
+.device-wrapper-Bold9900 {
+    position: relative;
+    padding: 196px 0 0 41px;
+    width: 685px;
+    height: 1062px;
     margin: 0 auto;
     border: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    background: url('images/Torch9810_landscape.png') no-repeat;
+    background: url('images/Bold9900.png') no-repeat;
 }
-
-.menu-button-wrapper-landscape-Torch9810{
-    position: relative;
-    margin: -175px 0 0 685px;
-    width: 85px;
-    height: 75px;
-    cursor: pointer;
-}
-
-.back-button-wrapper-landscape-Torch9810 {
-    position: relative;
-    margin: -272px 0 0 685px;
-    width: 85px;
-    height: 75px;
-    cursor: pointer;
-}
- 
 
 /*
  *  Copyright 2011 Research In Motion Limited.
@@ -1245,70 +1301,15 @@ fieldset {
  * limitations under the License.
  */
 /* ------------------------------>
-    Bold9900 (726x1258) offset (41x196)*/
+    Bold9700 (561x1009) offset (40x181)*/
 
-.viewport-wrapper-Bold9900 {
-    width: 640px;
-    height: 480px;
-    border: none;
-}
-
-.menu-button-wrapper-Bold9900{
-    position: relative;
-    display: inline-block;
-    margin: 30px 0 0 145px;
-    width: 90px;
-    height: 90px;
-    cursor: pointer;
-}
-
-.back-button-wrapper-Bold9900 {
-    position: relative;
-    display: inline-block;
-    margin: 0 0 0 170px;
-    width: 90px;
-    height: 90px;
-    cursor: pointer;
-}
-
-.device-wrapper-Bold9900 {
-    position: relative;
-    padding: 196px 0 0 41px;
-    width: 685px;
-    height: 1062px;
-    margin: 0 auto;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    background: url('images/Bold9900.png') no-repeat;
-}
-
-/*
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/* ------------------------------>
-    Curve9350-9360-9370 (560x998) offset (42x172)*/
-
-.viewport-wrapper-Curve9350-9360-9370 {
+.viewport-wrapper-Bold9700 {
     width: 480px;
     height: 360px;
     border: none;
 }
 
-.menu-button-wrapper-Curve9350-9360-9370{
+.menu-button-wrapper-Bold9700{
     position: relative;
     display: inline-block;
     margin: 30px 0 0 85px;
@@ -1317,7 +1318,7 @@ fieldset {
     cursor: pointer;
 }
 
-.back-button-wrapper-Curve9350-9360-9370 {
+.back-button-wrapper-Bold9700 {
     position: relative;
     display: inline-block;
     margin: 0 0 0 105px;
@@ -1326,17 +1327,17 @@ fieldset {
     cursor: pointer;
 }
 
-.device-wrapper-Curve9350-9360-9370 {
+.device-wrapper-Bold9700 {
     position: relative;
-    padding: 172px 0 0 42px;
-    width: 518px;
-    height: 826px;
+    padding: 181px 0 0 40px;
+    width: 521px;
+    height: 828px;
     margin: 0 auto;
     border: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    background: url('images/Curve9350-9360-9370.png') no-repeat;
+    background: url('images/Bold9700.png') no-repeat;
 }
 
 /*
@@ -1392,6 +1393,61 @@ fieldset {
     -moz-box-shadow: none;
     box-shadow: none;
     background: url('images/Style9670.png') no-repeat;
+}
+
+/*
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* ------------------------------>
+    Curve9350-9360-9370 (560x998) offset (42x172)*/
+
+.viewport-wrapper-Curve9350-9360-9370 {
+    width: 480px;
+    height: 360px;
+    border: none;
+}
+
+.menu-button-wrapper-Curve9350-9360-9370{
+    position: relative;
+    display: inline-block;
+    margin: 30px 0 0 85px;
+    width: 100px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.back-button-wrapper-Curve9350-9360-9370 {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 0 105px;
+    width: 100px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.device-wrapper-Curve9350-9360-9370 {
+    position: relative;
+    padding: 172px 0 0 42px;
+    width: 518px;
+    height: 826px;
+    margin: 0 auto;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background: url('images/Curve9350-9360-9370.png') no-repeat;
 }
 
 /*
@@ -1502,45 +1558,82 @@ fieldset {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* ------------------------------>
-    Bold9700 (561x1009) offset (40x181)*/
 
-.viewport-wrapper-Bold9700 {
+/* ------------------------------>
+    Torch9810 Skin (591x1048) offset (55x191)*/
+
+.viewport-wrapper-Torch9810 {
     width: 480px;
-    height: 360px;
+    height: 640px;
     border: none;
 }
 
-.menu-button-wrapper-Bold9700{
+.device-wrapper-Torch9810 {
     position: relative;
-    display: inline-block;
-    margin: 30px 0 0 85px;
-    width: 100px;
-    height: 80px;
-    cursor: pointer;
-}
-
-.back-button-wrapper-Bold9700 {
-    position: relative;
-    display: inline-block;
-    margin: 0 0 0 105px;
-    width: 100px;
-    height: 80px;
-    cursor: pointer;
-}
-
-.device-wrapper-Bold9700 {
-    position: relative;
-    padding: 181px 0 0 40px;
-    width: 521px;
-    height: 828px;
+    padding: 191px 0 0 55px;
+    width: 536px;
+    height: 857px;
     margin: 0 auto;
     border: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    background: url('images/Bold9700.png') no-repeat;
+    background: url('images/Torch9810.png') no-repeat;
 }
+
+.menu-button-wrapper-Torch9810 {
+    position: relative;
+    display: inline-block;
+    margin: 45px 0 0 100px;
+    width: 75px;
+    height: 85px;
+    cursor: pointer;
+}
+
+.back-button-wrapper-Torch9810 {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 0 118px;
+    width: 75px;
+    height: 85px;
+    cursor: pointer;
+}
+
+.viewport-wrapper-landscape-Torch9810 {
+    width: 640px;
+    height: 480px;
+    border: none;
+}
+
+.device-wrapper-landscape-Torch9810 {
+    position: relative;
+    padding: 55px 0 0 191px;
+    width: 857px;
+    height: 536px;
+    margin: 0 auto;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background: url('images/Torch9810_landscape.png') no-repeat;
+}
+
+.menu-button-wrapper-landscape-Torch9810{
+    position: relative;
+    margin: -175px 0 0 685px;
+    width: 85px;
+    height: 75px;
+    cursor: pointer;
+}
+
+.back-button-wrapper-landscape-Torch9810 {
+    position: relative;
+    margin: -272px 0 0 685px;
+    width: 85px;
+    height: 75px;
+    cursor: pointer;
+}
+ 
 
 /*
  *  Copyright 2011 Research In Motion Limited.
@@ -1651,97 +1744,4 @@ fieldset {
     box-shadow: none;
     background: url('images/Pearl9100.png') no-repeat;
 }
-
-/*
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/* ------------------------------>
-    Torch 9860-9850 Skin (602x1149) offset (59x159)*/
-
-.viewport-wrapper-Torch9860-9850 {
-    width: 480px;
-    height: 800px;
-    border: none;
-}
-
-.device-wrapper-Torch9860-9850 {
-    position: relative;
-    padding: 159px 0 0 59px;
-    width: 543px;
-    height: 990px;
-    margin: 0 auto;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    background: url('images/Torch9860-9850.png') no-repeat;
-}
-
-.menu-button-wrapper-Torch9860-9850 {
-    position: relative;
-    display: inline-block;
-    margin: 40px 0 0 98px;
-    width: 80px;
-    height: 62px;
-    cursor: pointer;
-}
-
-.back-button-wrapper-Torch9860-9850 {
-    position: relative;
-    display: inline-block;
-    margin: 0 0 0 123px;
-    width: 80px;
-    height: 62px;
-    cursor: pointer;
-}
-
-.viewport-wrapper-landscape-Torch9860-9850 {
-    margin: -99px 0 0 103px;
-    width: 800px;
-    height: 480px;
-    border: none;
-}
-
-.device-wrapper-landscape-Torch9860-9850 {
-    position: relative;
-    padding: 159px 0 0 60px;
-    width: 1089px;
-    height: 443px;
-    margin: 0 auto;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    background: url('images/Torch9860-9850_landscape.png') no-repeat;
-}
-
-.menu-button-wrapper-landscape-Torch9860-9850 {
-    position: relative;
-    margin: -175px 0 0 940px;
-    width: 60px;
-    height: 80px;
-    cursor: pointer;
-}
-
-.back-button-wrapper-landscape-Torch9860-9850 {
-    position: relative;
-    margin: -288px 0 0 940px;
-    width: 60px;
-    height: 80px;
-    cursor: pointer;
-}
- 
 
