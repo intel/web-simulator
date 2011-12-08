@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Wed Dec 07 2011 18:18:34 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Thu Dec 08 2011 18:07:40 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -36654,7 +36654,6 @@ AddressBook = function (type, name) {
                 if (!_security.all && !_security.deleteContact)
                     return _errorOccurred(errorCallback, errorcode.SECURITY_ERR);
 
-                id = id | 0;
                 utils.forEach(contactItems, function (contactItem, index) {
                     if (contactItem.id === id) {
                         contactItems.splice(index, 1);
@@ -36687,7 +36686,7 @@ AddressBook = function (type, name) {
                         (filter.phoneNumber  === undefined || Filter(filter.phoneNumber).match(contactItem.phoneNumbers)) &&
                         (filter.email        === undefined || Filter(filter.email).match(contactItem.emails)) &&
                         (filter.address      === undefined || Filter(filter.address).match(contactItem.addresses))) {
-                        contact = new Contact();
+                        contact = new Contact(contactItem.id);
 
                         contact.firstName    = utils.copy(contactItem.firstName);
                         contact.lastName     = utils.copy(contactItem.lastName);
@@ -36756,8 +36755,8 @@ ContactProperties = {
     emails: [EmailAddress]
 };
 
-Contact = function () {
-    var id = Math.uuid(null, 16);
+Contact = function (id) {
+    id = id || Math.uuid(null, 16);
 
     this.__defineGetter__("id", function () {
         return id;
@@ -37372,7 +37371,7 @@ module.exports = function () {
         demoImg = document.createElement("img");
         demoImg.setAttribute("id", camID + "-wac-2-0-camera-demo-image");
         loc = document.location;
-        imageSrc = loc.protocol + "//" + loc.hostname + "/" + loc.pathname.replace(/index\.html$/, "") + constants.CAMERA.WINDOW_ANIMATION;
+        imageSrc = loc.protocol + "//" + loc.hostname + loc.pathname.replace(/index\.html$/, "") + constants.CAMERA.WINDOW_ANIMATION;
         demoImg.setAttribute("src", imageSrc);
         demoImg.setAttribute("width", "100%");
         container.appendChild(demoImg);
@@ -48830,10 +48829,19 @@ self = module.exports = {
 
     appLocation: function () {
         if (require('ripple/ui').registered("omnibar")) {
-            var path = require('ripple/ui/plugins/omnibar').rootURL().replace(/\/$/, ""),
+            /* rootURL can only get url saved from 'FrameHistoryChange' event
+               it causes trouble when navigating directory through online 
+               version as index.html is automatically loaded.
+               Need a way to get more updated URL */
+
+            var path = require('ripple/ui/plugins/omnibar').rootURL(),
                 parts;
 
             if ((parts = path.match(/^((http[s]?|ftp|file):\/\/)(.+\/)?([^\/].+)$/i)) !== null && parts.length === 5) {
+                // this is a path already.
+                if (path.search(/\/$/, "") !== -1) {
+                    return path;
+                }
                 if (parts[4] === "about:blank") {
                     path = "";
                 }
@@ -51607,6 +51615,7 @@ function _reload() {
 event.on("FrameHistoryChange", function (url) {
     _omnibar().value = url;
     _persist(url);
+    _persistRoot(url);
 });
 
 module.exports = {
