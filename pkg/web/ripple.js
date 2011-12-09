@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.0 :: Built On Thu Dec 08 2011 18:07:40 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.0 :: Built On Fri Dec 09 2011 18:17:59 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -36417,7 +36417,8 @@ var utils = require('ripple/utils'),
     _security = {
         "http://wacapps.net/api/pim.contact": [],
         "http://wacapps.net/api/pim.contact.read": ["findContacts"],
-        "http://wacapps.net/api/pim.contact.write": ["addContact", "updateContact", "deleteContact"]
+        "http://wacapps.net/api/pim.contact.write": ["addContact", "updateContact", "deleteContact"],
+        all: true
     },
     _self;
 
@@ -36549,6 +36550,7 @@ _self = function () {
                     _security.all = true;
                     return;
                 }
+                _security.all = false;
                 utils.forEach(_security[subFeature], function (method) {
                     _security[method] = true;
                 });
@@ -36869,14 +36871,14 @@ function _isValid(onSuccess, onError, options, argLength) {
     if (typeof onSuccess !== "function")   // imply onSuccess == null
         return false;
 
-    if (onError !== undefined && typeof onError !== "function")
+    if (onError && (typeof onError !== "function"))
         return false;
 
-    if (options !== undefined &&
-        (typeof options !== "object" ||
-        typeof options.enableHighAccuracy !== "boolean" ||
-        typeof options.timeout !== "number" ||
-        typeof options.maximumAge !== "number"))
+    if ((options !== undefined) &&
+        ((typeof options !== "object") ||
+        (options.enableHighAccuracy !== undefined) && (typeof options.enableHighAccuracy !== "boolean") ||
+        (options.timeout            !== undefined) && (typeof options.timeout            !== "number") ||
+        (options.maximumAge         !== undefined) && (typeof options.maximumAge         !== "number")))
         return false;
 
     return true;
@@ -36894,8 +36896,7 @@ function _processOptions(options) {
         options.maximumAge === Math.floor(options.maximumAge) &&
         options.maximumAge >= 0) {
         validOptions.maximumAge = options.maximumAge | 0;
-    }
-    else {
+    } else {
         validOptions.maximumAge = 0;
     }
 
@@ -36903,15 +36904,13 @@ function _processOptions(options) {
         options.timeout !== undefined &&
         options.timeout === Math.floor(options.timeout)) {
         validOptions.timeout = (options.timeout >= 0) ? (options.timeout | 0) : 0;
-    }
-    else {
+    } else {
         validOptions.timeout = Infinity;
     }
 
     if (options !== undefined && options.enableHighAccuracy !== undefined) {
         validOptions.enableHighAccuracy = options.enableHighAccuracy;
-    }
-    else {
+    } else {
         validOptions.enableHighAccuracy = false;
     }
 
@@ -36927,8 +36926,7 @@ function _errorOccur(code, onError) {
     var error = new PositionError();
 
     error.code = code;
-    switch (code)
-    {
+    switch (code) {
     case PositionError.POSITION_UNAVAILABLE:
         error.message = "Position unavailable";
         break;
@@ -36943,30 +36941,24 @@ function _errorOccur(code, onError) {
 
 function _execute(data) {
     return function () {
-        if (data.timeout === 0) {
-            _errorOccur(PositionError.TIMEOUT, data.onError);
-            return;
-        }
-
         if (_lastPosition !== null &&
             ((new Date()).getTime() - _lastPosition.timestamp <= data.maximumAge)) {
             window.setTimeout(function () {
                 data.onSuccess(_lastPosition);
             }, 1);
-        }
-        else {
+        } else if (data.timeout === 0) {
+            _errorOccur(PositionError.TIMEOUT, data.onError);
+        } else {
             window.setTimeout(function () {
                 if (data.delay <= data.timeout) {
                     _lastPosition = _createPosition();
 
                     if (_lastPosition !== null) {
                         data.onSuccess(_lastPosition);
-                    }
-                    else {
+                    } else {
                         _errorOccur(PositionError.POSITION_UNAVAILABLE, data.onError);
                     }
-                }
-                else {
+                } else {
                     _errorOccur(PositionError.TIMEOUT, data.onError);
                 }
             }, Math.min(data.delay, data.timeout));
@@ -37168,6 +37160,15 @@ module.exports = {
             }
         }
         return undefined;
+    },
+
+    isEmptyObject: function (obj) {
+        var prop;
+
+        for (prop in obj) {
+            return false;
+        }
+        return true;
     }
 };
 
@@ -37196,7 +37197,8 @@ var utils = require('ripple/utils'),
     errorcode = require('ripple/platform/wac/2.0/errorcode'),
     PendingOperation = require('ripple/platform/wac/2.0/pendingoperation'),
     PendingObject = require('ripple/platform/wac/2.0/pendingObject'),
-    DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror');
+    DeviceApiError = require('ripple/platform/wac/2.0/deviceapierror'),
+    wac2_utils = require('ripple/platform/wac/2.0/wac2_utils');
 
 module.exports = function () {
     var _cameraArray, Camera, _videoStatus = {},
@@ -37465,8 +37467,9 @@ module.exports = function () {
     };
 
     this.handleSubFeatures = function (subFeatures) {
-        if (subFeatures["http://wacapps.net/api/camera"] ||
-           (subFeatures["http://wacapps.net/api/camera.capture"] &&
+        if (wac2_utils.isEmptyObject(subFeatures) ||
+            subFeatures["http://wacapps.net/api/camera"] ||
+            (subFeatures["http://wacapps.net/api/camera.capture"] &&
             subFeatures["http://wacapps.net/api/camera.show"])) {
             return;
         }
@@ -37482,7 +37485,7 @@ module.exports = function () {
             _createPreviewNodeAllowed = false;
             return;
         }
-        _console.warn("WAC-2.0-handleSubFeatures: something wrong");
+        _console.warn("WAC-2.0-Camera-handleSubFeatures: something wrong");
     };
 };
 
@@ -38448,8 +38451,9 @@ module.exports = function () {
             return wac2_utils.validateTypeMismatch(onSuccess, onError, "resolve", _resolve);
         },
         handleSubFeatures: function (subFeatures) {
-            if (subFeatures["http://wacapps.net/api/filesystem"] ||
-               (subFeatures["http://wacapps.net/api/filesystem.read"] &&
+            if (wac2_utils.isEmptyObject(subFeatures) ||
+                subFeatures["http://wacapps.net/api/filesystem"] ||
+                (subFeatures["http://wacapps.net/api/filesystem.read"] &&
                 subFeatures["http://wacapps.net/api/filesystem.write"])) {
                 return;
             }
@@ -38562,7 +38566,7 @@ module.exports = {
     },
     "CellularHardware": {
         "status": {
-            "name": "Cellular Hardware",
+            "name": "status",
             "control": {
                 "type": "checkbox",
                 "value": true
@@ -38589,22 +38593,16 @@ module.exports = {
             "name": "mcc",
             "control": {
                 "type": "text",
-                "value": "mcc value"
-            },
-            "event": "CellularNetworkMccChanged",
-            "callback": function (setting) {
-                event.trigger("CellularNetworkMccChanged", [setting]);
+                "value": "460",
+                "readonly": "readonly"
             }
         }, 
         "mnc": {
             "name": "mnc",
             "control": {
                 "type": "text",
-                "value": "mnc value"
-            },
-            "event": "CellularNetworkMncChanged",
-            "callback": function (setting) {
-                event.trigger("CellularNetworkMncChanged", [setting]);
+                "value": "0",
+                "readonly": "readonly"
             }
         }, 
         "signalStrength": {
@@ -38632,11 +38630,8 @@ module.exports = {
             "name": "Operator Name",
             "control": {
                 "type": "text",
-                "value": "operatorName value"
-            },
-            "event": "CellularNetworkOperatorNameChanged",
-            "callback": function (setting) {
-                event.trigger("CellularNetworkOperatorNameChanged", [setting]);
+                "value": "CMCC",
+                "readonly": "readonly"
             }
         }
     },
@@ -38645,44 +38640,32 @@ module.exports = {
             "name": "IMEI",
             "control": {
                 "type": "text",
-                "value": "1000"
-            },
-            "event": "DeviceIMEIChanged",
-            "callback": function (setting) {
-                event.trigger("DeviceIMEIChanged", [setting]);
+                "value": "860398001689659",
+                "readonly": "readonly"
             }
         }, 
         "model": {
             "name": "Model",
             "control": {
                 "type": "text",
-                "value": "model value"
-            },
-            "event": "DeviceModelChanged",
-            "callback": function (setting) {
-                event.trigger("DeviceModelChanged", [setting]);
+                "value": "",
+                "readonly": "readonly"
             }
         }, 
         "version": {
             "name": "Version",
             "control": {
                 "type": "text",
-                "value": "1.0"
-            },
-            "event": "DeviceVersionChanged",
-            "callback": function (setting) {
-                event.trigger("DeviceVersionChanged", [setting]);
+                "value": "",
+                "readonly": "readonly"
             }
         }, 
         "vendor": {
             "name": "Vendor.",
             "control": {
                 "type": "text",
-                "value": "vendor value"
-            },
-            "event": "DeviceVendorChanged",
-            "callback": function (setting) {
-                event.trigger("DeviceVendorChanged", [setting]);
+                "value": "",
+                "readonly": "readonly"
             }
         }
     },
@@ -38691,66 +38674,48 @@ module.exports = {
             "name": "Resolution Height",
             "control": {
                 "type": "number",
-                "value": 480
-            },
-            "event": "DisplayResolutionHeightChanged",
-            "callback": function (setting) {
-                event.trigger("DisplayResolutionHeightChanged", [setting]);
+                "value": 0,
+                "readonly": "readonly"
             }
         }, 
         "pixelAspectRatio": {
             "name": "Pixel Aspectratio",
             "control": {
                 "type": "number",
-                "value": 1.33
-            },
-            "event": "DisplayPixelAspectRatioChanged",
-            "callback": function (setting) {
-                event.trigger("DisplayPixelAspectRatioChanged", [setting]);
+                "value": 0,
+                "readonly": "readonly"
             }
         }, 
         "dpiY": {
             "name": "DPI-Y",
             "control": {
                 "type": "number",
-                "value": 72
-            },
-            "event": "DisplayDpiyChanged",
-            "callback": function (setting) {
-                event.trigger("DisplayDpiyChanged", [setting]);
+                "value": 0,
+                "readonly": "readonly"
             }
         }, 
         "resolutionWidth": {
             "name": "Resolution Width",
             "control": {
                 "type": "number",
-                "value": 320
-            },
-            "event": "DisplayResolutionWidthChanged",
-            "callback": function (setting) {
-                event.trigger("DisplayResolutionWidthChanged", [setting]);
+                "value": 0,
+                "readonly": "readonly"
             }
         }, 
         "dpiX": {
             "name": "DPI-X",
             "control": {
                 "type": "number",
-                "value": 72
-            },
-            "event": "DisplayDpixChanged",
-            "callback": function (setting) {
-                event.trigger("DisplayDpixChanged", [setting]);
+                "value": 0,
+                "readonly": "readonly"
             }
         }, 
         "colorDepth": {
             "name": "Color Depth",
             "control": {
                 "type": "number",
-                "value": 32
-            },
-            "event": "DisplayColorDepthChanged",
-            "callback": function (setting) {
-                event.trigger("DisplayColorDepthChanged", [setting]);
+                "value": 32,
+                "readonly": "readonly"
             }
         }
     },
@@ -38760,28 +38725,24 @@ module.exports = {
             "control": {
                 "type": "number",
                 "value": 262144,
-            },
-            "event": "MemoryUnitSizeChanged",
-            "callback": function (setting) {
-                event.trigger("MemoryUnitSizeChanged", [setting]);
+                "readonly": "readonly"
             }
         },
         "removable": {
             "name": "Removable",
             "control": {
                 "type": "checkbox",
-                "value": true
-            },
-            "event": "MemoryUnitRemovableChanged",
-            "callback": function (setting) {
-                event.trigger("MemoryUnitRemovableChanged", [setting]);
+                "value": true,
+                "readonly": "readonly"
             }
         },
         "availableSize": {
             "name": "Available Size",
             "control": {
-                "type": "number",
-                "value": 262144,
+                "type": "range",
+                "value": 16384,
+                "min": 0,
+                "max": 262144
             },
             "event": "MemoryUnitAvailableSizeChanged",
             "callback": function (setting) {
@@ -38794,64 +38755,50 @@ module.exports = {
             "name": "Language",
             "control": {
                 "type": "text",
-                "value": "English"
-            },
-            "event": "OperatingSystemLanguageChanged",
-            "callback": function (setting) {
-                event.trigger("OperatingSystemLanguageChanged", [setting]);
+                "value": "English",
+                "readonly": "readonly"
             }
         }, 
         "version": {
             "name": "Version",
             "control": {
                 "type": "text",
-                "value": "Operation value"
-            },
-            "event": "OperatingSystemVersionChanged",
-            "callback": function (setting) {
-                event.trigger("OperatingSystemVersionChanged", [setting]);
+                "value": "",
+                "readonly": "readonly"
             }
         }, 
         "name": {
             "name": "Name",
             "control": {
                 "type": "text",
-                "value": "OperatingSystem' name"
-            },
-            "event": "OperatingSystemNameChanged",
-            "callback": function (setting) {
-                event.trigger("OperatingSystemNameChanged", [setting]);
+                "value": "",
+                "readonly": "readonly"
             }
         }, 
         "vendor": {
             "name": "Vendor",
             "control": {
                 "type": "text",
-                "value": "vendor value"
-            },
-            "event": "OperatingSystemVendorChanged",
-            "callback": function (setting) {
-                event.trigger("OperatingSystemVendorChanged", [setting]);
+                "value": "",
+                "readonly": "readonly"
             }
         }
     },
     "WebRuntime": {
         "wacVersion": {
-            "name": "Web Runtime",
+            "name": "WAC Version",
             "control": {
                 "type": "text",
-                "value": "2.0"
-            },
-            "event": "WebRuntimeWACVersionChanged",
-            "callback": function (setting) {
-                event.trigger("WebRuntimeWACVersionChanged", [setting]);
+                "value": "2.0",
+                "readonly": "readonly"
             }
         }, 
         "supportedImageFormats": {
             "name": "Image Formats",
             "control": {
                 "type": "text",
-                "value": "gif87, gif89, png, jpeg"
+                "value": "gif87, gif89, png, jpeg",
+                "readonly": "readonly"
             },
             "event": "WebRuntimeSupportedImageFormatsChanged",
             "callback": function (setting) {
@@ -38859,36 +38806,27 @@ module.exports = {
             }
         }, 
         "version": {
-            "name": "Version",
+            "name": "Web Runtime Version",
             "control": {
                 "type": "text",
-                "value": "1.0"
-            },
-            "event": "WebRuntimeVersionChanged",
-            "callback": function (setting) {
-                event.trigger("WebRuntimeVersionChanged", [setting]);
+                "value": "1.0",
+                "readonly": "readonly"
             }
         }, 
         "name": {
-            "name": "Name",
+            "name": "Web Runtime Name",
             "control": {
                 "type": "text",
-                "value": "runtime value"
-            },
-            "event": "WebRuntimeNameChanged",
-            "callback": function (setting) {
-                event.trigger("WebRuntimeNameChanged", [setting]);
+                "value": "Tizen Web Simulator",
+                "readonly": "readonly"
             }
         }, 
         "vendor": {
-            "name": "Vendor",
+            "name": "Vendor Name",
             "control": {
                 "type": "text",
-                "value": "vendor value"
-            },
-            "event": "WebRuntimeVendorChanged",
-            "callback": function (setting) {
-                event.trigger("WebRuntimeVendorChanged", [setting]);
+                "value": "Tizen SDK team",
+                "readonly": "readonly"
             }
         }
     },
@@ -38910,7 +38848,7 @@ module.exports = {
             "name": "SSID",
             "control": {
                 "type": "text",
-                "value": "2000"
+                "value": "OfficeWLAN"
             },
             "event": "WiFiHardwareSsidChanged",
             "callback": function (setting) {
@@ -39653,7 +39591,8 @@ var utils = require('ripple/utils'),
         "http://wacapps.net/api/messaging.send": ["sendMessage"],
         "http://wacapps.net/api/messaging.find": ["findMessages"],
         "http://wacapps.net/api/messaging.subscribe": ["onSMS", "onMMS", "onEmail"],
-        "http://wacapps.net/api/messaging.write": ["update"]
+        "http://wacapps.net/api/messaging.write": ["update"],
+        all: true
     },
     _self;
 
@@ -39991,6 +39930,7 @@ _self = function () {
                     _security.all = true;
                     return;
                 }
+                _security.all = false;
                 utils.forEach(_security[subFeature], function (method) {
                     _security[method] = true;
                 });
@@ -40733,8 +40673,9 @@ module.exports = function () {
     };
 
     this.handleSubFeatures = function (subFeatures) {
-        if (subFeatures["http://wacapps.net/api/pim.calendar"] ||
-           (subFeatures["http://wacapps.net/api/pim.calendar.read"] &&
+        if (wac2_utils.isEmptyObject(subFeatures) ||
+            subFeatures["http://wacapps.net/api/pim.calendar"] ||
+            (subFeatures["http://wacapps.net/api/pim.calendar.read"] &&
             subFeatures["http://wacapps.net/api/pim.calendar.write"])) {
             return;
         } 
@@ -40748,7 +40689,7 @@ module.exports = function () {
             _findEventsAllowed = false;
             return;
         } 
-        _console.warn("WAC-2.0-handleSubFeatures: something wrong");
+        _console.warn("WAC-2.0-Calendar-handleSubFeatures: something wrong");
     };
 };
 
@@ -41098,7 +41039,7 @@ module.exports = {
                 },
                 devicestatus: {
                     path: "wac/2.0/devicestatus",
-                    feature: "http://wacapps.net/api/devicestatus",
+                    feature: "http://wacapps.net/api/devicestatus|http://wacapps.net/api/devicestatus.deviceinfo|http://wacapps.net/api/devicestatus.networkinfo",
                     handleSubfeatures: true
                 },
                 filesystem: {
@@ -41634,8 +41575,9 @@ module.exports = function () {
     });
 
     this.handleSubFeatures = function (subFeatures) {
-        if (subFeatures["http://wacapps.net/api/pim.task"] ||
-           (subFeatures["http://wacapps.net/api/pim.task.read"] &&
+        if (wac2_utils.isEmptyObject(subFeatures) ||
+            subFeatures["http://wacapps.net/api/pim.task"] ||
+            (subFeatures["http://wacapps.net/api/pim.task.read"] &&
             subFeatures["http://wacapps.net/api/pim.task.write"])) {
             return;
         }
@@ -41651,7 +41593,7 @@ module.exports = function () {
             _findTasksAllowed = false;
             return;
         }
-        _console.warn("WAC-2.0-handleSubFeatures: something wrong");
+        _console.warn("WAC-2.0-Task-handleSubFeatures: something wrong");
     };
 
 };
@@ -41733,7 +41675,7 @@ function isBacklightOn() {
 
 var vibrator = (function () {
     var isVibrating = false,
-        isStopping = false,
+        terminateAfterPattern = false,
         pattern = null,
         pulseIndex = 0,
         vibrateTimeout = null,
@@ -41773,8 +41715,8 @@ var vibrator = (function () {
         if (pulse === '.') vibrate();
         ++pulseIndex;
         if (pulseIndex >= pattern.length) {
-            if (isStopping) {
-                stopVibrate();
+            if (terminateAfterPattern) {
+                setTimeout(stopVibrate, 1);
                 return;
             }
             pulseIndex = 0;
@@ -41782,7 +41724,7 @@ var vibrator = (function () {
     }
     
     function terminateVibrate() {
-        isStopping = true;
+        terminateAfterPattern = true;
         terminateTimeout = null;
         if (pattern === null) {
             stopVibrate();        
@@ -41792,12 +41734,17 @@ var vibrator = (function () {
     function startVibrate(duration, _pattern) {
         if (!isInVibrateMode()) return;
         _clearTimeout();
-        isStopping = false;
+        terminateAfterPattern = false;
+        movementIndex = 0;
         
         if (_pattern) {
             pattern = _pattern;
             pulseIndex = 0;
             vibrateTimeout = setInterval(changePulse, MILLILSECONDS_OF_ONE_VIBRATION);
+            if (duration) 
+                terminateAfterPattern = false;
+            else 
+                terminateAfterPattern = true;
         } else {
             pattern = null;
             vibrateTimeout = setInterval(vibrate, MILLILSECONDS_OF_ONE_VIBRATION);
@@ -42467,17 +42414,16 @@ function _isPropertyFound(aspect, property) {
     return false;
 }
 
-function _isPropertySupported(aspect) {
-    if (_getDeviceInfoAspect === false) {
-        return _deviceInfoAspect.some(function (asp) {
-            return asp !== aspect;
-        });
+function _isPropertyAllowed(aspect) {
+    function hasAspect(asp) {
+        return asp === aspect;
     }
-    if (_getNetworkInfoAspect === false) {
-        return _networkInfoAspect.some(function (asp) {
-            return asp !== aspect;
-        });
+
+    if ((_deviceInfoAspect.some(hasAspect) && _getDeviceInfoAspect === false) ||
+        (_networkInfoAspect.some(hasAspect) && _getNetworkInfoAspect === false)) {
+        return false;
     }
+
     return true;
 }
 
@@ -42489,8 +42435,8 @@ function _isPropertyValid(prop, errorCallback) {
             _asynchErrorCallback(errorCallback, new DeviceApiError(errorcode.NOT_FOUND_ERR));
             return false;
         }
-        else if (_isPropertySupported(_prop.aspect) === false) {
-            _asynchErrorCallback(errorCallback, new DeviceApiError(errorcode.NOT_SUPPORTED_ERR));
+        else if (_isPropertyAllowed(_prop.aspect) === false) {
+            _asynchErrorCallback(errorCallback, new DeviceApiError(errorcode.SECURITY_ERR));
             return false;
         }
     } 
@@ -42501,131 +42447,136 @@ function _isPropertyValid(prop, errorCallback) {
     return true;
 }
 
-module.exports = _self = {  
-    getComponents: function (aspect) {
-        if (_isPropertyFound(aspect))
-            return ["_default"];
-        return null;              
-    },
+module.exports = function () {
+    return {  
+        getComponents: function (aspect) {
+            if (_isPropertyFound(aspect))
+                return ["_default"];
+            return null;              
+        },
 
-    isSupported: function (aspect, property) {
-        return _isPropertyFound(aspect, property) && _isPropertySupported(aspect) ? true : false;
-    },
+        isSupported: function (aspect, property) {
+            return _isPropertyFound(aspect, property);
+        },
 
-    getPropertyValue: function (successCallback, errorCallback, prop) {
-        return wac2_utils.validateTypeMismatch(successCallback, errorCallback, "getPropertyValue", function () {                                  
-            if (_isPropertyValid(prop, errorCallback) !== true)
-                return undefined;
-            
-            var value = deviceSettings.retrieve(prop.aspect + "." + prop.property);
-            if (value !== undefined) {
-                successCallback(value, prop);
-            }
-            else {
-                _asynchErrorCallback(errorCallback, new DeviceApiError(errorcode.NOT_AVAILABLE_ERR)); 
-            }
-            
-            return null;    
-        });        
-    },
-   
-    watchPropertyChange: function (successCallback, errorCallback, prop, options) {  
-        return wac2_utils.validateTypeMismatch(successCallback, errorCallback, "watchPropertyChange", function () {
-            if (_isPropertyValid(prop, errorCallback) !== true)
-                return undefined;
-
-            var _options = Object(options),
-                eventType = deviceSettings.retrieve(prop.aspect)[prop.property].event,
-                watchObj = {
-                    eventType: eventType,
-                    onEvent: function (newValue) {
-                        if (watchObj.timeStamp && 
-                            ((new Date()).getTime() - watchObj.timeStamp < options.minNotificationInterval)) {
-                            return undefined;
-                        }                       
-                        else if (watchObj.value &&
-                                 (newValue > watchObj.value * (1 - _options.minChangePercent) && 
-                                  newValue < watchObj.value * (1 + _options.minChangePercent))) {
-                            return undefined;
-                        }
-
-                        if (watchObj.intervalId) {
-                            clearInterval(watchObj.intervalId);
-                            watchObj.intervalId = setInterval(function () {
-                                successCallback(deviceSettings.retrieve(prop.aspect + "." + prop.property), prop);
-                            }, _options.maxNotificationInterval);
-                        }
-                        successCallback(newValue, prop);
-                        if (watchObj.timeStamp) {
-                            watchObj.timeStamp = (new Date()).getTime();
-                        }
-                        if (watchObj.value) {
-                            watchObj.value = newValue;
-                        }
-                    }                              
-                },
-                watchId = (new Date()).getTime() | 0;
-
-            if (options && _options.minNotificationInterval && _options.maxNotificationInterval && 
-                (_options.minNotificationInterval < 0 || _options.maxNotificationInterval < 0 || 
-                 _options.minNotificationInterval >= _options.maxNotificationInterval)) {
-                _asynchErrorCallback(errorCallback, new DeviceApiError(errorcode.INVALID_VALUES_ERR));
-                return undefined;
-            }
-
-            if (options && _options.maxNotificationInterval) {
-                watchObj.intervalId = setInterval(function () {
-                    successCallback(deviceSettings.retrieve(prop.aspect + "." + prop.property), prop);
-                }, _options.maxNotificationInterval);
-            }    
-
-            if (options && _options.minNotificationInterval) {
-                watchObj.timeStamp = (new Date()).getTime();
-            }                    
-
-            if (options && _options.minChangePercent) {
-                if (_options.minNotificationInterval || _options.maxNotificationInterval) {}
-                else {                
-                    watchObj.value = deviceSettings.retrieve(prop.aspect + "." + prop.property);
+        getPropertyValue: function (successCallback, errorCallback, prop) {
+            return wac2_utils.validateTypeMismatch(successCallback, errorCallback, "getPropertyValue", function () {                                  
+                if (_isPropertyValid(prop, errorCallback) !== true)
+                    return undefined;
+                
+                var value = deviceSettings.retrieve(prop.aspect + "." + prop.property);
+                if (value !== undefined) {
+                    successCallback(value, prop);
                 }
+                else {
+                    _asynchErrorCallback(errorCallback, new DeviceApiError(errorcode.NOT_AVAILABLE_ERR)); 
+                }
+                
+                return null;    
+            });        
+        },
+       
+        watchPropertyChange: function (successCallback, errorCallback, prop, options) {  
+            return wac2_utils.validateTypeMismatch(successCallback, errorCallback, "watchPropertyChange", function () {
+                if (_isPropertyValid(prop, errorCallback) !== true)
+                    return undefined;
+
+                var _options = Object(options),
+                    eventType = deviceSettings.retrieve(prop.aspect)[prop.property].event,
+                    watchObj = {
+                        eventType: eventType,
+                        onEvent: function (newValue) {
+                            if (watchObj.timeStamp && 
+                                ((new Date()).getTime() - watchObj.timeStamp < options.minNotificationInterval)) {
+                                return undefined;
+                            }                       
+                            else if (watchObj.value &&
+                                     (newValue > watchObj.value * (1 - _options.minChangePercent) && 
+                                      newValue < watchObj.value * (1 + _options.minChangePercent))) {
+                                return undefined;
+                            }
+
+                            if (watchObj.intervalId) {
+                                clearInterval(watchObj.intervalId);
+                                watchObj.intervalId = setInterval(function () {
+                                    successCallback(deviceSettings.retrieve(prop.aspect + "." + prop.property), prop);
+                                }, _options.maxNotificationInterval);
+                            }
+                            successCallback(newValue, prop);
+                            if (watchObj.timeStamp) {
+                                watchObj.timeStamp = (new Date()).getTime();
+                            }
+                            if (watchObj.value) {
+                                watchObj.value = newValue;
+                            }
+                        }                              
+                    },
+                    watchId = (new Date()).getTime() | 0;
+
+                if (options && _options.minNotificationInterval && _options.maxNotificationInterval && 
+                    (_options.minNotificationInterval < 0 || _options.maxNotificationInterval < 0 || 
+                     _options.minNotificationInterval >= _options.maxNotificationInterval)) {
+                    _asynchErrorCallback(errorCallback, new DeviceApiError(errorcode.INVALID_VALUES_ERR));
+                    return undefined;
+                }
+
+                if (options && _options.maxNotificationInterval) {
+                    watchObj.intervalId = setInterval(function () {
+                        successCallback(deviceSettings.retrieve(prop.aspect + "." + prop.property), prop);
+                    }, _options.maxNotificationInterval);
+                }    
+
+                if (options && _options.minNotificationInterval) {
+                    watchObj.timeStamp = (new Date()).getTime();
+                }                    
+
+                if (options && _options.minChangePercent) {
+                    if (_options.minNotificationInterval || _options.maxNotificationInterval) {}
+                    else {                
+                        watchObj.value = deviceSettings.retrieve(prop.aspect + "." + prop.property);
+                    }
+                }
+               
+                _watches[watchId] = watchObj;
+                if (watchObj.eventType) {
+                    event.on(watchObj.eventType, watchObj.onEvent);
+                }
+
+                return watchId;
+            });             
+        },
+
+        clearPropertyChange: function (watchHandler) {
+            var _handler = watchHandler | 0;
+            
+            if (_watches[_handler]) {
+                event.deleteEventHandler(_watches[_handler].eventType, _watches[_handler].onEvent);            
+                if (_watches[_handler].intervalId) {
+                    clearInterval(_watches[_handler].intervalId);
+                }
+                delete(_watches[_handler]); 
             }
-           
-            _watches[watchId] = watchObj;
-            event.on(watchObj.eventType, watchObj.onEvent);
+            return null;
+        },
 
-            return watchId;
-        });             
-    },
-
-    clearPropertyChange: function (watchHandler) {
-        var _handler = watchHandler | 0;
-        
-        if (_watches[_handler]) {
-            event.deleteEventHandler(_watches[_handler].eventType, _watches[_handler].onEvent);            
-            if (_watches[_handler].intervalId) {
-                clearInterval(_watches[_handler].intervalId);
+        handleSubFeatures: function (subFeatures) {
+            if (wac2_utils.isEmptyObject(subFeatures) ||
+                subFeatures["http://wacapps.net/api/devicestatus"] || 
+                (subFeatures["http://wacapps.net/api/devicestatus.deviceinfo"] &&
+                 subFeatures["http://wacapps.net/api/devicestatus.networkinfo"])) {
+                return;
             }
-            delete(_watches[_handler]); 
+            if (subFeatures["http://wacapps.net/api/devicestatus.deviceinfo"]) {
+                _getNetworkInfoAspect = false;
+                return;
+            }
+            if (subFeatures["http://wacapps.net/api/devicestatus.networkinfo"]) {
+                _getDeviceInfoAspect = false;
+                return;
+            }
+            _console.warn("WAC-2.0-Devicestatus-handleSubFeatures: something wrong");
         }
-        return null;
-    },
-
-    handleSubFeatures: function (subFeatures) {
-        if (subFeatures["http://wacapps.net/api/devicestatus"] || 
-            (subFeatures["http://wacapps.net/api/devicestatus.deviceinfo"] &&
-             subFeatures["http://wacapps.net/api/devicestatus.networkinfo"])) {
-            return;
-        }
-        if (subFeatures["http://wacapps.net/api/devicestatus.deviceinfo"]) {
-            _getNetworkInfoAspect = false;
-            return;
-        }
-        if (subFeatures["http://wacapps.net/api/devicestatus.networkinfo"]) {
-            _getDeviceInfoAspect = false;
-            return;
-        }
-        _console.warn("WAC-2.0-handleSubFeatures: something wrong");
-    }
+    };
 };
 
 
@@ -49527,6 +49478,37 @@ var constants = require('ripple/constants'),
     _contentContainer,
     _CONTAINER_ID = _CONST.CONTENT_CONTAINER_ID;
 
+function _retrieveDeviceInfo(key) {
+    var deviceInfo = require('ripple/devices').getCurrentDevice();
+
+    switch (key) {
+    case "Device.model":
+        return deviceInfo.model;
+    case "Device.version":
+        return deviceInfo.firmware;
+    case "Device.vendor":
+        return deviceInfo.manufacturer;
+    case "Display.resolutionHeight":
+        return deviceInfo.screen.height;
+    case "Display.resolutionWidth":
+        return deviceInfo.screen.width;
+    case "Display.pixelAspectRatio":
+        return (deviceInfo.screen.width / deviceInfo.screen.height).toFixed(2);
+    case "Display.dpiX":
+        return deviceInfo.ppi;
+    case "Display.dpiY":
+        return deviceInfo.ppi;
+    case "OperatingSystem.version":
+        return deviceInfo.osVersion;
+    case "OperatingSystem.name":
+        return deviceInfo.osName;
+    case "OperatingSystem.vendor":
+        return deviceInfo.manufacturer;
+    default:
+        return deviceSettings.retrieve(key);
+    }
+}
+
 function _appendSettingNode(labelNode, inputNode, label) {
     var frag = document.createDocumentFragment(),
         rowNode = frag.appendChild(utils.createElement("tr")),
@@ -49549,7 +49531,7 @@ function _appendSettingNode(labelNode, inputNode, label) {
 function _buildDOMNode(setting, settingType, key) {
     var settingsNode, tagName, jNode,
         fullKey = settingType + "." + key,
-        savedSetting = deviceSettings.retrieve(fullKey),
+        savedSetting = _retrieveDeviceInfo(fullKey),
         // TODO: move this into Utils (isSet method)
         currentSetting = (savedSetting || savedSetting === false || savedSetting === "" || savedSetting === 0) ? savedSetting : setting.control.value,
         domNode,
