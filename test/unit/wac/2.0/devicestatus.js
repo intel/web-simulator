@@ -15,11 +15,10 @@
  */
 debugger;
 describe("wac_2.0_devicestatus", function () {
-    var devicestatus = require('ripple/platform/wac/2.0/devicestatus'),
-        errorcode = require('ripple/platform/wac/2.0/errorcode'),
+    var Devicestatus = require('ripple/platform/wac/2.0/devicestatus'),
+        devicestatus = new Devicestatus(),
         event = require('ripple/event'),
-        platform = require('ripple/platform'),
-        db = require('ripple/db');       
+        platform = require('ripple/platform');
 
     beforeEach(function () {
         spyOn(platform, "current").andReturn(require('ripple/platform/wac/2.0/spec'));
@@ -138,7 +137,6 @@ describe("wac_2.0_devicestatus", function () {
                 maxNotificationInterval: 200
             },
             watchId,
-            _value,
             error = jasmine.createSpy("error_callback"),
             success = jasmine.createSpy("success_callback");          
 

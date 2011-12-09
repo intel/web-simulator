@@ -18,6 +18,7 @@
 describe("wac_2.0_calendar", function () {
     var Calendar = require('ripple/platform/wac/2.0/calendar'),
         wac2_utils = require('ripple/platform/wac/2.0/wac2_utils'),
+        db = require('ripple/db'),
         cal = [], calendars = new Calendar(),
         _WAIT_TIME = 6, _LONG_WAIT_TIME = 11,
         _predefinedEvent = {description: "descriptioN",
@@ -51,6 +52,11 @@ describe("wac_2.0_calendar", function () {
             expect(e.alarmTrigger).toEqual(-10);
             expect(e.alarmType).toEqual(calendars.SILENT_ALARM);
         };
+
+    beforeEach(function () {
+        spyOn(db, "retrieveObject");
+        spyOn(db, "saveObject");
+    });
 
     it("getCalendars should return an array of calendars", function () {
         var getCalendarOK = function (c) {
