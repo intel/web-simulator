@@ -22,8 +22,6 @@
         <section id="ui">
             <section id="emulator-booting"></section>
 
-            <section class="logo"></section>
-
             <section id="extension-url" class="irrelevant"></section>
 
             <section class="top main">
@@ -66,36 +64,11 @@
                 <span class="ui-icon ui-icon-arrowthick-1-w"></span>
             </section>
             <section id="left" class="left sortable main"></section>
-
+            <section class="tizen-logo"></section>
             <section class="middle">
                 <section id="device-container" class="device-wrapper">
                     <section id="viewport-container" class="viewport-wrapper">
                         <section id="overlay-views"><!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="dialog-window" class="overlay-dialog">
-    <div id="dialog-wrapper" class="overlay-dialog-wrapper">
-        <div id="dialog-title" class="overlay-dialog-title"></div>
-        <div id="dialog-box" class="overlay-dialog-box">
-            <div id="dialog-message" class="overlay-dialog-message"></div>
-            <div id="dialog-buttons" class="overlay-dialog-buttons"></div>
-        </div>
-    </div>
-</section>
-
-<!--
  *  Copyright 2011 Research In Motion Limited.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -136,6 +109,31 @@
     <button id="background-return" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
         <span class="ui-button-text">Return to application</span>
     </button>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="dialog-window" class="overlay-dialog">
+    <div id="dialog-wrapper" class="overlay-dialog-wrapper">
+        <div id="dialog-title" class="overlay-dialog-title"></div>
+        <div id="dialog-box" class="overlay-dialog-box">
+            <div id="dialog-message" class="overlay-dialog-message"></div>
+            <div id="dialog-buttons" class="overlay-dialog-buttons"></div>
+        </div>
+    </div>
 </section>
 
 </section>
@@ -184,100 +182,6 @@
             <div class="first-run-window"></div>
 
             <section id="panel-views" class="irrelevant"><!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="phone-container" class="ui-box ui-state-default ui-corner-all">
-    <section class="h2 info-header">
-        <section class="collapse-handle">Phone</section>
-        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
-            <span class="ui-icon ui-icon-arrow-4"></span>
-        </section>
-    </section>
-
-    <section class="info ui-widget-content ui-corner-all" style="display: none">
-        <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">Type</label></td>
-                <td><select id="phone-event-types" class="ui-state-default ui-corner-all"></select></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Call id</label></td>
-                <td><input id="phone-call-id" type="text" class="ui-state-default ui-corner-all"></td>
-            </tr>
-            <tr id="phone-event-error-container" style="display: none">
-                <td><label class="ui-text-label">Error</label></td>
-                <td><select id="phone-event-error-types" class="ui-state-default ui-corner-all"></select></td>
-            </tr>
-       </table>
-       <table class="panel-table">
-            <tr>
-                <td>
-                    <button id="phone-logs-clear" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                        <span class="ui-button-text">Clear Logs</span>
-                    </button>
-                </td>
-                <td>
-                    <button id="phone-event-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                        <span class="ui-button-text">Fire Event</span>
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="preferences" class="ui-box ui-state-default ui-corner-all">
-    <section class="h2 info-header">
-        <section class="collapse-handle">Storage</section>
-        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
-            <span class="ui-icon ui-icon-arrow-4"></span>
-        </section>
-    </section>
-
-    <section id="preferences-list" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <table class="preferences-table ui-widget-content">
-            <thead><tr><th><label class="ui-text-label">Key</label></th><th><label class="ui-text-label">Value</label></th></tr></thead>
-            <tbody id="preferences-list-body"></tbody>
-        </table>
-
-        <section class="preferences-count" id="preferences-count"></section>
-        <span class="preferences-count">Total:&nbsp;</span>
-        <span class="ui-text-highlight preferences-note">(read-only preference colour)</span><br/>
-
-        <button id="preferences-clear-button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-            <span class="ui-button-text">Clear All</span>
-        </button>
-    </section>
-</section>
-
-<!--
  *  Copyright 2011 Research In Motion Limited.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -343,145 +247,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="gps-container" class="ui-box ui-state-default ui-corner-all">
-    <section class="h2 info-header">
-        <section class="collapse-handle">Geo Location</section>
-        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
-            <span class="ui-icon ui-icon-arrow-4"></span>
-        </section>
-    </section>
-
-    <section class="info ui-widget-content ui-corner-all" style="display: none;">
-        <p></p>
-
-        <table class="panel-table">
-            <tr>
-                <td><label id="label-geo-latitude" class="ui-text-label" for="geo-latitude">Latitude</label></td>
-                <td><input id="geo-latitude" class="ui-state-default ui-corner-all" type="number" value=""></td>
-            </tr>
-            <tr>
-                <td><label id="label-geo-longitude" class="ui-text-label" for="geo-longitude">Longitude</label>
-                </td>
-                <td><input id="geo-longitude" class="ui-state-default ui-corner-all" type="number" value=""></td>
-            </tr>
-            <tr>
-                <td><label id="label-geo-altitude" class="ui-text-label" for="geo-altitude">Altitude</label></td>
-                <td><input id="geo-altitude" class="ui-state-default ui-corner-all" type="number" value=""></td>
-            </tr>
-            <tr id="geo-cellid-container">
-                <td><label id="label-geo-cellid" class="ui-text-label" for="geo-cellid">Cell Id</label></td>
-                <td><input id="geo-cellid" class="ui-state-default ui-corner-all" type="number" value=""></td>
-            </tr>
-            <tr>
-                <td><label id="label-geo-accuracy" class="ui-text-label" for="geo-accuracy">Accuracy</label></td>
-                <td><input id="geo-accuracy" class="ui-state-default ui-corner-all" type="number" value=""></td>
-            </tr>
-            <tr>
-                <td><label id="label-geo-altitudeaccuracy" class="ui-text-label" for="geo-altitudeaccuracy">Altitude Accuracy</label></td>
-                <td><input id="geo-altitudeaccuracy" class="ui-state-default ui-corner-all" type="number" value=""></td>
-            </tr>
-            <tr id="geo-heading-container">
-                <td><label id="label-geo-heading" class="ui-text-label" for="geo-heading">Heading</label></td>
-                <td>
-                    <label id="geo-heading-label" class="range-label-left">N</label>
-                    <input id="geo-heading" type="range" value="0" min="0" max="359.5" step="0.5" class="ui-state-default ui-corner-all">
-                </td>
-            </tr>
-            <tr id="geo-speed-container">
-                <td><label id="label-geo-speed" class="ui-text-label" for="geo-speed">Speed</label></td>
-                <td><input id="geo-speed" class="ui-state-default ui-corner-all" type="number" value=""></td>
-            </tr>
-            <tr id="geo-delay-container">
-                <td><span class="ui-text-label">GPS Delay (seconds)</span></td>
-                <td>
-                    <label id="geo-delay-label" class="range-label-left">0</label>
-                    <input id="geo-delay" type="range" value="0" min="0" max="30" class="ui-state-default ui-corner-all">
-                </td>
-            </tr>
-            <tr id="geo-timeout-container">
-                <td>
-                    <span class="ui-text-label">Simulate GPS Timeout</span>
-                </td>
-                <td>
-                    <input id="geo-timeout" type="checkbox" />
-                </td>
-            </tr>
-        </table>
-
-        <div id="geo-map">
-            <img id="geo-map-img">
-            <div id="geo-map-marker"></div>
-            <div id="geo-map-direction">
-                <div id="geo-map-arrow"></div>
-                <div id="geo-map-direction-label"></div>
-            </div>
-        </div>
-
-        <section class="geo-map-zoom-controls">
-            <button id="geo-map-zoom-decrease" class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                <span class="ui-button-text">-</span>
-            </button>
-            <button id="geo-map-zoom-increase" class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                <span class="ui-button-text">+</span>
-            </button>
-
-            <section class="h3 geo-map-zoomlevel">
-                Zoom Level:&nbsp;
-                <span id="geo-map-zoomlevel-value"></span>
-            </section>
-        </section>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="platform-events-container" class="ui-box ui-state-default ui-corner-all">
-    <section class="h2 info-header">
-        <section class="collapse-handle">Events</section>
-        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
-            <span class="ui-icon ui-icon-arrow-4"></span>
-        </section>
-    </section>
-
-    <section id="platform-events-container" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <p>Select the event that you want to fire.</p>
-        <select id="platform-events-select" class="ui-state-default ui-corner-all"></select>
-        <select id="platform-events-args" class="ui-state-default ui-corner-all" style="display: none"></select>
-        <br />
-        <button id="platform-events-fire" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-            <span class="ui-button-text">Fire Event</span>
-        </button>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
 <section id="config-container" class="ui-box ui-state-default ui-corner-all">
     <section class="h2 info-header">
         <section class="collapse-handle">Config</section>
@@ -524,33 +289,67 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="devices-container" class="ui-box ui-state-default ui-corner-all">
+<section id="filesystem-container" class="ui-box ui-state-default ui-corner-all">
     <section class="h2 info-header">
-        <section class="collapse-handle">Devices</section>
+        <section class="collapse-handle">File System</section>
         <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
             <span class="ui-icon ui-icon-arrow-4"></span>
         </section>
     </section>
 
-    <section class="info ui-widget-content ui-corner-all" style="display: none;">
-        <select id="device-select" class="ui-state-default ui-corner-all"></select>
+    <section id="file-container" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <p>You can map the following virtual paths (ex. /virtual/photos/) to specific locations on your drive.</p>
+
+        <p>You may specify any valid URI location (ex. http://domain.com/files).</p>
+
+        <p>Empty values will cause the virtual routes to point to your relative location.</p>
+
+        <p class="ui-text-label" >/virtual/...</p>
+
         <table class="panel-table">
             <tr>
-                <td><label class="ui-text-label">Orientation</label></td>
-                <td>
-                    <div id="layout-portrait"></div>
-                    <div id="layout-landscape"></div>
-                </td>
+                <td><label class="ui-text-label">photos/</label></td>
+                <td><input id="panel-filesystem-photos" class="ui-state-default ui-corner-all" type="text" value=""/></td>
             </tr>
             <tr>
-                <td><label class="ui-text-label">Zooming</label></td>
-                <td>
-                    <label id="screen-zooming-label" class="range-label-left">100%</label>
-                    <input id="screen-zooming" type="range" value="100" min="20" max="150" step="5" class="ui-state-default ui-corner-all">
-            </td>
+                <td><label class="ui-text-label">videos/</label></td>
+                <td><input id="panel-filesystem-videos" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">music/</label></td>
+                <td><input id="panel-filesystem-music" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">downloads/</label></td>
+                <td><input id="panel-filesystem-downloads" class="ui-state-default ui-corner-all" type="text" value=""/></td>
             </tr>
         </table>
     </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="information-container" class="ui-box ui-state-default ui-corner-all">
+    <section class="h2 info-header">
+        <section class="collapse-handle">Information</section>
+        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
+            <span class="ui-icon ui-icon-arrow-4"></span>
+        </section>
+    </section>
+    <section id="information-sub-container" class="info ui-widget-content ui-corner-all" style="display: none;"></section>
 </section>
 
 <!--
@@ -720,59 +519,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="devicesettings-panel-container" class="ui-box ui-state-default ui-corner-all">
-    <section class="h2 info-header">
-        <section class="collapse-handle">Device &amp; Network Settings</section>
-        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
-            <span class="ui-icon ui-icon-arrow-4"></span>
-        </section>
-    </section>
-
-    <section id="devicesettings-content-container" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <p>Configure device information, settings and events for the current platform.</p>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="information-container" class="ui-box ui-state-default ui-corner-all">
-    <section class="h2 info-header">
-        <section class="collapse-handle">Information</section>
-        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
-            <span class="ui-icon ui-icon-arrow-4"></span>
-        </section>
-    </section>
-    <section id="information-sub-container" class="info ui-widget-content ui-corner-all" style="display: none;"></section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
 <section id="settings-container" class="ui-box ui-state-default ui-corner-all">
     <section class="h2 info-header">
         <section class="collapse-handle">Settings</section>
@@ -822,6 +568,172 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
+<section id="devices-container" class="ui-box ui-state-default ui-corner-all">
+    <section class="h2 info-header">
+        <section class="collapse-handle">Devices</section>
+        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
+            <span class="ui-icon ui-icon-arrow-4"></span>
+        </section>
+    </section>
+
+    <section class="info ui-widget-content ui-corner-all" style="display: none;">
+        <select id="device-select" class="ui-state-default ui-corner-all"></select>
+        <table class="panel-table">
+            <tr>
+                <td><label class="ui-text-label">Orientation</label></td>
+                <td>
+                    <div id="layout-portrait"></div>
+                    <div id="layout-landscape"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">Zooming</label></td>
+                <td>
+                    <label id="screen-zooming-label" class="range-label-left">100%</label>
+                    <input id="screen-zooming" type="range" value="100" min="20" max="150" step="5" class="ui-state-default ui-corner-all">
+            </td>
+            </tr>
+        </table>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="devicesettings-panel-container" class="ui-box ui-state-default ui-corner-all">
+    <section class="h2 info-header">
+        <section class="collapse-handle">Device &amp; Network Settings</section>
+        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
+            <span class="ui-icon ui-icon-arrow-4"></span>
+        </section>
+    </section>
+
+    <section id="devicesettings-content-container" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <p>Configure device information, settings and events for the current platform.</p>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="phone-container" class="ui-box ui-state-default ui-corner-all">
+    <section class="h2 info-header">
+        <section class="collapse-handle">Phone</section>
+        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
+            <span class="ui-icon ui-icon-arrow-4"></span>
+        </section>
+    </section>
+
+    <section class="info ui-widget-content ui-corner-all" style="display: none">
+        <table class="panel-table">
+            <tr>
+                <td><label class="ui-text-label">Type</label></td>
+                <td><select id="phone-event-types" class="ui-state-default ui-corner-all"></select></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">Call id</label></td>
+                <td><input id="phone-call-id" type="text" class="ui-state-default ui-corner-all"></td>
+            </tr>
+            <tr id="phone-event-error-container" style="display: none">
+                <td><label class="ui-text-label">Error</label></td>
+                <td><select id="phone-event-error-types" class="ui-state-default ui-corner-all"></select></td>
+            </tr>
+       </table>
+       <table class="panel-table">
+            <tr>
+                <td>
+                    <button id="phone-logs-clear" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Clear Logs</span>
+                    </button>
+                </td>
+                <td>
+                    <button id="phone-event-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Fire Event</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="preferences" class="ui-box ui-state-default ui-corner-all">
+    <section class="h2 info-header">
+        <section class="collapse-handle">Storage</section>
+        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
+            <span class="ui-icon ui-icon-arrow-4"></span>
+        </section>
+    </section>
+
+    <section id="preferences-list" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <table class="preferences-table ui-widget-content">
+            <thead><tr><th><label class="ui-text-label">Key</label></th><th><label class="ui-text-label">Value</label></th></tr></thead>
+            <tbody id="preferences-list-body"></tbody>
+        </table>
+
+        <section class="preferences-count" id="preferences-count"></section>
+        <span class="preferences-count">Total:&nbsp;</span>
+        <span class="ui-text-highlight preferences-note">(read-only preference colour)</span><br/>
+
+        <button id="preferences-clear-button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            <span class="ui-button-text">Clear All</span>
+        </button>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
 <section id="platforms-container" class="ui-box ui-state-default ui-corner-all">
     <section class="h2 info-header">
         <section class="collapse-handle">Platforms</section>
@@ -845,6 +757,145 @@
         <button id="change-platform" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
             <span class="ui-button-text">Change Platform</span>
         </button>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="platform-events-container" class="ui-box ui-state-default ui-corner-all">
+    <section class="h2 info-header">
+        <section class="collapse-handle">Events</section>
+        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
+            <span class="ui-icon ui-icon-arrow-4"></span>
+        </section>
+    </section>
+
+    <section id="platform-events-container" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <p>Select the event that you want to fire.</p>
+        <select id="platform-events-select" class="ui-state-default ui-corner-all"></select>
+        <select id="platform-events-args" class="ui-state-default ui-corner-all" style="display: none"></select>
+        <br />
+        <button id="platform-events-fire" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            <span class="ui-button-text">Fire Event</span>
+        </button>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="gps-container" class="ui-box ui-state-default ui-corner-all">
+    <section class="h2 info-header">
+        <section class="collapse-handle">Geo Location</section>
+        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
+            <span class="ui-icon ui-icon-arrow-4"></span>
+        </section>
+    </section>
+
+    <section class="info ui-widget-content ui-corner-all" style="display: none;">
+        <p></p>
+
+        <table class="panel-table">
+            <tr>
+                <td><label id="label-geo-latitude" class="ui-text-label" for="geo-latitude">Latitude</label></td>
+                <td><input id="geo-latitude" class="ui-state-default ui-corner-all" type="number" value=""></td>
+            </tr>
+            <tr>
+                <td><label id="label-geo-longitude" class="ui-text-label" for="geo-longitude">Longitude</label>
+                </td>
+                <td><input id="geo-longitude" class="ui-state-default ui-corner-all" type="number" value=""></td>
+            </tr>
+            <tr>
+                <td><label id="label-geo-altitude" class="ui-text-label" for="geo-altitude">Altitude</label></td>
+                <td><input id="geo-altitude" class="ui-state-default ui-corner-all" type="number" value=""></td>
+            </tr>
+            <tr id="geo-cellid-container">
+                <td><label id="label-geo-cellid" class="ui-text-label" for="geo-cellid">Cell Id</label></td>
+                <td><input id="geo-cellid" class="ui-state-default ui-corner-all" type="number" value=""></td>
+            </tr>
+            <tr>
+                <td><label id="label-geo-accuracy" class="ui-text-label" for="geo-accuracy">Accuracy</label></td>
+                <td><input id="geo-accuracy" class="ui-state-default ui-corner-all" type="number" value=""></td>
+            </tr>
+            <tr>
+                <td><label id="label-geo-altitudeaccuracy" class="ui-text-label" for="geo-altitudeaccuracy">Altitude Accuracy</label></td>
+                <td><input id="geo-altitudeaccuracy" class="ui-state-default ui-corner-all" type="number" value=""></td>
+            </tr>
+            <tr id="geo-heading-container">
+                <td><label id="label-geo-heading" class="ui-text-label" for="geo-heading">Heading</label></td>
+                <td>
+                    <label id="geo-heading-label" class="range-label-left">N</label>
+                    <input id="geo-heading" type="range" value="0" min="0" max="359.5" step="0.5" class="ui-state-default ui-corner-all">
+                </td>
+            </tr>
+            <tr id="geo-speed-container">
+                <td><label id="label-geo-speed" class="ui-text-label" for="geo-speed">Speed</label></td>
+                <td><input id="geo-speed" class="ui-state-default ui-corner-all" type="number" value=""></td>
+            </tr>
+            <tr id="geo-delay-container">
+                <td><span class="ui-text-label">GPS Delay (seconds)</span></td>
+                <td>
+                    <label id="geo-delay-label" class="range-label-left">0</label>
+                    <input id="geo-delay" type="range" value="0" min="0" max="30" class="ui-state-default ui-corner-all">
+                </td>
+            </tr>
+            <tr id="geo-timeout-container">
+                <td>
+                    <span class="ui-text-label">Simulate GPS Timeout</span>
+                </td>
+                <td>
+                    <input id="geo-timeout" type="checkbox" />
+                </td>
+            </tr>
+        </table>
+
+        <div id="geo-map">
+            <img id="geo-map-img">
+            <div id="geo-map-marker"></div>
+            <div id="geo-map-direction">
+                <div id="geo-map-arrow"></div>
+                <div id="geo-map-direction-label"></div>
+            </div>
+        </div>
+
+        <section class="geo-map-zoom-controls">
+            <button id="geo-map-zoom-decrease" class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                <span class="ui-button-text">-</span>
+            </button>
+            <button id="geo-map-zoom-increase" class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                <span class="ui-button-text">+</span>
+            </button>
+
+            <section class="h3 geo-map-zoomlevel">
+                Zoom Level:&nbsp;
+                <span id="geo-map-zoomlevel-value"></span>
+            </section>
+        </section>
     </section>
 </section>
 
@@ -927,61 +978,19 @@
     </section>
 </section>
 
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="filesystem-container" class="ui-box ui-state-default ui-corner-all">
-    <section class="h2 info-header">
-        <section class="collapse-handle">File System</section>
-        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
-            <span class="ui-icon ui-icon-arrow-4"></span>
-        </section>
-    </section>
-
-    <section id="file-container" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <p>You can map the following virtual paths (ex. /virtual/photos/) to specific locations on your drive.</p>
-
-        <p>You may specify any valid URI location (ex. http://domain.com/files).</p>
-
-        <p>Empty values will cause the virtual routes to point to your relative location.</p>
-
-        <p class="ui-text-label" >/virtual/...</p>
-
-        <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">photos/</label></td>
-                <td><input id="panel-filesystem-photos" class="ui-state-default ui-corner-all" type="text" value=""/></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">videos/</label></td>
-                <td><input id="panel-filesystem-videos" class="ui-state-default ui-corner-all" type="text" value=""/></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">music/</label></td>
-                <td><input id="panel-filesystem-music" class="ui-state-default ui-corner-all" type="text" value=""/></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">downloads/</label></td>
-                <td><input id="panel-filesystem-downloads" class="ui-state-default ui-corner-all" type="text" value=""/></td>
-            </tr>
-        </table>
-    </section>
+</section>
+            <section id="dialog-views" class="irrelevant"><section id="settings-dialog">
+	<div id="settings-tabs">
+		<ul>
+            <li><a href="#settings-tabs-build">Package</a></li>
+		</ul>
+        <div id="settings-tabs-build">
+        </div>
+	</div>
+    <button id="settings-action" class="cap-text" style="float: right"></button>
 </section>
 
-</section>
-            <section id="dialog-views" class="irrelevant"><div id="about-dialog" style="background: #030303" class="ui-state-default" align="center">
+<div id="about-dialog" style="background: #030303" class="ui-state-default" align="center">
   <div class="about-logo"></div>
   <span style="font-size: 16pt"><strong>Tizen Simulator</strong><br/>
     <span id="about-dialog-ripple-version" style="font-size: 12pt">Version: 1.0</span>
@@ -992,17 +1001,6 @@
     <div style="font-weight: bold"><a href="http://www.tizen.org"><u>http://www.tizen.org</u></a></div> 
   </div>
 </div>
-
-<section id="settings-dialog">
-	<div id="settings-tabs">
-		<ul>
-            <li><a href="#settings-tabs-build">Package</a></li>
-		</ul>
-        <div id="settings-tabs-build">
-        </div>
-	</div>
-    <button id="settings-action" class="cap-text" style="float: right"></button>
-</section>
 
 </section>
 

@@ -538,6 +538,10 @@ input.ui-button { padding: .4em 1em; }
     background-image: url("../../images/tizenlogo.png");
 }
 
+.tizen-logo {
+    background-image: url("../../images/tizen-title.png");
+}
+
 .about-logo {
     background-image: url("../../images/tizenlogo.png");
 }
