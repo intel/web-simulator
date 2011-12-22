@@ -186,6 +186,7 @@ section.right, section.left{
     position: absolute;
     top: 0;
     max-height: 100%;
+    min-height: 26px;
     padding: 0;
     width: 344px;
 }
