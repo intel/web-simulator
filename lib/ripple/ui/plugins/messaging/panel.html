@@ -43,11 +43,41 @@
                         <textarea class="ui-state-default ui-corner-all" id="messaging-text" rows="4" style="width: 90%;"></textarea>
                     </td>
                 </tr>
-                <td>
-                        <button id="messaging-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span class="ui-button-text">Send</span>
+                <tr>
+                    <td><label class="ui-text-label">Attachments</label></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="messaging-attach" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                            <span class="ui-button-text">Attach</span>
                         </button>
                     </td>
+                    <td>
+                        <button id="messaging-detach" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                            <span class="ui-button-text">Detach</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+            <table id="messaging-attachments" class="panel-table">
+            </table>
+
+            <table class="panel-table">
+                <tr>
+                    <td colspan="4">Attachment Content:</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea class="ui-state-default ui-corner-all" id="messaging-attachment-content" rows="4" style="width: 90%;"></textarea>
+                    </td>
+                </tr>
+                <td>
+                    <button id="messaging-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Send</span>
+                    </button>
+                </td>
             </table>
 
 			<h4>Messaging Receiving</h4>
@@ -59,19 +89,19 @@
             </table>
 
             <table class="panel-table">
-            	<tr>
-            	<td colspan="4">
+                <tr>
+                    <td colspan="4">
                         <span id="messaging-received"></span>
-               </td>
-            	</tr>
-                <tr>
-                <td colpan="4">Message:</td>
+                    </td>
                 </tr>
                 <tr>
-                <td colspan="4"><textarea  class="ui-state-default ui-corner-all" id="received-message-box" rows="3" style="width: 90%;" readonly></textarea></td>
+                    <td colspan="4">Message:</td>
                 </tr>
                 <tr>
-                <td colspan="4"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="messaging-clear"><span class="ui-button-text">Clear</span></button></textarea></td>
+                    <td colspan="4"><textarea  class="ui-state-default ui-corner-all" id="received-message-box" rows="3" style="width: 90%;" readonly></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="messaging-clear"><span class="ui-button-text">Clear</span></button></textarea></td>
                 </tr>
             </table>
         </section>
