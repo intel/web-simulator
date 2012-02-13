@@ -629,7 +629,7 @@ section.left { left: 0; }
     position: absolute;
     top: 158px;
     left: 143px;
-    background: url(../images/arrow.png);
+    background: url(images/arrow.png);
     width: 22px;
     height: 30px;
     z-index: 800;
