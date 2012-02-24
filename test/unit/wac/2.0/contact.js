@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-debugger;
 describe("wac_2.0_contact", function () {
     var Contact = require('ripple/platform/wac/2.0/contact'),
         db = require('ripple/db'),
@@ -31,7 +30,7 @@ describe("wac_2.0_contact", function () {
         var error = jasmine.createSpy();
         try {
             contact = new Contact();
-            contact.handleSubFeatures({"http://wacapps.net/api/pim.contact":{id:"http://wacapps.net/api/pim.contact"}});
+            contact.handleSubFeatures({"http://wacapps.net/api/pim.contact": {id: "http://wacapps.net/api/pim.contact"}});
             contact.getAddressBooks(1, error);
         } catch (e) {
             runs(function () {

@@ -1,11 +1,7 @@
 describe("tizen_1.0_systeminfo", function () {
-    var tizen = require('ripple/platform/tizen/1.0/spec'),
-        db = require('ripple/db'),
+    var db = require('ripple/db'),
         platform = require('ripple/platform'),
-        systeminfo = require('ripple/platform/tizen/1.0/systeminfo'),
-        //device = require('ripple/platform/tizen/1.0/spec/device'),
-        event = require('ripple/event');
-        //systeminfo = new SystemInfo();
+        systeminfo = require('ripple/platform/tizen/1.0/systeminfo');
 
     beforeEach(function () {
         spyOn(db, "retrieveObject");
@@ -29,7 +25,6 @@ describe("tizen_1.0_systeminfo", function () {
 		var error = jasmine.createSpy("error_callback"),     
             successCB = function (power) {
             expect(power.level).toEqual(100);
-			//console.log("The power level is " + power.level);
 		};
 
 		runs(function () {
@@ -46,7 +41,6 @@ describe("tizen_1.0_systeminfo", function () {
     it("addPropertyValueChangeListener allows tracking the change of one or several system properties, get the value", function () {
 		var successCB = function (power) {
             expect(power.level).toEqual(100);
-			console.log("The power level is " + power.level);
 		},
 		errorCB = jasmine.createSpy("error_callback"),  
 		watchID = null; 

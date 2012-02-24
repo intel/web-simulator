@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-debugger;
 describe("wac_2.0_devicestatus", function () {
     var Devicestatus = require('ripple/platform/wac/2.0/devicestatus'),
         devicestatus = new Devicestatus(),

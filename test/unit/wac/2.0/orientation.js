@@ -15,7 +15,7 @@
  */
 
 describe("wac_2.0_orientation", function () {
-    var orient = require('ripple/platform/wac/2.0/orientation')
+    var orient = require('ripple/platform/wac/2.0/orientation');
 
 /* 
    **** Test no 1
@@ -238,7 +238,7 @@ describe("wac_2.0_orientation", function () {
     it("watchOrientation calls the callback on the default interval", function () {
         var success = jasmine.createSpy("success"),
             failure = jasmine.createSpy("failure"),
-            watchId =0;
+            watchId = 0;
         watchId =  orient.watchOrientation(success, failure);// the watch is run with no option (default interval)
         waits(350);
         runs(function () {
@@ -279,7 +279,7 @@ describe("wac_2.0_orientation", function () {
             failure = jasmine.createSpy("failure"),
             options = {minNotificationInterval: "a"},// the minNotificationInterval should be a log variable, but it's initialized as a string
             watchId = 0;
-        watchId =orient.watchOrientation(success, failure, options);
+        watchId = orient.watchOrientation(success, failure, options);
         waits(350);
         runs(function () {
             orient.clearWatch(watchId);
@@ -362,7 +362,7 @@ describe("wac_2.0_orientation", function () {
         var success = jasmine.createSpy(),
             failure = jasmine.createSpy(),
             options = {minNotificationInterval: 10},
-            watchID = 0;
+            watchId = 0;
         watchId = orient.watchOrientation(success, failure, options);
         waits(25);
         runs(function () {
@@ -370,7 +370,7 @@ describe("wac_2.0_orientation", function () {
         });
         waits(10);
         runs(function () {
-            orient.clearWatch(watchID);
+            orient.clearWatch(watchId);
             expect(success.callCount).toEqual(3); //watch stops only when the valid Id is called
             expect(failure).not.toHaveBeenCalled();// no error appeared
         });
