@@ -148,10 +148,10 @@ describe("tizen_1.0_geocoder", function () {
 */
     it("reverseGeocode transforms coordinates to address", function () {
         var successCB = function (result) {
-            //expect(result[0].address.city).toEqual("Bucharest");
-            //expect(result[0].address.country).toEqual("Romania");
+            expect(result[0].city).toEqual("London");
+            expect(result[0].country).toEqual("UK");
         },
-        coordinates = {latitude: 44.423193, longitude: 26.120947},
+        coordinates = {latitude: 51.510452, longitude: -0.119820},
         options = {resultType: 'STRUCTURED'};
         runs(function () {
             geocoder.getDefaultProvider().reverseGeocode(coordinates, successCB, null, options);
