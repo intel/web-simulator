@@ -6,13 +6,9 @@ Email: andreea.m.sandu@intel.com
 
 describe("tizen_1.0_geocoder", function () {
     var errorcode = require('ripple/platform/tizen/1.0/CommonError'),
-    tizen = require('ripple/platform/tizen/1.0/spec'),
     db = require('ripple/db'),
     platform = require('ripple/platform'),
-    geocoder = require('ripple/platform/tizen/1.0/geocoder'),
-    lbs = require('ripple/platform/tizen/1.0/lbs'),
-    event = require('ripple/event');
-
+    geocoder = require('ripple/platform/tizen/1.0/geocoder');
     beforeEach(function () {
         spyOn(db, "retrieveObject");
         spyOn(db, "saveObject");
