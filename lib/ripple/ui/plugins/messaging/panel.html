@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="messaging-container" class="ui-box ui-state-default ui-corner-all">
+<section id="messaging-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle">Messaging</section>
-        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
-            <span class="ui-icon ui-icon-arrow-4"></span>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Messaging</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
 
     <section id="messaging" class="info ui-widget-content ui-corner-all" style="display: none;">
         <section class="messaging-info">
-        	<h4>Messaging Sending</h4>
-            <table id="messaging-sms-fields" class="panel-table">
+        	<span class="PanelSectionTitle">Messaging Sending</span>
+            <table id="messaging-sms-fields" class="tf_panel-table">
                 <tr>
                     <td><label class="ui-text-label">From</label></td>
-                    <td><input id="messaging-sms-number" type="text" class="ui-state-default ui-corner-all"></td>
+                    <td style="width:80%;"><input id="messaging-sms-number" type="text" class="ui-corner-all" style="width: 88%;"></td>
                 </tr>
                 
                 <tr>
@@ -36,73 +36,50 @@
                 </tr>
                 <tr>
                     <td><label class="ui-text-label">Text</label></td>
-                    <td></td>
+                    <td><textarea class="ui-corner-all" id="messaging-text" rows="6" style="width: 88%;"></textarea></td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        <textarea class="ui-state-default ui-corner-all" id="messaging-text" rows="4" style="width: 90%;"></textarea>
-                    </td>
+                    <td><label class="ui-text-label">Attachment Content</label></td>
+                    <td><textarea class="ui-corner-all" id="messaging-attachment-content" rows="6" style="width: 88%;"></textarea></td>
                 </tr>
                 <tr>
-                    <td><label class="ui-text-label">Attachments</label></td>
-                    <td></td>
+                	<td><table id="messaging-attachments" class="tf_panel-table"></table></td>
+                	<td><span><button id="messaging-attach" class="PanelButtonStyle">Attach</button>&nbsp;&nbsp;<button id="messaging-detach" class="PanelButtonStyle">Detach</button></span></td>
                 </tr>
                 <tr>
-                    <td>
-                        <button id="messaging-attach" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span class="ui-button-text">Attach</span>
-                        </button>
-                    </td>
-                    <td>
-                        <button id="messaging-detach" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span class="ui-button-text">Detach</span>
-                        </button>
-                    </td>
-                </tr>
-            </table>
-
-            <table id="messaging-attachments" class="panel-table">
-            </table>
-
-            <table class="panel-table">
-                <tr>
-                    <td colspan="4">Attachment Content:</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <textarea class="ui-state-default ui-corner-all" id="messaging-attachment-content" rows="4" style="width: 90%;"></textarea>
-                    </td>
-                </tr>
+                <td></td>
                 <td>
-                    <button id="messaging-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                        <span class="ui-button-text">Send</span>
-                    </button>
+                	<button id="messaging-send" class="PanelButtonStyle" style="width:200px;">Send</button>
                 </td>
+                </tr>
             </table>
 
-			<h4>Messaging Receiving</h4>
-            <table class="panel-table">
+			<br>
+			<span class="PanelSectionTitle">Messaging Receiving</span>
+			<table class="tf_panel-table">
                 <tr>
                     <td><label class="ui-text-label">Recipients</label></td>
                     <td><input id="messaging-recipients" type="text" class="ui-state-default ui-corner-all"></td>
                 </tr>
             </table>
-
-            <table class="panel-table">
+			
+           
+			
+            <table class="tf_panel-table">
                 <tr>
-                    <td colspan="4">
+                    <td colspan="2">
                         <span id="messaging-received"></span>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4">Message:</td>
+                    <td><label class="ui-text-label">Message</label></td>
+                    <td><label class="ui-text-label"><textarea  class="ui-corner-all" id="received-message-box" rows="3" style="width: 90%;" readonly></textarea></label></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><textarea  class="ui-state-default ui-corner-all" id="received-message-box" rows="3" style="width: 90%;" readonly></textarea></td>
+                    <td></td>
+                    <td><button class="PanelButtonStyle" id="messaging-clear">Clear</button></td>
                 </tr>
-                <tr>
-                    <td colspan="4"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="messaging-clear"><span class="ui-button-text">Clear</span></button></textarea></td>
-                </tr>
+               
             </table>
         </section>
     </section>
