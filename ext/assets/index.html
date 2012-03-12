@@ -19,31 +19,31 @@
         <link href="#URL_PREFIX#ripple.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
-        <section id="ui">
+        <section id="ui" class="stage">
             <section id="emulator-booting"></section>
 
             <section id="extension-url" class="irrelevant">#URL_PREFIX#</section>
 
             <section class="top main">
-                <section class="ui-state-default omni-bar" style="display: none;">
-                    <div id="history-back" class="ui-state-default ui-corner-all ui-icon-container ui-icon-container-left">
-                        <span class="ui-icon ui-icon-arrowthick-1-w"></span>
+                <section class="omni-bar" style="display: none;">
+                	<div class="browsingBtns">
+                		<button id="history-back" class="button leftMostButton"><img src="images/leftArrowIcon.png"></button>
+                    	<button id="history-forward" class="button rightMostButton" role="button"><img src="images/rightArrowIcon.png"></button>
                     </div>
-
-                    <div id="history-forward" class="ui-state-default ui-corner-all ui-icon-container">
-                        <span class="ui-icon ui-icon-arrowthick-1-e"></span>
-                    </div>
-
-                    <div id="history-reload" class="ui-state-default ui-corner-all ui-icon-container">
-                        <span class="ui-icon ui-icon-arrowrefresh-1-e"></span>
-                    </div>
-
-                    <input class="ui-widget-content ui-corner-all" type="text" value="">
+                    
+					<button id="history-reload" class="button cornerButton" role="button" style="margin-left: 10px;"><img src="images/refreshIcon.png"></button>
+                	
+             
+                    <input class="ui-widget-content ui-corner-all" type="text" value="" style="margin-left: 18px;" placeholder="Enter a web application url...">
 
                     <span class="options">
-                        <div id="options-button" class="ui-state-default ui-corner-all ui-icon-container ui-icon-container-right">
-                            <span class="ui-icon ui-icon-wrench"></span>
-                        </div>
+                    
+                    	<button id="options-button" class="button cornerButton" role="button" "><img src="images/settingsIcon.png">&nbsp;Settings</button>
+                	
+                    
+                 
+                        
+                        
                         <ul id="options-menu">
                             <li id="options-menu-build" class="not-ready"><a>Package</a></li>
                             <li id="options-menu-sign" class="not-ready"><a>Package &amp; Sign</a></li>
@@ -60,11 +60,14 @@
                 </section>
             </section>
 
-            <section class="left-panel-collapse ui-state-default ui-corner-all ui-state-hover">
-                <span class="ui-icon ui-icon-arrowthick-1-w"></span>
-            </section>
-            <section id="left" class="left sortable main"></section>
-            <section class="tizen-logo"></section>
+            <div class="left-panel-collapse PanelCollapseBar">
+				<img src="images/sideCollapseIconLeftSide.png" style="margin-left:300px; margin-top: 6px;"/>		
+			</div>
+            
+            <div id="left_div">
+            <section id="left" class="left sortable main" style="position: relative;"></section>
+            </div>
+			
             <section class="middle">
                 <section id="device-container" class="device-wrapper">
                     <section id="viewport-container" class="viewport-wrapper">
@@ -80,10 +83,10 @@
                 <section id="panel-notification-text"></section>
             </section>
 
-            <section class="right-panel-collapse ui-state-default ui-corner-all ui-state-hover">
+            <section class="right-panel-collapse ui-state-default ui-corner-all ui-state-hover" style="DISPLAY:none;">
                 <span class="ui-icon ui-icon-arrowthick-1-e"></span>
             </section>
-            <section class="right sortable main"></section>
+            <section class="right sortable main"  style="DISPLAY:none;"></section>
 
             <section id="options-window"></section>
             <section class="error-window"></section>
