@@ -148,7 +148,7 @@ section, header, footer, aside, nav { display: block; }
     Middle/Device Wrapper Section */
 
 .middle {
-    margin: 0 auto;
+    margin-left: 0;
     top: 50px;
     position: relative;
 }
@@ -165,7 +165,7 @@ section, header, footer, aside, nav { display: block; }
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
     border-radius: 30px;
-    margin: 0 auto;
+    margin: 0 42px;
 }
 
 #document {
@@ -1122,14 +1122,15 @@ fieldset {
    background-size: 11px 11px;
    background-color: rgb(215,217,211);
    background-image: -webkit-repeating-linear-gradient(left,
-     rgba(128,128,128,.1),
-     transparent 1px,
-     transparent 12px),
-    -webkit-repeating-linear-gradient(top,
-     rgba(128,128,128,.1),
-     transparent 1px,
-     transparent 12px);
-   background-attachment: fixed;}
+        rgba(128,128,128,.1),
+        transparent 1px,
+        transparent 12px),
+   -webkit-repeating-linear-gradient(top,
+        rgba(128,128,128,.1),
+        transparent 1px,
+        transparent 12px);
+   background-attachment: fixed;
+}
 
 .PanelButtonStyle {
     font-size:12px;
