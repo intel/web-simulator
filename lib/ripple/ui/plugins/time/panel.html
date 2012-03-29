@@ -22,21 +22,15 @@
         </section>
     </section>
     <section class="info ui-widget-content ui-corner-all" style="display: none;">
-        <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">Current Time Locale</label></td>
-            </tr>
-        </table>
+        <h3 class="PanelSectionTitle">Current Time Locale</h3>
         <select id="time-locale-select" class="ui-state-default ui-corner-all"></select>
-        <table class="panel-table">
+        <h3 class="PanelSectionTitle">Time</h3>
+        <table class="tf_panel-table2">
             <tr>
-                <td><label class="ui-text-label">Time</label></td>
+                <td ><label class="ui-text-label">Current Time</label></td><td><span id="current-time"></span></td>
             </tr>
             <tr>
-                <td id="current-time" style="width:300px"></td>
-            </tr>
-            <tr>
-                <td id="trigger-alarm-id" style="width:300px"></td>
+                <td colspan="2" id="trigger-alarm-id" style="DISPLAY:none;"></td>
             </tr>
         </table>
     </section>

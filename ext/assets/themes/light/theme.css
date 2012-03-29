@@ -59,9 +59,7 @@ body { background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% r
 /* Interaction states
 ----------------------------------*/
 .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { 
-border: 1px solid #d3d3d3; background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #555555; }
-
-
+border: 1px solid #aaaaaa; background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; }
 .ui-state-default { 
     border: 1px solid #9b9fa1; 
     background: #e6e6e6;
@@ -584,3 +582,5 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
+
+
