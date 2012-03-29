@@ -15,6 +15,13 @@ In particular, the assets under ext/assets/images are excluded from the Apache S
 ## Build Requirements
 
 * nodejs, npm
+
+    nodejs: v0.4.12 is preferred. Later versions are not tested.
+
+       npm: If you are located behind a firewall, you might need to set up a proxy for npm. Just edit ~/.npmrc and add your proxy accordingly.
+                registry = http://registry.npmjs.org/
+                proxy = http://some.business.com:8080
+
 * OSX or linux (windows is not currently supported for development)
 
 ## Getting Started
