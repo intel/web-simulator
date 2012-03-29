@@ -14,7 +14,7 @@
  * limitations under the License.
 -->
 <section id="gps-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
+    <section class="h2 info-header" style="z-index:900;">
         <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Geo Location</section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
@@ -100,5 +100,12 @@
                 <span id="geo-map-zoomlevel-value"></span>
             </section>
         </section>
+        <div id="disable_geo_panel" style="DISPLAY:none; position: absolute; z-index:800; top:0; left:0; height: 100%; width:100%; background-color:rgba(0, 0, 0, 0.2);">
+            <div  style="position: absolute; top: 45%; width: 100%">
+                <div style="position: relative; top: -50%; width: 100%">
+                    <div align="center" style="padding: 6px; font-size: 22px; font-weight: bold; color: #666666; background-color:#ffffff;">Network is not available</div>
+                </div>
+            </div>
+        </div>
     </section>
 </section>
