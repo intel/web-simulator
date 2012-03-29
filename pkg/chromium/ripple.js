@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.2 :: Built On Thu Mar 29 2012 18:54:07 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.2 :: Built On Thu Mar 29 2012 19:18:46 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -36337,17 +36337,17 @@ module.exports = function (_sortMode, _maxResults) {
     var _self;
     if (_sortMode !== null && _sortMode !== undefined) {
         if (typeof _sortMode !== "object") {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+            throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
         }
         try {
             new SortMode(_sortMode.attributeName, _sortMode.order);
         } catch (e) {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+            throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
         }
     }
     if (_maxResults !== null && _maxResults !== undefined) {
         if (typeof _maxResults !== "number") {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+            throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
         }
     }
 
@@ -36683,7 +36683,7 @@ module.exports = function (prop) {
 
             searchStr = _concatAddrString(address);
             if (searchStr === undefined) {
-                throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+                throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
             }
             searchStr = "http://nominatim.openstreetmap.org/search?q=" + searchStr + "&format=json&polygon=1&addressdetails=1";
 
@@ -36697,7 +36697,7 @@ module.exports = function (prop) {
             }).error(function () {
                 if (errorCB) {
                     setTimeout(function () {
-                        errorCB(new WebAPIError(errorcode.SERVICE_NOT_AVAILABLE_ERR));
+                        errorCB(new WebAPIError(errorcode.NETWORK_ERR));
                     }, 1);
                 }
             });
@@ -36712,7 +36712,7 @@ module.exports = function (prop) {
             if (typeof coordinates !== "object" ||
                 typeof coordinates.latitude !== "number" ||
                 typeof coordinates.longitude !== "number") {
-                throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+                throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
             }
             searchStr = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" +
                         coordinates.latitude + "&lon=" + coordinates.longitude + "&zoom=18&addressdetails=1";
@@ -36738,7 +36738,7 @@ module.exports = function (prop) {
             }).error(function () {
                 if (errorCB) {
                     setTimeout(function () {
-                        errorCB(new WebAPIError(errorcode.SERVICE_NOT_AVAILABLE_ERR));
+                        errorCB(new WebAPIError(errorcode.NETWORK_ERR));
                     }, 1);
                 }
             });
@@ -37181,9 +37181,7 @@ require.define('ripple/platform/tizen/1.0/geocoder', function (require, module, 
  * limitations under the License.
  */
 
-var errorcode = require('ripple/platform/tizen/1.0/errorcode'),
-    WebAPIError = require('ripple/platform/tizen/1.0/WebAPIError'),
-    SimpleCoordinates = require('ripple/platform/tizen/1.0/SimpleCoordinates'),
+var SimpleCoordinates = require('ripple/platform/tizen/1.0/SimpleCoordinates'),
     ProviderLocal = require('ripple/platform/tizen/1.0/geoBackend_local'),
     ProviderNominatim = require('ripple/platform/tizen/1.0/geoBackend_nominatim'), // Nominatim geocode service
     _getProviders,
@@ -37191,23 +37189,17 @@ var errorcode = require('ripple/platform/tizen/1.0/errorcode'),
     _self;
 
 function _initialize() {
-    _providers = [new ProviderNominatim({name : "Nominatim", connectivity : "ONLINE"}), 
-                  new ProviderLocal({name : "Tizen Database", connectivity : "OFFLINE"})];
+    _providers = [new ProviderNominatim({name : "Nominatim", connectivity : "ONLINE"})
+                  /* ,new ProviderLocal({name : "Tizen Database", connectivity : "OFFLINE"}) */];
 }
 
 _initialize();
 
 _self = {
     getDefaultProvider : function () {
-        if (arguments.length !== 0) {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
-        }
         return _providers[0];
     },
     getProviders : function () {
-        if (arguments.length !== 0) {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
-        }
         return _providers;
     }
 };
@@ -37265,22 +37257,22 @@ module.exports = function (_sortMode, _resultType, _maxResults) {
     var _self;
     if (_sortMode !== null && _sortMode !== undefined) {
         if (typeof _sortMode !== "object") {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+            throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
         }
         try {
             new SortMode(_sortMode.attributeName, _sortMode.order);
         } catch (e) {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+            throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
         }
     }
     if (_resultType !== null && _resultType !== undefined) {
         if (_resultType !== "FORMATTED" && _resultType !== "STRUCTURED") {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+            throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
         }
     }
     if (_maxResults !== null && _maxResults !== undefined) {
         if (typeof _maxResults !== "number") {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+            throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
         }
     }
     _self = {
@@ -37506,7 +37498,6 @@ module.exports = {
         "messaging",
         "call",
         "geoView",
-        "geoDB",
         "time",
         "widgetConfig",
         "deviceSettings",
@@ -37961,8 +37952,8 @@ module.exports = {
                                          "http://tizen.org/api/messaging.send", "http://tizen.org/api/messaging.read",
                                          "http://tizen.org/api/messaging.write", "http://tizen.org/api/bluetooth",
                                          "http://tizen.org/api/bluetooth.gap", "http://tizen.org/api/bluetooth.spp",
-                                         "http://tizen.org/api/lbs.geocoder", "http://tizen.org/api/lbs.poi",
-                                         "http://tizen.org/api/lbs.map", "http://tizen.org/api/lbs.route",
+                                         "http://tizen.org/api/geocoder", "http://tizen.org/api/poi",
+                                         "http://tizen.org/api/map", "http://tizen.org/api/route",
                                          "http://tizen.org/api/mediacontent", "http://tizen.org/api/systeminfo",
                                          "http://tizen.org/api/nfc", "http://tizen.org/api/nfc.tag",
                                          "http://tizen.org/api/nfc.p2p", "http://tizen.org/api/nfc.se",
@@ -38106,9 +38097,9 @@ module.exports = {
         "units": {
             "name": "units",
             "control": {
-                "type": "text",
-                "value": "INTERNAL",
-                "readonly": "readonly"
+                "type": "label",
+                "innertext": "INTERNAL",
+                "value": "INTERNAL"
             },
         }
     },
@@ -38116,49 +38107,44 @@ module.exports = {
         "resolutionWidth": {
             "name": "Resolution Width",
             "control": {
-                "type": "number",
-                "value": 0,
-                "readonly": "readonly"
+                "type": "label",
+                "innertext": 0,
+                "value": 0
             }
         }, 
         "resolutionHeight": {
             "name": "Resolution Height",
             "control": {
-                "type": "number",
-                "value": 0,
-                "readonly": "readonly"
+                "type": "label",
+                "value": 0
             }
         },     
         "dotsPerInchWidth": {
             "name": "DPI-X",
             "control": {
-                "type": "number",
-                "value": 0,
-                "readonly": "readonly"
+                "type": "label",
+                "value": 0
             }
         },     
         "dotsPerInchHeight": {
             "name": "DPI-Y",
             "control": {
-                "type": "number",
-                "value": 0,
-                "readonly": "readonly"
+                "type": "label",
+                "value": 0
             }
         },                 
         "physicalWidth": {
             "name": "Physical Width",
             "control": {
-                "type": "number",
-                "value": 0,
-                "readonly": "readonly"
+                "type": "label",
+                "value": 0
             }
         },
         "physicalHeight": {
             "name": "Physical Height",
             "control": {
-                "type": "number",
-                "value": 0,
-                "readonly": "readonly"
+                "type": "label",
+                "value": 0
             }
         },
         "brightness": {
@@ -38177,33 +38163,29 @@ module.exports = {
         "imei": {
             "name": "IMEI",
             "control": {
-                "type": "text",
-                "value": "352099001761482",
-                "readonly": "readonly"
+                "type": "label",
+                "value": "352099001761482"
             }
         }, 
         "model": {
             "name": "GT-TIZEN",
             "control": {
-                "type": "text",
-                "value": "",
-                "readonly": "readonly"
+                "type": "label",
+                "value": ""
             }
         }, 
         "version": {
             "name": "Version",
             "control": {
-                "type": "text",
-                "value": "TIZEN_emul_20111229_1",
-                "readonly": "readonly"
+                "type": "label",
+                "value": "TIZEN_1.0"
             }
         }, 
         "vendor": {
             "name": "Vendor.",
             "control": {
-                "type": "text",
-                "value": "",
-                "readonly": "readonly"
+                "type": "label",
+                "value": ""
             }
         }
     },    
@@ -38279,59 +38261,80 @@ module.exports = {
             "name": "apn",
             "control": {
                 "type": "text",
-                "value": "",
-                "readonly": "readonly"
+                "value": "Tizen"               
+            },
+            "event": "CellularNetworkapnChanged",
+            "callback": function (setting) {
+                event.trigger("CellularNetworkapnChanged", [setting]);
             }
         },
         "ipAddress": {
             "name": "IP Address",
             "control": {
                 "type": "text",
-                "value": "10.0.2.16",
-                "readonly": "readonly"
+                "value": "10.0.2.16"                
+            },
+            "event": "CellularNetworkipAddressChanged",
+            "callback": function (setting) {
+                event.trigger("CellularNetworkipAddressChanged", [setting]);
             }
         },         
         "mcc": {
             "name": "mcc",
             "control": {
                 "type": "text",
-                "value": "460",
-                "readonly": "readonly"
+                "value": "460"                
+            },
+            "event": "CellularNetworkmccChanged",
+            "callback": function (setting) {
+                event.trigger("CellularNetworkmccChanged", [setting]);
             }
         }, 
         "mnc": {
             "name": "mnc",
             "control": {
                 "type": "text",
-                "value": "0",
-                "readonly": "readonly"
+                "value": "0"                
+            },
+            "event": "CellularNetworkmncChanged",
+            "callback": function (setting) {
+                event.trigger("CellularNetworkmncChanged", [setting]);
             }
         }, 
         "cellid": {
             "name": "cellid",
             "control": {
                 "type": "text",
-                "value": "0",
-                "readonly": "readonly"
+                "value": "0"                
+            },
+            "event": "CellularNetworkcellidChanged",
+            "callback": function (setting) {
+                event.trigger("CellularNetworkcellidChanged", [setting]);
             }
         }, 
         "lac": {
             "name": "lac",
             "control": {
                 "type": "text",
-                "value": "0",
-                "readonly": "readonly"
+                "value": "0"                
+            },
+            "event": "CellularNetworklacChanged",
+            "callback": function (setting) {
+                event.trigger("CellularNetworklacChanged", [setting]);
             }
         }, 
         "serviceType": {
             "name": "serviceType",
             "control": {
                 "type": "text",
-                "value": "",
-                "readonly": "readonly"
+                "value": "INTERNET"                
+            },
+            "event": "CellularNetworkserviceTypeChanged",
+            "callback": function (setting) {
+                event.trigger("CellularNetworkserviceTypeChanged", [setting]);
             }
         }, 
-        "isInRoaming": {
+        "isRoaming": {
             "name": "Roaming",
             "control": {
                 "type": "checkbox",
@@ -40645,7 +40648,7 @@ module.exports = function (prop) {
                 } else if (_checkAddressType(address) === "StructuredAddress") {
                     _geocodeByAddress(address, successCB, errorCB, options);
                 } else {
-                    throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+                    throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
                 }
             });
         }
@@ -40665,7 +40668,7 @@ module.exports = function (prop) {
                 } else if (_checkCoordsType(coordinates) === "geoCoordinates") {
                     _reverseGeocodeByGeo(coordinates, successCB, errorCB, options);
                 } else {
-                    throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+                    throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
                 }
             });
         }
@@ -41266,12 +41269,12 @@ module.exports = function (_attributeName, _order) {
     var _self;
     if (_attributeName !== null && _attributeName !== undefined) {
         if (typeof _attributeName !== "string") {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+            throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
         }
     }
     if (_order !== null && _order !== undefined) {
         if (_order !== "ASC" && _order !== "DESC") {
-            throw new WebAPIError(errorcode.TYPE_MISMATCH_ERR);
+            throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
         }
     }
     _self = {
@@ -44287,11 +44290,11 @@ module.exports = {
                     children: {
                         geocoder: {
                             path: "tizen/1.0/geocoder",
-                            feature: "http://tizen.org/api/lbs.geocoder"
+                            feature: "http://tizen.org/api/geocoder"
                         },
                         map: {
                             path: "tizen/1.0/map",
-                            feature: "http://tizen.org/api/lbs.map"
+                            feature: "http://tizen.org/api/map"
                         }
                     }
                 },
@@ -63138,6 +63141,17 @@ module.exports = {
         }
 
         initMap();
+        if (navigator.onLine === false) {
+            jQuery("#disable_geo_panel").show();
+        }
+        jQuery(window).bind("online", function () {
+            jQuery("#disable_geo_panel").hide();
+            console.log("ONLINE");
+        });
+        jQuery(window).bind("offline", function () {
+            jQuery("#disable_geo_panel").show();
+            console.log("OFFLINE");
+        });
 
         initializeValues();
 
@@ -63688,7 +63702,7 @@ module.exports = {
         }
 
         function initializeValues() {
-            var timeValue     =  db.retrieve(constants.BATTERY.TIME),
+            var timeValue     =  db.retrieve(constants.BATTERY.TIME) || 600,
                 volumeValue   =  db.retrieve(constants.BATTERY.VOLUME) || 100,
                 chargingValue =  db.retrieve(constants.BATTERY.CHARGING);
 
@@ -63810,9 +63824,16 @@ function _retrieveDeviceInfo(key) {
         return deviceInfo.screen.width;
     case "Display.pixelAspectRatio":
         return (deviceInfo.screen.width / deviceInfo.screen.height).toFixed(2);
-    case "Display.dpiX":
-        return deviceInfo.ppi;
+
+    case "Display.physicalWidth":
+        return (deviceInfo.screen.width/deviceInfo.ppi).toFixed(2);
+    case "Display.physicalHeight":
+        return (deviceInfo.screen.height/deviceInfo.ppi).toFixed(2);
     case "Display.dpiY":
+    case "Display.dotsPerInchHeight":
+        return deviceInfo.ppi;
+    case "Display.dpiX":
+    case "Display.dotsPerInchWidth":
         return deviceInfo.ppi;
     case "OperatingSystem.version":
         return deviceInfo.osVersion;
@@ -63833,8 +63854,6 @@ function _retrieveSettingName(type) {
         return "Cellular Hardware";
     case "CellularNetwork":
         return "Cellular Network";
-    case "Device.vendor":
-        return deviceInfo.manufacturer;
     case "MemoryUnit":
         return "Memory Unit";
     case "OperatingSystem":
@@ -63843,8 +63862,6 @@ function _retrieveSettingName(type) {
         return "Web Runtime";
     case "WiFiHardware":
         return "WiFi Hardware";
-    case "Display.dpiY":
-        return deviceInfo.ppi;
     case "WiFiNetwork":
         return "WiFi Network";
     default:
@@ -63894,6 +63911,9 @@ function _buildDOMNode(setting, settingType, key) {
     case "select":
         tagName = "select";
         break;
+    case "label":
+        tagName = "label";
+        break;
     default:
         exception.raise(exception.types.Application, _CONST.UKNOWN_CONTROL_MESSAGE);
     }
@@ -63910,7 +63930,9 @@ function _buildDOMNode(setting, settingType, key) {
     domNode = _appendSettingNode(utils.createElement("span", {"innerText": setting.name, "class": constants.UI.TEXT_LABEL_CLASS}), settingsNode, domNodeLabel);
 
     jNode = jQuery(settingsNode);
-    jNode.addClass(constants.UI.JQUERY_UI_INPUT_CLASSES);
+    if (tagName !== "label") {
+        jNode.addClass(constants.UI.JQUERY_UI_INPUT_CLASSES);
+    }
 
     switch (setting.control.type) {
     case "checkbox":
@@ -63938,6 +63960,10 @@ function _buildDOMNode(setting, settingType, key) {
                 setting.callback(jNode.val());
             }
         });
+        break;
+    
+    case "label":
+        jNode.text(currentSetting);
         break;
 
     case "select":
@@ -64724,7 +64750,7 @@ function _process(collapseNode, panelNode, side, callback) {
             collapseNode.css("left", 0);
             jQuery("#middle_div").css("width", $(window).width() - 344);
             jQuery("#middle_div").css("left", 347);
-            jQuery("#device-container").css("margin-left", "42px");
+            jQuery("#device-container").css("margin-left", "21px");
             updateZoomingValues(zoomingValue, "left");
         }
         
@@ -64748,7 +64774,7 @@ function _process(collapseNode, panelNode, side, callback) {
             jQuery('#left_div').hide("slow");
             jQuery("#middle_div").css("width", $(window).width() - 20);
             jQuery("#middle_div").css("left", 20);
-            jQuery("#device-container").css("margin-left", "42px");
+            jQuery("#device-container").css("margin-left", "21px");
             updateZoomingValues(zoomingValue, "left");
         }
         
@@ -64801,7 +64827,7 @@ module.exports = {
             jQuery('#left_div').hide();
             jQuery("#middle_div").css("width", $(window).width() - 20);
             jQuery("#middle_div").css("left", 20);
-            jQuery("#device-container").css("margin-left", "42px");
+            jQuery("#device-container").css("margin-left", "21px");
             updateZoomingValues(zoomingValue, "left");
         } else {
             jQuery('#left_div').show("fast");
@@ -64811,7 +64837,7 @@ module.exports = {
             leftCollapseNode.append('<img src="images/sideCollapseIconLeftSide.png" style="margin-left:330px; margin-top: 6px;"/>');
             leftCollapseNode.css("top", $(window).height() - 56);
             leftCollapseNode.css("left", 0);
-            jQuery("#device-container").css("margin-left", "42px");
+            jQuery("#device-container").css("margin-left", "21px");
             updateZoomingValues(zoomingValue, "left");
         }   
 
@@ -65275,7 +65301,7 @@ function _init() {
     function triggerAlarm() {
         time = new Date();
         timeNode.empty();
-        timeNode.append(utils.createElement("p", {
+        timeNode.append(utils.createElement("span", {
             "innerHTML": " " + time.toLocaleTimeString()
         }));
         alarms = db.retrieveObject("tizen1.0-db-alarms");
@@ -65311,6 +65337,7 @@ function _init() {
         triggerNode.append(utils.createElement("p", {
             "innerHTML": applicationId + " is triggered"
         }));
+        triggerNode.show();
     });
 }
 

@@ -273,7 +273,7 @@
  * limitations under the License.
 -->
 <section id="gps-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
+    <section class="h2 info-header" style="z-index:900;">
         <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Geo Location</section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
@@ -359,6 +359,13 @@
                 <span id="geo-map-zoomlevel-value"></span>
             </section>
         </section>
+        <div id="disable_geo_panel" style="DISPLAY:none; position: absolute; z-index:800; top:0; left:0; height: 100%; width:100%; background-color:rgba(0, 0, 0, 0.2);">
+            <div  style="position: absolute; top: 45%; width: 100%">
+                <div style="position: relative; top: -50%; width: 100%">
+                    <div align="center" style="padding: 6px; font-size: 22px; font-weight: bold; color: #666666; background-color:#ffffff;">Network is not available</div>
+                </div>
+            </div>
+        </div>
     </section>
 </section>
 
@@ -1028,23 +1035,12 @@
                 </td>
                 </tr>
             </table>
-
 			<br>
 			<span class="PanelSectionTitle">Receiving</span>
 			<table class="tf_panel-table">
                 <tr>
                     <td><label class="ui-text-label">Recipients</label></td>
-                    <td><input id="messaging-recipients" type="text" class="ui-state-default ui-corner-all"></td>
-                </tr>
-            </table>
-			
-           
-			
-            <table class="tf_panel-table">
-                <tr>
-                    <td colspan="2">
-                        <span id="messaging-received"></span>
-                    </td>
+                    <td><input id="messaging-recipients" type="text" class="ui-corner-all" style="width: 28%;">&nbsp;&nbsp;<span id="messaging-received"></span></td>
                 </tr>
                 <tr>
                     <td><label class="ui-text-label">Message</label></td>
@@ -1054,7 +1050,6 @@
                     <td></td>
                     <td><button class="PanelButtonStyle" id="messaging-clear">Clear</button></td>
                 </tr>
-               
             </table>
         </section>
     </section>
@@ -1192,21 +1187,15 @@
         </section>
     </section>
     <section class="info ui-widget-content ui-corner-all" style="display: none;">
-        <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">Current Time Locale</label></td>
-            </tr>
-        </table>
+        <h3 class="PanelSectionTitle">Current Time Locale</h3>
         <select id="time-locale-select" class="ui-state-default ui-corner-all"></select>
-        <table class="panel-table">
+        <h3 class="PanelSectionTitle">Time</h3>
+        <table class="tf_panel-table2">
             <tr>
-                <td><label class="ui-text-label">Time</label></td>
+                <td ><label class="ui-text-label">Current Time</label></td><td><span id="current-time"></span></td>
             </tr>
             <tr>
-                <td id="current-time" style="width:300px"></td>
-            </tr>
-            <tr>
-                <td id="trigger-alarm-id" style="width:300px"></td>
+                <td colspan="2" id="trigger-alarm-id" style="DISPLAY:none;"></td>
             </tr>
         </table>
     </section>
@@ -1321,7 +1310,7 @@
   
   <p style="font-size: 11pt; font-color:#333; margin-top:18px; line-height:21px;">
     A web application simulator. Based on the <a style=" font-size:12px; color:rgb(46,171,171); text-decoration: none;" href="http://rippledocs.tinyhippos.com" target="_blank"><u>Ripple Mobile Emulator</u></a>
-    Copyright 2011 Intel Corporation. All rights reserved.
+    Copyright 2012 Intel Corporation. All rights reserved.
     <a style=" font-size:12px; color:rgb(46,171,171); text-decoration: none;" href="http://www.tizen.org" target="_blank"><u>http://www.tizen.org</u></a>
   </p>
 </div>
