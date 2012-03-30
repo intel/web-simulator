@@ -1154,11 +1154,16 @@ fieldset {
 }
 
 .PanelButtonStyle:hover {
-    color:#e0e0e0;
-    background-color: #cccccc;
+    color:#55555;
+    background-color: #fbfbfb;
     border-color:#424242;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#777777)); 
     background-image: -webkit-linear-gradient(top, #cccccc, #777777); 
+}
+
+
+.PanelButtonStyle:active {
+    color:#e0e0e0;
 }
 
 .urlBox {
