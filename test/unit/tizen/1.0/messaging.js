@@ -205,7 +205,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('INVALID_VALUES_ERROR');
+            expect(e.code).toEqual(e.INVALID_VALUES_ERR);
         }
 
         waits(1);
@@ -238,7 +238,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('INVALID_VALUES_ERROR');
+            expect(e.code).toEqual(e.INVALID_VALUES_ERR);
         }
 
         waits(1);
@@ -270,7 +270,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -304,7 +304,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -337,7 +337,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -370,7 +370,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -404,7 +404,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -437,7 +437,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -467,7 +467,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -497,7 +497,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -527,7 +527,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -557,7 +557,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -589,7 +589,7 @@ describe("tizen_1.0_messaging", function () {
             }
             catch (e) {
                 exceptSend = true;
-                expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+                expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
             }
         };
 
@@ -598,7 +598,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -633,7 +633,7 @@ describe("tizen_1.0_messaging", function () {
             }
             catch (e) {
                 exceptSend = true;
-                expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+                expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
             }
         };
 
@@ -642,7 +642,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -676,7 +676,7 @@ describe("tizen_1.0_messaging", function () {
             }
             catch (e) {
                 exceptSend = true;
-                expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+                expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
             }
         };
 
@@ -685,7 +685,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(1);
@@ -723,7 +723,7 @@ describe("tizen_1.0_messaging", function () {
             }
             catch (e) {
                 exceptSend = true;
-                expect(e.name).toEqual('INVALID_VALUES_ERROR');
+                expect(e.code).toEqual(e.INVALID_VALUES_ERR);
             }
         };
 
@@ -732,7 +732,7 @@ describe("tizen_1.0_messaging", function () {
         }
         catch (e) {
             except = true;
-            expect(e.name).toEqual('TYPE_MISMATCH_ERROR');
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
 
         waits(10);
