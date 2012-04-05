@@ -57,7 +57,7 @@
                     <section id="device-container" class="device-wrapper">
                         <section id="viewport-container" class="viewport-wrapper">
                         <section id="overlay-views"><!--
- *  Copyright 2012 Intel Corporation.
+ *  Copyright 2011 Research In Motion Limited.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,8 +71,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="lock-screen-window" class="overlay">
-    <h1>The screen is locked, please unlock it by un-checking "Lock Screen" in the "Device & Network Settings" panel.</h1>
+<section id="menu-window" class="overlay-menu">
+    <div id="menu-box" class="overlay-menu-box">
+        <div id="menu-buttons" class="overlay-menu-buttons"></div>
+    </div> 
 </section>
 
 <!--
@@ -98,7 +100,7 @@
 </section>
 
 <!--
- *  Copyright 2011 Research In Motion Limited.
+ *  Copyright 2012 Intel Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,10 +114,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="menu-window" class="overlay-menu">
-    <div id="menu-box" class="overlay-menu-box">
-        <div id="menu-buttons" class="overlay-menu-buttons"></div>
-    </div> 
+<section id="lock-screen-window" class="overlay">
+    <h1>The screen is locked, please unlock it by un-checking "Lock Screen" in the "Device & Network Settings" panel.</h1>
 </section>
 
 <!--
@@ -200,60 +200,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="accelerometer-container" class="ui-box ui-state-default">
+<section id="phone-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Accelerometer</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Phone</section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
-    <section id="accelerometer" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <section class="accelerometer-info">
-            <canvas style="display: block;" id="accelerometer-canvas" width="300" height="200"></canvas>
 
-            <table class="tf_panel-table">
-                <tr>
-                    <td colspan="2" style="text-align: center"> 
-                        <em>
-                            Click and drag with the mouse to manipulate the device. <br/>
-                            Hold the Shift key to modify 'alpha'
-                        </em>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label" for="accelerometer-x">xAxis:</label></td>
-                    <td><span id="accelerometer-x"></span>m / s^2</td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label" for="accelerometer-y">yAxis:</label></td>
-                    <td><span id="accelerometer-y"></span> m / s^2</td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label" for="accelerometer-z">zAxis:</label></td>
-                    <td><span id="accelerometer-z"></span> m / s^2</td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label" for="accelerometer-alpha">alpha:</label></td>
-                    <td><span id="accelerometer-alpha"></span> deg</td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label" for="accelerometer-beta">beta:</label></td>
-                    <td><span id="accelerometer-beta"></span> deg</td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label" for="accelerometer-gamma">gamma:</label></td>
-                    <td><span id="accelerometer-gamma"></span> deg</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button id="accelerometer-shake" class="PanelButtonStyle">
-                        <span class="ui-button-text">Shake</span>
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </section>
+    <section class="info ui-widget-content ui-corner-all" style="display: none">
+        <table class="panel-table">
+            <tr>
+                <td><label class="ui-text-label">Type</label></td>
+                <td><select id="phone-event-types" class="ui-state-default ui-corner-all"></select></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">Call id</label></td>
+                <td><input id="phone-call-id" type="text" class="ui-state-default ui-corner-all"></td>
+            </tr>
+            <tr id="phone-event-error-container" style="display: none">
+                <td><label class="ui-text-label">Error</label></td>
+                <td><select id="phone-event-error-types" class="ui-state-default ui-corner-all"></select></td>
+            </tr>
+       </table>
+       <table class="panel-table">
+            <tr>
+                <td>
+                    <button id="phone-logs-clear" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Clear Logs</span>
+                    </button>
+                </td>
+                <td>
+                    <button id="phone-event-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Fire Event</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
     </section>
 </section>
 
@@ -274,7 +257,7 @@
 -->
 <section id="gps-container" class="ui-box ui-state-default">
     <section class="h2 info-header" style="z-index:900;">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Geo Location</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Geolocation</section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
@@ -384,6 +367,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
+<section id="settings-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Device UI Settings</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+    <section class="info ui-widget-content ui-corner-all" style="display: none;">
+        <table class="panel-table">
+            <tr>
+                <td><label class="ui-text-label">Tooltips</label></td>
+                <td>
+                    <button id="settings-toggletooltips" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Toggle</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">Cross Domain Proxy</label></td>
+                <td>
+                    <select id="settings-xhr-proxy" class="ui-state-default ui-corner-all">
+                        <option value="false">Enabled</option>
+                        <option value="true">Disabled</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="theme-switcher">
+                <td><label class="ui-text-label">Themes</label></td>
+                <td><select id="theme-select" class="ui-state-default ui-corner-all"></select></td>
+            </tr>
+        </table>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
 <section id="platform-events-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
         <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Events</section>
@@ -403,8 +435,8 @@
     </section>
 </section>
 
-<!--
- *  Copyright 2011 Research In Motion Limited.
+/*
+ *  Copyright 2012 Intel Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -417,49 +449,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
--->
-<section id="phone-container" class="ui-box ui-state-default">
+ */
+
+<section id="sensors-panel-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Phone</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Sensors</section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
 
-    <section class="info ui-widget-content ui-corner-all" style="display: none">
-        <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">Type</label></td>
-                <td><select id="phone-event-types" class="ui-state-default ui-corner-all"></select></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Call id</label></td>
-                <td><input id="phone-call-id" type="text" class="ui-state-default ui-corner-all"></td>
-            </tr>
-            <tr id="phone-event-error-container" style="display: none">
-                <td><label class="ui-text-label">Error</label></td>
-                <td><select id="phone-event-error-types" class="ui-state-default ui-corner-all"></select></td>
-            </tr>
-       </table>
-       <table class="panel-table">
-            <tr>
-                <td>
-                    <button id="phone-logs-clear" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                        <span class="ui-button-text">Clear Logs</span>
-                    </button>
-                </td>
-                <td>
-                    <button id="phone-event-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                        <span class="ui-button-text">Fire Event</span>
-                    </button>
-                </td>
-            </tr>
-        </table>
+    <section id="sensorsettings-content-container" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <p>Configure sensors information, settings and events for the current platform.</p>
     </section>
 </section>
 
 <!--
- *  Copyright 2011 Research In Motion Limited.
+ *  Copyright 2012 Intel Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -473,201 +479,82 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="push-container" class="ui-box ui-state-default">
+<section id="call-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Push</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Call</section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
 
-    <section id="push" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <section class="push-info">
-            <table id="push-fields" class="panel-table">
-                <tr>
-                    <td><label class="ui-text-label">Port</label></td>
-                    <td><select id="port-select" class="ui-state-default ui-corner-all"></select></td>
+    <section id="call" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <section class="call-info">
+        	<h3 class="PanelSectionTitle">Local Party</h4>
+            <table id="call-status" class="tf_panel-table2" style="display: none;">
+                <tr id="status-text">
+                    <td width="100%"><label class="ui-text-label" style = "color: red;"><center id="call-status-arrow"></center></label></td>
                 </tr>
             </table>
-
-            <table class="panel-table">
+            <table id="call-local-dialer" class="tf_panel-table2">
                 <tr>
-                    <td colspan="2">
-                        <textarea class="ui-state-default ui-corner-all" id="push-text" rows="4" style="width: 90%;"></textarea>
-                    </td>
+                    <td><label class="ui-text-label">Auto recording: </label></td>
+                    <td><input id="recording-status" type="checkbox" class="ui-state-default ui-corner-all"></td>
                 </tr>
-
                 <tr>
-                    <td colspan="2">
-                        <button id="push-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span class="ui-button-text">Push</span>
+                    <td><label class="ui-text-label">Call with number</label></td>
+                    <td><select id="call-local-phone-number" class="ui-state-default ui-corner-all"></select></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">Operation: </label></td>
+                    <td>
+                        <button id="call-local-call" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                            <span id="call-local-text" class="ui-button-text">Call</span>
+                        </button>                    
+                        <button id="call-local-end" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                            <span id="end-local-text" class="ui-button-text">End</span>
                         </button>
                     </td>
                 </tr>
             </table>
+
+        	<h3 class="PanelSectionTitle">Remote Party</h3>
+            <table id="remote-call-status" class="tf_panel-table2" style="display: none;">
+                <tr id="remote-status-text">                    
+                    <td width="100%"><label class="ui-text-label" style = "color: red;"><center id="remote-call-status-arrow"></center></label></td>
+                </tr>
+            </table>
+            <table id="call-remote-dialer" class="tf_panel-table2">
+                <!--
+                <tr>
+                    <td><label class="ui-text-label">Phone Number</label></td>
+                    <td><select id="call-remote-phone-number" class="ui-state-default ui-corner-all"></select></td>
+                </tr>
+                -->
+                <tr>
+                    <td><label class="ui-text-label">Operation: </label></td>
+                    <td>
+                        <button id="call-remote-call" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                            <span id="call-remote-text" class="ui-button-text">Call</span>
+                        </button>
+                        <button id="call-remote-end" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                            <span id="end-remote-text" class="ui-button-text">End</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+        	<h3 class="PanelSectionTitle">End call with</h3>
+            <table id="call-exception" class="tf_panel-table2">
+                <tr>
+                    <td><label class="ui-text-label">Reason</label></td>
+                    <td><select id="call-exception-type" class="ui-state-default ui-corner-all"></select></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">End</label></td>
+                    <td><input id="call-exception-status" type="checkbox" class="ui-state-default ui-corner-all"></td>
+                </tr>
+            </table>
         </section>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Intel Corporation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="battery-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Battery</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
-    </section>
-
-    <section class="info ui-widget-content ui-corner-all" style="display: none;">
-        <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">Total Time (mins)</label></td>
-                <td><input id="charging-time" type="text" value="1" class="ui-state-default ui-corner-all"></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Battery Volume</label></td>
-                <td>
-                    <label id="battery-volume-label" class="range-label-left">100%</label>
-                    <input id="battery-volume" type="range" value="100" min="0" max="100" step="0.01" class="ui-state-default ui-corner-all">
-                </td>
-            </tr>
-			<tr>
-                <td><label class="ui-text-label">Actual Power</label></td>
-                <td id="battery-remaining-power" style="width:300px"></td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="ui-text-label">Is Charging</span>
-                </td>
-                <td>
-                    <input id="is-charging" type="checkbox" />
-                </td>
-            </tr>
-        </table>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="information-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>System Summary</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
-    </section>
-    <section id="information-sub-container" class="info ui-widget-content ui-corner-all" style="display: none;"></section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="platforms-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Platform API</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
-    </section>
-
-    <section class="info ui-widget-content ui-corner-all" style="display: none;">
-        <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">Platform</label></td>
-                <td><select id="platform-select" class="ui-state-default ui-corner-all"></select></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Version</label></td>
-                <td><select id="version-select" class="ui-state-default ui-corner-all"></select></td>
-            </tr>
-        </table>
-        
-        <button id="change-platform" class="PanelButtonStyle">
-            <span class="ui-button-text">Change Platform</span>
-        </button>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="devices-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Resolution & Orientation</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
-    </section>
-
-    <section class="info ui-widget-content ui-corner-all" style="display: none;">
-        <select id="device-select" class="ui-state-default ui-corner-all"></select>
-        <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">Orientation</label></td>
-                <td>
-                    <div id="layout-portrait"></div>
-                    <div id="layout-landscape"></div>
-                </td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Zooming</label></td>
-                <td>
-                    <label id="screen-zooming-label" class="range-label-left">100%</label>
-                    <input id="screen-zooming" type="range" value="100" min="20" max="150" step="5" class="ui-state-default ui-corner-all">
-            </td>
-            </tr>
-        </table>
     </section>
 </section>
 
@@ -728,34 +615,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="devicesettings-panel-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Device &amp; Network Settings</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
-    </section>
-
-    <section id="devicesettings-content-container" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <p>Configure device information, settings and events for the current platform.</p>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
 <section id="preferences" class="ui-box ui-state-default">
     <section class="h2 info-header">
         <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Storage</section>
@@ -777,6 +636,287 @@
         <button id="preferences-clear-button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
             <span class="ui-button-text">Clear All</span>
         </button>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="filesystem-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>File System</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+
+    <section id="file-container" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <p>You can map the following virtual paths (ex. /virtual/photos/) to specific locations on your drive.</p>
+
+        <p>You may specify any valid URI location (ex. http://domain.com/files).</p>
+
+        <p>Empty values will cause the virtual routes to point to your relative location.</p>
+
+        <p class="ui-text-label" >/virtual/...</p>
+
+        <table class="panel-table">
+            <tr>
+                <td><label class="ui-text-label">photos/</label></td>
+                <td><input id="panel-filesystem-photos" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">videos/</label></td>
+                <td><input id="panel-filesystem-videos" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">music/</label></td>
+                <td><input id="panel-filesystem-music" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">downloads/</label></td>
+                <td><input id="panel-filesystem-downloads" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+            </tr>
+        </table>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="messaging-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Messaging</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+
+    <section id="messaging" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <section class="messaging-info">
+        	<span class="PanelSectionTitle">Sending</span>
+            <table id="messaging-sms-fields" class="tf_panel-table">
+                <tr>
+                    <td><label class="ui-text-label">From</label></td>
+                    <td style="width:80%;"><input id="messaging-sms-number" type="text" class="ui-corner-all" style="width: 88%;"></td>
+                </tr>
+                
+                <tr>
+                    <td><label class="ui-text-label">Type</label></td>
+                    <td><select id="messaging-type" class="ui-state-default ui-corner-all"></select></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">Text</label></td>
+                    <td><textarea class="ui-corner-all" id="messaging-text" rows="6" style="width: 88%;"></textarea></td>
+                </tr>
+<!-- TODO: add back when attachment is finished
+                <tr>
+                    <td><label class="ui-text-label">Attachment Content</label></td>
+                    <td><textarea class="ui-corner-all" id="messaging-attachment-content" rows="6" style="width: 88%;"></textarea></td>
+                </tr>
+                <tr>
+                	<td><table id="messaging-attachments" class="tf_panel-table"></table></td>
+                	<td><span><button id="messaging-attach" class="PanelButtonStyle">Attach</button>&nbsp;&nbsp;<button id="messaging-detach" class="PanelButtonStyle">Detach</button></span></td>
+                </tr>
+-->
+                <tr>
+                <td></td>
+                <td>
+                	<button id="messaging-send" class="PanelButtonStyle" style="width:200px;">Send</button>
+                </td>
+                </tr>
+            </table>
+			<br>
+			<span class="PanelSectionTitle">Receiving</span>
+			<table class="tf_panel-table">
+                <tr>
+                    <td><label class="ui-text-label">Recipients</label></td>
+                    <td><input id="messaging-recipients" type="text" class="ui-corner-all" style="width: 28%;">&nbsp;&nbsp;<span id="messaging-received"></span></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">Message</label></td>
+                    <td><label class="ui-text-label"><textarea  class="ui-corner-all" id="received-message-box" rows="3" style="width: 90%;" readonly></textarea></label></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button class="PanelButtonStyle" id="messaging-clear">Clear</button></td>
+                </tr>
+            </table>
+        </section>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="accelerometer-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Accelerometer</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+    <section id="accelerometer" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <section class="accelerometer-info">
+            <canvas style="display: block;" id="accelerometer-canvas" width="300" height="200"></canvas>
+
+            <table class="tf_panel-table">
+                <tr>
+                    <td colspan="2" style="text-align: center"> 
+                        <em>
+                            Click and drag with the mouse to manipulate the device. <br/>
+                            Hold the Shift key to modify 'alpha'
+                        </em>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-x">xAxis:</label></td>
+                    <td><span id="accelerometer-x"></span>m / s^2</td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-y">yAxis:</label></td>
+                    <td><span id="accelerometer-y"></span> m / s^2</td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-z">zAxis:</label></td>
+                    <td><span id="accelerometer-z"></span> m / s^2</td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-alpha">alpha:</label></td>
+                    <td><span id="accelerometer-alpha"></span> deg</td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-beta">beta:</label></td>
+                    <td><span id="accelerometer-beta"></span> deg</td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-gamma">gamma:</label></td>
+                    <td><span id="accelerometer-gamma"></span> deg</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button id="accelerometer-shake" class="PanelButtonStyle">
+                        <span class="ui-button-text">Shake</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="multimedia-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Multimedia</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+    <section id="media-container" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <h3>Multimedia</h3>
+
+        <table class="panel-table">
+            <tr>
+                <td><label class="ui-text-label">Is audio playing?</label></td>
+                <td id="multimedia-isaudioplaying">false</td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">Is video playing?</label></td>
+                <td id="multimedia-isvideoplaying">false</td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">Volume:</label></td>
+                <td>
+                    <span id="media-volume-value" class="range-label-right">05</span>
+                    <input id="media-volume" type="range" min="0" max="10" value="5" />
+                </td>
+            </tr>
+        </table>
+
+        <h3>Audio Player</h3>
+
+        <table class="panel-table audio-table">
+            <tr>
+                <td><label class="ui-text-label">Opened File:</label></td>
+                <td id="media-audio-file"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">State:</label></td>
+                <td id="media-audio-state"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">Progress:</label></td>
+                <td id="media-audio-progress"></td>
+            </tr>
+        </table>
+
+        <h3>Video Player</h3>
+
+        <table class="panel-table video-table">
+            <tr>
+                <td><label class="ui-text-label">Opened File:</label></td>
+                <td id="media-video-file"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">State:</label></td>
+                <td id="media-video-state"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">Progress:</label></td>
+                <td id="media-video-progress"></td>
+            </tr>
+        </table>
     </section>
 </section>
 
@@ -887,282 +1027,6 @@
     </section>
 </section>
 
-<!--
- *  Copyright 2012 Intel Corporation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="call-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Call</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
-    </section>
-
-    <section id="call" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <section class="call-info">
-        	<h3 class="PanelSectionTitle">Local Party</h4>
-            <table id="call-status" class="panel-table" style="display: none;">
-                <tr id="status-text">
-                    <td><label class="ui-text-label">Local_Party</label></td>
-                    <td><center id="call-status-arrow"></center></td>
-                    <td><label class="ui-text-label">Remote_Party</label></td>
-                </tr>
-            </table>
-            <table id="call-local-dialer" class="panel-table">
-                <tr>
-                    <td><label class="ui-text-label">Auto recording: </label></td>
-                    <td><input id="recording-status" type="checkbox" class="ui-state-default ui-corner-all"></td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">Phone Number</label></td>
-                    <td><select id="call-local-phone-number" class="ui-state-default ui-corner-all"></select></td>
-                </tr>
-                <tr>
-                    <td>
-                        <button id="call-local-call" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span id="call-local-text" class="ui-button-text">Call</span>
-                        </button>
-                    </td>
-                    <td>
-                        <button id="call-local-end" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span id="end-local-text" class="ui-button-text">End</span>
-                        </button>
-                    </td>
-                </tr>
-            </table>
-
-        	<h3 class="PanelSectionTitle">Remote Party</h4>
-            <table id="call-remote-dialer" class="panel-table">
-                <tr>
-                    <td><label class="ui-text-label">Phone Number</label></td>
-                    <td><select id="call-remote-phone-number" class="ui-state-default ui-corner-all"></select></td>
-                </tr>
-                <tr>
-                    <td>
-                        <button id="call-remote-call" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span id="call-remote-text" class="ui-button-text">Call</span>
-                        </button>
-                    </td>
-                    <td>
-                        <button id="call-remote-end" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span id="end-remote-text" class="ui-button-text">End</span>
-                        </button>
-                    </td>
-                </tr>
-            </table>
-
-        	<h3 class="PanelSectionTitle">End call with</h3>
-            <table id="call-exception" class="panel-table">
-                <tr>
-                    <td><label class="ui-text-label">Reason</label></td>
-                    <td><select id="call-exception-type" class="ui-state-default ui-corner-all"></select></td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">End</label></td>
-                    <td><input id="call-exception-status" type="checkbox" class="ui-state-default ui-corner-all"></td>
-                </tr>
-            </table>
-        </section>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="messaging-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Messaging</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
-    </section>
-
-    <section id="messaging" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <section class="messaging-info">
-        	<span class="PanelSectionTitle">Sending</span>
-            <table id="messaging-sms-fields" class="tf_panel-table">
-                <tr>
-                    <td><label class="ui-text-label">From</label></td>
-                    <td style="width:80%;"><input id="messaging-sms-number" type="text" class="ui-corner-all" style="width: 88%;"></td>
-                </tr>
-                
-                <tr>
-                    <td><label class="ui-text-label">Type</label></td>
-                    <td><select id="messaging-type" class="ui-state-default ui-corner-all"></select></td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">Text</label></td>
-                    <td><textarea class="ui-corner-all" id="messaging-text" rows="6" style="width: 88%;"></textarea></td>
-                </tr>
-<!-- TODO: add back when attachment is finished
-                <tr>
-                    <td><label class="ui-text-label">Attachment Content</label></td>
-                    <td><textarea class="ui-corner-all" id="messaging-attachment-content" rows="6" style="width: 88%;"></textarea></td>
-                </tr>
-                <tr>
-                	<td><table id="messaging-attachments" class="tf_panel-table"></table></td>
-                	<td><span><button id="messaging-attach" class="PanelButtonStyle">Attach</button>&nbsp;&nbsp;<button id="messaging-detach" class="PanelButtonStyle">Detach</button></span></td>
-                </tr>
--->
-                <tr>
-                <td></td>
-                <td>
-                	<button id="messaging-send" class="PanelButtonStyle" style="width:200px;">Send</button>
-                </td>
-                </tr>
-            </table>
-			<br>
-			<span class="PanelSectionTitle">Receiving</span>
-			<table class="tf_panel-table">
-                <tr>
-                    <td><label class="ui-text-label">Recipients</label></td>
-                    <td><input id="messaging-recipients" type="text" class="ui-corner-all" style="width: 28%;">&nbsp;&nbsp;<span id="messaging-received"></span></td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">Message</label></td>
-                    <td><label class="ui-text-label"><textarea  class="ui-corner-all" id="received-message-box" rows="3" style="width: 90%;" readonly></textarea></label></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><button class="PanelButtonStyle" id="messaging-clear">Clear</button></td>
-                </tr>
-            </table>
-        </section>
-    </section>
-</section>
-
-/*
- *  Copyright 2012 Intel Corporation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-<section id="sensors-panel-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Sensors</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
-    </section>
-
-    <section id="sensorsettings-content-container" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <p>Configure sensors information, settings and events for the current platform.</p>
-    </section>
-</section>
-
-<!--
- *  Copyright 2011 Research In Motion Limited.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-<section id="multimedia-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Multimedia</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
-    </section>
-    <section id="media-container" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <h3>Multimedia</h3>
-
-        <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">Is audio playing?</label></td>
-                <td id="multimedia-isaudioplaying">false</td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Is video playing?</label></td>
-                <td id="multimedia-isvideoplaying">false</td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Volume:</label></td>
-                <td>
-                    <span id="media-volume-value" class="range-label-right">05</span>
-                    <input id="media-volume" type="range" min="0" max="10" value="5" />
-                </td>
-            </tr>
-        </table>
-
-        <h3>Audio Player</h3>
-
-        <table class="panel-table audio-table">
-            <tr>
-                <td><label class="ui-text-label">Opened File:</label></td>
-                <td id="media-audio-file"></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">State:</label></td>
-                <td id="media-audio-state"></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Progress:</label></td>
-                <td id="media-audio-progress"></td>
-            </tr>
-        </table>
-
-        <h3>Video Player</h3>
-
-        <table class="panel-table video-table">
-            <tr>
-                <td><label class="ui-text-label">Opened File:</label></td>
-                <td id="media-video-file"></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">State:</label></td>
-                <td id="media-video-state"></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Progress:</label></td>
-                <td id="media-video-progress"></td>
-            </tr>
-        </table>
-    </section>
-</section>
-
 /!--
  *  Copyright 2012 Intel Corporation.
  *
@@ -1216,39 +1080,132 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="filesystem-container" class="ui-box ui-state-default">
+<section id="devicesettings-panel-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>File System</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Device &amp; Network Settings</section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
 
-    <section id="file-container" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <p>You can map the following virtual paths (ex. /virtual/photos/) to specific locations on your drive.</p>
+    <section id="devicesettings-content-container" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <p>Configure device information, settings and events for the current platform.</p>
+    </section>
+</section>
 
-        <p>You may specify any valid URI location (ex. http://domain.com/files).</p>
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="platforms-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Platform API</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
 
-        <p>Empty values will cause the virtual routes to point to your relative location.</p>
-
-        <p class="ui-text-label" >/virtual/...</p>
-
+    <section class="info ui-widget-content ui-corner-all" style="display: none;">
         <table class="panel-table">
             <tr>
-                <td><label class="ui-text-label">photos/</label></td>
-                <td><input id="panel-filesystem-photos" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+                <td><label class="ui-text-label">Platform</label></td>
+                <td><select id="platform-select" class="ui-state-default ui-corner-all"></select></td>
             </tr>
             <tr>
-                <td><label class="ui-text-label">videos/</label></td>
-                <td><input id="panel-filesystem-videos" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+                <td><label class="ui-text-label">Version</label></td>
+                <td><select id="version-select" class="ui-state-default ui-corner-all"></select></td>
+            </tr>
+        </table>
+        
+        <button id="change-platform" class="PanelButtonStyle">
+            <span class="ui-button-text">Change Platform</span>
+        </button>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="information-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>System Summary</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+    <section id="information-sub-container" class="info ui-widget-content ui-corner-all" style="display: none;"></section>
+</section>
+
+<!--
+ *  Copyright 2011 Intel Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="battery-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Battery</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+
+    <section class="info ui-widget-content ui-corner-all" style="display: none;">
+        <table class="panel-table">
+            <tr>
+                <td><label class="ui-text-label">Total Time (mins)</label></td>
+                <td><input id="charging-time" type="text" value="1" class="ui-state-default ui-corner-all"></td>
             </tr>
             <tr>
-                <td><label class="ui-text-label">music/</label></td>
-                <td><input id="panel-filesystem-music" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+                <td><label class="ui-text-label">Battery Volume</label></td>
+                <td>
+                    <label id="battery-volume-label" class="range-label-left">100%</label>
+                    <input id="battery-volume" type="range" value="100" min="0" max="100" step="0.01" class="ui-state-default ui-corner-all">
+                </td>
+            </tr>
+			<tr>
+                <td><label class="ui-text-label">Actual Power</label></td>
+                <td id="battery-remaining-power" style="width:300px"></td>
             </tr>
             <tr>
-                <td><label class="ui-text-label">downloads/</label></td>
-                <td><input id="panel-filesystem-downloads" class="ui-state-default ui-corner-all" type="text" value=""/></td>
+                <td>
+                    <span class="ui-text-label">Is Charging</span>
+                </td>
+                <td>
+                    <input id="is-charging" type="checkbox" />
+                </td>
             </tr>
         </table>
     </section>
@@ -1269,44 +1226,90 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="settings-container" class="ui-box ui-state-default">
+<section id="devices-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Device UI Settings</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Resolution & Orientation</section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
+
     <section class="info ui-widget-content ui-corner-all" style="display: none;">
+        <select id="device-select" class="ui-state-default ui-corner-all"></select>
         <table class="panel-table">
             <tr>
-                <td><label class="ui-text-label">Tooltips</label></td>
+                <td><label class="ui-text-label">Orientation</label></td>
                 <td>
-                    <button id="settings-toggletooltips" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                        <span class="ui-button-text">Toggle</span>
-                    </button>
+                    <div id="layout-portrait"></div>
+                    <div id="layout-landscape"></div>
                 </td>
             </tr>
             <tr>
-                <td><label class="ui-text-label">Cross Domain Proxy</label></td>
+                <td><label class="ui-text-label">Zooming</label></td>
                 <td>
-                    <select id="settings-xhr-proxy" class="ui-state-default ui-corner-all">
-                        <option value="false">Enabled</option>
-                        <option value="true">Disabled</option>
-                    </select>
-                </td>
-            </tr>
-            <tr class="theme-switcher">
-                <td><label class="ui-text-label">Themes</label></td>
-                <td><select id="theme-select" class="ui-state-default ui-corner-all"></select></td>
+                    <label id="screen-zooming-label" class="range-label-left">100%</label>
+                    <input id="screen-zooming" type="range" value="100" min="20" max="150" step="5" class="ui-state-default ui-corner-all">
+            </td>
             </tr>
         </table>
+    </section>
+</section>
+
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="push-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Push</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+
+    <section id="push" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <section class="push-info">
+            <table id="push-fields" class="panel-table">
+                <tr>
+                    <td><label class="ui-text-label">Port</label></td>
+                    <td><select id="port-select" class="ui-state-default ui-corner-all"></select></td>
+                </tr>
+            </table>
+
+            <table class="panel-table">
+                <tr>
+                    <td colspan="2">
+                        <textarea class="ui-state-default ui-corner-all" id="push-text" rows="4" style="width: 90%;"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <button id="push-send" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                            <span class="ui-button-text">Push</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </section>
     </section>
 </section>
 
 </section>
             <section id="dialog-views" class="irrelevant"><div id="about-dialog" style="background: #ffffff" class="ui-state-default ui-corner-bottom" align="center" title="About Tizen Simulator">
   <div class="about-logo" style="margin-top:26px;"></div>
-  <div id="about-dialog-ripple-version" style="font-size: 14pt; font-color:#333; font-weight: semi-bold; margin-top:26px;">Version: 1.0</div>
+  <div id="about-dialog-ripple-version" style="font-size: 14pt; font-color:#333; font-weight: semi-bold; margin-top:26px;">Version: 1.0 Beta</div>
   
   <p style="font-size: 11pt; font-color:#333; margin-top:18px; line-height:21px;">
     A web application simulator. Based on the <a style=" font-size:12px; color:rgb(46,171,171); text-decoration: none;" href="http://rippledocs.tinyhippos.com" target="_blank"><u>Ripple Mobile Emulator</u></a>
