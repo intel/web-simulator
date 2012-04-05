@@ -70,7 +70,7 @@ describe("tizen_1.0_alarm", function () {
         try {
             alarm.add("bla", "alarmclock");
         } catch (e) {
-            expect(e.name).toEqual("TYPE_MISMATCH_ERROR");
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
     });
 
@@ -84,7 +84,7 @@ describe("tizen_1.0_alarm", function () {
         try {
             alarm.add(alarm_a, 123);
         } catch (e) {
-            expect(e.name).toEqual("TYPE_MISMATCH_ERROR");
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
     });
 
@@ -98,7 +98,7 @@ describe("tizen_1.0_alarm", function () {
         try {
             alarm.add(alarm_a, "alarmclock", 123);
         } catch (e) {
-            expect(e.name).toEqual("TYPE_MISMATCH_ERROR");
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
     });
 
@@ -133,7 +133,7 @@ describe("tizen_1.0_alarm", function () {
         try {
             alarm.remove("unexisting_id");
         } catch (e) {
-            expect(e.name).toEqual("NOT_FOUND_ERROR");
+            expect(e.code).toEqual(e.NOT_FOUND_ERR);
         }
     });
 
@@ -147,7 +147,7 @@ describe("tizen_1.0_alarm", function () {
         try {
             alarm.remove(err);
         } catch (e) {
-            expect(e.name).toEqual("TYPE_MISMATCH_ERROR");
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
     });
 
@@ -175,7 +175,7 @@ describe("tizen_1.0_alarm", function () {
         try {
             alarm.get("unexisting_id");
         } catch (e) {
-            expect(e.name).toEqual("NOT_FOUND_ERROR");
+            expect(e.code).toEqual(e.NOT_FOUND_ERR);
         }
     });
 
@@ -189,7 +189,7 @@ describe("tizen_1.0_alarm", function () {
         try {
             alarm.get(err);
         } catch (e) {
-            expect(e.name).toEqual("TYPE_MISMATCH_ERROR");
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
     });
 
@@ -379,8 +379,8 @@ describe("tizen_1.0_alarm", function () {
         try {
             new AlarmAbsolute(today, ['1', 'FR']);
         } catch (e) {
-            console.log(e.name);
-            expect(e.name).toEqual("TYPE_MISMATCH_ERROR");
+            console.log(e.code);
+            expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
         }
     });
 
@@ -396,8 +396,8 @@ describe("tizen_1.0_alarm", function () {
             new AlarmAbsolute(today, ['', 'FR']);
         } catch (e) {
             runs(function () {
-                console.log(e.name);
-                expect(e.name).toEqual("TYPE_MISMATCH_ERR");
+                console.log(e.code);
+                expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
             });
         }
     });
