@@ -397,7 +397,7 @@ describe("tizen_1.0_alarm", function () {
         } catch (e) {
             runs(function () {
                 console.log(e.code);
-                expect(e.code).toEqual("TYPE_MISMATCH_ERR");
+                expect(e.code).toEqual(e.TYPE_MISMATCH_ERR);
             });
         }
     });
