@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.2 :: Built On Fri Mar 30 2012 10:55:14 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.2 :: Built On Fri Apr 06 2012 09:50:44 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -47141,7 +47141,7 @@ module.exports = function (m, opt) {
         bcc: m.bcc.slice(0),
         body: utils.copy(m.body),
         isRead: m.isRead,
-        priority: m.priority,
+        isHighPriority: m.isHighPriority,
         subject: m.subject,
         inResponseTo: m.inResponseTo,
         attachments: utils.copy(m.attachments)
@@ -47237,7 +47237,7 @@ function _defaultMediaContent() {
         id: Math.uuid(null, 16),
         folderURI: "videos",
         title: "videos",
-        StorageType: "INTERNAL",
+        storageType: "INTERNAL",
         modifiedDate: new Date(),
         mediaItems: [video1.id, video2.id]
     },
@@ -47245,7 +47245,7 @@ function _defaultMediaContent() {
         id: Math.uuid(null, 16),
         folderURI: "music",
         title: "music",
-        StorageType: "EXTERNAL",
+        storageType: "EXTERNAL",
         modifiedDate: new Date(),
         mediaItems: [audio1.id, audio2.id]
     },
@@ -47253,7 +47253,7 @@ function _defaultMediaContent() {
         id: Math.uuid(null, 16),
         folderURI: "images",
         title: "images",
-        StorageType: "EXTERNAL",
+        storageType: "EXTERNAL",
         modifiedDate: new Date(),
         mediaItems: [image1.id, image2.id]
     },
@@ -47329,12 +47329,29 @@ MediaSource = function () {
         return tizen1_utils.validateTypeMismatch(successCallback, errorCallback, "mediacontent:updateItem", _updateItem);
     }
 
-    function findFolders(successCallback, errorCallback, filter, sortMode, count, offset) {
-        function _findFolders() {
-            find(successCallback, errorCallback, _data.folders, filter, sortMode, count, offset);
+    function updateItemsBatch(items, successCallback, errorCallback) {
+        function _updateItemsBatch() {
+            for (var item in items) {
+                updateItem(item, successCallback, errorCallback);
+            }
         }
+        return tizen1_utils.validateTypeMismatch(successCallback, errorCallback, "mediacontent:updateItemsBatch", _updateItemsBatch);
+    }
 
-        return tizen1_utils.validateTypeMismatch(successCallback, errorCallback, "mediacontent:findFolders", _findFolders);
+    function getFolders(successCallback, errorCallback) {
+        function _getFolders() {
+            if (_data.folders.length === 0) {
+                if (errorCallback) {
+                    setTimeout(function () {
+                        errorCallback(new WebAPIError(errorcode.NOT_FOUND_ERR));
+                    }, 1);
+                }
+                return;
+            }
+
+            successCallback(_data.folders);
+        }
+        return tizen1_utils.validateTypeMismatch(successCallback, errorCallback, "mediacontent:getFolders", _getFolders);
     }
 
     function findItems(successCallback, errorCallback, filter, sortMode, count, offset) {
@@ -47345,9 +47362,58 @@ MediaSource = function () {
         return tizen1_utils.validateTypeMismatch(successCallback, errorCallback, "mediacontent:findItems", _findItems);
     }
 
-    this.updateItem  = updateItem;
-    this.findFolders = findFolders;
-    this.findItems   = findItems;
+    function browseFolder(id, successCallback, errorCallback, filter, sortMode, count, offset) {
+        function _browseFolder() {
+            var src = [], i, j, k;
+            if (_data.folders.length === 0) {
+                if (errorCallback) {
+                    setTimeout(function () {
+                        errorCallback(new WebAPIError(errorcode.NOT_FOUND_ERR));
+                    }, 1);
+                }
+                return;
+            }
+
+            for (i in _data.folders) {
+                if (_data.folders[i].id === id) {
+                    if (_data.folders[i].mediaItems.length === 0) {
+                        if (errorCallback) {
+                            setTimeout(function () {
+                                errorCallback(new WebAPIError(errorcode.NOT_FOUND_ERR));
+                            }, 1);
+                        }
+                        return;
+                    }
+
+                    for (j in _data.folders[i].mediaItems) {
+                        for (k in _data.items) {
+                            if (_data.folders[i].mediaItems[j].id === _data.items[k].id) {
+                                src.push(_data.items[k]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (src.length === 0) {
+                if (errorCallback) {
+                    setTimeout(function () {
+                        errorCallback(new WebAPIError(errorcode.UNKNOWN_ERR));
+                    }, 1);
+                }
+                return;
+            }
+
+            find(successCallback, errorCallback, src, filter, sortMode, count, offset);
+        }
+        return tizen1_utils.validateTypeMismatch(successCallback, errorCallback, "mediacontent:browseFolder", _browseFolder);
+    }
+
+    this.updateItem       = updateItem;
+    this.updateItemsBatch = updateItemsBatch;
+    this.getFolders       = getFolders;
+    this.findItems        = findItems;
+    this.browseFolder     = browseFolder;
 };
 
 _initialize();
@@ -48680,7 +48746,7 @@ _self = function (messages, security_check) {
                       filter.matchFlag, filter.matchValue);
             break;
         case "isRead":
-        case "priority":
+        case "isHighPriority":
             if (filter.matchFlag !== "EXACTLY" || typeof filter.matchValue !== "boolean") {
                 throw (new WebAPIError(errorcode.INVALID_VALUES_ERR,
                               "Support only matchFlag === 'EXACTLY' and typeof matchValue === 'boolean'"));
@@ -49543,15 +49609,15 @@ module.exports = function (frequency, ruleInitDict) {
         _self.interval        = ruleInitDict.interval;
         _self.untilDate       = utils.copy(ruleInitDict.untilDate);
         _self.occurrenceCount = ruleInitDict.occurrenceCount;
-        _self.daysOfWeek      = utils.copy(ruleInitDict.daysOfWeek);
-        _self.setPosition     = utils.copy(ruleInitDict.setPosition);
+        _self.daysOfTheWeek   = utils.copy(ruleInitDict.daysOfTheWeek);
+        _self.setPositions     = utils.copy(ruleInitDict.setPositions);
         _self.exceptions      = utils.copy(ruleInitDict.exceptions);
     } else {
         _self.interval        = 0;
         _self.untilDate       = new TZDate();
         _self.occurrenceCount = 0;
-        _self.daysOfWeek      = [""];
-        _self.setPosition     = [];
+        _self.daysOfTheWeek      = [""];
+        _self.setPositions     = [];
         _self.exceptions      = [new TZDate()];
     }
 
@@ -49778,8 +49844,6 @@ var event = require('ripple/event'),
     utils = require('ripple/utils'),
     tizen1_utils = require('ripple/platform/tizen/1.0/tizen1_utils'),
     msg_utils = require('ripple/platform/tizen/1.0/msg_utils'),
-    PendingObject = require('ripple/platform/tizen/1.0/pendingObject'),
-    PendingOperation = require('ripple/platform/tizen/1.0/pendingoperation'),
     _self,
     TIZEN_DEFAULT_MSG_FROM = {"messaging.sms": "13572468",
                               "messaging.mms": "13572468",
@@ -49790,6 +49854,7 @@ var event = require('ripple/event'),
 
 _self = function (id, name, type, security_check) {
     var msg_service = {},
+        pendingOperations = {},
         _msgSending = {},
         _receivedEmails = [],
         _id = id,
@@ -49871,8 +49936,7 @@ _self = function (id, name, type, security_check) {
 
     msg_service = {
         sendMessage: function (_msg, onSuccess, onError) {
-            var m, msg = {}, opt = {}, shortMsg = {}, rst = {},
-                pendingOperation, pendingObj, _sendMsg;
+            var m, msg = {}, opt = {}, shortMsg = {}, rst = {}, _sendMsg;
             if (_security_check.send === false) {
                 throw (new WebAPIError(errorcode.SECURITY_ERR));
             }
@@ -49884,89 +49948,86 @@ _self = function (id, name, type, security_check) {
                 throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
             }
             _sendMsg = function () {
-                pendingObj = new PendingObject();
-
-                pendingObj.pendingID = setTimeout(function () {
-                    pendingObj.setCancelFlag(false);
-
-                    if (typeof _msg.id === 'string') {
-                        if (_messages.msg[_msg.id] === undefined) {
-                            if (onError) {
+                if (typeof _msg.id === 'string') {
+                    if (_messages.msg[_msg.id] === undefined) {
+                        if (onError) {
+                            setTimeout(function () {
                                 onError(new WebAPIError(errorcode.INVALID_VALUES_ERR));
-                            }
-                            return;
+                            }, 1);
                         }
-                        if (_messages.msg[_msg.id].priv.messageStatus === "DRAFT") {
-                            msg_utils.delMsg(_messages.msg[_msg.id]);
-                            delete _messages.msg[_msg.id];
-                        } else {
-                            // if msg found in storage, it can only be a draft.
-                            if (onError) {
+                        return;
+                    }
+                    if (_messages.msg[_msg.id].priv.messageStatus === "DRAFT") {
+                        msg_utils.delMsg(_messages.msg[_msg.id]);
+                        delete _messages.msg[_msg.id];
+                    } else {
+                        // if msg found in storage, it can only be a draft.
+                        if (onError) {
+                            setTimeout(function () {
                                 onError(new WebAPIError(errorcode.SECURITY_ERR));
-                            }
-                            return;
+                            }, 1);
                         }
+                        return;
                     }
-                    opt.id = Math.uuid(8, 16);
-                    opt.serviceId = _id;
-                    if ((msg.inResponseTo !== null) &&
-                        (_messages.msg[msg.inResponseTo] !== undefined) &&
-                        (_messages.msg[msg.inResponseTo].priv.messageStatus !== "DRAFT")) {
-                        opt.conversationId = _messages.msg[msg.inResponseTo].priv.conversationId;
-                    } else {
-                        opt.conversationId = opt.id;
-                    }
-                    opt.folderId = "OUTBOX";
-                    opt.type = _type;
-                    opt.timestamp = new Date();
-                    opt.from = _from;
-                    if (msg.attachments.length === 0) {
-                        opt.hasAttachment = false;
-                    } else {
-                        opt.hasAttachment = true;
-                    }
-                    opt.messageStatus = "SENDING";
+                }
+                opt.id = Math.uuid(8, 16);
+                opt.serviceId = _id;
+                if ((msg.inResponseTo !== null) &&
+                    (_messages.msg[msg.inResponseTo] !== undefined) &&
+                    (_messages.msg[msg.inResponseTo].priv.messageStatus !== "DRAFT")) {
+                    opt.conversationId = _messages.msg[msg.inResponseTo].priv.conversationId;
+                } else {
+                    opt.conversationId = opt.id;
+                }
+                opt.folderId = "OUTBOX";
+                opt.type = _type;
+                opt.timestamp = new Date();
+                opt.from = _from;
+                if (msg.attachments.length === 0) {
+                    opt.hasAttachment = false;
+                } else {
+                    opt.hasAttachment = true;
+                }
+                opt.messageStatus = "SENDING";
 
-                    m = new PrivMessage(msg, opt);
-                    _messages.msg[m.priv.id] = m;
-                    msg_utils.saveMsg(m);  // sync to remote
-                    shortMsg.msg = m;   // pass by ref
-                    shortMsg.id = m.priv.id;
-                    shortMsg.body = m.body.plainBody;
-                    shortMsg.to = m.to.slice(0);
-                    shortMsg.cc = m.cc.slice(0);
-                    shortMsg.bcc = m.bcc.slice(0);
-                    event.trigger("OutsideMessageReceived", [shortMsg]);
-                    rst.onsuccess = onSuccess;
-                    rst.onerror = onError;
-                    _msgSending[m.priv.id] = rst;
-                }, 1);
-                pendingOperation = new PendingOperation(pendingObj);
-                return pendingOperation;
+                m = new PrivMessage(msg, opt);
+                _messages.msg[m.priv.id] = m;
+                msg_utils.saveMsg(m);  // sync to remote
+                shortMsg.msg = m;   // pass by ref
+                shortMsg.id = m.priv.id;
+                shortMsg.body = m.body.plainBody;
+                shortMsg.to = m.to.slice(0);
+                shortMsg.cc = m.cc.slice(0);
+                shortMsg.bcc = m.bcc.slice(0);
+                event.trigger("OutsideMessageReceived", [shortMsg]);
+                rst.onsuccess = onSuccess;
+                rst.onerror = onError;
+                _msgSending[m.priv.id] = rst;
             };
             return tizen1_utils.validateTypeMismatch(onSuccess, onError, "messagingService:sendMsg", _sendMsg);
         },
 
         loadMessageBody: function (msg, onSuccess, onError) {
-            var pendingOperation, pendingObj, _loadMsgBody;
-
+            var pendingID, _loadMsgBody;
             if (_security_check.write === false) {
                 throw (new WebAPIError(errorcode.SECURITY_ERR));
             }
             _loadMsgBody = function () {
-                pendingObj = new PendingObject();
-
-                pendingObj.pendingID = setTimeout(function () {
-                    pendingObj.setCancelFlag(false);
+                pendingID = setTimeout(function () {
+                    if (pendingOperations[pendingID] === undefined) {
+                        // has been cancelled/expired
+                        return;
+                    }
+                    delete pendingOperations[pendingID];
                     onSuccess();
                 }, 1);
-                pendingOperation = new PendingOperation(pendingObj);
-                return pendingOperation;
+                pendingOperations[pendingID] = onError;
+                return pendingID;
             };
             return tizen1_utils.validateTypeMismatch(onSuccess, onError, "messagingService:loadMessageBody", _loadMsgBody);
         },
         loadMessageAttachment: function (msg, onSuccess, onError) {
-            var pendingOperation, pendingObj, _loadMsgAttachment;
+            var pendingID, _loadMsgAttachment;
 
             if (_security_check.write === false) {
                 throw (new WebAPIError(errorcode.SECURITY_ERR));
@@ -49975,29 +50036,33 @@ _self = function (id, name, type, security_check) {
                 throw (new WebAPIError(errorcode.NOT_FOUND_ERR));
             }
             _loadMsgAttachment = function () {
-                pendingObj = new PendingObject();
-
-                pendingObj.pendingID = setTimeout(function () {
-                    pendingObj.setCancelFlag(false);
+                pendingID = setTimeout(function () {
+                    if (pendingOperations[pendingID] === undefined) {
+                        // has been cancelled/expired
+                        return;
+                    }
+                    delete pendingOperations[pendingID];
                     onSuccess();
                 }, 1);
-                pendingOperation = new PendingOperation(pendingObj);
-                return pendingOperation;
+                pendingOperations[pendingID] = onError;
+                return pendingID;
             };
             return tizen1_utils.validateTypeMismatch(onSuccess, onError, "messagingService:loadMessageAttachment", _loadMsgAttachment);
         },
         sync: function (onSuccess, onError, limit) {
-            var i, m, _sync, pendingOperation, pendingObj;
+            var i, m, pendingID, _sync, _onError;
 
             if (_security_check.write === false) {
                 throw (new WebAPIError(errorcode.SECURITY_ERR));
             }
+            _onError = onError || null;
             _sync = function () {
-                pendingObj = new PendingObject();
-
-                pendingObj.pendingID = setTimeout(function () {
-                    pendingObj.setCancelFlag(false);
-
+                pendingID = setTimeout(function () {
+                    if (pendingOperations[pendingID] === undefined) {
+                        // has been cancelled/expired
+                        return;
+                    }
+                    delete pendingOperations[pendingID];
                     for (i = 0; i < _receivedEmails.length; i++) {
                         m = _receivedEmails[i];
                         _messages.msg[m.priv.id] = m;  // sync to local
@@ -50005,24 +50070,26 @@ _self = function (id, name, type, security_check) {
                     }
                     _receivedEmails = [];
                     onSuccess();
-                }, 5000);
-                pendingOperation = new PendingOperation(pendingObj);
-                return pendingOperation;
+                }, 1);
+                pendingOperations[pendingID] = _onError;
+                return pendingID;
             };
             return tizen1_utils.validateTypeMismatch(onSuccess, onError, "messagingService:sync", _sync);
         },
 
         syncFolder: function (folder, onSuccess, onError, limit) {
-            var i, m, pendingOperation, pendingObj, _syncFolder;
+            var i, m, pendingID, _syncFolder;
 
             if (_security_check.write === false) {
                 throw (new WebAPIError(errorcode.SECURITY_ERR));
             }
             _syncFolder = function () {
-                pendingObj = new PendingObject();
-
-                pendingObj.pendingID = setTimeout(function () {
-                    pendingObj.setCancelFlag(false);
+                pendingID = setTimeout(function () {
+                    if (pendingOperations[pendingID] === undefined) {
+                        // has been cancelled/expired
+                        return;
+                    }
+                    delete pendingOperations[pendingID];
                     if (folder.id === "INBOX") {
                         for (i = 0; i < _receivedEmails.length; i++) {
                             m = _receivedEmails[i];
@@ -50033,10 +50100,21 @@ _self = function (id, name, type, security_check) {
                     }
                     onSuccess();
                 }, 1);
-                pendingOperation = new PendingOperation(pendingObj);
-                return pendingOperation;
+                pendingOperations[pendingID] = onError;
+                return pendingID;
             };
             return tizen1_utils.validateTypeMismatch(onSuccess, onError, "messagingService:syncFolder", _syncFolder);
+        },
+        cancelOperation: function (pendingID) {
+            if (_security_check.write === false) {
+                throw (new WebAPIError(errorcode.SECURITY_ERR));
+            }
+            if (pendingOperations[pendingID] === undefined) {
+                return;
+            } else {
+                pendingOperations[pendingID]();
+                delete pendingOperations[pendingID];
+            }
         }
     };
     msg_service.__defineGetter__("id", function () {
@@ -50670,13 +50748,13 @@ var _self,
     "Indiana (East)": {diff: -5, abbr: ""},
 //    "Caracas": {diff: -4.5, abbr: ""},
     "Asuncion": {diff: -4, abbr: ""},
-    "Atlantic Time": {diff: -4, abbr: ""},
+    "Atlantic Time (Canada)": {diff: -4, abbr: ""},
     "Cuiaba": {diff: -4, abbr: ""},
     "Georgetown, La Paz, Manaus, San Juan": {diff: -4, abbr: ""},
     "Santiago": {diff: -4, abbr: ""},
 //    "Newfoundland": {diff: -3.5, abbr: ""},
     "Brasilia": {diff: -3, abbr: ""},
-    "Buenos_Aires": {diff: -3, abbr: "ART"},
+    "Buenos Aires": {diff: -3, abbr: "ART"},
     "Cayenne, Fortaleza": {diff: -3, abbr: ""},
     "Greenland": {diff: -3, abbr: ""},
     "Montevideo": {diff: -3, abbr: ""},
@@ -50684,21 +50762,22 @@ var _self,
     "Mid-Atlantic": {diff: -2, abbr: ""},
     "Azores": {diff: -1, abbr: ""},
     "Cape Verde Is.": {diff: -1, abbr: ""},
-    "UTC": {diff: 0, abbr: "UTC"},
     "Casablanca": {diff: 0, abbr: "UTC"},
     "Coordinated Universal Time": {diff: 0, abbr: "UTC"},
     "Dublin, Edinburgh, Lisbon, London": {diff: 0, abbr: "UTC"},
     "Monrovia, Reykjavik": {diff: 0, abbr: "UTC"},
-    "Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna": {diff: 1, abbr: ""},
-    "Belgrade, Bratislava, Budapest, Ljubljan, Prague": {diff: 1, abbr: ""},
-    "Brussels, Copenhagen, Madrid, Paris": {diff: 1, abbr: ""},
+    "Amsterdam, Berlin, Bern": {diff: 1, abbr: ""},
+    "Rome, Stockholm, Vienna": {diff: 1, abbr: ""},
+    "Belgrade, Bratislava, Budapest": {diff: 1, abbr: ""},
+    "Ljubljana, Prague": {diff: 1, abbr: ""},
+    "Brussels, Copenhagen, Madrid, Paris": {diff: 1, abbr: "CET"},
     "Sarajevo, Skopje, Warsaw, Zagreb": {diff: 1, abbr: ""},
     "West Central Africa": {diff: 1, abbr: ""},
     "Windhoek": {diff: 1, abbr: ""},
     "Amman": {diff: 2, abbr: ""},
-    "Athens, Bucharest": {diff: 2, abbr: ""},
+    "Athens, Bucharest": {diff: 2, abbr: "EET"},
     "Beirut": {diff: 2, abbr: ""},
-    "Cairo": {diff: 2, abbr: ""},
+    "Cairo": {diff: 2, abbr: "EET"},
     "Damascus": {diff: 2, abbr: ""},
     "Harare, Pretoria": {diff: 2, abbr: ""},
     "Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius": {diff: 2, abbr: ""},
@@ -50728,19 +50807,19 @@ var _self,
 //    "Yangon (Rangoon)": {diff: 6.5, abbr: ""},
     "Bangkok, Hanoi, Jakarta": {diff: 7, abbr: ""},
     "Novosibirsk": {diff: 7, abbr: ""},
-    "Beijing, Chongqing, Hong Kong, Urumqi": {diff: 8, abbr: ""},
+    "Beijing, Chongqing, Hong Kong, Urumqi": {diff: 8, abbr: "CST"},
     "Krasnoyarsk": {diff: 8, abbr: ""},
-    "Kuala Lumpur, Singapore": {diff: 8, abbr: ""},
+    "Kuala Lumpur, Singapore": {diff: 8, abbr: "SGT"},
     "Perth": {diff: 8, abbr: ""},
     "Taipei": {diff: 8, abbr: ""},
     "Ulaanbaatar": {diff: 8, abbr: ""},
     "Irkutsk": {diff: 9, abbr: ""},
-    "Osaka, Sapporo, Tokyo": {diff: 9, abbr: ""},
-    "Seoul": {diff: 9, abbr: ""},
+    "Osaka, Sapporo, Tokyo": {diff: 9, abbr: "JST"},
+    "Seoul": {diff: 9, abbr: "KST"},
 //    "Adelaide": {diff: 9.5, abbr: ""},
 //    "Darwin": {diff: 9.5, abbr: ""},
     "Brisbane": {diff: 10, abbr: ""},
-    "Canberra, Melbourne, Sydney": {diff: 10, abbr: ""},
+    "Canberra, Melbourne, Sydney": {diff: 10, abbr: "EST"},
     "Guam, Port Moresby": {diff: 10, abbr: ""},
     "Hobart": {diff: 10, abbr: ""},
     "Yakutsk": {diff: 10, abbr: ""},
@@ -50767,7 +50846,7 @@ module.exports = {
         return _timezone_data[zone].abbr;
     },
     isValidTimezone: function (zone) {
-        return (_timezone_data[zone] === undefined) ? false:true;
+        return (_timezone_data[zone] === undefined) ? false : true;
     }
 };
 
@@ -51255,10 +51334,10 @@ _self = function () {
     return calendarManager;
 };
 
-Calendar = function (type, name, storageItems, id, accountId) {
+Calendar = function (type, name, storageItems, id, accountServiceId) {
     var privateItems = {};
     id = id || Math.uuid(null, 16);
-    accountId = accountId || 0;
+    accountServiceId = accountServiceId || 0;
 
     // private
     function createCalendarItem() {
@@ -51301,11 +51380,14 @@ Calendar = function (type, name, storageItems, id, accountId) {
         calendarItem.startDate      = new TZDate(new Date(storageItem.startDate));
         calendarItem.duration       = utils.copy(storageItem.duration);
         calendarItem.location       = utils.copy(storageItem.location);
+        calendarItem.geolocation    = utils.copy(storageItem.geolocation);
         calendarItem.organizer      = utils.copy(storageItem.organizer);
         calendarItem.visibility     = utils.copy(storageItem.visibility);
         calendarItem.status         = utils.copy(storageItem.status);
         calendarItem.priority       = utils.copy(storageItem.priority);
+        calendarItem.alarms         = utils.copy(storageItem.alarms);
         calendarItem.categories     = utils.copy(storageItem.categories);
+        calendarItem.attendees      = utils.copy(storageItem.attendees);
     }
 
     function loadCalendarEventInit(calendarItem, storageItem) {
@@ -51318,13 +51400,13 @@ Calendar = function (type, name, storageItems, id, accountId) {
             calendarItem.startDate = startDate;
             calendarItem.endDate   = endDate;
         };
-        calendarItem.frequency      = utils.copy(storageItem.frequency);
-        calendarItem.interval       = utils.copy(storageItem.interval);
-        calendarItem.untilDate      = new TZDate(new Date(storageItem.untilDate));
+        calendarItem.frequency       = utils.copy(storageItem.frequency);
+        calendarItem.interval        = utils.copy(storageItem.interval);
+        calendarItem.untilDate       = new TZDate(new Date(storageItem.untilDate));
         calendarItem.occurrenceCount = utils.copy(storageItem.occurrenceCount);
-        calendarItem.daysOfWeek     = utils.copy(storageItem.daysOfWeek);
-        calendarItem.setPosition    = utils.copy(storageItem.setPosition);
-        calendarItem.exceptions     = utils.copy(storageItem.exceptions);
+        calendarItem.daysOfTheWeek   = utils.copy(storageItem.daysOfTheWeek);
+        calendarItem.setPositions    = utils.copy(storageItem.setPositions);
+        calendarItem.exceptions      = utils.copy(storageItem.exceptions);
     }
 
     function loadCalendarTaskInit(calendarItem, storageItem) {
@@ -51360,6 +51442,13 @@ Calendar = function (type, name, storageItems, id, accountId) {
     }
 
     // public
+    function get(id) {
+        if (!isValidCalendarItemId(id))
+            throw new WebAPIError(errorcode.NOT_FOUND_ERR);
+
+        return privateItems[id];
+    }
+
     function add(item) {
         if (!_security.all && !_security.add)
             throw new WebAPIError(errorcode.SECURITY_ERR);
@@ -51618,13 +51707,14 @@ Calendar = function (type, name, storageItems, id, accountId) {
     this.__defineGetter__("id", function () {
         return id;
     });
-    this.__defineGetter__("accountId", function () {
-        return accountId;
+    this.__defineGetter__("accountServiceId", function () {
+        return accountServiceId;
     });
     this.__defineGetter__("name", function () {
         return name;
     });
 
+    this.get                  = get;
     this.add                  = add;
     this.addBatch             = addBatch;
     this.update               = update;
@@ -51637,9 +51727,10 @@ Calendar = function (type, name, storageItems, id, accountId) {
 };
 
 CalendarStorage = function (calendar) {
-    this.id        = calendar.id;
-    this.accountId = calendar.accountId;
-    this.name      = calendar.name;
+    this.id               = calendar.id;
+    this.accountServiceId = calendar.accountServiceId;
+    this.name             = calendar.name;
+
 };
 
 CalendarItemsStorage = function (privateItems) {
@@ -52222,7 +52313,7 @@ function AddressBook(id, name, readOnly, contacts) {
                         listenerCB.oncontactsadded(listenArray);
                     });
                 });
-                return ret;
+                return;
             }
 
             _validateCallbackType(successCB, errorCB, _addBatch);
@@ -52312,7 +52403,7 @@ function AddressBook(id, name, readOnly, contacts) {
                         listenerCB.oncontactsupdated(listenArray);
                     });
                 });
-                return ret;
+                return;
             }
 
             _validateCallbackType(successCB, errorCB, _updateBatch);
@@ -52392,7 +52483,7 @@ function AddressBook(id, name, readOnly, contacts) {
                         listenerCB.oncontactsremoved(ids);
                     });
                 });
-                return ret;
+                return;
             }
 
             _validateCallbackType(successCB, errorCB, _removeBatch);
@@ -53068,10 +53159,10 @@ module.exports = {
             newm.isRead = false;
         }
 
-        if (typeof m.priority === 'boolean') {
-            newm.priority = m.priority;
+        if (typeof m.isHighPriority === 'boolean') {
+            newm.isHighPriority = m.isHighPriority;
         } else {
-            newm.priority = false;
+            newm.isHighPriority = false;
         }
 
         if ((m.subject === null) || (m.subject === undefined)) {
@@ -54038,7 +54129,7 @@ module.exports = {
             "name": "Lock Screen",
             "control": {
                 "type": "checkbox",
-                "value": true
+                "value": false
             },
             "callback": function (setting) {
                 event.trigger("LockScreenChanged", [setting]);
@@ -54097,7 +54188,7 @@ module.exports = {
                 "type": "label",
                 "value": 0
             }
-        },                 
+        },
         "physicalWidth": {
             "name": "Physical Width",
             "control": {
@@ -54226,7 +54317,7 @@ module.exports = {
             "name": "apn",
             "control": {
                 "type": "text",
-                "value": "Tizen"               
+                "value": "Tizen"
             },
             "event": "CellularNetworkapnChanged",
             "callback": function (setting) {
@@ -54237,7 +54328,7 @@ module.exports = {
             "name": "IP Address",
             "control": {
                 "type": "text",
-                "value": "10.0.2.16"                
+                "value": "10.0.2.16"
             },
             "event": "CellularNetworkipAddressChanged",
             "callback": function (setting) {
@@ -54248,7 +54339,7 @@ module.exports = {
             "name": "mcc",
             "control": {
                 "type": "text",
-                "value": "460"                
+                "value": "460"
             },
             "event": "CellularNetworkmccChanged",
             "callback": function (setting) {
@@ -54259,29 +54350,29 @@ module.exports = {
             "name": "mnc",
             "control": {
                 "type": "text",
-                "value": "0"                
+                "value": "0"
             },
             "event": "CellularNetworkmncChanged",
             "callback": function (setting) {
                 event.trigger("CellularNetworkmncChanged", [setting]);
             }
         }, 
-        "cellid": {
-            "name": "cellid",
+        "cellId": {
+            "name": "cellId",
             "control": {
                 "type": "text",
-                "value": "0"                
+                "value": "0"
             },
-            "event": "CellularNetworkcellidChanged",
+            "event": "CellularNetworkcellIdChanged",
             "callback": function (setting) {
-                event.trigger("CellularNetworkcellidChanged", [setting]);
+                event.trigger("CellularNetworkcellIdChanged", [setting]);
             }
         }, 
         "lac": {
             "name": "lac",
             "control": {
                 "type": "text",
-                "value": "0"                
+                "value": "0"
             },
             "event": "CellularNetworklacChanged",
             "callback": function (setting) {
@@ -54292,7 +54383,7 @@ module.exports = {
             "name": "serviceType",
             "control": {
                 "type": "text",
-                "value": "INTERNET"                
+                "value": "INTERNET"
             },
             "event": "CellularNetworkserviceTypeChanged",
             "callback": function (setting) {
@@ -55846,7 +55937,7 @@ var TZDate = require('ripple/platform/tizen/1.0/TZDate'),
     CalendarRecurrenceRule = require('ripple/platform/tizen/1.0/CalendarRecurrenceRule');
 
 module.exports = function (eventInitDict) {
-    var _self;
+    var _self, isDetached = false; //isDetached
 
     _self = new CalendarItem("EVENT");
 
@@ -55864,7 +55955,9 @@ module.exports = function (eventInitDict) {
         _self.startDate = startDate;
         _self.endDate   = endDate;
     };
-
+    _self.__defineGetter__("isDetached", function () {
+        return isDetached;
+    });
     return _self;
 };
 
@@ -56289,6 +56382,7 @@ var utils = require('ripple/utils'),
     WebAPIError = require('ripple/platform/tizen/1.0/WebAPIError'),
     TZDate = require('ripple/platform/tizen/1.0/TZDate'),
     CalendarRecurrenceRule = require('ripple/platform/tizen/1.0/CalendarRecurrenceRule'),
+    SimpleCoordinates = require('ripple/platform/tizen/1.0/SimpleCoordinates'),
     CalendarItemInit,
     CalendarEventInit,
     CalendarTaskInit,
@@ -56328,11 +56422,14 @@ CalendarItem = function (type, id, lastModificationDate) {
         item.startDate            = _self.startDate;
         item.duration             = _self.duration;
         item.location             = _self.location;
+        item.geolocation          = _self.geolocation;
         item.organizer            = _self.organizer;
         item.visibility           = _self.visibility;
         item.status               = _self.status;
         item.priority             = _self.priority;
+        item.alarms               = _self.alarms;
         item.categories           = _self.categories;
+        item.attendees            = _self.attendees;
 
         if (type === "EVENT") {
             item.endDate          = _self.endDate;
@@ -56540,11 +56637,14 @@ CalendarItemInit = function () {
         startDate:   new TZDate(),
         duration:    {},
         location:    "",
+        geolocation: new SimpleCoordinates(),
         organizer:   "",
         visibility:  "",
         status:      "",
         priority:    "",
-        categories:  [""]
+        alarms:      [],
+        categories:  [""],
+        attendees:   []
     };
 };
 
@@ -60580,6 +60680,9 @@ _self = module.exports = {
             "Curve9350-9360-9370",
             "FWVGA",
             "G1",
+*/
+            "HD",
+/*
             "HPPre3",
             "HPVeer",
 */
@@ -60596,19 +60699,17 @@ _self = module.exports = {
             "PalmPre2",
             "Pearl9100",
             "Playbook",
-*/
             "QVGA",
-/*
             "Style9670",
             "Tattoo",
             "Torch9800",
             "Torch9810",
             "Torch9860-9850",
             "Wave",
-*/
             "WQVGA",
-            "WVGA",
-            "WSVGA"
+*/
+            "WSVGA",
+            "WVGA"
         ].reduce(function (hash, deviceID) {
             hash[deviceID] = require('ripple/devices/' + deviceID);
             return hash;
@@ -62245,6 +62346,59 @@ module.exports = {
     "userAgent": "Mozilla/5.0 (BlackBerry; U; BlackBerry 9100; en) AppleWebKit/534.3+ (KHTML, like Gecko) Version/6.0.0.286 Mobile Safari/534.3+",
     "browser": ["Webkit"],
     "platforms": ["web", "phonegap", "webworks.handset"]
+};
+
+});
+require.define('ripple/devices/HD', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports = {
+    "id": "HD",
+    "name": "Generic - HD (720x1280)",
+    "osName": "Generic",
+    "osVersion": "Generic",
+    "manufacturer": "Generic",
+    "model": "Generic",
+    "uuid": "42",
+    "firmware": "Generic",
+
+    "screen": {
+        "width": 720,
+        "height": 1280
+    },
+    "viewPort": {
+        "portrait": {
+            "width": 720,
+            "height": 1280,
+            "paddingTop": 0,
+            "paddingLeft": 0
+        },
+        "landscape": {
+            "width": 1280,
+            "height": 720,
+            "paddingTop": 0,
+            "paddingLeft": 0
+        }
+    },
+
+    "ppi": 96,
+    "browser": ["Generic"],
+    "platforms": ["wac", "web", "phonegap", "tizen"],
+    "userAgent": "Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.7 Safari/533.2"
 };
 
 });
