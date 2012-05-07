@@ -20,43 +20,33 @@
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
-
     <section id="call" class="info ui-widget-content ui-corner-all" style="display: none;">
         <section class="call-info">
-        	<h3 class="PanelSectionTitle">Local Party</h4>
-            <table id="call-status" class="tf_panel-table2" style="display: none;">
-                <tr id="status-text">
-                    <td width="100%"><label class="ui-text-label" style = "color: red;"><center id="call-status-arrow"></center></label></td>
-                </tr>
-            </table>
+            <h3 class="PanelSectionTitle">Local Party</h3>
+            <div id="call-status" style="position:absolute; width:85%; height:120px; z-index:200; padding:10px; background-color:rgba(0, 0, 0, 0.9); color: white; display: none; border-style:solid;
+border-width:3px; border-bottom-width:0px; border-color: gray;"></div>
             <table id="call-local-dialer" class="tf_panel-table2">
                 <tr>
-                    <td><label class="ui-text-label">Auto recording: </label></td>
+                    <td><image src="images/contact-icon.png"></td>
+                    <td><label class="ui-text-label">Simulator Bot</label></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">Auto recording</label></td>
                     <td><input id="recording-status" type="checkbox" class="ui-state-default ui-corner-all"></td>
                 </tr>
                 <tr>
-                    <td><label class="ui-text-label">Call with number</label></td>
-                    <td><select id="call-local-phone-number" class="ui-state-default ui-corner-all"></select></td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">Operation: </label></td>
                     <td>
                         <button id="call-local-call" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
                             <span id="call-local-text" class="ui-button-text">Call</span>
-                        </button>                    
-                        <button id="call-local-end" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span id="end-local-text" class="ui-button-text">End</span>
                         </button>
                     </td>
+                    <td><select id="call-local-phone-number" class="ui-state-default ui-corner-all"></select></td>
                 </tr>
+                <tr><td colspan="2">&nbsp;---------------------------------------------------------------------------</td></tr>
             </table>
-
         	<h3 class="PanelSectionTitle">Remote Party</h3>
-            <table id="remote-call-status" class="tf_panel-table2" style="display: none;">
-                <tr id="remote-status-text">                    
-                    <td width="100%"><label class="ui-text-label" style = "color: red;"><center id="remote-call-status-arrow"></center></label></td>
-                </tr>
-            </table>
+            <div id="remote-call-status" style="position:absolute; width:85%; height:120px; z-index:200; padding:10px; background-color:rgba(0, 0, 0, 0.9); color: white; display: none; border-style:solid;
+border-width:3px; border-bottom-width:0px; border-color: gray;"></div>
             <table id="call-remote-dialer" class="tf_panel-table2">
                 <!--
                 <tr>
@@ -65,18 +55,21 @@
                 </tr>
                 -->
                 <tr>
-                    <td><label class="ui-text-label">Operation: </label></td>
+                    <td><image src="images/contact-icon.png"></td>
+                    <td><label class="ui-text-label"><span id="remotePartyName"></span></label></td>
+                </tr>
+                <tr>
                     <td>
                         <button id="call-remote-call" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
                             <span id="call-remote-text" class="ui-button-text">Call</span>
                         </button>
-                        <button id="call-remote-end" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                            <span id="end-remote-text" class="ui-button-text">End</span>
-                        </button>
+                    </td>
+                    <td>
+                        <label class="ui-text-label" style="font-size:14px;">Simulator Bot</label>
                     </td>
                 </tr>
+                <tr><td colspan="2">&nbsp;---------------------------------------------------------------------------</td></tr>
             </table>
-
         	<h3 class="PanelSectionTitle">End call with</h3>
             <table id="call-exception" class="tf_panel-table2">
                 <tr>
