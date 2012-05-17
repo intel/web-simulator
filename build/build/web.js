@@ -54,6 +54,8 @@ module.exports = function (src, baton) {
         var css = _c.ASSETS + "ripple.css",
             cssDeploy = _c.DEPLOY + "web/ripple.css",
             cacheDeploy = _c.DEPLOY + "web/cache.manifest",
+            browserCheck = _c.ASSETS + "browserCheck.html",
+            rippleIndex = _c.DEPLOY + "web/ripple.html",
             index = _c.DEPLOY + "web/index.html",
             js = _c.DEPLOY + "web/ripple.js",
             doc = src.html.replace(/#URL_PREFIX#/g, "")
@@ -62,7 +64,8 @@ module.exports = function (src, baton) {
                           .replace(/#PANEL_VIEWS#/g, src.panels);
 
         fs.writeFileSync(cssDeploy, fs.readFileSync(css, "utf-8") + src.skins);
-        fs.writeFileSync(index, doc);
+        fs.writeFileSync(rippleIndex, doc);
+        fs.writeFileSync(index, fs.readFileSync(browserCheck, "utf-8"));
         fs.writeFileSync(js, src.js +
             "require('ripple/ui').register('omnibar');" +
             "require('ripple/bootstrap').bootstrap();");
