@@ -1,0 +1,25 @@
+# Tizen Web Simulator
+
+Tizen Web Simulator is a lightweight tool for developing mobile web applications. Extending the Google Chrome developer tools, it enables running and debugging web APIs for a variety of mobile platforms. It currently supports the Tizen 1.0 Web API.
+
+## Features
+ * Enables running and debugging modern HTML5 web applications.
+ * Supports simulation of platform APIs via Javascript backend. Currently: Tizen 1.0 Web APIs.
+ * Includes configuration panels for sending the application events and messages to debug features such as Geo Location, Accelerometer, Messaging, and more.
+ * Runs on Google Chrome and supports Web Inspector developer tools.
+
+For more detailed features, please refer to https://developer.tizen.org/help/topic/org.tizen.help.gs/Simulator%20Features.html
+
+## Install Google Chrome
+The Tizen Web Simulator runs on the Google Chrome browser. To use the Tizen Web Simulator, you must first download and install Google Chrome on your development platform: http://www.google.com/chrome/
+
+## Starting the Tizen Web Simulator
+ 1. Unzip it to a known location.
+ 2. Navigate to the web-simulator directory and use the included script (simulator.sh or simulator.bat) to launch Chrome and start the simulator.
+
+## Load your application in the simulator
+Once the simulator is running inside of Chrome, you can open your application by entering the full path to your application's primary content file (such as index.html) in the simulator's (not chrome's) URL bar.
+
+Tizen Web Simulator is based on the Ripple Mobile Emulator.
+Copyright 2012 Intel Corporation. Alli rights reserved.
+https://developer.tizen.org
