@@ -1,5 +1,5 @@
 /*! 
-  Ripple Mobile Environment Emulator v0.9.2 :: Built On Fri May 04 2012 11:11:41 GMT+0800 (CST)
+  Ripple Mobile Environment Emulator v0.9.2 :: Built On Fri May 18 2012 15:43:59 GMT+0800 (CST)
 
                                 Apache License
                            Version 2.0, January 2004
@@ -25296,6 +25296,7 @@ function _initializeUI() {
 
     utils.forEach(_applicationState, function (obj) {
         var node = jQuery("#" + obj.domId),
+            imgNode = node.find(".ui-box-TitleImage");
             matchingDomId = function (panel) {
                 return panel.domId === obj.domId;
             };
@@ -25323,6 +25324,7 @@ function _initializeUI() {
                     })
                     .end()
                     .addClass("ui-box-open");
+                    imgNode.addClass("ui-box-TitleImageOpen");
                 }
             }
         }
@@ -40448,6 +40450,35 @@ _self = function () {
 module.exports = _self;
 
 });
+require.define('ripple/platform/tizen/1.0/GeometryFilter', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports = function (criteria, geometry) {
+    var _self;
+
+    _self = {
+        criteria: criteria,
+        geometry: geometry
+    };
+
+    return _self;
+};
+
+});
 require.define('ripple/platform/tizen/1.0/pendingoperation', function (require, module, exports) {
 /*
  *  Copyright 2011 Intel Corporation.
@@ -41958,6 +41989,38 @@ module.exports = function (prop) {
 };
 
 });
+require.define('ripple/platform/tizen/1.0/GeoCircleBounds', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports = function (_center, _radius) {
+    var center, radius;
+    center = _center || null;
+    radius = _radius || 0;
+
+    this.__defineGetter__("center", function () {
+        return center;
+    });
+
+    this.__defineGetter__("radius", function () {
+        return radius;
+    });
+};
+
+});
 require.define('ripple/platform/tizen/1.0/systeminfo', function (require, module, exports) {
 /*
  *  Copyright 2011 Intel Corporation.
@@ -42653,6 +42716,69 @@ module.exports = function () {
 
 
 });
+require.define('ripple/platform/tizen/1.0/poi', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var OpenMapQuestProvider = require('ripple/platform/tizen/1.0/poiBackend_openmapquest'), // opne.MapQuest.xapi service
+    _providers,
+    _security = {
+        "http://tizen.org/api/poi": [],
+        "http://tizen.org/api/poi.read": ["find"],
+        "http://tizen.org/api/poi.write": ["add", "remove", "update"],
+        all: true
+    },
+    _self;
+
+function _initialize() {
+    _providers = [new OpenMapQuestProvider({name : "MapQuest", connectivity : "ONLINE", metaData : _security})];
+}
+
+_self = function () {
+    var poi;
+
+    poi = {
+        getDefaultProvider : function () {
+            return _providers[0];
+        },
+        getProviders : function () {
+            return _providers;
+        },
+        handleSubFeatures: function (subFeatures) {
+            var i, subFeature;
+            for (subFeature in subFeatures) {
+                if (_security[subFeature].length === 0) {
+                    _security.all = true;
+                    break;
+                }
+                _security.all = false;
+                for (i = 0; i < _security[subFeature].length; i++) {
+                    _security[_security[subFeature][i]] = true;
+                }
+            }
+            _initialize();
+        }
+    };
+
+    return poi;
+};
+
+module.exports = _self;
+
+});
 require.define('ripple/platform/tizen/1.0/routeBackend_navigation', function (require, module, exports) {
 /*
  *  Copyright 2012 Intel Corporation.
@@ -43041,6 +43167,52 @@ module.exports = function (prop) {
     return _self;
 };
 });
+require.define('ripple/platform/tizen/1.0/Notification', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
+ * Parameters
+ * iconUrl
+ *    URL of the icon to be shown with this notification.
+ *    It supports full URL and relative URL from server access;
+ *    while only supports full URL beginning with "http://" from local file access.
+ * title
+ *    Primary text, or title, of the notification.
+ * body
+ *    Secondary text, or body, of the notification.
+ *
+ * Attributes
+ * onshow
+ *    An event listener function corresponding to the event type "show".
+ *    It replaced 'ondisplay' attribute of Chrome notifications.
+ */
+
+module.exports = function (iconUrl, title, body) {
+    var _self = window.webkitNotifications.createNotification(iconUrl, title, body);
+
+    _self.__defineSetter__("onshow", function (onshow) {
+        return _self.ondisplay = onshow;
+    });
+
+    return _self;
+};
+
+
+});
 require.define('ripple/platform/tizen/1.0/ContactEmailAddress', function (require, module, exports) {
 /*      
  *  Copyright 2012 Intel Corporation.
@@ -43201,6 +43373,109 @@ module.exports = function (type, messageInit) {
         return _messageStatus;
     });
     return msg;
+};
+
+});
+require.define('ripple/platform/tizen/1.0/POIBase', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var tizen1_utils = require('ripple/platform/tizen/1.0/tizen1_utils'),
+    POIGeometry = require('ripple/platform/tizen/1.0/POIGeometry'),
+    errorcode = require('ripple/platform/tizen/1.0/errorcode'),
+    WebAPIError = require('ripple/platform/tizen/1.0/WebAPIError');
+
+
+module.exports = function (prop) {
+    var _self, i, copy, attr;
+    _self = {
+        name : null,
+        categories : [],
+        address : null,
+        phoneNumbers : [],
+        geometry : null,
+        urls : [],
+        rating : null,
+        tags : null,
+        toGeoJSON : function () {
+            throw new WebAPIError(errorcode.NOT_SUPPORTED_ERR);
+        }
+    };
+
+    _self.__defineGetter__("id", function () {
+        return null;
+    });
+
+    _self.__defineGetter__("providerName", function () {
+        return null;
+    });
+
+    if (prop) {
+        if (prop.name) {
+            _self.name = String(prop.name);
+        }
+        if (tizen1_utils.isValidArray(prop.categories)) {
+            _self.categories = [];
+            for (i in prop.categories) {
+                _self.categories.push(String(prop.categories[i]));
+            }
+        }
+        if (prop.address) {
+            if (typeof prop.address === "string") {
+                _self.address = String(prop.address);
+            } else if (Object.prototype.toString.call(prop.address) === "[object Object]") {
+                copy = prop.address.constructor();
+                for (attr in prop.address) {
+                    if (prop.address.hasOwnProperty(attr)) {
+                        copy[attr] = prop.address[attr];
+                    }
+                }
+                _self.address = copy;
+            }
+        }
+        if (tizen1_utils.isValidArray(prop.phoneNumbers)) {
+            _self.phoneNumbers = [];
+            for (i in prop.phoneNumbers) {
+                _self.phoneNumbers.push(String(prop.phoneNumbers[i]));
+            }
+        }
+        if (prop.geometry) {
+            _self.geometry = new POIGeometry(prop.geometry.position, prop.geometry.viewport, prop.geometry.wkt);
+        }
+        if (tizen1_utils.isValidArray(prop.urls)) {
+            _self.urls = [];
+            for (i in prop.urls) {
+                _self.urls.push(String(prop.urls[i]));
+            }
+        }
+        if (typeof prop.rating === "number") {
+            _self.rating = prop.rating;
+        }
+        if (Object.prototype.toString.call(prop.tags) === "[object Object]") {
+            copy = prop.tags.constructor();
+            for (attr in prop.tags) {
+                if (prop.tags.hasOwnProperty(attr)) {
+                    copy[attr] = prop.tags[attr];
+                }
+            }
+            _self.tags = copy;
+        }
+    }
+
+    return _self;
 };
 
 });
@@ -44677,6 +44952,51 @@ module.exports = function (url, type) {
 };
 
 });
+require.define('ripple/platform/tizen/1.0/POIGeometry', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var SimpleCoordinates = require('ripple/platform/tizen/1.0/SimpleCoordinates'),
+    GeoRectBounds = require('ripple/platform/tizen/1.0/GeoRectBounds');
+
+module.exports = function (position, viewport, wkt) {
+    var _self, _position = null, _viewport = null, _wkt = "";
+
+    if (position) {
+        _position = new SimpleCoordinates(position.latitude, position.longitude);
+    }
+
+    if (viewport) {
+        _viewport = new GeoRectBounds(viewport.southWest, viewport.northEast);
+    }
+
+    if (wkt) {
+        _wkt = String(wkt);
+    }
+
+    _self = {
+        position : _position,
+        viewport: _viewport,
+        wkt: _wkt
+    };
+
+    return _self;
+};
+
+});
 require.define('ripple/platform/tizen/1.0/CalendarRecurrenceRule', function (require, module, exports) {
 /*
  *  Copyright 2012 Intel Corporation.
@@ -45546,6 +45866,38 @@ module.exports = function (_attributeName, _matchFlag, _matchValue) {
         matchFlag: _matchFlag,
         matchValue: _matchValue
     };
+};
+
+});
+require.define('ripple/platform/tizen/1.0/GeoRectBounds', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports = function (_southWest, _northEast) {
+    var southWest, northEast;
+    southWest = _southWest || null;
+    northEast = _northEast || null;
+
+    this.__defineGetter__("southWest", function () {
+        return southWest;
+    });
+
+    this.__defineGetter__("northEast", function () {
+        return northEast;
+    });
 };
 
 });
@@ -46834,6 +47186,35 @@ _initialize();
 module.exports = _self;
 
 });
+require.define('ripple/platform/tizen/1.0/POIFilter', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports = function (attributeName, value) {
+    var _self;
+
+    _self = {
+        attributeName: attributeName,
+        value: value
+    };
+
+    return _self;
+};
+
+});
 require.define('ripple/platform/tizen/1.0/ContactPhoneNumber', function (require, module, exports) {
 /*      
  *  Copyright 2012 Intel Corporation.
@@ -47762,6 +48143,261 @@ event.on("CheckAlarm", function (id) {
 module.exports = _self;
 
 });
+require.define('ripple/platform/tizen/1.0/poiBackend_openmapquest', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var lbs = require('ripple/platform/tizen/1.0/lbs_utils'),
+    errorcode = require('ripple/platform/tizen/1.0/errorcode'),
+    WebAPIError = require('ripple/platform/tizen/1.0/WebAPIError'),
+    tizen1_utils = require('ripple/platform/tizen/1.0/tizen1_utils'),
+    POIGeometry = require('ripple/platform/tizen/1.0/POIGeometry'),
+    SimpleCoordinates = require('ripple/platform/tizen/1.0/SimpleCoordinates'),
+    _security;
+
+function POIPublic(prop) {
+    /* This is created for public use */
+    var _self, i, copy, attr,  _id = null, _providerName = null;
+    if (prop.id) {
+        _id = prop.id;
+    }
+    if (prop.providerName) {
+        _providerName = prop.providerName;
+    }
+    _self = {
+        name : null,
+        categories : [],
+        address : null,
+        phoneNumbers : [],
+        geometry : null,
+        urls : [],
+        rating : null,
+        tags : null,
+        toGeoJSON : function () {
+            throw new WebAPIError(errorcode.NOT_SUPPORTED_ERR);
+        }
+    };
+
+    _self.__defineGetter__("id", function () {
+        return _id;
+    });
+
+    _self.__defineGetter__("providerName", function () {
+        return _providerName;
+    });
+
+    if (prop) {
+        if (prop.name) {
+            _self.name = String(prop.name);
+        }
+        if (tizen1_utils.isValidArray(prop.categories)) {
+            _self.categories = [];
+            for (i in prop.categories) {
+                _self.categories.push(String(prop.categories[i]));
+            }
+        }
+        if (prop.address) {
+            if (typeof prop.address === "string") {
+                _self.address = String(prop.address);
+            } else if (Object.prototype.toString.call(prop.address) === "[object Object]") {
+                copy = prop.address.constructor();
+                for (attr in prop.address) {
+                    if (prop.address.hasOwnProperty(attr)) {
+                        copy[attr] = prop.address[attr];
+                    }
+                }
+                _self.address = copy;
+            }
+        }
+        if (tizen1_utils.isValidArray(prop.phoneNumbers)) {
+            _self.phoneNumbers = [];
+            for (i in prop.phoneNumbers) {
+                _self.phoneNumbers.push(String(prop.phoneNumbers[i]));
+            }
+        }
+        if (prop.geometry) {
+            _self.geometry = new POIGeometry(prop.geometry.position, prop.geometry.viewport, prop.geometry.wkt);
+        }
+        if (tizen1_utils.isValidArray(prop.urls)) {
+            _self.urls = [];
+            for (i in prop.urls) {
+                _self.urls.push(String(prop.urls[i]));
+            }
+        }
+        if (typeof prop.rating === "number") {
+            _self.rating = prop.rating;
+        }
+        if (Object.prototype.toString.call(prop.tags) === "[object Object]") {
+            copy = prop.tags.constructor();
+            for (attr in prop.tags) {
+                if (prop.tags.hasOwnProperty(attr)) {
+                    copy[attr] = prop.tags[attr];
+                }
+            }
+            _self.tags = copy;
+        }
+    }
+
+    return _self;
+}
+
+module.exports = function (prop) {
+
+    var _self = new lbs.LocationServiceProvider(prop);
+
+    if (prop.metaData) {
+        _security = prop.metaData;
+    }
+
+    _self.__defineGetter__("supportedFilterTypes", function () {
+        return [];
+    });
+
+    _self.__defineGetter__("supportedPOIFilterAttributes", function () {
+        return [];
+    });
+
+    _self.__defineGetter__("supportedCategories", function () {
+        /* reference: http://wiki.openstreetmap.org/wiki/Map_Features#Amenity */
+        return ["bar", "bbq", "biergarten", "cafe", "drinking_water", "fast_food", "food_court", "ice_cream",
+                "pub", "restaurant", "college", "kindergarten", "library", "school", "university",
+                "bicycle_parking", "bicycle_rental", "bus_station", "car_rental", "car_sharing", "car_wash",
+                "ev_charging", "ferry_terminal", "fuel", "grit_bin", "parking", "parking_entrance",
+                "parking_space", "taxi", "atm", "bank", "bureau_de_change", "baby_hatch", "clinic",
+                "dentist", "doctors", "hospital", "nursing_home", "pharmacy", "social_facility", "veterinary",
+                "arts_centre", "cinema", "community_centre", "fountain", "nightclub", "social_centre",
+                "stripclub", "studio", "swingerclub", "theatre", "bench", "brothel", "clock", "courthouse",
+                "crematorium", "embassy", "fire_station", "grave_yard", "hunting_stand", "marketplace",
+                "place_of_worship", "police", "post_box", "post_office", "prison", "public_building",
+                "recycling", "sauna", "shelter", "shower", "telephone", "toilets", "townhall", "vending_machine",
+                "waste_basket", "waste_disposal", "watering_place"];
+    });
+
+    _self.__defineGetter__("capabilities", function () {
+        /* The set is empty, indicating that this provider supports only 'find' operations */
+        return [];
+    });
+
+    _self.find = function (point, successCallback, errorCallback, options) {
+        /* This provider only supports searching by "GeoRectBounds" due to MapQuest XAPI limitation */
+
+        function _find() {
+            var searchStr, pois = [], isTypeOK = false,
+                id, providerName, name, categories = [], geometry;
+
+            if (Object.prototype.toString.call(point) === "[object Object]") {
+                if (point.southWest && point.northEast) {
+                    if (typeof point.southWest.latitude === "number" &&
+                        typeof point.southWest.longitude === "number" &&
+                        typeof point.northEast.latitude === "number" &&
+                        typeof point.northEast.longitude === "number") {
+                        isTypeOK = true;
+                    }
+                }
+            }
+
+            if (!isTypeOK) {
+                throw (new WebAPIError(errorcode.TYPE_MISMATCH_ERR));
+            }
+
+            searchStr = "http://open.mapquestapi.com/xapi/api/0.6/node";
+            if (options && tizen1_utils.isValidArray(options.categories) &&
+                options.categories.length > 0 && typeof options.categories[0] === "string") {
+                /* xapi support single amenity only */
+                searchStr += "[amenity=" + options.categories[0] + "]";
+            }
+            searchStr += "[bbox=" + point.southWest.longitude + "," + point.southWest.latitude + "," +
+                point.northEast.longitude + "," + point.northEast.latitude + "]";
+
+            /* use Open MapQuest online xapi service. (http://open.mapquestapi.com/xapi/) */
+            $.ajax({
+                type: "GET",
+                url: searchStr,
+                dataType: "xml",
+                timeout: 15000, /* 15 secs timeout */
+                success: function (xml) {
+                    providerName = $(xml).find("osm").attr("generator");
+                    $(xml).find("node").each(function () {
+                        var $item = $(this);
+                        categories = [];
+                        id = $item.attr("id");
+                        geometry = new POIGeometry(new SimpleCoordinates($item.attr("lat"), $item.attr("lon")));
+                        $item.find("tag").each(function () {
+                            if ($(this).attr("k") === "name") {
+                                name = $(this).attr("v");
+                            } else if ($(this).attr("k") === "amenity") {
+                                categories.push($(this).attr("v"));
+                            }
+                        });
+                        pois.push(new POIPublic({id: id, providerName: providerName, name: name,
+                                                categories: categories, geometry: geometry}));
+                    });
+                    successCallback(pois);
+                },
+                error: function (obj, msg) {
+                    if (errorCallback) {
+                        if (msg === "timeout") {
+                            setTimeout(function () {
+                                errorCallback(new WebAPIError(errorcode.TIMEOUT_ERR));
+                            }, 1);
+                        } else {
+                            setTimeout(function () {
+                                errorCallback(new WebAPIError(errorcode.NETWORK_ERR));
+                            }, 1);
+                        }
+                    }
+                }
+            });
+        }
+
+        if (!_security.all && !_security.find) {
+            throw new WebAPIError(errorcode.SECURITY_ERR);
+        }
+
+        tizen1_utils.validateTypeMismatch(successCallback, errorCallback, "find", _find);
+    };
+
+    _self.update = function (poi, successCallback, errorCallback) {
+        if (!_security.all && !_security.update) {
+            throw new WebAPIError(errorcode.SECURITY_ERR);
+        }
+
+        throw new WebAPIError(errorcode.NOT_SUPPORTED_ERR);
+    };
+
+    _self.add = function (poi, successCallback, errorCallback) {
+        if (!_security.all && !_security.add) {
+            throw new WebAPIError(errorcode.SECURITY_ERR);
+        }
+
+        throw new WebAPIError(errorcode.NOT_SUPPORTED_ERR);
+    };
+
+    _self.remove = function (poi, successCallback, errorCallback) {
+        if (!_security.all && !_security.remove) {
+            throw new WebAPIError(errorcode.SECURITY_ERR);
+        }
+
+        throw new WebAPIError(errorcode.NOT_SUPPORTED_ERR);
+    };
+
+    return _self;
+};
+
+});
 require.define('ripple/platform/tizen/1.0/MessageStorage', function (require, module, exports) {
 /*
  *  Copyright 2012 Intel Corporation.
@@ -48547,6 +49183,9 @@ module.exports = {
         SensorConnection: {
             path: "w3c/1.0/SensorConnection"
         },
+        Notification: {
+            path: "tizen/1.0/Notification"
+        },
         navigator: {
             path: "tizen/1.0/navigator",
             children: {
@@ -48678,8 +49317,34 @@ module.exports = {
                         route: {
                             path: "tizen/1.0/route",
                             feature: "http://tizen.org/api/route"
+                        },
+                        poi: {
+                            path: "tizen/1.0/poi",
+                            feature: "http://tizen.org/api/poi|http://tizen.org/api/poi.read|http://tizen.org/api/poi.write",
+                            handleSubfeatures: true
+                        },
+                        GeoRectBounds: {
+                            path: "tizen/1.0/GeoRectBounds"
+                        },
+                        GeoCircleBounds: {
+                            path: "tizen/1.0/GeoCircleBounds"
+                        },
+                        GeoPolyBounds: {
+                            path: "tizen/1.0/GeoPolyBounds"
+                        },
+                        POIGeometry: {
+                            path: "tizen/1.0/POIGeometry"
+                        },
+                        POIFilter: {
+                            path: "tizen/1.0/POIFilter"
+                        },
+                        GeometryFilter: {
+                            path: "tizen/1.0/GeometryFilter"
                         }
                     }
+                },
+                POI: {
+                    path: "tizen/1.0/POIBase"
                 },
                 mediacontent: {
                     path: "tizen/1.0/mediacontent",
@@ -49255,6 +49920,32 @@ self = module.exports = {
     }
 };
 
+
+});
+require.define('ripple/platform/tizen/1.0/GeoPolyBounds', function (require, module, exports) {
+/*
+ *  Copyright 2012 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports = function (_points) {
+    var points = _points || [];
+
+    this.__defineGetter__("points", function () {
+        return points;
+    });
+};
 
 });
 require.define('ripple/platform/tizen/1.0/AlarmBase', function (require, module, exports) {
@@ -64583,6 +65274,7 @@ function _buildDOMNode(setting, settingType, key) {
     }
 
     settingsNode = utils.createElement(tagName, setting.control.type === "select" ? null : setting.control);
+    settingsNode.setAttribute("id", "device-settings-" + settingType + "-" + key);
 
     // TODO: this should really be part of utils.createControl? add element of type "range" with label?
     if (setting.control.type === "range") {
@@ -64750,8 +65442,8 @@ var event = require('ripple/event'),
         INPROGRESS: 3,
     },
     _statusInfo = [
-        "Waiting...;Waiting" ,                                   // IDLE
-        "Calling ;Incomming call from simulator",                // DIALED
+        "Waiting...;Waiting",                                   // IDLE
+        "Calling... ;Incomming call from simulator",               // DIALED
         "Incomming call from ;Calling simulator",                // PLACED
         "In conversation with ;In conversation with simulator"   // INPROGRESS
     ],
@@ -64768,12 +65460,15 @@ var event = require('ripple/event'),
     _CONTACT_KEY = "tizen1-contact",
     _RECORDING_KEY = "tizen1-call-recording",
     _RECORDING_PATH = "music/",
-    _record = {};
+    _record = {},
+    _conversationSeconds = 0,
+    _conversationTimer,
+    _callingEffectTimer;
 
 function _initContacts() {
     var data = db.retrieveObject(_CONTACT_KEY),
         contactsSelect = document.getElementById("call-local-phone-number"),
-        displayName = null, number = null, contacts = [], index = 0, i;
+        displayName = null, number = null, index = 0, i;
         
     contactsSelect.innerHTML = "";
 
@@ -64856,42 +65551,106 @@ function _initRecord() {
     _record.recording = [];
 }
 
+
+function updateConvTime() {
+    var timeObj = new Date(1970, 0, 1),
+    timeString;
+
+    timeObj.setSeconds(_conversationSeconds);
+    timeString = timeObj.toTimeString().substr(0, 8);
+    jQuery("#ConvTimeString").text(timeString);
+    jQuery("#ConvTimeString2").text(timeString);
+    _conversationSeconds = _conversationSeconds + 1;
+}
+
+
+function CallingEffect() {
+    var color = jQuery("#callingString").css('color');
+    if (color === "rgb(255, 255, 255)") {
+        jQuery("#callingString").css('color', "black");
+        jQuery("#callingString2").css('color', "black");
+    }
+    else {
+        jQuery("#callingString").css('color', "white");
+        jQuery("#callingString2").css('color', "white");
+    }
+}
+
+
 function _transferStatus() {
     var statusStringList = _statusInfo[_data.status].split(";"),
         localPartString = jQuery("#call-local-phone-number option:selected").text() || "",
         localPartStringList = localPartString.split(":"),
         localNumber = localPartStringList[0],
         localName = _contactMap[localNumber] || localNumber;
-
     jQuery("#status-text").show();
     jQuery("#remote-status-text").show();
     jQuery("#call-status").show();
     jQuery("#remote-call-status").show();
+    jQuery("#remotePartyName").html(localName);
+    jQuery("#call-local-call").show();
+    window.clearInterval(_callingEffectTimer);
 
     switch (_data.status) {
     case _status.DIALED:      // local call
         jQuery("#call-remote-text").html("Accept");
         jQuery("#end-remote-text").html("Reject");
-        jQuery("#call-status-arrow").html(statusStringList[0] + localName);
-        jQuery("#remote-call-status-arrow").html(statusStringList[1]);
+        jQuery("#call-status").html("<span style='font-size: 22px;'>" + localName + "</span><br>" + 
+                        "<span id='callingString' style='font-size: 14px;'>&nbsp;" + statusStringList[0] + 
+                        "</span><br><br><br><button id='call-local-end-d' class='ui-corner-all' style='padding:2px;" +
+                        " border-width:1px; background-color:red; color:white; font-size:14px; font-weight:bold; width:100%;'>End call</button>");
+        jQuery("#call-local-end-d").bind("click", _localEnd);
+        jQuery("#remote-call-status").html("<span style='font-size: 20px;'>Simulator Bot</span><br>" + 
+                        "<span id='callingString2' style='font-size: 12px;'>&nbsp;Incoming call...</span>" +
+                        "<br><br><br><button id='call-remote-decline-d' class='ui-corner-all' style='padding:2px;" +
+                        " border-width:1px; background-color:red; color:white; font-size:14px; font-weight:bold; width:49%;'>Decline</button>&nbsp;&nbsp;" +
+                        "<button id='call-remote-answer-d' class='ui-corner-all' style='padding:2px; border-width:1px; background-color:green; color:white; font-size:14px; font-weight:bold; width:49%;'>Answer</button>");
+        jQuery("#call-remote-answer-d").bind("click", _remoteCall);
+        jQuery("#call-remote-decline-d").bind("click", _remoteEnd);
+        _callingEffectTimer = window.setInterval(CallingEffect, 800);
         break;
     case _status.PLACED:      // Remote Call
         jQuery("#call-local-text").html("Accept");
         jQuery("#end-local-text").html("Reject");
-        jQuery("#call-status-arrow").html(statusStringList[0] + localName);
-        jQuery("#remote-call-status-arrow").html(statusStringList[1]);
+        jQuery("#call-status").html(statusStringList[0] + localName);
+        jQuery("#remote-call-status").html(statusStringList[1]);
+        jQuery("#remote-call-status").html("<span style='font-size: 22px;'>Simulator Bot</span><br>" + 
+                        "<span id='callingString' style='font-size: 14px;'>&nbsp;Calling..." + 
+                        "</span><br><br><br><button id='call-remote-end-d' class='ui-corner-all' style='padding:2px;" +
+                        " border-width:1px; background-color:red; color:white; font-size:14px; font-weight:bold; width:100%;'>End call</button>");
+        jQuery("#call-remote-end-d").bind("click", _remoteEnd);
+        jQuery("#call-status").html("<span style='font-size: 22px;'>" + localName + "</span><br>" + 
+                        "<span id='callingString2' style='font-size: 14px;'>&nbsp;Incoming call...</span>" +
+                        "<br><br><br><button id='call-local-decline-d' class='ui-corner-all' style='padding:2px;" +
+                        " border-width:1px; background-color:red; color:white; font-size:14px; font-weight:bold; width:49%;'>Decline</button>&nbsp;&nbsp;" +
+                        "<button id='call-local-answer-d' class='ui-corner-all' style='padding:2px; border-width:1px;" +
+                        " background-color:green; color:white; font-size:14px; font-weight:bold; width:49%;'>Answer</button>");
+        jQuery("#call-local-answer-d").bind("click", _localCall);
+        jQuery("#call-local-decline-d").bind("click", _localEnd);
+        _callingEffectTimer = window.setInterval(CallingEffect, 800);
         break;
     case _status.INPROGRESS:
-        jQuery("#call-status-arrow").html(statusStringList[0] + localName);
-        jQuery("#remote-call-status-arrow").html(statusStringList[1]);
+        jQuery("#call-status").html("<span style='font-size: 22px;'>" + localName + "</span><br>" + 
+                        "<span id='ConvTimeString' style='font-size: 14px;'>" + "00:00:00" + 
+                        "</span><br><br><br><button id='call-local-end-d-c' class='ui-corner-all' style='padding:2px;" +
+                        " border-width:1px; background-color:red; color:white; font-size:14px; font-weight:bold; width:100%;'>End call</button>");
+        jQuery("#remote-call-status").html("<span style='font-size: 22px;'>Simulator Robot</span><br>" + 
+                        "<span id='ConvTimeString2' style='font-size: 14px;'>" + "00:00:00" + 
+                        "</span><br><br><br><button id='call-remote-end-d-c' class='ui-corner-all' style='padding:2px;" +
+                        " border-width:1px; background-color:red; color:white; font-size:14px; font-weight:bold; width:100%;'>End call</button>");
+        jQuery("#call-local-end-d-c").bind("click", _localEnd);
+        jQuery("#call-remote-end-d-c").bind("click", _remoteEnd);
+        _conversationTimer = window.setInterval(updateConvTime, 1000);
         jQuery("#call-remote-text").html("Call");
         jQuery("#end-remote-text").html("End");
         jQuery("#call-local-text").html("Call");
         jQuery("#end-local-text").html("End");
         break;
     default:
-        jQuery("#call-status-arrow").html(statusStringList[0]);
-        jQuery("#remote-call-status-arrow").html(statusStringList[1]);
+        jQuery("#call-status").html(statusStringList[0]);
+        jQuery("#call-status").html("default");
+        jQuery("#remote-call-status").html(statusStringList[1]);
+        jQuery("#remote-call-status").html("default");
         jQuery("#call-remote-text").html("Call");
         jQuery("#end-remote-text").html("End");
         jQuery("#call-local-text").html("Call");
@@ -64904,7 +65663,7 @@ function _startCall() {
     _data.conversationStartTime = new Date();
     event.trigger("CallInProgress", [true]);
     _data.status = _status.INPROGRESS;
-    _transferStatus();
+    //_transferStatus();
 }
 
 function _endCall(callEndReason) {
@@ -64933,6 +65692,11 @@ function _endCall(callEndReason) {
     _data.status = _status.IDLE;
     _transferStatus();
     _record = {};
+
+    _conversationSeconds = 0;
+    window.clearInterval(_conversationTimer);
+    jQuery("#call-status").hide();
+    jQuery("#remote-call-status").hide();
 
     jQuery("#status-text").hide();
     jQuery("#remote-status-text").hide();
@@ -65047,6 +65811,12 @@ function _exceptionStatus() {
     }
 }
 
+
+function _updateRemotePartyName() {
+    jQuery("#remotePartyName").text(jQuery("#call-local-phone-number option:selected").text());
+}
+
+
 module.exports = {
     panel: {
         domId: "call-container",
@@ -65064,6 +65834,8 @@ module.exports = {
 
         _initEventWatchers();
         _initContacts();
+        jQuery("#remotePartyName").text(jQuery("#call-local-phone-number option:selected").text());
+        jQuery("#call-local-phone-number").bind("change", _updateRemotePartyName);
         _initExceptionTypes();
     }
 };

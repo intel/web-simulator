@@ -11,6 +11,7 @@ images/arrow.png
 images/refreshIcon.png
 images/tizen-wave.gif
 images/tizenlogo_large.png
+images/contact-icon.png
 images/openArrowIcon.png
 images/circle.png
 images/about_Tizen_Simulator_logo.png
@@ -31,6 +32,7 @@ images/tizen-title.png
 images/dontPanic.png
 images/sideCollapseIconRightSide.png
 images/Icon_16x16.png
+browserCheck.html
 themes/light/images/ui-icons_454545_256x240.png
 themes/light/images/ui-bg_glass_55_fbf9ee_1x400.png
 themes/light/images/ui-icons_2e83ff_256x240.png
@@ -67,4 +69,5 @@ ripple.css
 index.html
 beep.wav
 ripple.js
-# Manifest build date: Fri May 04 2012 11:11:41 GMT+0800 (CST)
+ripple.html
+# Manifest build date: Fri May 18 2012 15:43:59 GMT+0800 (CST)

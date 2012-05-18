@@ -1,0 +1,15 @@
+CURRENT_DATE=`date +%d%m%y`
+rm -rf web-simulator*
+mkdir web-simulator
+cp -r ../pkg/web web-simulator
+cp ../README.md web-simulator
+cp ../LICENSE web-simulator
+cp simulator.bat web-simulator
+cp sdk-wrt-options.txt web-simulator
+zip -qr web-simulator-$CURRENT_DATE.zip web-simulator
+
+rm web-simulator/simulator.bat
+cp simulator.sh web-simulator
+tar cfa web-simulator-$CURRENT_DATE.tar.gz web-simulator
+
+md5sum web-simulator-$CURRENT_DATE.*
