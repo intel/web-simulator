@@ -19,19 +19,30 @@
         <link href="ripple.css" type="text/css" rel="stylesheet" />
         <script>
             window.onload = function () {
-                var supportedBrowser, resultWindow;
+                var supportedBrowser, resultWindow, params = {}, url;
                 supportedBrowser = /(Chrome|Chromium)\/(\S+)/;
+                window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(string, key, value) {
+                    params[key] = value;
+                });
+
+                if (params['url'] !== undefined) {
+                    url = "ripple.html?url=" + params['url'];
+                }
+                else {
+                    url = "ripple.html";
+                }
+
                 if (!supportedBrowser.test(navigator.userAgent)) {
                     resultWindow = document.getElementById("browser-check-result-window");
                     resultWindow.style.display = "block";
                     document.getElementById("browserInfo").innerText = navigator.userAgent;
                     document.getElementById("BrowserWarningConfirm").onclick = function() {
                         resultWindow.style.display = "none";
-                        document.location.assign("ripple.html");
+                        document.location.assign(url);
                     };
                 }
                 else {
-                    document.location.assign("ripple.html");
+                    document.location.assign(url);
                 }
             }
         </script>
