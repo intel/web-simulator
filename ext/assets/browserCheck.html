@@ -35,11 +35,7 @@
                 if (!supportedBrowser.test(navigator.userAgent)) {
                     resultWindow = document.getElementById("browser-check-result-window");
                     resultWindow.style.display = "block";
-                    document.getElementById("browserInfo").innerText = navigator.userAgent;
-                    document.getElementById("BrowserWarningConfirm").onclick = function() {
-                        resultWindow.style.display = "none";
-                        document.location.assign(url);
-                    };
+                    document.getElementById("browserInfo").innerHTML = navigator.userAgent;
                 }
                 else {
                     document.location.assign(url);
@@ -47,19 +43,18 @@
             }
         </script>
     </head>
-    <body>
-    <div id="browser-check-result-window" class="browser-check-result-window">
-        <section>
-            <image width="160" height="180" src="images/dontPanic.png">
-            <h1 style="font-size: 66px;">WARNING</h1>
-            <div style="width:800px; margin:auto;">
-                <h1 style="font-size: 24px;">You're using "<span style="color: blue; font-size:22px;" id="browserInfo"></span>"</h1>
-                <p style="font-size:16px;">
-                *Currently only Chrome and Chromium are fully supported. The simulator maybe will not run with full function or run with some problems.</h2>
-                </p>
-                <button id="BrowserWarningConfirm">Continue</button> or <a href="http://tizen.org">to learn more about web simulator</a>
-            </div>
-        </section>
-    </div>
+    <body style="background-color: #EFEFEF">
+      <center>
+	<div class="wrong-browser" id="browser-check-result-window"  >
+	  <br/><br/>
+          <h2 style="text-align:center">Unsupported Browser</h2>
+	  <p><img style="float:left; padding:0px 10px 175px" src="images/dontPanic.png" />Currently only Chrome and Chromium based browsers are 
+	    supported by the Tizen Web Simulator. </p>
+	  <p>You can download Chrome from 
+	    <a href="https://www.google.com/chrome">https://www.google.com/chrome</a></p>
+          <p>This browser reported: <span style="color: blue;" id="browserInfo"></span></p>
+
+	</div>
+      </center>
     </body>
 </html>
