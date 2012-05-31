@@ -896,12 +896,12 @@ section.left {
     First Run Window */
 .wrong-browser {
     width: 540px;
-    height: 100%;    
+    height: 100%;
     top: 150px;
     text-align: left;
-    vertical-align: middle;    
+    vertical-align: middle;
     display: none;
-    margin: 0 auto;    
+    margin: 0 auto;
     font-family: Arial, Verdana, Tahoma, Helevetica, Sans;
 }
 
@@ -917,16 +917,16 @@ section.left {
 }
 
 .platform-select-dialog {
-    z-index: 9001;        
+    z-index: 9001;
     position: absolute;
     top: 250px;
     padding: 20px 0 20px 130px;
     opacity: 1;
     width: 450px;
     height: auto;
-    text-align: center;    
+    text-align: center;
     vertical-align: middle;
-    margin: 0 auto;    
+    margin: 0 auto;
     display: none;
 }
 
@@ -1499,4 +1499,99 @@ textarea {
 .tf_panel-table2 td {
     vertical-align: middle;
     height: 30px;
+}
+
+#settings-menu-popup {
+    display: none;
+    width: 306px;
+    padding: 16px 8px 10px 8px;
+    position: absolute;
+    top: 50px;
+    left: 700px;
+    z-index: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 12px;
+    background-color: #f3f3f3;
+    -moz-box-shadow: 0px 10px 15px #555555; /* Firefox 3.6 and earlier */
+    box-shadow: 0px 10px 15px #555555;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    -moz-border-radius: 7px 7px 7px 7px;
+    border-radius: 7px 7px 7px 7px;
+}
+
+#settings-menu-container-div {
+    z-index: 0;
+    padding:0;
+    background-color: #ffffff;
+    border-top:1px solid #a1a1a1;
+    border-left:1px solid #888888;
+    border-right:1px solid #888888;
+    border-bottom:1px solid #888888;
+    width:292px;
+    height:300px;
+    overflow: auto;
+    overflow-x:hidden;
+    overflow-y:auto;
+    position: relative;
+}
+
+.settings-menu-content-table {
+    width: 300px;
+    color: #444444;
+}
+
+.settings-menu-content-table td{
+    font-size: 14px;
+    width:300px;
+    height: 36px;
+    padding-left: 6px;
+    border-bottom:1px solid #a1a1a1;
+    border-style: dotted;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select:none;
+}
+
+.settings-menu-content-table td:hover{
+    background-color:#FFE680;
+    cursor: pointer
+}
+
+.settings-menu-tab-div{
+    font-size:14px;
+    font-weight:bold;
+    background-color: #c6c6c6;
+    color: #444444;
+    width:160px;
+    height:32px;
+    padding: 0px 0px 0px 0px;
+    text-align:center;
+    vertical-align: middle;
+    display: table-cell;
+    border-top-left-radius:0.7em;
+    border-top-right-radius:0.7em;
+}
+
+.settings-menu-button {
+    color: #444444;
+    font-size: 14px;
+    padding: 5px;
+    width: 70px;
+    font-weight:bold;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+.settings-menu-checkbox {
+    width:25px;
+    height:25px;
+    vertical-align: -5px;
+    display: table-cell;
+}
+
+.settings-menu-close-btn {
+    font-size: 12px;
+    width: 24px;
+    height: 20px;
 }
