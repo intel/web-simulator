@@ -1,0 +1,37 @@
+[
+    {
+        name  : Haitao Feng
+        email : haitao.feng@intel.com
+        task  : accelerometer, orientation, filesystem
+    },
+    {
+        name  : Jason Hu
+        email : jia-cheng.hu@intel.com
+        task  : deviceapis, camera, pim.calendar
+    },
+    {
+        name  : Wenchao Wang
+        email : wenchao.wang@intel.com
+        task  : geolocation, messaging, pim.contact
+    },
+    {
+        name  : Hongbo Liu
+        email : hongbo.liu@intel.com
+        task  : deviceinteraction
+    },
+    {
+        name  : Ziv Chang
+        email : ziv.chang@intel.com
+        task  : pim.task
+    },
+    {
+        name  : Franky Yang
+        email : franky.yang@intel.com
+        task  : devicestatus
+    },
+    {
+        name  : Jun Tian
+        email : jun.j.tian@intel.com
+        task  : device zooming in/out
+    }
+]

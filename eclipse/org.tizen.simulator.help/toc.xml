@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Tizen Simulator" topic="html/toc.html">
+   <topic label="Getting Started">
+      <anchor id="gettingstarted"/>
+   </topic>
+   <topic label="Debugging with the Simulator"  href="html/debugging.html" />
+   <topic label="Application Demos"  href="html/appdemos.html" />
+   <topic label="Known Issues"  href="html/knownissues.html" />   
+   <topic label="Simulator Design"  href="html/design.html" />   
+ 
+</toc>

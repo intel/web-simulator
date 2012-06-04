@@ -13,78 +13,101 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<html>
+<!DOCTYPE html>
+<html manifest="cache.manifest">
     <head>
-        <link href="#URL_PREFIX#styles/main.css" type="text/css" rel="stylesheet" />
+        <link href="#URL_PREFIX#ripple.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
-        <section id="ui">
+        <section id="ui" class="stage">
             <section id="emulator-booting"></section>
-
-            <section class="logo"></section>
-
             <section id="extension-url" class="irrelevant">#URL_PREFIX#</section>
-
-            <div class="beta ui-text-beta">beta</div>
-
             <section class="top main">
-            </section>
-
-            <section class="left-panel-collapse ui-state-default ui-corner-all ui-state-hover">
-                <span class="ui-icon ui-icon-arrowthick-1-w"></span>
-            </section>
-            <section id="left" class="left sortable main"></section>
-
-            <section class="middle">
-                <section id="device-container" class="device-wrapper">
-                    <section id="viewport-container" class="viewport-wrapper">
-                        <section id="overlay-views">#OVERLAY_VIEWS#</section>
-                    </section>
-                    <div id="menu-button" class="menu-button-wrapper" title="Click to press menu key"></div>
-                    <div id="back-button" class="back-button-wrapper" title="Click to press back key"></div>
+                <section class="omni-bar" style="display: none;">
+                    <div class="browsingBtns">
+                        <button id="history-back" class="button leftMostButton"><img src="images/leftArrowIcon.png"></button>
+                        <button id="history-forward" class="button rightMostButton" role="button"><img src="images/rightArrowIcon.png"></button>
+                    </div>
+                    <button id="history-reload" class="button cornerButton" role="button" style="margin-left: 10px;"><img src="images/refreshIcon.png"></button>
+                    <input class="ui-corner-all" type="text" value="" style="margin-left: 18px; min-width:200px;" placeholder="Enter a web application url...">
+                    <span class="options">
+                        <div><button id="options-button-setting-menu" class="button cornerButton" role="button" style="margin-right: 4px;"><img src="images/settingsIcon.png"></button>
+                             <button id="options-button-about" class="button cornerButton" role="button"><img src="images/infoIcon.png"></button>
+                        </div>                        <ul id="options-menu">
+                            <li id="options-menu-build" class="not-ready"><a>Package</a></li>
+                            <li id="options-menu-sign" class="not-ready"><a>Package &amp; Sign</a></li>
+                            <li id="options-menu-launch" class="not-ready"><a>Package &amp; Launch</a></li>
+                            <li id="options-menu-build-warning"><hr>Remote Web Inspector Enabled</li>
+                            <li><hr></li>
+                            <li id="options-menu-settings" class="not-ready"><a>Settings...</a></li>
+                            <li><hr></li>
+                            <li id="options-menu-about"><a>About Simulator</a></li>
+                        </ul>
+                    </span>
+                    <div id="options-progress" class="progress"></div>
+                </section>
+                <section id="setting-menu-overlay">
+                <div id="settings-menu-popup">
+                    <table style="border-collapse: collapse; border-spacing:0px;">
+                        <tr>
+                        <td style="border-width: 0px; padding: 0px;"><div class="settings-menu-tab-div"">Panel Settings</div></td>
+                        <td style="padding-right: 2px; text-align: right; vertical-align: top; display: table-cell;"><button id="settings-menu-close-btn">X</button></td>
+                        </tr>
+                        <tr><td colspan="2" style="background-color: #c6c6c6; padding:4px 4px 4px 4px; height:300px; border-width:0px;">
+                            <div id="settings-menu-container-div">
+                            <table id="settings-menu-content-panel-table" class="settings-menu-content-table">
+                            </table>
+                            </div></td></tr>
+                        <tr><td colspan="2" style="text-align: right; padding:10px 2px 0px 0px;"><button class="settings-menu-button" id="settings-menu-save-btn">Apply</button></td></tr>
+                    </table>
+                </div>
+                <div id="overlayBackground" style="DISPLAY:none; position: absolute; z-index:800; top:0; left:0; background-color:rgba(0, 0, 0, 0.4);"></div>
                 </section>
             </section>
-
+            <div class="left-panel-collapse PanelCollapseBar">
+                <img src="images/sideCollapseIconLeftSide.png" style="margin-left:300px; margin-top: 6px;"/>        
+            </div>
+            <div id="left_div">
+            <section id="left" class="left sortable main" style="position: relative;"></section>
+            </div>
+            <div id="middle_div">
+                <section class="middle">
+                    <section id="device-container" class="device-wrapper">
+                        <section id="viewport-container" class="viewport-wrapper">
+                        <section id="overlay-views">#OVERLAY_VIEWS#</section>
+                     </section>
+                        <div id="menu-button" class="menu-button-wrapper" title="Click to press menu key"></div>
+                        <div id="back-button" class="back-button-wrapper" title="Click to press back key"></div>
+                    </section>
+                </section>
+            </div>
             <section class="main ui-widget" id="panel-notification" style="display: none;">
                 <section class="panel-notification-closebtn">X</section>
                 <section id="panel-notification-text"></section>
             </section>
-
-            <section class="right-panel-collapse ui-state-default ui-corner-all ui-state-hover">
+            <section class="right-panel-collapse ui-state-default ui-corner-all ui-state-hover" style="DISPLAY:none;">
                 <span class="ui-icon ui-icon-arrowthick-1-e"></span>
             </section>
-            <section class="right sortable main"></section>
-
-            <section class="error-window">
-            </section>
-
+            <section class="right sortable main"  style="DISPLAY:none;"></section>
+            <section id="options-window"></section>
+            <section class="error-window"></section>
             <section class="error-dialog main ui-corner-all">
-                <section class="error-logo"></section>
                 <section class="error-text">
-                    <h1>Looks like what we have here is a failure to... emulate</h1>
-                    <p>You're seeing this window because it looks like the zombie apocalypse has started.</p>
-                    <p>For some strange reason it looks like we are unable to load. This could be a problem
-                        with your application, with ours or that you may require more time to finish loading.
-                        Hit "Wait" to give your application more time. Hit "FIRE!!" to pick up a shotgun and blow away all
-                        all of Ripple's settings in an attempt to purge out the bad stuff.</p>
-                    <br />
-                    <button id="error-wait" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                        <span class="ui-button-text">Wait</span>
-                    </button>
-                    
-                    <button id="error-panic" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                        <span class="ui-button-text">FIRE!!</span>
-                    </button>
 
-                    <p>If you want to help make things better, drop us a line at <a style="color: #F0F0F0" href="mailto:bugs@tinyhippos.com">bugs@tinyhippos.com</a></p>
+                    <h1>Unsupported Browser</h1>
+		  <p><img style="float:left; padding:0px 10px 75px" src="images/dontPanic.png" />Currently only Chrome and Chromium based browsers are 
+		    supported by the Web Simulator. </p>
+		  <p>You can download Chrome from 
+		    <a href="https://www.google.com/chrome">https://www.google.com/chrome</a></p>
+                    
                 </section>
-                <section class="error-hippo"></section>
             </section>
 
             <!-- Divs for overlay and platform select dialog -->
             <div class="first-run-window"></div>
 
             <section id="panel-views" class="irrelevant">#PANEL_VIEWS#</section>
+            <section id="dialog-views" class="irrelevant">#DIALOG_VIEWS#</section>
 
             <div class="platform-select-dialog main ui-corner-all">
                 <section class="platform-select-logo"></section>
