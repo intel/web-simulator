@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Application Demos for Tizen Simulator</title>
+	<!-- 
+	      <link rel="stylesheet" type="text/css" href="scripts/content.css" />
+	-->
+</head>
+
+<body>
+	<h1>Introduction of Demo Applications</h1>
+	This <a href="video.html" target="new">demo video</a> shows a quick
+	go-through of every demo application. Each demo application is briefly
+	presented in the following paragraphs.
+
+	<h2>Accelerometer</h2>
+	<p>Accelerometer API can access accelerometer sensor values and
+		functionalities are provided via deviceapis.accelerometer interface.</p>
+
+	<p>Application can subscribe to accelerometer device to receive
+		notifications about device acceleration changes.</p>
+
+	<p>X,Y and Z Axis values are show in the middle and when you can
+		click and drag with mouse, those value will change concurrently.</p>
+
+	<p>Also, we can click the "Shake" button to simulate the device is
+		shaken along the X axis.</p>
+
+	<h2>Device Orientation</h2>
+	<p>This example simulates a device orientation change event.</p>
+
+	<p>Switch between portrait and landscape icon from the Device
+		panel, as you can see, the platform screen is rotated accordingly.</p>
+
+	<h2>Device APIs</h2>
+	This page shows the result of deviceapis.listAvailableFeatures() and
+	deviceapis.listActivatedFeatures().
+
+	<h2>Geo Positioning With Ripple</h2>
+	<p>Geographical data can be configured from the "Geo Location"
+		panel and web simulator will pass the geo location data to the
+		application.</p>
+	<p>As shown in the video, we change the value of Latitude from the
+		"Geo Location" panel and the map in the panel is updated instantly for
+		reference. Then click the "Update Map" button in our application, the
+		map in the center is updated accordingly with correct geographical
+		data, just like the map on the Geo Location panel.</p>
+
+	<h2>Camera</h2>
+
+	<p>The example shows the emulated camera window for the device.
+		Click capture to take a picture or use "Record Start" and "Record
+		Stop" to record video.</p>
+
+	<h2>Device Interaction</h2>
+	<p>This example demonstrates a few device notification mechanisms
+		provided by WAC 2.0 DeviceInteraction API. As shown in the "Device &
+		Network Setting", you can turn on/off device vibrator and backlight
+		and adjust audio volume.</p>
+	<p>If backlight is off, the whole device is dimmed to simulate this
+		effect.</p>
+	<p>One of the most prominent case of DeviceInteraction module is to
+		test startNotify. If the device volume is above 0, a device beeper is
+		played when startNotify is invoked. If the device volume is set to 0
+		and vibrator is active, then the device will render a shake-like
+		movement. If the vibrator is also off, backlight will be switched on
+		for a specified duration.</p>
+	<h2>Contact</h2>
+	<p>This example demonstrates the usage of pim.contact API. Start by
+		getting an Address Book and you can add/update/delete/find contacts in
+		that Address Book.</p>
+
+	<h2>Filesystem</h2>
+
+	<p>Filesystem example showcases the capability of Filesystem API.
+		You can traverse the file system hierarchy by clicking through the
+		folders or back button. You can also execute copy/paste/delete
+		operations by clicking corresponding buttons. In addition, a simple
+		editor is provided for you to create/edit text files.</p>
+</body>
+</html>

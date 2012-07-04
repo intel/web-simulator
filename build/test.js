@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var jsdom = require('jsdom'),
+    fs = require('fs'),
+    jWorkflow = require('jWorkflow'),
+    jasmine = require('./test/jasmine-node'),
+    childProcess = require('child_process'),
+    nodeXMLHttpRequest = require(__dirname + '/../thirdparty/node-XMLHttpRequest/XMLHttpRequest').XMLHttpRequest;
+
 function _extraMocks() {
     global.screen = {
         height: 1600,
@@ -20,20 +27,16 @@ function _extraMocks() {
         width: 1200,
         availWidth: 1200
     };
-    global.XMLHttpRequest = window.XMLHttpRequest = require(__dirname +
-        '/../thirdparty/node-XMLHttpRequest/XMLHttpRequest').XMLHttpRequest;
 
+    global.XMLHttpRequest = window.XMLHttpRequest = nodeXMLHttpRequest;
     require(__dirname + "/../thirdparty/Math.uuid");
-
-    global.jWorkflow = require('jWorkflow');
+    global.jWorkflow = jWorkflow;
 
     window.navigator.userAgent = "foo";
     window.navigator.geolocation = {};
     window.navigator.javaEnabled = function () {};
 
-    global.location = window.location = {
-        protocol: "http"
-    };
+    global.location = window.location = {protocol: "http"};
     global.NamedNodeMap = function () {
         return [];
     };
@@ -41,9 +44,7 @@ function _extraMocks() {
 }
 
 function _setupEnv(ready) {
-    var jsdom = require('jsdom'),
-        fs = require('fs'),
-        layout = fs.readFileSync(__dirname + "/../ext/assets/index.html", "utf-8"),
+    var layout = fs.readFileSync(__dirname + "/../ext/assets/index.html", "utf-8"),
         thirdparty = [
             __dirname + "/../thirdparty/jquery.js",
             __dirname + "/../thirdparty/jquery.ui.js"
@@ -64,32 +65,14 @@ function _setupEnv(ready) {
 
         _extraMocks();
 
-        ready();
+        childProcess.exec('cp -rf lib/ripple node_modules/ripple && ' +
+                          'cp -f lib/ripple.js node_modules/ripple.js', ready);
     });
 }
 
 module.exports = function (done, custom) {
-    var jasmine = require('jasmine-node'),
-        verbose = false,
-        colored = true,
-        specs = __dirname + "/../" + (custom ? custom : "test");
-
-    global.jasmine.printRunnerResults = function (runner) {
-        var results = runner.results(),
-            specs = runner.specs(),
-            suites = runner.suites(),
-            msg = '';
-        msg += specs.length + ' spec' + ((specs.length === 1) ? '' : 's') + ', ';
-        msg += suites.length + ' suite' + ((suites.length === 1) ? '' : 's') + ', ';
-        msg += results.totalCount + ' assertion' + ((results.totalCount === 1) ? '' : 's') + ', ';
-        msg += results.failedCount + ' failure' + ((results.failedCount === 1) ? '' : 's') + '\n';
-        return msg;
-    };
-
-    require.paths.push(__dirname + "/../lib/");
-
     //HACK: this should be  taken out if our pull request in jasmine is accepted.
-    jasmine.Matchers.prototype.toThrow = function (expected) {
+    jasmine.core.Matchers.prototype.toThrow = function (expected) {
         var result = false,
             exception,
             not = this.isNot ? "not " : "";
@@ -107,12 +90,12 @@ module.exports = function (done, custom) {
                 result = expected(exception);
             }
             else {
-                result = (expected === jasmine.undefined || this.env.equals_(exception.message || exception, expected.message || expected));
+                result = (expected === jasmine.core.undefined || this.env.equals_(exception.message || exception, expected.message || expected));
             }
         }
 
         this.message = function () {
-            if (exception && (expected === jasmine.undefined || !this.env.equals_(exception.message || exception, expected.message || expected))) {
+            if (exception && (expected === jasmine.core.undefined || !this.env.equals_(exception.message || exception, expected.message || expected))) {
                 return ["Expected function " + not + "to throw", expected ? expected.message || expected : "an exception", ", but it threw", exception.message || exception].join(' ');
             } else {
                 return "Expected function to throw an exception.";
@@ -123,15 +106,13 @@ module.exports = function (done, custom) {
     };
 
     _setupEnv(function () {
-        for (var key in jasmine) {
-            if (Object.prototype.hasOwnProperty.call(jasmine, key)) {
-                global[key] = jasmine[key];
-            }
-        }
+        var targets = __dirname + "/../" + (custom ? custom : "test");
 
-        jasmine.executeSpecsInFolder(specs, function (runner, log) {
+        jasmine.run(targets.split(' '), function (runner) {
             var failed = runner.results().failedCount === 0 ? 0 : 1;
-            (typeof done !== "function" ? process.exit : done)(failed);
-        }, verbose, colored);
+            setTimeout(function () {
+                (typeof done !== "function" ? process.exit : done)(failed);
+            }, 10);
+        });
     });
 };

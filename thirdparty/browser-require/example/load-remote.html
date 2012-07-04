@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>require example</title>
+    <script src="../require.js"></script>
+    <script>
+    require.load({
+      id: 'user-agent',
+      url:'http://github.com/visionmedia/user-agent.js/raw/master/lib/user-agent.js'
+    }, function (err) {
+      if (err) throw err;
+      var userAgent = require('user-agent');
+      var info = userAgent.parse('Mozilla/5.0 (Windows; U; Windows NT 5.1; en) '+
+                                 'AppleWebKit/526.9 (KHTML, like Gecko) '+
+                                 'Version/4.0dp1 Safari/526.8');      
+      document.body.innerHTML +=
+        "<p>User agent info:<br><tt>"+JSON.stringify(info)+"</tt></p>";
+    });
+    </script>
+  </head>
+  <body>
+    <h1>untitled</h1>
+  </body>
+</html>

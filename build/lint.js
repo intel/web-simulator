@@ -13,17 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module.exports = function (done, files) {
-    var args = files && files.length > 0 ? files : ["."],
-        options = ["--reporter", "build/lint/reporter.js", "--show-non-errors"],
-        spawn = require('child_process').spawn,
-        cmd = spawn('jshint', args.concat(options)),
-        sys = require('sys');
+var childProcess = require('child_process'),
+    fs = require('fs');
 
-    cmd.stdout.on('data', sys.print);
-    cmd.stderr.on('data', sys.print);
+function _spawn(proc, args, done) {
+    function log(data) {
+        process.stdout.write(new Buffer(data).toString("utf-8"));
+    }
+
+    var cmd = childProcess.spawn(proc, args);
+
+    cmd.stdout.on('data', log);
+    cmd.stderr.on('data', log);
 
     if (done) {
         cmd.on('exit', done);
     }
+}
+
+function _lintJS(files, done) {
+    var options = ["--reporter", "build/lint/reporter.js", "--show-non-errors"];
+    _spawn('jshint', files.concat(options), done);
+}
+
+function _lintCSS(files, done) {
+    var rules = JSON.parse(fs.readFileSync(__dirname + "/../.csslintrc", "utf-8")),
+        options = ["--rules=" + rules, "--format=compact"];
+    _spawn('csslint', files.concat(options), done);
+}
+
+module.exports = function (done, files) {
+    var cssDirs = ["ext/assets/ripple.css", "ext/chromium/styles", "lib", "test"];
+    _lintJS(files && files.length > 0 ? files : ["."], function () {
+        _lintCSS(files && files.length > 0 ? files : cssDirs, done);
+    });
 };

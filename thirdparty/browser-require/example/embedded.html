@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>require example</title>
+    <script src="../require.js"></script>
+    <script>
+    require.define('foo', function(require, module, exports){
+      exports.hello = "hello from the foo module";
+    });
+    require.define('xyz/bar', function(require, module, exports){
+      var foo = require('foo');
+      exports.hello = "hello from the xyz/bar module";
+      exports.helloFromFoo = foo.hello;
+    });
+    </script>
+  </head>
+  <body>
+    <h1>untitled</h1>
+    <script>
+    var foo = require('foo');
+    document.write('<p>foo.hello -> '+foo.hello+'</p>');
+    var bar = require('xyz/bar');
+    document.write('<p>bar.hello -> '+bar.hello+'</p>');
+    document.write('<p>bar.helloFromFoo -> '+bar.helloFromFoo+'</p>');
+    </script>
+  </body>
+</html>

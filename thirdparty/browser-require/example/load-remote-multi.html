@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>require example</title>
+    <script src="../require.js"></script>
+    <script>
+    // load and define multiple modules (they will be loaded in parallel)
+    require.load([
+      'foo.js',
+      {id: 'user-agent',
+       url:'http://github.com/visionmedia/user-agent.js/raw/master/lib/user-agent.js'}
+    ], function (err) {
+      if (err) throw err;
+      // when this gets called, all modules have been successfully loaded
+      var foo = require('foo');
+      document.body.innerHTML +=
+        foo.format("<p>Hello %s from %s</p>", 'Mister', 'Interwebs');
+      var userAgent = require('user-agent');
+      var info = userAgent.parse('Mozilla/5.0 (Windows; U; Windows NT 5.1; en) '+
+                                 'AppleWebKit/526.9 (KHTML, like Gecko) '+
+                                 'Version/4.0dp1 Safari/526.8');      
+      document.body.innerHTML +=
+        foo.format("<p>User agent info:<br><tt>%o</tt></p>", info);
+    });
+    </script>
+  </head>
+  <body>
+    <h1>untitled</h1>
+  </body>
+</html>
