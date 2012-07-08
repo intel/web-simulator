@@ -15,6 +15,13 @@ In particular, the assets under ext/assets/images are excluded from the Apache S
 ## Build Requirements
 
 * nodejs, npm
+
+    nodejs: v0.4.12 is preferred. Later versions are not tested.
+
+       npm: If you are located behind a firewall, you might need to set up a proxy for npm. Just edit ~/.npmrc and add your proxy accordingly.
+                registry = http://registry.npmjs.org/
+                proxy = http://some.business.com:8080
+
 * OSX or linux (windows is not currently supported for development)
 
 ## Getting Started
@@ -34,6 +41,16 @@ To test ripple as an extension in chrome/chromium just load the chromium folder 
     jake -T
 
 This will describe all the available commands for building and running the tests
+
+## Running Inside Other Web Browsers
+
+Ripple is (by-design) browser agnostic, and is able to run inside any web browser (with disabled web security).
+
+To get it running inside Chrome you should start it with these [command line](http://www.chromium.org/developers/how-tos/run-chromium-with-flags) flags:
+
+    --app=http://path/to/ripple-ui/pkg/web
+    --disable-web-security
+    --user-data-dir=/path/to/dummy/profile
 
 ## Code Guidelines
 

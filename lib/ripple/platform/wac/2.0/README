@@ -1,0 +1,123 @@
+This folder contains the WAC 2.0 API simulation implementation.
+
+Here is our implementation logic on the WAC 2.0 specification at
+http://specs.wacapps.net/2.0/jun2011/.
+
+1. Type Compatible
+
+Nearly every WAC 2.0 API will throw TYPE_MISMATCH_ERR exception when any of the
+input parameters are not compatible with the expected type for that parameter.
+In our codes, we implemented this logic by following the W3C WebIDL
+specification with some exceptions. For example, let's consider the
+deviceapis.accelerometer.watchAcceleration API:
+
+"
+long watchAcceleration(in AccelerationSuccessCallback successCallback, in
+optional ErrorCallback errorCallback, in optional AccelerationOptions options);
+
+[Callback=FunctionOnly, NoInterfaceObject] interface AccelerationSuccessCallback {
+    void onsuccess(in Acceleration acceleration);
+};
+
+[Callback=FunctionOnly, NoInterfaceObject] interface ErrorCallback {
+    void onerror(in DeviceAPIError error);
+};
+
+[Callback, NoInterfaceObject] interface AccelerationOptions {
+    attribute long minNotificationInterval;
+};
+"
+
+For the third parameter options, according to W3C IDL 4.2.5
+(http://www.w3.org/TR/WebIDL/):
+
+"
+4.2.15. object
+
+IDL object values are represented by ECMAScript Object values.
+
+An ECMAScript value V is converted to an IDL object value by running the
+following algorithm:
+
+    Let x be the result of calling ToObject(V).
+    Return the IDL object value that is a reference to the same object as x.
+
+The result of converting an IDL object value to an ECMAScript value is the
+Object value that represents a reference to the same object that the IDL object
+represents.
+"
+
+We will convert the options by using "opt = Object(options);" and then convert
+opt.minNotificationInterval to type long.
+
+"
+4.2.8. long
+
+An ECMAScript value V is converted to an IDL long value by running the
+following algorithm:
+
+    Initialize x to ToNumber(V).
+    If the conversion to an IDL value is being performed due to any of the following:
+        V is being assigned to an attribute annotated with the [EnforceRange] extended attribute,
+        V is being passed as an operation argument annotated with the [EnforceRange] extended attribute, or
+        V is being used as the value of dictionary member annotated with the [EnforceRange] extended attribute,
+    then:
+        If x is NaN, +∞, or −∞, then throw a TypeError.
+        Set x to sign(x) * floor(abs(x)).
+        If x < −231 or x > 231 − 1, then throw a TypeError.
+        Return the IDL long value that represents the same numeric value as x.
+    If x is not NaN and the conversion to an IDL value is being performed due to any of the following:
+        V is being assigned to an attribute annotated with the [Clamp] extended attribute,
+        V is being passed as an operation argument annotated with the [Clamp] extended attribute, or
+        V is being used as the value of dictionary member annotated with the [Clamp] extended attribute,
+    then:
+        Round x to the nearest integer, choosing the even integer if it lies halfway between two.
+        Set x to min(max(x, −231), 231 − 1).
+        Return the IDL long value that represents the same numeric value as x.
+    Set x to ToInt32(x).
+    Return the IDL long value that represents the same numeric value as x.
+
+The result of converting an IDL long value to an ECMAScript value is a Number
+that represents the same numeric value as the IDL long value. The Number value
+will be an integer in the range [−2147483648, 2147483647].
+"
+
+Now we use a technique for the ToInt32 implementation from ECMA-262 11.10
+(http://www.ecma-international.org/publications/standards/Ecma-262.htm):
+
+"
+11.10 Binary Bitwise Operators
+
+Semantics
+
+The production A : A @ B, where @ is one of the bitwise operators in the
+productions above, is evaluated as follows:
+    Let lref be the result of evaluating A.
+    Let lval be GetValue(lref).
+    Let rref be the result of evaluating B.
+    Let rval be GetValue(rref).
+    Let lnum be ToInt32(lval).
+    Let rnum be ToInt32(rval).
+
+Return the result of applying the bitwise operator @ to lnum and rnum. The
+result is a signed 32 bit integer.
+"
+
+For this example, the code is "minInterval = opt.minNotificationInterval | 0;".
+
+Exceptions: Currently there are two exceptions (not following specs) in our codes.
+    1) null/undefined is compatible with function
+      According W3C IDL, after null/undefined is converted to Object, there is
+no internal [[Call]] method, we should throw TYPE_MISMATCH_ERR error. However
+from the WAC specification, that null/undefined is compatible with functions.
+
+    2) null/undefined is converted to Object without throwing exception.
+      According ECMA-262 9.9, when null/undefined is converted to Object, we
+should throw a TypeError. However, chrome and node.js does not throw such
+errors, so our codes are not guarded by try and catch.
+        
+2. Feature handling
+
+Some WAC 2.0 modules has sub features, so we introduced a property for 
+each feature in spec.js. If the handleSubfeatures is true, we will implement 
+a function "handleSubfeatures" in that feature to handle the sub features.

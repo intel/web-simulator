@@ -1,6 +1,11 @@
 {
     "predef": [ 
+        "Event",
+        "stagewebview",
+        "FileReader", "FileWriter",
+        "WebKitBlobBuilder", "BlobBuilder",
         "webkitNotifications",
+        "FileError",
         "DOMDocument",
         "$", "it", "describe",
         "xit", "xdescribe",
@@ -59,7 +64,8 @@
         "Draw",
         "sinon",
         "setInterval", "clearInterval", "setTimeout", "clearTimeout",
-        "require", "Contact", "Position", "Coordinates", "Node"
+        "require", "Contact", "Position", "Coordinates", "Node",
+        "OpenLayers"
     ],
  
     "node" : true,

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget  xmlns="http://www.w3.org/ns/widgets"
+         id="http://jil.org/wid/42d5a18589a14d1990f6b0ba0451fbaaabbd033d3537a1c4e30c81432d20d791/Demo+Widget"
+         version="2.0"
+         height="684"
+         width="480">
+    <icon src="Icon.png"/>
+    <icon src="icon.png"/>
+    <content src="index.html"/>
+    <preference name = "pref-readwrite"
+               value = "readwrite"/>
+    <preference name = "pref-readonly"
+               value = "readonly"
+            readonly = "true" />
+    <feature name="http://wacapps.net/api/accelerometer">
+        <param name="accuracy" value="low"/>
+    </feature>
+    <feature name="http://wacapps.net/api/orientation"/>
+    <feature name="http://wacapps.net/api/deviceapis"/>
+    <feature name="http://wacapps.net/api/camera.show"/>
+    <name short="demoWidget" xml:lang="jp">
+        <span xml:lang="en-us">Ripple Demo Widget(us)</span>
+    </name>
+    <name short="demoWidget">
+        <span xml:lang="en-uk">Ripple Demo Widget(uk)</span>
+    </name>
+    <description>The Ripple Emulator Demo Widget</description>
+    <license  href="http://www.opensource.org/licenses/mit-license.php">MIT</license>
+    <author  email="dan.silivestru@tinyhippos.com">Dan Silivestru and Brent Lintner</author>
+</widget>
