@@ -13,96 +13,70 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-
 <section id="application-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Program Manager</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Application</section>
         <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png" /></span>
+            <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
 
     <section class="info ui-widget-content ui-corner-all" style="display: none;">
-        <section>
-            <div><span class="PanelSectionTitle">Installed Programs</span></div>
-            <br>
-            <div data-role="page" id="page1">
-                <div data-role="content" value="A">
-                    <div data-role="fieldcontain" id="application-installed"></div>
-                </div>
-            </div>
-            <br>
-            <table class="panel-table">
-                <tr>
-                    <td><button id="application-uninstall" class="PanelButtonStyle">Uninstall</button></td>
-                    <td><button id="application-update" class="PanelButtonStyle">Update</button></td>
-                </tr>
-            </table>
-            <br>
-        </section>
+    <div><span class="PanelSectionTitle">Installed applications</span></div>
+    <div data-role="page" id="page1">
+        <div data-role="content" value="A">
+            <select id="application-installed" class="ui-state-default ui-corner-all"></select>
+        </div>
+    </div>
+    <p></p>
+    <button id="application-uninstall" class="PanelButtonStyle">Uninstall</button>
+    <button id="application-update" class="PanelButtonStyle">Update</button>
+    <button id="application-install" class="PanelButtonStyle">Install</button>
 
-        <section>
-            <div><span class="PanelSectionTitle">New Installer Package</span></div>
-            <br>
-            <table class="panel-table">
-                <tr>
-                    <td>
-                        <select id="install-type" class="ui-state-default ui-corner-all">
-                            <option value="1">Only application</option>
-                            <option value="2">Service and application</option>
-                            <option value="3">Bond service to application</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label><b><i>Service</i></b></label></td>
-                </tr>
-                <tr>
-                    <td><label for="application-operation" class="ui-text-label"><b>Operation</b></label></td>
-                    <td><input id="application-operation" type="text" class="ui-corner-all" maxlength="100" /></td>
-                </tr>
-                <tr>
-                    <td><label for="application-uri"><b>URI</b></label></td>
-                    <td><input id="application-uri" type="text" class="ui-corner-all" maxlength="100" /></td>
-                </tr>
-                <tr>
-                    <td><label for="application-mime"><b>MIME</b></label></td>
-                    <td><input id="application-mime" type="text" class="ui-corner-all" maxlength="100" /></td>
-                </tr>
-                <tr>
-                    <td><label><b><i>Application</i></b></label></td>
-                </tr>
-                <tr>
-                    <td><label for="application-id"><b>ID</b></label></td>
-                    <td><input id="application-id" type="text" class="ui-corner-all" maxlength="100" /></td>
-                </tr>
-                <tr>
-                    <td><label for="application-name"><b>Name</b></label></td>
-                    <td><input id="application-name" type="text" class="ui-corner-all" maxlength="100" /></td>
-                </tr>
-                <tr>
-                    <td><label for="application-iconPath"><b>Icon</b></label></td>
-                    <td><input id="application-iconPath" type="text" class="ui-corner-all" maxlength="100" /></td>
-                </tr>
-                <tr>
-                    <td><label for="application-version"><b>Version</b></label></td>
-                    <td><input id="application-version" type="text" class="ui-corner-all" maxlength="100" /></td>
-                </tr>
-                <tr>
-                    <td><label><b>Show</b></label></td>
-                    <td>
-                        <label>Yes</label><input type="radio" name="application-show" checked="checked" value="true" />
-                        <label>No</label><input type="radio" name="application-show" value="false" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><button id="application-install" class="PanelButtonStyle">Install</button></td>
-                </tr>
-            </table>
-        </section>
 
-        <section>
-            <div id="application-error"></div>
-        </section>
+        <table id= "application-table" class="panel-table">
+            <tr><td colspan=2><hr width="100%"></td></tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-id">ID</label></td>
+                <td><input id="application-id" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-name">Name</label></td>
+                <td><input id="application-name" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-iconPath">Icon path</label></td>
+                <td><input id="application-iconPath" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-iconPath">Version</label></td>
+                <td><input id="application-version" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-show">Show</label></td>
+                <td>
+                    <label>Yes</label><input type="radio" name="application-show" checked="checked" value="true" />
+                    <label>No</label><input type="radio" name="application-show" value="false" />
+                </td>
+            </tr>
+
+            <tr><td colspan=2><hr width="100%"></td></tr>
+            <tr>
+                <td colspan=2><label class="ui-text-label">Binding service</label></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-operation">Service operation</label></td>
+                <td><input id="application-operation" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-uri">Service URI</label></td>
+                <td><input id="application-uri" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-mime">Service MIME</label></td>
+                <td><input id="application-mime" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+
+        </table>
     </section>
 </section>
