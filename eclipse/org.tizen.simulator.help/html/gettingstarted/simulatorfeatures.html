@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Tizen Simulator Features</title>
+
+<!--
+        <link rel="stylesheet" href="styles/style.css">
+        <script type="text/javascript" src="jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="scripts/content.css" />
+ -->
+<style type="text/css">
+#code {
+	background-color: #EFF3F2;
+	border: 1px solid #E0E8E5;
+	border-collapse: collapse;
+	border-spacing: 0;
+	color: #444444;
+	font-family: Monaco, "Courier New", Courier, monospace;
+	font-size: 100%;
+	overflow: auto;
+	padding: 1em;
+}
+</style>
+</head>
+
+<body>
+	<h1>Tizen Simulator Features</h1>
+	
+	The features of the simulator are best demonstrated by loading the Tizen API Demo application.
+	More to come... How to load demo app.  Screenshot
+
+		<h2>Loading application URL</h2>
+		<p>By default, we have provided a demo application for WAC 2.0
+			API. The simulator will preload this demo application. To specify
+			your own test program, please enter the url of your web application
+			in the address bar at the top. (NOT the address bar of the browser).</p>
+
+		<p>For example, if you have a test program at
+			/home/tizen/demo/wac-api-test.html in your local machine. You just
+			enter</p>
+		<div id="code">
+			<pre>"file:///home/tizen/demo/wac-api-test.html"</pre>
+		</div>
+		<p>in the address bar inside the simulator, as show in the pic
+			below.</p>
+		<img src="./images/wac2-address-bar.png" alt="">
+		<p>
+			or if it is a test page from a remote link, just enter the complete
+			url, e.g. <i><b>http://specs.wacapps.net/1.0/dec2010/examples.html</b></i><b></b>
+		</p>
+
+		<h2>Basic panel operation</h2>
+		<p>each panel can be moved around by click-hold the icon on the
+			right hand side of the title bar as shown in pic below:</p>
+		<img src="./images/wac2-move.png" alt="">
+		<p>By clicking on the title bar area, the panel can be toggled
+			between collapse/expand.</p>
+		<br> <b>Device panel is expanded:</b><br> <img
+			src="./images/wac2-expand.png" alt=""><br>
+		<br> <b>Device panel is collapsed:</b><br> <img
+			src="./images/wac2-collapse.png" alt="">
+
+
+		<h2>Device Information and Event Trigger Panel</h2>
+		<p>The panels on the right/left show device related information
+			and simulate events to the device in the middle. In the following
+			paragraphs, we will introduce them one by one.</p>
+		<h3>Devices</h3>
+		<img src="./images/Devices.png" alt="">
+
+		<p>In this panel you can change the target device you are
+			emulating. In addition, you can switch its orientation between
+			portrait mode and landscape mode. If your application has subscribed
+			to this event, it should receive the event and invoke corresponding
+			callback.</p>
+		<h3>Platforms</h3>
+		<img src="./images/wac2-Platforms.png" alt="">
+		<p>In this panel, you should be able to specify the platform you
+			are on. Just select from the Platform and Version dropdown menu, and
+			click "Change Platform".</p>
+		<h3>Information</h3>
+		<img src="./images/Information.png" alt="">
+		<p>This panel gives you a view of what device your are simulating,
+			which platform you are on, as well as notes that are of interest for
+			the emulated environment.</p>
+
+		<h3>Accelerometer</h3>
+		<img src="./images/Accelerometer.png" alt="">
+		<p>In this panel, you can click and drag with your mouse to
+			manipulate the physical position of the device, which should be
+			useful if your application is responding to accelerometer change. A
+			"Shake" button is provide to simulate the back and forth movement
+			along the X axis.</p>
+		<h3>Settings</h3>
+		<img src="./images/wac2-SimulatorSettings.png" alt="">
+		<p>This panel provides a control panel the simulator's setting.
+			You can turn on/off tooltip and choose simulator's dark/light theme.</p>
+		<h3>Geo location</h3>
+
+		<img src="./images/GeoLocation.png" alt="">
+		<p>Your test application can use APIs to retrieve geographical
+			data from the device and this panel provides a input interface to
+			configure the geographical data being sent from the device.
+			Additionally, a map is shown in response to the change of the data,
+			so you get an idea of what the geo location data means in a real map.</p>
+		<h3>Config</h3>
+		<img src="./images/wac2-Config.png" alt="">
+		<p>If a config.xml for your application is provided, simulator
+			will try to parse and validate it. This section is just a graphical
+			representation of your configuration file.</p>
+
+		<h3>Device & Networking Settings</h3>
+
+		<img src="./images/wac2-DeviceNetworkSettings.png" alt="">
+		<p>WAC 2.0 provides various APIs to retrieve device and networking
+			information. This panel allows user to specify device status and see
+			if the application can react accordingly.</p>
+		<p>In the Config section, you can turn on/off vibrator and
+			backlight. Also, you can adjust audio volume. These notification
+			mechanism can be controlled by deviceinteraction APIs.</p>
+		<p>The rest part in this panel are device and network properties
+			that can be configured and devicestatus APIs offers methods to get
+			information about the device status and subscribe to receive
+			notifications of device status changes.</p>
+
+
+	</div>
+</body>
+</html>

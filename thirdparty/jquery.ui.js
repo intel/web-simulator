@@ -9059,7 +9059,7 @@ $.widget("ui.dialog", {
 				.addClass(
 					'ui-dialog-titlebar ' +
 					'ui-widget-header ' +
-					'ui-corner-all ' +
+					'ui-corner-top ' +
 					'ui-helper-clearfix'
 				)
 				.prependTo(uiDialog),

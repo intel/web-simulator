@@ -13,29 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<section id="accelerometer-container" class="ui-box ui-state-default ui-corner-all">
+<section id="accelerometer-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle">Accelerometer</section>
-        <section class="drag-handle ui-state-default ui-corner-all ui-state-hover">
-            <span class="ui-icon ui-icon-arrow-4"></span>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Accelerometer</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
     <section id="accelerometer" class="info ui-widget-content ui-corner-all" style="display: none;">
         <section class="accelerometer-info">
             <canvas style="display: block;" id="accelerometer-canvas" width="300" height="200"></canvas>
 
-            <table class="panel-table">
+            <table class="tf_panel-table">
+                <tr>
+                    <td colspan="2" style="text-align: center"> 
+                        <em>
+                            Click and drag with the mouse to manipulate the device. <br/>
+                            Hold the Shift key to modify 'alpha'
+                        </em>
+                    </td>
+                </tr>
                 <tr>
                     <td><label class="ui-text-label" for="accelerometer-x">xAxis:</label></td>
-                    <td><span id="accelerometer-x"></span>m / s^2</td>
+                    <td><span id="accelerometer-x"></span> m/s^2</td>
                 </tr>
                 <tr>
                     <td><label class="ui-text-label" for="accelerometer-y">yAxis:</label></td>
-                    <td><span id="accelerometer-y"></span> m / s^2</td>
+                    <td><span id="accelerometer-y"></span> m/s^2</td>
                 </tr>
                 <tr>
                     <td><label class="ui-text-label" for="accelerometer-z">zAxis:</label></td>
-                    <td><span id="accelerometer-z"></span> m / s^2</td>
+                    <td><span id="accelerometer-z"></span> m/s^2</td>
                 </tr>
                 <tr>
                     <td><label class="ui-text-label" for="accelerometer-alpha">alpha:</label></td>
@@ -52,7 +60,7 @@
                 <tr>
                     <td></td>
                     <td>
-                        <button id="accelerometer-shake" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <button id="accelerometer-shake" class="PanelButtonStyle">
                         <span class="ui-button-text">Shake</span>
                         </button>
                     </td>

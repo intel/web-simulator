@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>require example</title>
+    <script src="../require.js"></script>
+    <script>require.load('foo.js');</script>
+    <script>require.load('bar/something.js');</script>
+  </head>
+  <body>
+    <h1>untitled</h1>
+    <script>
+    var foo = require('foo');
+    document.write(foo.format("<p>Hello %s from %s</p>", 'You', 'Interwebs'));
+    var something = require('bar/something');
+    document.write('<p>something.hello -> '+something.hello+'</p>');
+    document.write('<p>something.helloFromFoo -> '+something.helloFromFoo+'</p>');
+    document.write('<p>something.myUri -> '+something.myUri+'</p>');
+    </script>
+  </body>
+</html>
