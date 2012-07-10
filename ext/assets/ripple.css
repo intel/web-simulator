@@ -75,7 +75,11 @@ input, textarea, keygen, select, button, isindex, datagrid {
     font-size: 1.00em;
  }
 
-.main input[type^=text], .main input[type^=number], .main select, .main textarea {
+.main select {
+    padding: 0.4em 1em !important;
+}
+
+.main input[type^=text], .main input[type^=number], .main textarea {
     -webkit-appearance: none;
     -moz-appearance: none;
     padding: 0.4em 1em !important;
