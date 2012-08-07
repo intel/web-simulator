@@ -1,0 +1,123 @@
+<!--
+ *  Copyright 2011 Intel Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="power-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Power Manager</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+
+    <section class="info ui-widget-content ui-corner-all" style="display: none;">
+        <span class="PanelSectionTitle">Resources</span>
+            <br/><br/>
+            <table class="tf_panel-table" style="border-spacing: 0px;">
+                <tr>
+                    <td style="text-align:left"><label class="ui-text-label" id="cpu-load-label">CPU:(load = 0.9)</label></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left"> 
+                        <select id="cpu-state" class="ui-state-default ui-corner-all" style="width:60%; align:center">
+                            <option value="LOW">Low</option>
+                            <option value="HIGH">High</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <span><label class="ui-text-label">Power Management Rules</label></span><br/><br/>
+            <table class="tf_panel-table" style="border-spacing: 0px;">
+                <tr>
+                    <td style="text-align:left">High</td>
+                    <td style="text-align:left">
+                        <select id="high-role" class="ui-state-default ui-corner-all" >
+                            <option value='1'>Allow</option>
+                            <option value='0'>Deny</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">Low</td>
+                    <td style="text-align:left">
+                        <select id="low-role" class="ui-state-default ui-corner-all" >
+                            <option value='1'>Allow</option>
+                            <option value='0'>Deny</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <div>---------------------------------------------------------------------</div>
+            <div ></div>
+            <br/>
+            <table class="tf_panel-table" style="border-spacing: 0px;">
+                <tr>
+                    <td style="text-align:left"><label class="ui-text-label" id="diplay-brightness-label">Display:(brightness = 0.3)</label></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left"> 
+                        <select id="display-state" class="ui-state-default ui-corner-all" style="width:60%; align:center">
+                            <option value="OFF">Off</option>
+                            <option value="DIM">Dim</option>
+                            <option value="NORMAL">Normal</option>
+                            <option value="BRIGHT">Bright</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <span><label class="ui-text-label">Power Management Rules</label></span><br/><br/>
+            <table class="tf_panel-table" style="border-spacing: 0px;">
+                <tr>
+                    <td style="text-align:left">Off</td>
+                    <td style="text-align:left">
+                        <select id="off-role" class="ui-state-default ui-corner-all" >
+                            <option value='1'>Allow</option>
+                            <option value='0'>Deny</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">Dim</td>
+                    <td style="text-align:left">
+                        <select id="dim-role" class="ui-state-default ui-corner-all" >
+                            <option value='1'>Allow</option>
+                            <option value='0'>Deny</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">Normal</td>
+                    <td style="text-align:left">
+                        <select id="normal-role" class="ui-state-default ui-corner-all" >
+                            <option value='1'>Allow</option>
+                            <option value='0'>Deny</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">Bright</td>
+                    <td style="text-align:left">
+                        <select id="bright-role" class="ui-state-default ui-corner-all" >
+                            <option value='1'>Allow</option>
+                            <option value='0'>Deny</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+         
+    </section>
+</section>
