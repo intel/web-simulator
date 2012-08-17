@@ -16,10 +16,15 @@
 <!DOCTYPE html>
 <html manifest="cache.manifest">
     <head>
+        <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
         <link href="#URL_PREFIX#ripple.css" type="text/css" rel="stylesheet" />
     </head>
     <title>Web Simulator</title>
     <body>
+        <section id="bus" style="display: none">
+            <section id="bus-send"></section>
+            <section id="bus-receive"></section>
+        </section>
         <section id="ui" class="stage">
             <section id="emulator-booting"></section>
             <section id="extension-url" class="irrelevant">#URL_PREFIX#</section>
@@ -34,7 +39,7 @@
                     <span class="options">
                         <div><button id="options-button-setting-menu" class="button cornerButton" role="button" style="margin-right: 4px;"><img src="images/settingsIcon.png"></button>
                              <button id="options-button-about" class="button cornerButton" role="button"><img src="images/infoIcon.png"></button>
-                        </div>                        <ul id="options-menu">
+                        </div>                     <!--   <ul id="options-menu">
                             <li id="options-menu-build" class="not-ready"><a>Package</a></li>
                             <li id="options-menu-sign" class="not-ready"><a>Package &amp; Sign</a></li>
                             <li id="options-menu-launch" class="not-ready"><a>Package &amp; Launch</a></li>
@@ -43,7 +48,7 @@
                             <li id="options-menu-settings" class="not-ready"><a>Settings...</a></li>
                             <li><hr></li>
                             <li id="options-menu-about"><a>About Simulator</a></li>
-                        </ul>
+                        </ul> -->
                     </span>
                     <div id="options-progress" class="progress"></div>
                 </section>

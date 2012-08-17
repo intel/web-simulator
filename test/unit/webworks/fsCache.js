@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var fs = require('ripple/dbfs'),
-    event = require('ripple/event'),
-    FileProperties = require('ripple/platform/webworks.core/2.0.0/client/FileProperties'),
-    bbUtils = require('ripple/platform/webworks.core/2.0.0/client/utils'),
-    cache = require('ripple/platform/webworks.core/2.0.0/fsCache');
-
 describe("fsCache", function () {
-    var _root = [{
+    var fs = require('ripple/dbfs'),
+        event = require('ripple/event'),
+        FileProperties = require('ripple/platform/webworks.core/2.0.0/client/FileProperties'),
+        bbUtils = require('ripple/platform/webworks.core/2.0.0/client/utils'),
+        cache = require('ripple/platform/webworks.core/2.0.0/fsCache'),
+        _root = [{
         fullPath: "/dude",
         name: "dude",
         isDirectory: false,
@@ -109,12 +108,7 @@ describe("fsCache", function () {
             it("returns an object of file properties", function () {
                 spyOn(fs, "stat");
 
-                var properties = new FileProperties({
-                        dateModified: new Date(123),
-                        size: 50,
-                        mimeType: "application/x-javascript"
-                    }),
-                    result = cache.file.getFileProperties("/hungry.js");
+                var result = cache.file.getFileProperties("/hungry.js");
 
                 expect(result.dateModified).toEqual(new Date(123));
                 expect(result.dateCreated).toEqual(new Date(123));
@@ -122,7 +116,7 @@ describe("fsCache", function () {
                 expect(result.fileExtension).toEqual("js");
                 expect(result.isHidden).toEqual(false);
                 expect(result.isReadonly).toEqual(false);
-                expect(result.mimeType).toEqual(properties.mimeType);
+                expect(result.mimeType).toEqual("application/x-javascript");
                 expect(result.size).toEqual(50);
                 expect(result instanceof FileProperties).toBe(true);
             });

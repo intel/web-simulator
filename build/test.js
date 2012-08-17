@@ -40,6 +40,7 @@ function _extraMocks() {
     global.NamedNodeMap = function () {
         return [];
     };
+    window.require = require;
     window.removeEventListener = function () {};
 }
 
@@ -65,12 +66,11 @@ function _setupEnv(ready) {
 
         _extraMocks();
 
-        childProcess.exec('cp -rf lib/ripple node_modules/ripple && ' +
-                          'cp -f lib/ripple.js node_modules/ripple.js', ready);
+        ready();
     });
 }
 
-module.exports = function (done, custom) {
+module.exports = function (done) {
     //HACK: this should be  taken out if our pull request in jasmine is accepted.
     jasmine.core.Matchers.prototype.toThrow = function (expected) {
         var result = false,
@@ -106,13 +106,11 @@ module.exports = function (done, custom) {
     };
 
     _setupEnv(function () {
-        var targets = __dirname + "/../" + (custom ? custom : "test");
+        var targets = __dirname + "/../test";
 
         jasmine.run(targets.split(' '), function (runner) {
             var failed = runner.results().failedCount === 0 ? 0 : 1;
-            setTimeout(function () {
-                (typeof done !== "function" ? process.exit : done)(failed);
-            }, 10);
+            (typeof done !== "function" ? process.exit : done)(failed);
         });
     });
 };
