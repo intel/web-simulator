@@ -17,33 +17,32 @@ module.exports = function () {
     var connect = require('connect'),
         fs = require('fs'),
         utils = require('./build/utils'),
-        libs = [],
         tests = [],
         html = fs.readFileSync(__dirname + "/btest/test.html", "utf-8"),
+        pack = require('./build/pack'),
+        conf = require('./build/conf'),
         doc,
         modules,
         specs,
-        app = connect(
-            connect.static(__dirname + "/../lib/"),
-            connect.static(__dirname + "/../"),
-            connect.router(function (app) {
-                app.get('/', function (req, res) {
-                    res.writeHead(200, {
-                        "Cache-Control": "no-cache",
-                        "Content-Type": "text/html"
-                    });
-                    res.end(doc);
+        app = connect()
+            .use(connect.static(__dirname + "/../lib/"))
+            .use(connect.static(__dirname + "/../"))
+            .use('/', function (req, res) {
+                res.writeHead(200, {
+                    "Cache-Control": "max-age=0",
+                    "Content-Type": "text/html"
                 });
-            })
-        );
+                res.end(doc);
+            });
 
-    utils.collect(__dirname + "/../lib", libs);
+    //HACK: Openlayers causes weird stuff with the browser runner, so lets remove it from the list until we fix it
+    conf.thirdpartyIncludes = conf.thirdpartyIncludes.filter(function (filename) {
+        return !filename.match(/openlayers\.js/i);
+    });
+
+    modules = pack();
+
     utils.collect(__dirname + "/../test", tests);
-
-    modules = libs.reduce(function (str, file) {
-        str += '"' + file.replace(/^.*lib\//, "").replace(/\.js$/, "") + '",\n';
-        return str;
-    }, "").replace(/\,\n$/g, "\n");
 
     specs = tests.reduce(function (str, file) {
         str += '<script src="' +
@@ -52,7 +51,7 @@ module.exports = function () {
         return str;
     }, "");
 
-    doc = html.replace(/<!-- SPECS -->/g, specs).replace(/"##FILES##"/g, modules);
+    doc = html.replace(/<!-- SPECS -->/g, specs).replace(/##FILES##/g, modules.js);
 
     app.listen(3000);
 
