@@ -24,50 +24,45 @@
 
     <section id="bluetooth" class="info ui-widget-content ui-corner-all" style="display: none;">
         <section class="bluetooth-info">
-            <span class="PanelSectionTitle">Sending</span>
-            <table class="tf_panel-table">
+            <h3 class="PanelSectionTitle">Status</h3>
+            <table><tbody>
                 <tr>
-                    <td nowrap><label class="ui-text-label" for="bluetooth-away">Is Away</label></td>
-                    <td><input type="checkbox" name="away" id="bluetooth-away"/></td>
+                    <td style="text-align:right;" width="50%"><label class="ui-text-label">Device Name:</label></td>
+                    <td style="text-align:left;" width="50%"><label id="name-status" class="ui-text-label" style="color: red;"></label></td>
                 </tr>
                 <tr>
-                    <td nowrap><label class="ui-text-label" for="checkboxRFCOMM">Register RFCOMM</label></td>
-                    <td><input type="checkbox" name="checkboxRFCOMM" id="checkboxRFCOMM"/></td>
-                </tr>
-            </table>
-            <span id="bondPrompt" class="PanelSectionTitle" style="color:red;display:none;">Bond Successfully</span>
-            <table class="tf_panel-table">
-                <tr>
-                    <td colspan='2' width="100%" style="text-align:left;">
-                        <div id="operation-bonding" style="display: none;text-size:12px;">
-                            <label class="ui-text-label">Service 1:<span></span>chat</label><br><br>
-                            <label class="ui-text-label">5bce9431-6d25-32ab-afe0-2ecdra30860</label><br><br>
-                            <label id="bluetooth-operation-label" class="ui-text-label">Operation</label><br><br>
-                            <button id="accept-bonding" class="PanelButtonStyle">Accept</button>
-                            <button id="cancel-bonding" class="PanelButtonStyle">Cancel</button>
-                            <br>
-                        </div>
-                    </td>
+                    <td style="text-align:right;" width="50%"><label class="ui-text-label">Power State:</label></td>
+                    <td style="text-align:left;" width="50%"><label id="power-status" class="ui-text-label" style="color: red;">Power off</label></td>
                 </tr>
                 <tr>
-                    <td><label class="ui-text-label">Text</label></td>
-                    <td><textarea class="ui-corner-all" id="bluetooth-text" rows="3" style="width: 90%;"></textarea></td>
+                    <td style="text-align:right;" width="50%"><label class="ui-text-label">Visible State:</label></td>
+                    <td style="text-align:left;" width="50%"><label id="visible-status" class="ui-text-label" style="color: red;"></label></td>
+                </tr>
+                <tr><td colspan="2">&nbsp;---------------------------------------------------------------------------</td></tr>
+            </tbody></table>
+
+			<h3 class="PanelSectionTitle">Bluetooth Devices</h3>
+			<table class="list_item-table" id="historyDevices" width="100%" borderColor=#ff6600 border=1 cellPadding=0 cellSpacing=0>
+				
+			</table>
+            <table><tr><td colspan="2">&nbsp;---------------------------------------------------------------------------</td></tr></table>
+            <h3 class="PanelSectionTitle" id="panel-title">Message Incoming Simulate</h3>
+            <table class="tf_panel-table" id="send-receive">
+                <tr>
+                    <td><label class="ui-text-label">Services UUID: </label></td>
+                    <td><select id="services-uuid" class="ui-state-default ui-corner-all"></select></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">Name:</label></td>
+                    <td id="service-name"><label class="ui-text-label"></label></td>
+                </tr>
+                <td><label class="ui-text-label">Text</label></td>
+                    <td><textarea class="ui-corner-all" id="message-content" rows="3" style="width: 90%;"></textarea></td>
                 </tr>
                 <tr>
                     <td colspan='2'>
-                        <button id="bluetooth-send" class="PanelButtonStyle">Send</button>
+                        <button id="incoming-message" class="PanelButtonStyle">Trigger</button>
                     </td>
-                </tr>
-            </table>
-            <br>
-            <span class="PanelSectionTitle">Receiving</span>
-            <table class="tf_panel-table">
-                <tr>
-                    <td><label class="ui-text-label">Data</label></td>
-                    <td><label class="ui-text-label"><textarea class="ui-corner-all" id="received-data" rows="3" style="width: 90%;" readonly></textarea></label></td>
-                </tr>
-                <tr>
-                    <td colspan='2'><button class="PanelButtonStyle" id="bluetooth-clear">Clear</button></td>
                 </tr>
             </table>
         </section>
