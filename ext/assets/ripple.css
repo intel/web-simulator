@@ -1309,30 +1309,6 @@ input.urlBox:focus {
     border-radius: 5px 5px 5px 5px;
 }
 
-.leftMostButton  {
-    -webkit-border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    border-radius: 5px 0 0 5px;
-}
-
-.rightMostButton {
-    -webkit-border-radius: 0 5px 5px 0;
-    -moz-border-radius: 0 5px 5px 0;
-    border-radius: 0 5px 5px 0;
-}
-
-.leftMostButton.button:active {
-    -webkit-box-shadow: inset -2px 0 1px 0 rgba(0,0,0,.4);
-    -moz-box-shadow: inset -2px 0 1px 0 rgba(0,0,0,.4);
-    box-shadow: inset -2px 0 1px 0 rgba(0,0,0,.4);
-}
-    
-.rightMostButton.button:active {
-    -webkit-box-shadow:  inset 2px 0 1px 0 rgba(0,0,0,.4);
-    -moz-box-shadow:  inset 2px 0 1px 0 rgba(0,0,0,.4);
-    box-shadow:  inset 2px 0 1px 0 rgba(0,0,0,.4);
-}
-    
 .titleBar {
     border-bottom:1px solid #9b9fa1;
     position:relative;
@@ -1418,10 +1394,6 @@ input.urlBox:focus {
     position:absolute;
     top:0;
     right:0;
-}
-
-.browsingBtns {
-    padding: 0 0 0 0;
 }
 
 .reloadBtn {
