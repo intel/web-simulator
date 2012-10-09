@@ -1,3 +1,83 @@
+## v0.9.8 - Aug 15, 2012
+
+* Introduced integrated Build & Deploy Services in RIM hosted Ripple
+* Added ability to select Theme through querystring param for auto-enabling Ripple
+* Minor UI clean up work
+* Added Nexus 7 Device
+* Added Galaxy Nexus Device
+
+## v0.9.7 - July 19, 2012
+
+* Fixed an issue with Ripple booting on Chrome 21 dev channel
+* Webworks BB10 support: (https://github.com/blackberry/Ripple-UI/issues?milestone=11&page=1&state=closed)
+ * blackberry.app.exit
+ * device settings for software version and hardware ID
+ * support for consumer and enterprise parameters
+ * support for the swipe down event
+ * support for invoke
+* Fixed a caching issue.
+* Cleaned up browser test failures
+* updated build tooling to work in latest node
+* updated README docs for running as a plugin
+* added support for selecting the platform and version when launching from the querystring
+* Updated Cordova support for 2.0.0 (https://github.com/blackberry/Ripple-UI/issues?milestone=13&page=1&state=closed)
+ * updated the version numbers for phonegap and cordova
+ * navigator camera
+ * Media
+ * File API
+ * cordova specific event support
+ * updated and fixed support for navigator.contacts
+ * added partial support for navigator.device.capture
+
+## v0.9.6.1 (HOTFIX) - June 21, 2012
+
+* Fixed bug with Chrome Version 21.0.1180.0 dev where Ripple will not boot
+* Added support for file:/// scheme in Chrome Store version (stil need to start Ripple with --allow-file-access-from-files flag)
+* Fixed injection routine for cordova 1.6
+
+## v0.9.6 (HOTFIX) - June 12, 2012
+
+* Fixed bug which caused Ripple to not start up for some edge cases
+
+## v0.9.5 - June 5, 2012
+
+* Added whitelisting support for blackberry.event event registration
+* Added support for window.orientation for WebWorks
+* Updated blackberry.ui.dialoge to asynch
+* Added support for network connection type for WebWorks BB10
+* Added support for connectionchange event for WebWorks BB10
+* Added support for blackberry.device.version for WebWorks BB10
+
+* Fixed touch events not being emulated due to race condition
+
+* Known issue: no userAgent HTTP header support for the version distributed through the Chrome Web Store
+
+## v0.9.4 - April 30, 2012 (not released to the Google Chrome Store)
+
+* Added support for BlackBerry 10 WebWorks (beta)
+* Added new BlackBerry 10 Dev Alpha device
+* Added support for WebWorks Build and Deploy services
+* Added userAgent emulation
+* Added initial support for Cordova/PhoneGap 1.6 (alpha)
+* (fix) Improved injection routine
+* (known issue) Disabled loading in file:/// scheme
+
+## v0.9.3 - March 10, 2012
+
+* Added support for dynamic maps with OpenLayers
+* Added missing properties to touch events
+* Moved to Almond for module management
+* (fix) [PhoneGap] events now fire on the correct DOM document
+* (fix) [WW File] fixed the dateCreated and dateModified file properties
+* (fix) [PhoneGap] fixed id bug on contacts API
+* (fix) [iPhone] fixed viewport size to match screen size
+* (fix) [iPhone] fixed screen size display
+* (fix) [OpenLayers] fixed stylesheet link
+* (fix) [touch] fixed element.ontouchX buinding
+* (fix) [touch] fixed event.screenX/Y values 
+* (fix) [tests] fixed failing tests in browser runner
+* (update) removed End of Life notice
+
 ## v0.9.2 - November 17, 2011
 
 * Removed dependency on jasmine-node. Bumped jasmine submodule to v1.1.0.
