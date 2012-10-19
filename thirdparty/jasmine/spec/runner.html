@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Test Runner</title>
+
+  <script type="text/javascript">
+    // yes, really keep this here to keep us honest, but only for jasmine's own runner! [xw]
+    undefined = "diz be undefined yo";
+  </script>
+  <link rel="shortcut icon" type="image/png" href="../images/jasmine_favicon.png">
+  <script type="text/javascript" src="../lib/jasmine-core/jasmine.js"></script>
+
+  <script type="text/javascript" src="../src/html/TrivialReporter.js"></script>
+  <script type="text/javascript" src="../src/console/TrivialConsoleReporter.js"></script>
+
+  <script type="text/javascript" src="core/BaseSpec.js"></script>
+  <script type="text/javascript" src="core/CustomMatchersSpec.js"></script>
+  <script type="text/javascript" src="core/EnvSpec.js"></script>
+  <script type="text/javascript" src="core/ExceptionsSpec.js"></script>
+  <script type="text/javascript" src="core/JsApiReporterSpec.js"></script>
+  <script type="text/javascript" src="core/MatchersSpec.js"></script>
+  <script type="text/javascript" src="core/MockClockSpec.js"></script>
+  <script type="text/javascript" src="core/MultiReporterSpec.js"></script>
+  <script type="text/javascript" src="core/NestedResultsSpec.js"></script>
+  <script type="text/javascript" src="core/PrettyPrintSpec.js"></script>
+  <script type="text/javascript" src="core/ReporterSpec.js"></script>
+  <script type="text/javascript" src="core/RunnerSpec.js"></script>
+  <script type="text/javascript" src="core/QueueSpec.js"></script>
+  <script type="text/javascript" src="core/SpecSpec.js"></script>
+  <script type="text/javascript" src="core/SpecRunningSpec.js"></script>
+  <script type="text/javascript" src="core/SpySpec.js"></script>
+  <script type="text/javascript" src="core/SuiteSpec.js"></script>
+  <script type="text/javascript" src="core/UtilSpec.js"></script>
+  <script type="text/javascript" src="core/WaitsForBlockSpec.js"></script>
+  <script type="text/javascript" src="console/TrivialConsoleReporterSpec.js"></script>
+  <script type="text/javascript" src="html/MatchersHtmlSpec.js"></script>
+  <script type="text/javascript" src="html/PrettyPrintHtmlSpec.js"></script>
+  <script type="text/javascript" src="html/TrivialReporterSpec.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var trivialReporter = new jasmine.TrivialReporter();
+
+      jasmineEnv.addReporter(trivialReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return trivialReporter.specFilter(spec);
+      };
+
+      window.onload = function() {
+        jasmineEnv.execute();
+      };
+    })();
+  </script>
+
+  <link href="../src/html/jasmine.css" rel="stylesheet"/>
+</head>
+
+<body>
+</body>
+</html>
