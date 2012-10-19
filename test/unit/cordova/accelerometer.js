@@ -25,7 +25,7 @@ describe("cordova accelerometer bridge", function () {
     afterEach(function () {
         accel.stop();
     });
-
+    /*
     describe("when starting", function () {
         it("starts an interval", function () {
             var s = jasmine.createSpy("success"),
@@ -61,6 +61,7 @@ describe("cordova accelerometer bridge", function () {
             expect(f).not.toHaveBeenCalled();
         });
     });
+    */
 
     describe("when stopping", function () {
         it("it clears the interval", function () {
