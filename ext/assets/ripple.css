@@ -596,9 +596,9 @@ section.left {
 
 #geo-map {
     position: relative;
-    padding: 10px 0;
     width: 316px;
     height: 316px;
+    border: 2px solid #999;
     overflow: hidden;
 }
 
@@ -666,6 +666,63 @@ section.left {
     position: absolute;
     right: 0;
     top: 10px;
+}
+
+#clear-route-btn {
+    position: absolute;
+    height: 22px;
+    top: 3px;
+    right: 33px;
+    z-index: 800;
+}
+
+#set-route-btn {
+    position: absolute;
+    top: 1px;
+    right: 3px;
+    z-index: 800;
+}
+
+#geo-map-zoom-decrease {
+    width: 49px;
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
+    z-index: 800;
+}
+
+#geo-map-zoom-increase {
+    position: absolute;
+    bottom: 29px;
+    left: 1px;
+    z-index: 800;
+}
+
+#route-control {
+    width: 320px;
+    height: 70px;
+    border: 2px solid #999;
+    border-top-width: 0px;
+    text-align: center;
+}
+
+#route-control button {
+    height:20px;
+    width:40px;
+    margin-top:25px;
+}
+
+#play-route-speed-label {
+    margin-top: 1px;
+    left: 22px;
+    position: absolute;
+    font-weight: bold;
+}
+
+#play-route-speed {
+    left: 55px;
+    width: 260px;
+    position: absolute;
 }
 
 
