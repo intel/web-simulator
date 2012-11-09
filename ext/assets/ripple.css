@@ -213,8 +213,8 @@ section.right, section.left{
 
 section.right { right: 0; }
 
-section.left { 
-    left: 0; 
+section.left {
+    left: 0;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -278,7 +278,7 @@ section.left {
 .info-header{
     padding: 0;
     position: relative;
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 .info section > span{
@@ -495,14 +495,14 @@ section.left {
     background: rgba(0,0,0,1.0);
 }
 
-.overlay-menu-box::-webkit-scrollbar {  
+.overlay-menu-box::-webkit-scrollbar {
     width: 0.50ex;
-    -webkit-border-radius: 1ex;  
+    -webkit-border-radius: 1ex;
     -moz-border-radius: 1ex;
     border-radius: 1ex;
-}  
-  
-.overlay-menu-box::-webkit-scrollbar-thumb {  
+}
+
+.overlay-menu-box::-webkit-scrollbar-thumb {
     background: #0f55ad;
     -webkit-border-radius: 1ex;
     -moz-border-radius: 1ex;
@@ -909,7 +909,7 @@ section.left {
 
 #options-window {
     width: 100%;
-    height: 100%;    
+    height: 100%;
     position: absolute;
     top: 0;
     display: none;
@@ -919,29 +919,29 @@ section.left {
 
 /* ------------------------------>
     Error Window */
-    
+
 .error-window {
     z-index: 10000;
     width: 100%;
-    height: 100%;    
+    height: 100%;
     position: absolute;
     top: 0;
     text-align:center;
-    vertical-align: middle;    
+    vertical-align: middle;
     display: none;
-    background-color: #EFEFEF;    
+    background-color: #EFEFEF;
 }
 
 .error-dialog {
-    z-index: 10001;        
+    z-index: 10001;
     position: absolute;
     top: 150px;
     opacity: 1;
     width: 500px;
     height: auto;
-    text-align: center;    
+    text-align: center;
     vertical-align: middle;
-    margin: 0 auto;    
+    margin: 0 auto;
     display: none;
     font-family: Helevetica, Arial;
 }
@@ -961,29 +961,29 @@ section.left {
 
 /* ------------------------------>
     EULA Window */
-    
+
 .eula-window {
     z-index: 9000;
     width: 100%;
-    height: 100%;    
+    height: 100%;
     position: absolute;
     top: 0;
     text-align:center;
-    vertical-align: middle;    
+    vertical-align: middle;
     display: none;
 }
 
 .eula-dialog {
-    z-index: 9001;        
+    z-index: 9001;
     position: absolute;
     top: 200px;
     padding: 20px 0 20px 130px;
     opacity: 1;
     width: 450px;
     height: auto;
-    text-align: center;    
+    text-align: center;
     vertical-align: middle;
-    margin: 0 auto;    
+    margin: 0 auto;
     display: none;
 }
 
@@ -1257,13 +1257,13 @@ fieldset {
     line-height:12px;
     padding:8px 20px 7px 20px;
     background-color: #fbfbfb;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#ececec)); 
-    background-image: -webkit-linear-gradient(top, #fbfbfb, #ececec); 
-    background-image: -moz-linear-gradient(top, #fbfbfb, #ececec); 
-    background-image: -ms-linear-gradient(top, #fbfbfb, #ececec); 
-    background-image: -o-linear-gradient(top, #fbfbfb, #ececec); 
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#ececec));
+    background-image: -webkit-linear-gradient(top, #fbfbfb, #ececec);
+    background-image: -moz-linear-gradient(top, #fbfbfb, #ececec);
+    background-image: -ms-linear-gradient(top, #fbfbfb, #ececec);
+    background-image: -o-linear-gradient(top, #fbfbfb, #ececec);
     background-image: linear-gradient(to bottom, #fbfbfb, #ececec);
-    -webkit-border-radius: 6px; 
+    -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
     -webkit-background-clip: padding-box;
@@ -1274,8 +1274,8 @@ fieldset {
     color:#55555;
     background-color: #fbfbfb;
     border-color:#424242;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#777777)); 
-    background-image: -webkit-linear-gradient(top, #cccccc, #777777); 
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#777777));
+    background-image: -webkit-linear-gradient(top, #cccccc, #777777);
 }
 
 
@@ -1402,7 +1402,7 @@ input.urlBox:focus {
     width:260px;
     text-decoration:none;
 }
-    
+
 .closedArrow {
     background:url(images/closedArrowIcon.png) no-repeat;
     width:10px;
@@ -1411,7 +1411,7 @@ input.urlBox:focus {
     position:absolute;
     top:6px;
     left:8px;
-}  
+}
 
 .openArrow {
     background:url(images/openArrowIcon.png) no-repeat;
@@ -1421,7 +1421,7 @@ input.urlBox:focus {
     position:absolute;
     top:7px;
     left:5px;
-}  
+}
 
 .titleDragger {
     background:url(images/menuDraggerIcon.png) no-repeat;
@@ -1431,7 +1431,7 @@ input.urlBox:focus {
     position:absolute;
     top:7px;
     right:8px;
-}   
+}
 
 
 .bottomDragBar {
@@ -1492,16 +1492,16 @@ input.urlBox:focus {
 }
 
 #left_div {
-    margin-bottom:20px; 
+    margin-bottom:20px;
     z-index: 3;
-    padding:0; 
-    background-color: #b7bbbd; 
-    border-right:1px;  
-    width:346px; 
-    height: 100%; 
-    overflow: auto; 
-    overflow-x:hidden; 
-    overflow-y:auto; 
+    padding:0;
+    background-color: #b7bbbd;
+    border-right:1px;
+    width:346px;
+    height: 100%;
+    overflow: auto;
+    overflow-x:hidden;
+    overflow-y:auto;
     position: relative;
 }
 
@@ -1509,14 +1509,14 @@ input.urlBox:focus {
     position: fixed;
     left: 0;
     top:0;
-    margin:0; 
-    z-index: 0; 
-    padding:0; 
-    width:100%; 
-    height: 100%; 
-    overflow: auto; 
-    overflow-x:hidden; 
-    overflow-y:auto; 
+    margin:0;
+    z-index: 0;
+    padding:0;
+    width:100%;
+    height: 100%;
+    overflow: auto;
+    overflow-x:hidden;
+    overflow-y:auto;
 }
 
 .PanelSectionTitle {
@@ -1943,4 +1943,74 @@ textarea {
     font-weight: bold;
     text-transform:uppercase;
     color: #2c7a94;
+}
+
+/* ------------------------------>
+    Communication Panel */
+
+#communication-viewport {
+    background-color: #e1e1e1;
+    position: relative;
+}
+
+.communication-callContainer, .communication-messageContainer {
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    background-color: #ffffff;
+    text-align:center;
+    vertical-align: middle;
+    border: 3px solid black;
+    -moz-box-shadow: 0px 10px 15px #555555; /* Firefox 3.6 and earlier */
+    -webkit-box-shadow: 0px 10px 15px #555555;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+.communication-callContainer table, .communication-messageContainer table {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: top;
+}
+
+.communication-callContainer td, .communication-messageContainer td {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.communication-callContainer tr:nth-child(2) td, .communication-messageContainer tr:nth-child(2) td {
+    font-size: 18px;
+    font-weight: normal;
+    vertical-align: top;
+}
+
+#communication-messageThread {
+    width: 280px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.communication-msgOut td:nth-child(1), .communication-msgIn td:nth-child(3) {
+    width: 40px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.communication-msgOut td:nth-child(2), .communication-msgIn td:nth-child(2) {
+    margin: 0px;
+    width: 20px;
+}
+
+.communication-msgOut td:nth-child(3), .communication-msgIn td:nth-child(1) {
+     font-size: 16px;
+     font-weight: normal;
+     width: 200px;
+     border: 1px solid black;
+     word-wrap: break-word;
+     word-break: break-all;
+     -webkit-border-radius: 5px 5px 5px 5px;
+     -webkit-box-shadow: 5px 5px 5px #555555;
 }
