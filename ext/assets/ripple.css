@@ -2014,3 +2014,19 @@ textarea {
      -webkit-border-radius: 5px 5px 5px 5px;
      -webkit-box-shadow: 5px 5px 5px #555555;
 }
+
+/* ------------------------------>
+    Network Management Panel */
+
+.ui-buttonset {
+     margin-right: 7px;
+ }
+ .ui-buttonset .ui-button {
+     margin-left: 0;
+     margin-right: -.3em;
+ }
+ .ui-helper-hidden-accessible {
+     position: absolute !important;
+     clip: rect(1px 1px 1px 1px);
+     clip: rect(1px,1px,1px,1px);
+ }
