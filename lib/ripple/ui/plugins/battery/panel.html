@@ -24,33 +24,64 @@
     <section class="info ui-widget-content ui-corner-all" style="display: none;">
         <table class="panel-table">
             <tr>
-                <td colspan="2"  align="center">
-                    <p id='error-comment' style="DISPLAY:none;color:red">Only number between 1 to 600 is accepted. Try again.</p>
+                <td>
+                    <span class="ui-text-label" id="charging-state">Plugged in?</span>
+                </td>
+                <td>
+                    <input id="is-charging" type="checkbox"/>
                 </td>
             </tr>
             <tr>
-                <td><label class="ui-text-label">Total Time (mins)</label></td>
-                <td><input id="charging-time" type="text" value="1" class="ui-state-default ui-corner-all"></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Battery Level</label></td>
                 <td>
-                    <label id="battery-volume-label" class="range-label-left">100%</label>
-                    <input id="battery-volume" type="range" value="100" min="0" max="100" step="0.01" class="ui-state-default ui-corner-all">
+                    <label class="ui-text-label">Battery Level:</label>
                 </td>
             </tr>
             <tr>
-                <td><label class="ui-text-label">Remaining Power (mins)</label></td>
-                <td id="battery-remaining-power" style="width:300px"></td>
-            </tr>
-            <tr>
                 <td>
-                    <span class="ui-text-label">Is Charging</span>
+                    <input id="battery-volume" type="number" value="100" min="0" max="100" step="1" class="ui-state-default ui-corner-all">
+                    <label id="battery-volume-label" style="display:none"></label>
+                    <label>%</label>
                 </td>
                 <td>
-                    <input id="is-charging" type="checkbox" />
+                    <div id="block0" class="battery-block"></div>
+                    <div id="block1" class="battery-block"></div>
+                    <div id="block2" class="battery-block"></div>
+                    <div id="block3" class="battery-block"></div>
+                    <div id="block4" class="battery-block"></div>
+                    <div id="block5" class="battery-block"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label class="ui-text-label" id="remaining-time-label">Remaining Time (seconds)</label>
                 </td>
             </tr>
         </table>
+        <div>
+            <label id="remain-time"></label>
+        </div>
+
+        <div align="center">
+            <button id="simulate-low-battery-btn">Simulate low battery</button>
+            <button id="stop-btn">Stop</button>
+        </div>
+        <div id="simulate-low-battery" title="Simulate low battery">
+            <p style="margin-left:5px">
+                <label>Start at :&nbsp;&nbsp;</label>
+                <input id="low-battery-start-at" type="number" value="20" min="0" max="100" step="1" class="ui-state-default ui-corner-all">
+                <label>%</label>
+            </p>
+            <p style="margin-left:5px">
+                <label>Drop to 0% over :&nbsp;&nbsp;</label>
+                <input id="low-battery-remain-time" value="1200">
+                <select>
+                    <option value="sec">sec</option>
+                </select>
+            </p>
+            <p align="right">
+                <button id="simulate-low-battery-cancel">Cancel</button>
+                <button id="simulate-low-battery-start">Start</button>
+            </p>
+        </div>
     </section>
 </section>
