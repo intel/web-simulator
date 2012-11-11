@@ -2030,3 +2030,55 @@ textarea {
      clip: rect(1px 1px 1px 1px);
      clip: rect(1px,1px,1px,1px);
  }
+
+
+/* ------------------------------>
+    UI.Battery */
+
+.battery-block {
+    width: 20px;
+    height: 20px;
+    border: solid thin black;
+    float: left;
+    margin-right: 2px;
+    background-color: #000000;
+}
+
+#simulate-low-battery-btn {
+    width: 200px;
+    height: 30px;
+    margin: 5px;
+}
+
+#stop-btn {
+    height: 30px;
+    width: 200px;
+    margin: 5px;
+    display: none;
+    background-color: #D2691E;
+    color: #ffffff;
+}
+
+#simulate-low-battery {
+    height: 180px;
+    border: solid thin black;
+    display: none;
+    background: #ffffff;
+}
+
+#low-battery-remain-time {
+    height: 25px;
+    width: 50px;
+}
+
+#simulate-low-battery-cancel {
+    height:30px;
+    width:80px;
+    margin:5px;
+}
+
+#simulate-low-battery-start {
+    height: 30px;
+    width: 80px;
+    margin: 5px;
+}
