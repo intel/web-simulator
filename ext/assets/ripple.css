@@ -1896,6 +1896,31 @@ textarea {
 }
 
 
+#configure-window-done-popup {
+    display: none;
+    width: 400px;
+    padding: 16px 8px 10px 8px;
+    position: absolute;
+    top: 60px;
+    left: 200px;
+    z-index: 1001;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 12px;
+    background-color: #f3f3f3;
+    -moz-box-shadow: 0 10px 15px #555555; /* Firefox 3.6 and earlier */
+    box-shadow: 0 10px 15px #555555;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    -moz-border-radius: 7px 7px 7px 7px;
+    border-radius: 7px 7px 7px 7px;
+}
+
+#configure-window-done-content {
+    height:100%;
+    padding: 20px;
+	border-color: gray;
+	background-color: white;
+}
+
 #app-launching-history {
     display: none;
     width: 710px;
