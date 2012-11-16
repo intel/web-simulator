@@ -564,6 +564,45 @@ section.left {
     word-wrap: break-word;
 }
 
+#notification-info {
+    margin-left : -15px;
+}
+
+#progress-bar-box {
+    width: 100px;
+    height: 8px;
+    float: left;
+    border: 1px solid;
+    margin-top: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #80AC27;
+}
+
+#progress-bar-value {
+    width: 35px;
+    float: left;
+    margin-left: 2px;
+}
+
+.remove-notification-btn {
+    width: 100%;
+    border-radius: 5px;
+    color: #80AC27;
+    font-weight: bold;
+}
+
+#remove-all-notifications-btn {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
+    color: #80AC27;
+    font-weight: bold;
+}
+
 /* ------------------------------>
     UI.Devices */
 
@@ -1365,12 +1404,12 @@ input.urlBox:focus {
 .rightMostButton {-webkit-border-radius: 0 5px 5px 0;}
 
 .leftMostButton.button:active {
-	-webkit-box-shadow:  none;
-	-webkit-box-shadow:  inset  -2px 0 1px 0 rgba(0,0,0,.4);}
+    -webkit-box-shadow:  none;
+    -webkit-box-shadow:  inset  -2px 0 1px 0 rgba(0,0,0,.4);}
 
 .rightMostButton.button:active {
-	-webkit-box-shadow:  none;
-	-webkit-box-shadow:  inset 2px 0 1px 0 rgba(0,0,0,.4);}
+    -webkit-box-shadow:  none;
+    -webkit-box-shadow:  inset 2px 0 1px 0 rgba(0,0,0,.4);}
 
 .titleBar {
     border-bottom:1px solid #9b9fa1;
@@ -1384,7 +1423,7 @@ input.urlBox:focus {
         left bottom,
         color-stop(0.41, #FFFFFF),
         color-stop(0.57, #E5E5E5)
-	);
+    );
 }
 
 .actualTitle {
@@ -1642,9 +1681,9 @@ textarea {
 }
 
 .configure-window-input {
-	width: 180px;
-	font-size: 16px;
-	height: 30px;
+    width: 180px;
+    font-size: 16px;
+    height: 30px;
 }
 
 #settings-menu-popup {
@@ -1828,20 +1867,20 @@ textarea {
 }
 
 #configure-window-content-panel-table td{
-	padding: 1px;
-	border-color: gray;
-	background-color: white;
+    padding: 1px;
+    border-color: gray;
+    background-color: white;
 }
 
 .configure-window-text-label {
-	font-size: 16px;
-	font-weight: bold;
-	color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
 }
 
 .configure-window-text-label2 {
-	font-size: 16px;
-	color: #000000;
+    font-size: 16px;
+    color: #000000;
 }
 
 .configuration-window-item {
@@ -1917,8 +1956,8 @@ textarea {
 #configure-window-done-content {
     height:100%;
     padding: 20px;
-	border-color: gray;
-	background-color: white;
+    border-color: gray;
+    background-color: white;
 }
 
 #app-launching-history {
