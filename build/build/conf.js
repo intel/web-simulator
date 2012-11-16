@@ -37,6 +37,8 @@ module.exports = {
         "Math.uuid.js",
         "jXHR.js",
         "3d.js",
+        "three.js",
+        "ShaderSkin.js",
         "draw.js",
         "jWorkflow/jworkflow-min-0.4.0.js",
         "OpenLayers.js"
