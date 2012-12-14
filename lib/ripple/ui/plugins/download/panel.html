@@ -1,0 +1,62 @@
+<!--
+ *  Copyright 2012 Intel Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="download-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Download</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+
+    <section class="info ui-widget-content ui-corner-all" style="display: none;">
+    <div><span class="PanelSectionTitle">Manager Download Resource</span></div></br>
+    <div data-role="page" id="page1">
+        <div data-role="content" value="A">
+            <label class="ui-text-label">Resource List</label>&nbsp;<select id="download-resource" class="ui-state-default ui-corner-all"></select>
+        </div>
+    </div>
+    <p></p>
+    <div align="center">
+        <button id="download-add" class="PanelButtonStyle">Add</button>
+        <button id="download-update" class="PanelButtonStyle">Update</button>
+        <button id="download-delete" class="PanelButtonStyle">Delete</button>
+    </div></br>
+    <div align="center">
+        <label id="download-error" style="color:red"></label>
+    </div>
+        <table id= "application-table" class="panel-table">
+            <tr><td colspan=2><hr width="100%"></td></tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-url">URL</label></td>
+                <td><input id="download-url" class="ui-state-default ui-corner-all"  maxlength="250" type='text' style="width:150px"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-size">File size (KB)</label></td>
+                <td><input id="download-size" class="ui-state-default ui-corner-all" type="number" maxlength="200" ></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-speed">Speed (KB/S)</label></td>
+                <td><input id="download-speed" class="ui-state-default ui-corner-all" type="number" maxlength="200"></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label" for="application-unit">Estimated time (S)</label></td>
+                <td>
+                    <label id="download-time">0</label>
+                </td>
+            </tr>
+        </table>
+    </section>
+</section>

@@ -550,6 +550,42 @@ describe("utils", function () {
         });
     });
 
+    describe("queryString", function () {
+
+        it("can handle a location with no params", function () {
+            spyOn(utils, "location").andReturn({
+                search: ""
+            });
+
+            expect(utils.queryString()).toEqual({});
+        });
+
+        it("can handle a location with a single qs", function () {
+            spyOn(utils, "location").andReturn({
+                search: "?foo=bar"
+            });
+
+            expect(utils.queryString()).toEqual({foo: "bar"});
+        });
+
+        it("can handle a location with a couple of qs", function () {
+            spyOn(utils, "location").andReturn({
+                search: "?foo=bar&baz=fred"
+            });
+
+            expect(utils.queryString()).toEqual({foo: "bar", baz: "fred"});
+        });
+
+        it("lowercases the values", function () {
+            spyOn(utils, "location").andReturn({
+                search: "?YO=Momma&Is=soFat"
+            });
+
+            expect(utils.queryString()).toEqual({yo: "momma", is: "sofat"});
+
+        });
+    });
+
     describe("rippleLocation", function () {
         describe("properly returns the base path for ripple-ui", function () {
             it("returns the base path when index.html is used", function () {
@@ -595,8 +631,19 @@ describe("utils", function () {
                 });
                 expect(utils.rippleLocation()).toBe("http://127.0.0.1:6767/i/will/put/ripple/here/");
             });
+
+            //Test for github issue #315
+            xit("returns the correct path when folder has a . in it", function () {
+                
+                spyOn(utils, "location").andReturn({
+                    href: "http://127.0.0.1/bb10.sample/",
+                    protocol: "http:",
+                    port: "",
+                    hostname: "127.0.0.1",
+                    pathname: "/bb10.sample/"
+                });
+                expect(utils.rippleLocation()).toBe("http://127.0.0.1/bb10.sample/");
+            });
         });
-
     });
-
 });

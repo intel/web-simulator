@@ -56,6 +56,10 @@ input, textarea, keygen, select, button, isindex, datagrid {
 
 .main {
     font-size: 12px !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* TODO: better css for this specificity */
@@ -71,7 +75,7 @@ input, textarea, keygen, select, button, isindex, datagrid {
     border: 0;
 }
 
-.main table{
+.main table {
     font-size: 1.00em;
  }
 
@@ -86,7 +90,7 @@ input, textarea, keygen, select, button, isindex, datagrid {
 }
 
 .main option {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 input:focus, textarea:focus, isindex:focus, keygen:focus, select:focus {
@@ -113,6 +117,13 @@ input:focus, textarea:focus, isindex:focus, keygen:focus, select:focus {
 .h4, .main h4 { font-size: 1em; font-weight: normal; }
 
 .irrelevant { display: none; }
+
+.text-is-selectable {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
 
 section, header, footer, aside, nav { display: block; }
 
@@ -155,6 +166,8 @@ section, header, footer, aside, nav { display: block; }
     margin-left: 0;
     top: 50px;
     position: relative;
+    width:100%;
+    height:100%;
 }
 
 .viewport-wrapper {
@@ -166,9 +179,6 @@ section, header, footer, aside, nav { display: block; }
 .device-wrapper {
     position: relative;
     padding: 28px 28px 45px 28px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    border-radius: 30px;
     margin: 0 42px;
 }
 
@@ -203,8 +213,8 @@ section.right, section.left{
 
 section.right { right: 0; }
 
-section.left { 
-    left: 0; 
+section.left {
+    left: 0;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -268,7 +278,7 @@ section.left {
 .info-header{
     padding: 0;
     position: relative;
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 .info section > span{
@@ -485,14 +495,14 @@ section.left {
     background: rgba(0,0,0,1.0);
 }
 
-.overlay-menu-box::-webkit-scrollbar {  
+.overlay-menu-box::-webkit-scrollbar {
     width: 0.50ex;
-    -webkit-border-radius: 1ex;  
+    -webkit-border-radius: 1ex;
     -moz-border-radius: 1ex;
     border-radius: 1ex;
-}  
-  
-.overlay-menu-box::-webkit-scrollbar-thumb {  
+}
+
+.overlay-menu-box::-webkit-scrollbar-thumb {
     background: #0f55ad;
     -webkit-border-radius: 1ex;
     -moz-border-radius: 1ex;
@@ -554,6 +564,45 @@ section.left {
     word-wrap: break-word;
 }
 
+#notification-info {
+    margin-left : -15px;
+}
+
+#progress-bar-box {
+    width: 100px;
+    height: 8px;
+    float: left;
+    border: 1px solid;
+    margin-top: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #80AC27;
+}
+
+#progress-bar-value {
+    width: 35px;
+    float: left;
+    margin-left: 2px;
+}
+
+.remove-notification-btn {
+    width: 100%;
+    border-radius: 5px;
+    color: #80AC27;
+    font-weight: bold;
+}
+
+#remove-all-notifications-btn {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
+    color: #80AC27;
+    font-weight: bold;
+}
+
 /* ------------------------------>
     UI.Devices */
 
@@ -586,9 +635,9 @@ section.left {
 
 #geo-map {
     position: relative;
-    padding: 10px 0;
     width: 316px;
     height: 316px;
+    border: 2px solid #999;
     overflow: hidden;
 }
 
@@ -656,6 +705,63 @@ section.left {
     position: absolute;
     right: 0;
     top: 10px;
+}
+
+#clear-route-btn {
+    position: absolute;
+    height: 22px;
+    top: 3px;
+    right: 33px;
+    z-index: 800;
+}
+
+#set-route-btn {
+    position: absolute;
+    top: 1px;
+    right: 3px;
+    z-index: 800;
+}
+
+#geo-map-zoom-decrease {
+    width: 49px;
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
+    z-index: 800;
+}
+
+#geo-map-zoom-increase {
+    position: absolute;
+    bottom: 29px;
+    left: 1px;
+    z-index: 800;
+}
+
+#route-control {
+    width: 320px;
+    height: 70px;
+    border: 2px solid #999;
+    border-top-width: 0px;
+    text-align: center;
+}
+
+#route-control button {
+    height:20px;
+    width:40px;
+    margin-top:25px;
+}
+
+#play-route-speed-label {
+    margin-top: 1px;
+    left: 22px;
+    position: absolute;
+    font-weight: bold;
+}
+
+#play-route-speed {
+    left: 55px;
+    width: 260px;
+    position: absolute;
 }
 
 
@@ -745,7 +851,7 @@ section.left {
 
 .panel-table {
     width: 100%;
-    border-spacing: 0;
+    border-spacing:0;
 }
 
 .panel-table th {
@@ -764,16 +870,12 @@ section.left {
 .panel-table td {
     vertical-align: middle;
     height: 30px;
+    border-width:0;
 }
 
 
 /* ------------------------------>
     UI.Platform */
-
-#device-select {
-    width: 100%;
-    margin: 0.5em 0;
-}
 
 #change-platform {
     width: 100%;
@@ -838,7 +940,7 @@ section.left {
 }
 
 #options-menu-build-warning {
-    color: #00CC00;
+    color: #C44;
     display: none;
     text-align: center;
     font-variant:small-caps;
@@ -846,7 +948,7 @@ section.left {
 
 #options-window {
     width: 100%;
-    height: 100%;    
+    height: 100%;
     position: absolute;
     top: 0;
     display: none;
@@ -856,29 +958,29 @@ section.left {
 
 /* ------------------------------>
     Error Window */
-    
+
 .error-window {
     z-index: 10000;
     width: 100%;
-    height: 100%;    
+    height: 100%;
     position: absolute;
     top: 0;
     text-align:center;
-    vertical-align: middle;    
+    vertical-align: middle;
     display: none;
-    background-color: #EFEFEF;    
+    background-color: #EFEFEF;
 }
 
 .error-dialog {
-    z-index: 10001;        
+    z-index: 10001;
     position: absolute;
     top: 150px;
     opacity: 1;
     width: 500px;
     height: auto;
-    text-align: center;    
+    text-align: center;
     vertical-align: middle;
-    margin: 0 auto;    
+    margin: 0 auto;
     display: none;
     font-family: Helevetica, Arial;
 }
@@ -895,6 +997,68 @@ section.left {
     font-size: 1.17em;
     text-align: left;
 }
+
+/* ------------------------------>
+    EULA Window */
+
+.eula-window {
+    z-index: 9000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    text-align:center;
+    vertical-align: middle;
+    display: none;
+}
+
+.eula-dialog {
+    z-index: 9001;
+    position: absolute;
+    top: 200px;
+    padding: 20px 0 20px 130px;
+    opacity: 1;
+    width: 450px;
+    height: auto;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 auto;
+    display: none;
+}
+
+    .eula-logo {
+        background: url("images/ripplelogo_large.png") no-repeat 10px 10px;
+        background-size: 100% 100%;
+        position: absolute;
+        width: 122px;
+        height: 200px;
+        top: 0;
+        left: 0;
+    }
+
+    .eula-dialog > button {
+        margin: 0 .25em;
+    }
+
+    .eula-text h2 {
+        font-size: 1.25em;
+    }
+
+    .eula-text p {
+        font-size: 1.17em;
+    }
+
+    .eula-text div {
+        font-size: 1em;
+        width: 90%;
+        margin: 0 auto;
+        height: 250px;
+        overflow-y: auto;
+        background-color: #e1e1e1;
+        color: #1e1e1e;
+        text-align: left;
+    }
+
 
 /* ------------------------------>
     First Run Window */
@@ -1058,9 +1222,9 @@ section.left {
 }
 
 .omni-bar input {
-    width: 70%;
-    min-width:150px;
-    height: 15px;
+    width: 60%;
+    min-width:100px;
+    height: 14px;
 }
 
 /* ------------------------------>
@@ -1130,13 +1294,13 @@ fieldset {
     line-height:12px;
     padding:8px 20px 7px 20px;
     background-color: #fbfbfb;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#ececec)); 
-    background-image: -webkit-linear-gradient(top, #fbfbfb, #ececec); 
-    background-image: -moz-linear-gradient(top, #fbfbfb, #ececec); 
-    background-image: -ms-linear-gradient(top, #fbfbfb, #ececec); 
-    background-image: -o-linear-gradient(top, #fbfbfb, #ececec); 
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#ececec));
+    background-image: -webkit-linear-gradient(top, #fbfbfb, #ececec);
+    background-image: -moz-linear-gradient(top, #fbfbfb, #ececec);
+    background-image: -ms-linear-gradient(top, #fbfbfb, #ececec);
+    background-image: -o-linear-gradient(top, #fbfbfb, #ececec);
     background-image: linear-gradient(to bottom, #fbfbfb, #ececec);
-    -webkit-border-radius: 6px; 
+    -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
     -webkit-background-clip: padding-box;
@@ -1147,8 +1311,8 @@ fieldset {
     color:#55555;
     background-color: #fbfbfb;
     border-color:#424242;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#777777)); 
-    background-image: -webkit-linear-gradient(top, #cccccc, #777777); 
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#777777));
+    background-image: -webkit-linear-gradient(top, #cccccc, #777777);
 }
 
 
@@ -1234,30 +1398,17 @@ input.urlBox:focus {
     border-radius: 5px 5px 5px 5px;
 }
 
-.leftMostButton  {
-    -webkit-border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    border-radius: 5px 0 0 5px;
-}
-
-.rightMostButton {
-    -webkit-border-radius: 0 5px 5px 0;
-    -moz-border-radius: 0 5px 5px 0;
-    border-radius: 0 5px 5px 0;
-}
+.leftMostButton  {-webkit-border-radius: 5px 0 0 5px;}
+.rightMostButton {-webkit-border-radius: 0 5px 5px 0;}
 
 .leftMostButton.button:active {
-    -webkit-box-shadow: inset -2px 0 1px 0 rgba(0,0,0,.4);
-    -moz-box-shadow: inset -2px 0 1px 0 rgba(0,0,0,.4);
-    box-shadow: inset -2px 0 1px 0 rgba(0,0,0,.4);
-}
-    
+    -webkit-box-shadow:  none;
+    -webkit-box-shadow:  inset  -2px 0 1px 0 rgba(0,0,0,.4);}
+
 .rightMostButton.button:active {
-    -webkit-box-shadow:  inset 2px 0 1px 0 rgba(0,0,0,.4);
-    -moz-box-shadow:  inset 2px 0 1px 0 rgba(0,0,0,.4);
-    box-shadow:  inset 2px 0 1px 0 rgba(0,0,0,.4);
-}
-    
+    -webkit-box-shadow:  none;
+    -webkit-box-shadow:  inset 2px 0 1px 0 rgba(0,0,0,.4);}
+
 .titleBar {
     border-bottom:1px solid #9b9fa1;
     position:relative;
@@ -1270,7 +1421,7 @@ input.urlBox:focus {
         left bottom,
         color-stop(0.41, #FFFFFF),
         color-stop(0.57, #E5E5E5)
-	);
+    );
 }
 
 .actualTitle {
@@ -1288,7 +1439,7 @@ input.urlBox:focus {
     width:260px;
     text-decoration:none;
 }
-    
+
 .closedArrow {
     background:url(images/closedArrowIcon.png) no-repeat;
     width:10px;
@@ -1297,7 +1448,7 @@ input.urlBox:focus {
     position:absolute;
     top:6px;
     left:8px;
-}  
+}
 
 .openArrow {
     background:url(images/openArrowIcon.png) no-repeat;
@@ -1307,7 +1458,7 @@ input.urlBox:focus {
     position:absolute;
     top:7px;
     left:5px;
-}  
+}
 
 .titleDragger {
     background:url(images/menuDraggerIcon.png) no-repeat;
@@ -1317,7 +1468,7 @@ input.urlBox:focus {
     position:absolute;
     top:7px;
     right:8px;
-}   
+}
 
 
 .bottomDragBar {
@@ -1343,10 +1494,6 @@ input.urlBox:focus {
     position:absolute;
     top:0;
     right:0;
-}
-
-.browsingBtns {
-    padding: 0 0 0 0;
 }
 
 .reloadBtn {
@@ -1382,31 +1529,31 @@ input.urlBox:focus {
 }
 
 #left_div {
-    margin-bottom:20px; 
-    z-index: 0; 
-    padding:0; 
-    background-color: #b7bbbd; 
-    border-right:1px;  
-    width:346px; 
-    height: 100%; 
-    overflow: auto; 
-    overflow-x:hidden; 
-    overflow-y:auto; 
+    margin-bottom:20px;
+    z-index: 3;
+    padding:0;
+    background-color: #b7bbbd;
+    border-right:1px;
+    width:346px;
+    height: 100%;
+    overflow: auto;
+    overflow-x:hidden;
+    overflow-y:auto;
     position: relative;
 }
 
 #middle_div {
     position: fixed;
-    left: 347px;
+    left: 0;
     top:0;
-    margin:0; 
-    z-index: 0; 
-    padding:0; 
-    width:100%; 
-    height: 100%; 
-    overflow: auto; 
-    overflow-x:hidden; 
-    overflow-y:auto; 
+    margin:0;
+    z-index: 0;
+    padding:0;
+    width:100%;
+    height: 100%;
+    overflow: auto;
+    overflow-x:hidden;
+    overflow-y:auto;
 }
 
 .PanelSectionTitle {
@@ -1503,6 +1650,40 @@ textarea {
     height: 30px;
 }
 
+.configure-window-panel-table {
+    width: 100%;
+    border-spacing: 6px;
+}
+
+.configure-window-panel-table th {
+    text-align: left;
+}
+
+.configure-window-panel-table td input[type^=text], .panel-table td input[type^=number] {
+    width: 100px;
+}
+
+.configure-window-panel-table td:nth-child(1) {
+    width: 50%;
+    text-align: left;
+}
+
+.configure-window-panel-table td:nth-child(2) {
+    width: 50%;
+    text-align: left;
+}
+
+.configure-window-panel-table td {
+    vertical-align: middle;
+    height: 40px;
+}
+
+.configure-window-input {
+    width: 180px;
+    font-size: 16px;
+    height: 30px;
+}
+
 #settings-menu-popup {
     display: none;
     width: 306px;
@@ -1510,7 +1691,7 @@ textarea {
     position: absolute;
     top: 50px;
     left: 700px;
-    z-index: 900;
+    z-index: 1001;
     font-family: Arial, Helvetica, sans-serif;
     padding-left: 12px;
     background-color: #f3f3f3;
@@ -1567,7 +1748,7 @@ textarea {
     color: #444444;
     width:160px;
     height:32px;
-    padding: 0px 0px 0px 0px;
+    padding: 0 0px 0px 0px;
     text-align:center;
     vertical-align: middle;
     display: table-cell;
@@ -1592,8 +1773,422 @@ textarea {
     display: table-cell;
 }
 
+.settings-menu-checkallbox {
+    width:25px;
+    height:25px;
+    vertical-align: -5px;
+    display: table-cell;
+}
+
 .settings-menu-close-btn {
     font-size: 12px;
     width: 24px;
     height: 20px;
+}
+
+#configure-window-popup {
+    display: none;
+    width: 806px;
+    padding: 16px 8px 10px 8px;
+    position: absolute;
+    top: 60px;
+    left: 200px;
+    z-index: 1001;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 12px;
+    background-color: #f3f3f3;
+    -moz-box-shadow: 0 10px 15px #555555; /* Firefox 3.6 and earlier */
+    box-shadow: 0 10px 15px #555555;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    -moz-border-radius: 7px 7px 7px 7px;
+    border-radius: 7px 7px 7px 7px;
+}
+
+#configure-window-container-div {
+    z-index: 0;
+    padding:0;
+    background-color: #ffffff;
+    border-top:1px solid #a1a1a1;
+    border-left:1px solid #888888;
+    border-right:1px solid #888888;
+    border-bottom:1px solid #888888;
+    width:792px;
+    height:500px;
+    overflow: auto;
+    overflow-x:hidden;
+    overflow-y:auto;
+    position: relative;
+}
+
+
+.configuration-window-title-div {
+    font-size:15px;
+    font-weight:bold;
+    background-color: #c6c6c6;
+    color: #444444;
+    width:802px;
+    height:32px;
+    padding: 5px 0 0 0;
+    text-align:center;
+    vertical-align: middle;
+    display: table-cell;
+    border-top-left-radius:0.7em;
+    border-top-right-radius:0.7em;
+}
+
+.configuration-window-done-button {
+    color: #444444;
+    font-size: 14px;
+    padding: 5px;
+    width: 70px;
+    font-weight:bold;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+
+.configuration-window-close-btn {
+    font-size: 12px;
+    width: 24px;
+    height: 20px;
+}
+
+
+#configure-window-content-panel-table {
+    width: 800px;
+    height: 100%;
+    color: #444444;
+    border-width: 0;
+    border-style: solid;
+    border-color: #55555;
+    border-collapse: collapse;
+}
+
+#configure-window-content-panel-table td{
+    padding: 1px;
+    border-color: gray;
+    background-color: white;
+}
+
+.configure-window-text-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.configure-window-text-label2 {
+    font-size: 16px;
+    color: #000000;
+}
+
+.configuration-window-item {
+    display: inline-block;
+    vertical-align: text-top;
+    font-size:16px;
+    font-weight:bold;
+    width:200px;
+    height: 30px;
+    padding-left: 10px;
+    padding-top: 12px;
+    border-bottom:1px solid #a1a1a1;
+    background-color: #eeeeee;
+    color: #333333;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select:none;
+}
+
+.configuration-window-item:hover{
+    cursor: pointer
+}
+
+.configuration-button-bar-div {
+    vertical-align: middle;
+    display: inline-block;
+    padding-top:5px;
+    padding-left:0;
+    padding-right:10px;
+    width:100%;
+    height:100%;
+    background-color:#dddddd;
+    border-width:0;
+}
+
+.configuration-window-content-div {
+    display: none;
+    vertical-align: text-top;
+    vertical-align: top;
+    padding: 5px 10px 5px 10px;
+    height:442px;
+    overflow: auto;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.configuration-window-content-panel {
+    vertical-align: text-top;
+    vertical-align: top;
+    padding: 5px 10px 5px 10px;
+}
+
+
+#configure-window-done-popup {
+    display: none;
+    width: 400px;
+    padding: 16px 8px 10px 8px;
+    position: absolute;
+    top: 60px;
+    left: 200px;
+    z-index: 1001;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 12px;
+    background-color: #f3f3f3;
+    -moz-box-shadow: 0 10px 15px #555555; /* Firefox 3.6 and earlier */
+    box-shadow: 0 10px 15px #555555;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    -moz-border-radius: 7px 7px 7px 7px;
+    border-radius: 7px 7px 7px 7px;
+}
+
+#configure-window-done-content {
+    height:100%;
+    padding: 20px;
+    border-color: gray;
+    background-color: white;
+}
+
+#app-launching-history {
+    display: none;
+    width: 710px;
+    position: absolute;
+    top: 43px;
+    left: 49px;
+    z-index: 1001;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f3f3f3;
+    -moz-box-shadow: 0 10px 15px #555555; /* Firefox 3.6 and earlier */
+    box-shadow: 0 10px 15px #555555;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    -moz-border-radius: 7px 7px 7px 7px;
+    border-radius: 7px 7px 7px 7px;
+}
+
+.app-launching-history-item {
+    display: inline-block;
+    vertical-align: text-top;
+    font-size:13px;
+    width:100%;
+    height: 20px;
+    padding-left: 12px;
+    padding-top: 2px;
+    border-bottom:1px solid #a1a1a1;
+    background-color: #ffffff;
+    color: #333333;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select:none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.app-launching-history-item:hover{
+    background-color:#FFE680;
+    cursor: pointer
+}
+
+.app-launching-history-item-empty {
+    display: inline-block;
+    vertical-align: text-top;
+    font-size:13px;
+    width:100%;
+    height: 20px;
+    padding-left: 12px;
+    padding-top: 2px;
+    border-bottom:1px solid #a1a1a1;
+    background-color: #ffffff;
+    color: #333333;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select:none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.app-launching-history-item-empty:hover{
+    background-color:#FFE680;
+    cursor: pointer
+}
+.configure-window-session-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform:uppercase;
+    color: #2c7a94;
+}
+
+/* ------------------------------>
+    Communication Panel */
+
+#communication-viewport {
+    background-color: #e1e1e1;
+    position: relative;
+}
+
+.communication-callContainer, .communication-messageContainer {
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    background-color: #ffffff;
+    text-align:center;
+    vertical-align: middle;
+    border: 3px solid black;
+    -moz-box-shadow: 0px 10px 15px #555555; /* Firefox 3.6 and earlier */
+    -webkit-box-shadow: 0px 10px 15px #555555;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+.communication-callContainer table, .communication-messageContainer table {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: top;
+}
+
+.communication-callContainer td, .communication-messageContainer td {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.communication-callContainer tr:nth-child(2) td, .communication-messageContainer tr:nth-child(2) td {
+    font-size: 18px;
+    font-weight: normal;
+    vertical-align: top;
+}
+
+#communication-messageThread {
+    width: 280px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.communication-msgOut td:nth-child(1), .communication-msgIn td:nth-child(3) {
+    width: 40px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.communication-msgOut td:nth-child(2), .communication-msgIn td:nth-child(2) {
+    margin: 0px;
+    width: 20px;
+}
+
+.communication-msgOut td:nth-child(3), .communication-msgIn td:nth-child(1) {
+     font-size: 16px;
+     font-weight: normal;
+     width: 200px;
+     border: 1px solid black;
+     word-wrap: break-word;
+     word-break: break-all;
+     -webkit-border-radius: 5px 5px 5px 5px;
+     -webkit-box-shadow: 5px 5px 5px #555555;
+}
+
+/* ------------------------------>
+    Network Management Panel */
+
+.ui-buttonset {
+     margin-right: 7px;
+ }
+ .ui-buttonset .ui-button {
+     margin-left: 0;
+     margin-right: -.3em;
+ }
+ .ui-helper-hidden-accessible {
+     position: absolute !important;
+     clip: rect(1px 1px 1px 1px);
+     clip: rect(1px,1px,1px,1px);
+ }
+
+
+/* ------------------------------>
+    UI.Battery */
+
+.battery-block {
+    width: 20px;
+    height: 20px;
+    border: solid thin black;
+    float: left;
+    margin-right: 2px;
+    background-color: #000000;
+}
+
+#simulate-low-battery-btn {
+    width: 200px;
+    height: 30px;
+    margin: 5px;
+}
+
+#stop-btn {
+    height: 30px;
+    width: 200px;
+    margin: 5px;
+    display: none;
+    background-color: #D2691E;
+    color: #ffffff;
+}
+
+#simulate-low-battery {
+    height: 180px;
+    border: solid thin black;
+    display: none;
+    background: #ffffff;
+}
+
+#low-battery-remain-time {
+    height: 25px;
+    width: 50px;
+}
+
+#simulate-low-battery-cancel {
+    height:30px;
+    width:80px;
+    margin:5px;
+}
+
+#simulate-low-battery-start {
+    height: 30px;
+    width: 80px;
+    margin: 5px;
+}
+
+/* ------------------------------>
+/*sensors*/
+
+#sensors input, #sensors select, #sensors button {
+    margin-left: 20px;
+}
+
+#accelerometer-canvas {
+    width: 300px;
+    height: 200px;
+}
+
+#buttonContainer {
+    border-top: #ccc 1px solid;
+    border-bottom: #ccc 1px solid;
+    padding: 10px;
+    margin-top: 80px;
+}
+
+#sensorsettings-content-container {
+    border-top: #ccc 1px solid;
+    border-bottom: #ccc 1px solid;
+    padding:10px;
 }

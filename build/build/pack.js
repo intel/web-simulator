@@ -24,12 +24,15 @@ module.exports = function () {
         panels = [],
         dialogs = [],
         thirdparty = [],
+        configWindow = [],
+        configPanels = [],
         src = {
             info: JSON.parse(fs.readFileSync(_c.PACKAGE_JSON, "utf-8")),
             js: "",
             overlays: "",
             panels: "",
             dialogs: "",
+            configWindow: "",
             html: "",
             skins: ""
         };
@@ -56,6 +59,8 @@ module.exports = function () {
     utils.collect(_c.UI, overlays, matches("overlay.html"));
     utils.collect(_c.UI, panels, matches("panel.html"));
     utils.collect(_c.UI, dialogs, matches("dialog.html"));
+    utils.collect(_c.UI, configWindow, matches("configWindow.html"));
+    utils.collect(_c.UI, configPanels, matches("configPanels.html"));
 
     utils.collect(_c.THIRDPARTY, thirdparty, function (path) {
         return _c.thirdpartyIncludes.some(function (file) {
@@ -69,14 +74,22 @@ module.exports = function () {
     src.panels += compile(panels);
     src.dialogs += compile(dialogs);
     src.overlays += compile(overlays);
+    src.configWindow += compile(configWindow);
+    configPanels = compile(configPanels);
+
+    src.configWindow = src.configWindow.replace(/#CONFIG_PANELS#/g, configPanels);
+
+    src.js += "window.require = null;window.define = null;";
 
     src.js += _c.thirdpartyIncludes.reduce(function (buffer, file) {
         return buffer + fs.readFileSync(_c.THIRDPARTY + file, "utf-8");
     }, "");
 
+    src.js += "define.unordered = true;";
+
     src.js += compile(lib, function (file, path) {
-        return "require.define('" + path.replace(/^.*ripple/, "ripple").replace(/\.js$/, '') +
-               "', function (require, module, exports) {\n" + file + "});\n";
+        return "define('" + path.replace(/^.*ripple/, "ripple").replace(/\.js$/, '') +
+               "', function (require, exports, module) {\n" + file + "});\n";
     });
 
     return src;
