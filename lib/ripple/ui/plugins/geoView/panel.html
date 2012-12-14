@@ -24,6 +24,59 @@
     <section class="info ui-widget-content ui-corner-all" style="display: none;">
         <p></p>
 
+        <div>
+            <h3 class="PanelSectionTitle">Timezone</h3>
+            <select id="time-locale-select" class="ui-state-default ui-corner-all"></select>
+            <br/><br/>
+        </div>
+
+        <div>Draw your route by click on the point button and then click on the map at desired location points.Double-click to end route.</div>
+        <div id="geo-map">
+            <div id="geo-map-container"></div>
+            <button id="clear-route-btn">clear</button>
+            <button id="set-route-btn">
+                <img src="images/marker_icon.png"></img>
+            </button>
+            <button id="geo-map-zoom-decrease" class="geo-map-zoom-btn PanelButtonStyle">
+                <span class="ui-button-text">-</span>
+            </button>
+            <button id="geo-map-zoom-increase" class="geo-map-zoom-btn PanelButtonStyle">
+                <span class="ui-button-text">+</span>
+            </button>
+            <div id="geo-map-direction">
+                <div id="geo-map-arrow"></div>
+                <div id="geo-map-direction-label"></div>
+            </div>
+        </div>
+
+        <table id="route-control">
+            <tr>
+                <td>
+                    <label class="ui-text-label" style="margin-left: -10px;">Set Speed of Playback</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label id="play-route-speed-label"></label>
+                    <input id="play-route-speed" type="range" value="1" min="1" max="20" step="1" class="ui-state-default ui-corner-all">
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <button id="back-route-btn">
+                        <img src="images/back.png"></img>
+                    </button>
+                    <button id="play-route-btn">
+                        <img id="play-btn-icon" src="images/play.png"></img>
+                    </button>
+                    <button id="forward-route-btn">
+                        <img src="images/forward.png"></img>
+                    </button>
+                </td>
+            </tr>
+        </table>
+
         <table class="panel-table">
             <tr>
                 <td><label id="label-geo-latitude" class="ui-text-label" for="geo-latitude">Latitude</label></td>
@@ -78,27 +131,6 @@
             </tr>
         </table>
 
-        <div id="geo-map">
-            <div id="geo-map-container"></div>
-            <div id="geo-map-direction">
-                <div id="geo-map-arrow"></div>
-                <div id="geo-map-direction-label"></div>
-            </div>
-        </div>
-
-        <section class="geo-map-zoom-controls">
-            <button id="geo-map-zoom-decrease" class="geo-map-zoom-btn PanelButtonStyle">
-                <span class="ui-button-text">-</span>
-            </button>
-            <button id="geo-map-zoom-increase" class="geo-map-zoom-btn PanelButtonStyle">
-                <span class="ui-button-text">+</span>
-            </button>
-
-            <section class="h3 geo-map-zoomlevel">
-                Zoom Level:&nbsp;
-                <span id="geo-map-zoomlevel-value"></span>
-            </section>
-        </section>
         <div id="disable_geo_panel" style="DISPLAY:none; position: absolute; z-index:800; top:0; left:0; height: 100%; width:100%; background-color:rgba(0, 0, 0, 0.2);">
             <div  style="position: absolute; top: 45%; width: 100%">
                 <div style="position: relative; top: -50%; width: 100%">

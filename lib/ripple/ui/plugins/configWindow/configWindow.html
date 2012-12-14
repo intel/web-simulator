@@ -1,0 +1,51 @@
+<section id="configure-window-overlay">
+    <div id="configure-window-popup">
+        <table style="border-collapse: collapse; border-spacing:0px;">
+            <tr>
+                <td colspan="2" style="border-width:0px; padding: 0px;"><span class="configuration-window-title-div"><label style="float:left; margin-left:320px; margin-top:3px;">Configuration Settings</label><button id="configuration-window-close-btn" style="float:right;margin-right:15px;">X</button></span></td>
+            </tr>
+            <tr><td colspan="2" style="background-color: #c6c6c6; padding:4px 4px 4px 4px; height:300px; border-width:0px;">
+                <div id="configure-window-container-div">
+                    <table id="configure-window-content-panel-table">
+                        <tr style="height: 40px;">
+                            <td colspan=2 style="border-width:1px; border-style:inset;">
+                                <div class="configuration-button-bar-div">
+                                <!--
+                                <button class="button cornerButton" role="button" style="margin-right:12px; float:right;"><img src="images/infoIcon.png"></button>
+                                -->
+                                <button id="configuration-window-save-btn" class="button cornerButton" role="button" style="margin-left:10px; float:left;"><img src="images/saveIcon.png"></button>
+                                <button id="configuration-window-load-btn" class="button cornerButton" role="button" style="margin-left:10px; float:left;"><img src="images/loadIcon.png"></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="item_container" style="width: 26%; vertical-align:top; border-width:1px; border-style:inset;">
+                            </td>
+                            <td style="vertical-align:top; border-width:1px; border-style:inset;"><div id="content_container" class="configuration-window-content-div">#CONFIG_PANELS#</div></td>
+                        </tr>
+                    </table>
+                </div>
+            </td></tr>
+            <tr><td colspan="2" style="text-align: right; padding:10px 2px 0px 0px;"><button class="configuration-window-done-button" id="configuration-window-done-btn">Done</button></td></tr>
+        </table>
+    </div>
+    <div id="configure-window-done-popup">
+        <table style="border-collapse: collapse; border-spacing:0px;">
+            <tr>
+                <td style="border-width:0px; padding: 0px;"><span class="configuration-window-title-div"><label style="float:left; margin-left:156px; margin-top:3px;">Notification</label></span></td>
+            </tr>
+            <tr><td style="background-color: #c6c6c6; padding:4px 4px 4px 4px; height:160px; border-width:0px;">
+                <div id="configure-window-done-content">
+                        You can access the configuration window again at any time by clicking on the configuration window icon (<button class="button cornerButton" role="button" style="float:none;"><img src="images/configPanelIcon.png"></button>) in the toolbar.
+                </div>
+            </td></tr>
+            <tr><td style="text-align: right; padding:10px 2px 0px 0px;">
+                <input id="configure-window-done-dialog-show" type="checkbox" class="settings-menu-checkallbox" style="float:left; margin-left:8px;">
+                </input><span style="float:left; vertical-align: text-middle; font-size:14px; margin-left:5px;margin-top:8px; color:#444444;">Don't show this message again</span>
+                <button class="configuration-window-done-button" id="configuration-window-done-btn2">Done</button>
+            </td></tr>
+        </table>
+    </div>
+</section>
+
+

@@ -1,0 +1,102 @@
+<section class="configuration-window-content-panel" id="device-conf-panel">
+    <section style="display: block; margin-top:0;">
+        <table class="configure-window-panel-table">
+            <tr>
+                <td><label class="configure-window-text-label">API</label></td>
+                <td><label class="configure-window-text-label">Version</label></td>
+            </tr>
+            <tr>
+                <td><select id="platform-select" class="ui-state-default ui-corner-all configure-window-input"></select></td>
+                <td><select id="version-select" class="ui-state-default ui-corner-all configure-window-input"></select></td>
+            </tr>
+        </table>
+    </section>
+    <section style="display: block; margin-top:0;">
+    <table class="configure-window-panel-table">
+        <tbody>
+        <tr><td colspan=2><label class="configure-window-text-label">Resolution</label></td></tr>
+        <tr>
+            <td colspan=2><input type="radio" name="resolution-type" checked="checked" value="predefined" />&nbsp;&nbsp;
+                <select id="device-select" class="ui-state-default ui-corner-all configure-window-input"></select></td>
+        </tr>
+        <tr>
+            <td colspan=2><input type="radio" name="resolution-type" value="custom" />&nbsp;&nbsp;
+			    <label class="configure-window-text-label2">Custom:</label>
+                <input type="number" id="resolution-custom-width" type="text" class="ui-state-default ui-corner-all configure-window-input" style="height:26px; width:100px;"/>&nbsp;
+                <label class="configure-window-text-label2">X</label>&nbsp;
+                <input type="number"id="resolution-custom-height" type="text" class="ui-state-default ui-corner-all configure-window-input" style="height:26px; width:100px;" />
+            </td>
+        </tr>
+        <tr><td colspan=2><label id="custom-resolution-error" style="color:#AA5500; padding:30px;">* Width and Height: Valid from 200 to 2000</label></td></tr>
+        </tbody>
+    </table>
+    </section>
+</section>
+
+
+<section class="configuration-window-content-panel" id="system-settings-conf-panel">
+    <section id="devicesettings-content-container" class="info ui-widget-content ui-corner-all" style="display: block;">
+    </section>
+</section>
+
+
+<section class="configuration-window-content-panel" id="network-conf-panel">
+    <section id="networksettings-content-container" class="info ui-widget-content ui-corner-all" style="display: block;">
+    </section>
+</section>
+
+
+<section class="configuration-window-content-panel" id="programs-conf-panel">
+    <section class="info ui-widget-content ui-corner-all" style="display: block;">
+    <div>
+    	<select id="application-installed" class="ui-state-default ui-corner-all" style="width:150px;"></select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button id="application-install" class="PanelButtonStyle">Install</button>
+        <button id="application-update" class="PanelButtonStyle">Update</button>
+        <button id="application-uninstall" class="PanelButtonStyle">Uninstall</button>
+    </div>
+        <table id= "application-table" class="configure-window-panel-table">
+            <tr><td colspan=2><hr width="100%"></td></tr>
+            <tr>
+                <td><label class="configure-window-text-label" for="application-id">ID</label></td>
+                <td><input id="application-id" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="configure-window-text-label" for="application-name">Name</label></td>
+                <td><input id="application-name" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="configure-window-text-label" for="application-iconPath">Icon path</label></td>
+                <td><input id="application-iconPath" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="configure-window-text-label" for="application-iconPath">Version</label></td>
+                <td><input id="application-version" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="configure-window-text-label" for="application-show">Show</label></td>
+                <td>
+                    <label>Yes</label><input type="radio" name="application-show" checked="checked" value="true" />
+                    <label>No</label><input type="radio" name="application-show" value="false" />
+                </td>
+            </tr>
+
+            <tr><td colspan=2><hr width="100%"></td></tr>
+            <tr>
+                <td colspan=2><label class="configure-window-session-title">Binding service</label></td>
+            </tr>
+            <tr>
+                <td><label class="configure-window-text-label" for="application-operation">Service operation</label></td>
+                <td><input id="application-operation" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="configure-window-text-label" for="application-uri">Service URI</label></td>
+                <td><input id="application-uri" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+            <tr>
+                <td><label class="configure-window-text-label" for="application-mime">Service MIME</label></td>
+                <td><input id="application-mime" class="ui-state-default ui-corner-all" type="text" maxlength="100"></td>
+            </tr>
+
+        </table>
+    </section>
+</section>

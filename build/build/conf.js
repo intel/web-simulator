@@ -30,13 +30,15 @@ module.exports = {
     SPACES_AND_TABS: /\n+|\s+|\t{2,}/g,
     ESCAPED_QUOTES: '\'+"\'"+\'',
     thirdpartyIncludes: [
-        "browser-require/require.js",
+        "almond.js",
         "jquery.js",
         "jquery.ui.js",
         "jquery.tooltip.js",
         "Math.uuid.js",
         "jXHR.js",
         "3d.js",
+        "three.js",
+        "ShaderSkin.js",
         "draw.js",
         "jWorkflow/jworkflow-min-0.4.0.js",
         "OpenLayers.js"

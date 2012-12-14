@@ -10,7 +10,7 @@ var jasmineGlobals = require('../lib/jasmine-core/jasmine.js');
 for (var k in jasmineGlobals) {
   global[k] = jasmineGlobals[k];
 }
-require('../src/console/ConsoleReporter.js');
+require('../src/console/TrivialConsoleReporter.js');
 
 /*
  Pulling in code from jasmine-node.
@@ -30,14 +30,14 @@ delete global.window;
 function noop() {
 }
 
-jasmine.executeSpecs = function(specs, done, isVerbose, showColors) {
+jasmine.executeSpecs = function(specs, done) {
   for (var i = 0, len = specs.length; i < len; ++i) {
     var filename = specs[i];
     require(filename.replace(/\.\w+$/, ""));
   }
 
   var jasmineEnv = jasmine.getEnv();
-  var consoleReporter = new jasmine.ConsoleReporter(sys.print, done, showColors);
+  var consoleReporter = new jasmine.TrivialConsoleReporter(sys.print, done);
 
   jasmineEnv.addReporter(consoleReporter);
   jasmineEnv.execute();
