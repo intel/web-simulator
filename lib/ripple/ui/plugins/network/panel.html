@@ -321,56 +321,149 @@
                 </div></td>
             </tr>
         </table>
-        <div id="bluetooth-main-container" style="display:none; background-color:#D3D1D1;">
-            <table class="list_item-table" id="historyDevices" width="100%" border="0">
-                <tr>
-                    <td><font color="Red">Tizen-Device</font></td>
-                    <td><img src="./images/bluetooth.png"></td>
-                </tr>
-                <tr>
-                    <td id="bluetooth-device-1" colSpan=2>Not bonded, not connected</td>
-                </tr>
-                <tr>
-                    <td><font color="Red">Android-Device</font></td>
-                    <td><img src="./images/bluetooth.png"></td>
-                </tr>
-                <tr>
-                    <td id="bluetooth-device-2" colSpan>Not bonded, not connected</td>
-                </tr>
-                <tr>
-                    <td><font color="Red">iPhone</font></td>
-                    <td><img src="./images/bluetooth.png"></td>
-                </tr>
-                <tr>
-                    <td id="bluetooth-device-3" colSpan=2>Not bonded, not connected</td>
-                </tr>
-            </table>
+        <div id="bluetooth-main-container">
+		<section class="info ui-widget-content ui-corner-all" style="display:none;">
+        	<h3 class="PanelSectionTitle">Bluetooth Adapter</h3>
 
-            <table>
-                <tr>
-                    <td colspan="2"><hr>
-                    </td>
-                </tr>
-            </table>
-            <h3 class="PanelSectionTitle" id="panel-title">&nbsp;Message Incoming Simulate</h3>
-            <table class="tf_panel-table" id="send-receive">
-                <tr>
-                    <td><label class="ui-text-label">Sender: </label></td>
-                    <td><select id="bluetooth-devices" class="ui-state-default ui-corner-all">
-                        <option value="0">Tizen-Device</option>
-                        <option value="1">Android-Device</option>
-                        <option value="2">iPhone</option>
-                    </select></td>
-                </tr>
-                <td><label class="ui-text-label">Text</label></td>
-                    <td><textarea class="ui-corner-all" id="bluetooth-message-content" rows="3" style="width: 90%;"></textarea></td>
-                </tr>
-                <tr>
-                    <td colspan='2'>
-                        <button id="bluetooth-incoming-message" class="PanelButtonStyle">Trigger</button>
-                    </td>
-                </tr>
-            </table>
+        	<table class="preferences-table">
+        	<tr>
+        		<td><label class="ui-text-label">Name</label></td>
+        		<td><span id="bt-adapter-name">Tizen BT Adapter</span></td>
+        	</tr>
+        	<tr>
+        		<td><label class="ui-text-label">Address</label></td>
+        		<td>12:34:56:78:90:AB</td>
+        	</tr>
+        	<tr>
+        		<td><label class="ui-text-label">Powered</label></td>
+        		<td><span id="bt-adapter-power">Off</span></td>
+        	</tr>
+        	<tr>
+        		<td><label class="ui-text-label">Visible</label></td>
+        		<td><span id="bt-adapter-visible">Off</span></td>
+        	</tr>
+        	</table>
+		<h3 class="PanelSectionTitle">Simulated Devices</h3>
+		<table>
+		<tr><td style="width: 75%">
+		<select id="network-bt-device-select" class="ui-state-default ui-corner-all" style="width: 100%">
+			<option>BT Device 1</option>
+			<option>BT Device 2</option>
+		</select>
+		</td><td>
+			<button id="network-bt-nearby-btn" class="PanelButtonStyle" style="width: 100%; margin: 0.5em 0;"><span class="ui-button-text">Nearby</span></button>
+		</td></tr>
+		</table>
+		
+        <div id="network-bt-box">
+            <div id="network-bt-template">
+                <h3 class="config-accordion-node-title ui-text-pass">
+					<table>
+        				<tr>
+        					<td rowspan="2"><img src="images/bluetooth.png"/></td>
+        					<td><label class="ui-text-label">#name</label></td>
+        				</tr>
+        				<tr>
+        					<td><label class="ui-text-label">#address</label></td>
+        				</tr>
+        			</table>
+                </h3>
+                <div>
+					<button id=#address class="network-bt-remove-btn PanelButtonStyle" style="width: 100%; margin: 0.5em 0;background:#EEAAAA;"><span class="ui-button-text">Stop simulating</span></button>
+                    <table class="preferences-table">
+						<tr><td colspan="2"><hr></td></tr>
+                    	<tr>
+                    		<td colspan="2"><label class="PanelSectionTitle">Profile</label></td>
+                    	</tr>
+                        <tr>
+                            <td><label class="ui-text-label">Name</label></td>
+                            <td>#name</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Address</label></td>
+                            <td>#address</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Class</label></td>
+							<td>#class-major</td>
+                        </tr>
+                        <tr>
+                        	<td>&nbsp</td><td>#class-minor</td>
+                        </tr>
+                        <tr>
+                        	<td>&nbsp</td><td>#class-service</td>
+                        </tr>
+                        <tr><td colspan="2"><hr></td></tr>           
+                    	<tr>
+                    		<td colspan="2"><label class="PanelSectionTitle">State</label></td>
+                    	</tr>                        
+                        <tr>
+                            <td><label class="ui-text-label">Bonded</label></td>
+                            <td id=bonded-#id>#bonded</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Trusted</label></td>
+                            <td id=trusted-#id>#trusted</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Connected</label></td>
+                            <td id=connected-#id>#connected</td>
+                        </tr>
+                        <tr><td colspan="2"><hr></td></tr>
+                    	<tr>
+                    		<td colspan="2"><label class="PanelSectionTitle">Services</label></td>
+                    	<tr>
+                    		<td colspan="2">
+                    			<select id=#address class="network-bt-service-select ui-state-default ui-corner-all" style="width: 100%">
+                    			#uuids
+                    			</select>
+                    		</td>
+                    	</tr>
+                    </table>
+                    	
+                    <div style="border: 1px solid #AAA; padding: 0.4em 1em !important;" class="ui-corner-all">
+                    	<table>
+                    	</tr>
+                    		<td><label class="ui-text-label">UUID</label></td>
+                    		<td id=network-bt-uuid-#id>#service-uuid</td>
+                    	</tr>                    	
+                    	<tr>
+                    		<td><label class="ui-text-label">Protocol</label></td>
+                    		<td id=network-bt-protocol-#id>#service-protocol</td>
+                    	</tr>
+                    	<tr>
+                    		<td><label class="ui-text-label">State</label></td>
+                    		<!--<td id="network-bt-state">#state</td> -->
+                    		<td id=service-state-#id>
+                    		#service-state
+                    		</td>
+                    	</tr>
+                    	<tr>
+                    		<td><label class="ui-text-label">Raw Data</label></td>
+                    	</tr>
+                    	<tr>
+                    		<td colspan="2"><textarea id=service-transfer-textarea-#id class="ui-corner-all" rows="4" style="width: 90%;"></textarea></td>
+                    	</tr>
+                    	<tr>
+                    		<td colspan="2">
+                    		<button id=#address class="network-bt-send-btn PanelButtonStyle" style="width: 100%; margin: 0.5em 0;">
+                    		<span class="ui-button-text">
+                    		Send Data
+                    		</span>
+                    		</button></td>
+                    	</tr>
+                    	<tr>
+                    		<td><label class="ui-text-label">Receive</label></td>
+                    	</tr>
+                    	<tr>
+                    		<td colspan="2"><textarea id=service-receive-textarea-#id class="ui-corner-all" rows="4" style="width: 90%;" readonly></textarea></td>
+                    	</tr>
+                    	</table>
+                    	</div>
+                </div>
+            </div>
+        </div>
+    </section>       	
         </div>
     </section>
 </section>
