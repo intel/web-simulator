@@ -61,7 +61,8 @@ module.exports = function (src, baton) {
             doc = src.html.replace(/#URL_PREFIX#/g, "")
                           .replace(/#OVERLAY_VIEWS#/g, src.overlays)
                           .replace(/#DIALOG_VIEWS#/g, src.dialogs)
-                          .replace(/#PANEL_VIEWS#/g, src.panels);
+                          .replace(/#PANEL_VIEWS#/g, src.panels)
+                          .replace(/#CONFIG_WINDOW#/g, src.configWindow);
 
         fs.writeFileSync(cssDeploy, fs.readFileSync(css, "utf-8") + src.skins);
         fs.writeFileSync(rippleIndex, doc);

@@ -1,0 +1,96 @@
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="sensors-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Sensors</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+    <section id="sensors" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <section class="accelerometer-info">
+            <div style="display: block;" id="accelerometer-div"></div>
+            <canvas style="display: none;" id="accelerometer-canvas" width="300px" height="200px"></canvas>
+            <div id="buttonContainer">
+                <button id="accelerometer-drop" class="PanelButtonStyle">
+                <span class="ui-button-text">Drop</span>
+                <button id="accelerometer-shake" class="PanelButtonStyle">
+                <span class="ui-button-text">Shake</span>
+                <button id="sensor-reset-all" class="PanelButtonStyle">
+                <span class="ui-button-text">Reset All</span>
+            </div>
+            <h3>Accelerometer and Gyro</h3>
+            <table class="tf_panel-table">
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-x">X</label></td>
+                    <td><span id="accelerometer-x" style="margin-left:160px">0</span></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-y">Y</label></td>
+                    <td><span id="accelerometer-y" style="margin-left:160px">0</span></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-z">Z</label></td>
+                    <td><span id="accelerometer-z" style="margin-left:160px">0</span></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-alpha">xRot</label></td>
+                    <td><input type="text" id="accelerometer-alpha" class="ui-state-default ui-corner-all inputModification" value="0" maxValue="360" minValue="-360"> deg</td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-beta">yRot</label></td>
+                    <td><input type="text" id="accelerometer-beta" class="ui-state-default ui-corner-all inputModification" value="0" maxValue="360" minValue="-360"> deg</td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label" for="accelerometer-gamma">zRot</label></td>
+                    <td><input type="text" id="accelerometer-gamma" class="ui-state-default ui-corner-all inputModification" value="0" maxValue="360" minValue="-360"> deg</td>
+                </tr>
+            </table>
+        </section>
+        <section id="sensorsettings-content-container" class="info ui-widget-content ui-corner-all">
+            <h3>MagneticField</h3>
+            <table class="tf_panel-table">
+                <tr>
+                    <td><span class="ui-text-label">X</span></td>
+                    <td><input id="magnetic-x" type="text" value="100" class="ui-state-default ui-corner-all inputModification" maxValue="200" minValue="0"></td>
+                </tr>
+                <tr>
+                    <td><span class="ui-text-label">Y</span></td>
+                    <td><input id="magnetic-y" type="text" value="100" class="ui-state-default ui-corner-all inputModification" maxValue="200" minValue="0"></td>
+                </tr>
+                <tr>
+                    <td><span class="ui-text-label">Z</span></td>
+                    <td><input id="magnetic-z" type="text" value="100" class="ui-state-default ui-corner-all inputModification" maxValue="200" minValue="0"></td>
+                </tr>
+            </table>
+        </section>
+        <section>
+            <table class="tf_panel-table" style="border-spacing: 0px;padding-top:20px">
+                <tr>
+                    <td>Light level:</td>
+                    <td style="text-align:left;">
+                        <select id="display-state" class="ui-state-default ui-corner-all" style="width:60%; align:center">
+                            <option value="OFF">Off</option>
+                            <option value="DIM">Dim</option>
+                            <option value="NORMAL">Normal</option>
+                            <option value="BRIGHT">Bright</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </section>
+</section>

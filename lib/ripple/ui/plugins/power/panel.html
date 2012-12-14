@@ -22,45 +22,70 @@
     </section>
 
     <section class="info ui-widget-content ui-corner-all" style="display: none;">
+    <span class="PanelSectionTitle">Battery</span>
+        <table class="panel-table">
+            <tr>
+                <td>
+                    <span class="ui-text-label" id="charging-state">Plugged in?</span>
+                </td>
+                <td>
+                    <input id="is-charging" type="checkbox"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="ui-text-label">Battery Level:</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="battery-volume" type="number" value="100" min="0" max="100" step="1" class="ui-state-default ui-corner-all">
+                    <label id="battery-volume-label" style="display:none"></label>
+                    <label>%</label>
+                </td>
+                <td>
+                    <div id="block0" class="battery-block"></div>
+                    <div id="block1" class="battery-block"></div>
+                    <div id="block2" class="battery-block"></div>
+                    <div id="block3" class="battery-block"></div>
+                    <div id="block4" class="battery-block"></div>
+                    <div id="block5" class="battery-block"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label class="ui-text-label" id="remaining-time-label">Remaining Time (seconds)</label>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <label id="remain-time"></label>
+        </div>
+
+        <div align="center">
+            <button id="simulate-low-battery-btn">Simulate low battery</button>
+            <button id="stop-btn">Stop</button>
+        </div>
+        <div id="simulate-low-battery" title="Simulate low battery">
+            <p style="margin-left:5px">
+                <label>Start at :&nbsp;&nbsp;</label>
+                <input id="low-battery-start-at" type="number" value="20" min="0" max="100" step="1" class="ui-state-default ui-corner-all">
+                <label>%</label>
+            </p>
+            <p style="margin-left:5px">
+                <label>Drop to 0% over :&nbsp;&nbsp;</label>
+                <input id="low-battery-remain-time" value="1200">
+                <select>
+                    <option value="sec">sec</option>
+                </select>
+            </p>
+            <p align="right">
+                <button id="simulate-low-battery-cancel">Cancel</button>
+                <button id="simulate-low-battery-start">Start</button>
+            </p>
+        </div>
+        <br>
         <span class="PanelSectionTitle">Resources</span>
-            <br/><br/>
-            <table class="tf_panel-table" style="border-spacing: 0px;">
-                <tr>
-                    <td style="text-align:left"><label class="ui-text-label" id="cpu-load-label">CPU:(load = 0.9)</label></td>
-                </tr>
-                <tr>
-                    <td style="text-align:left"> 
-                        <select id="cpu-state" class="ui-state-default ui-corner-all" style="width:60%; align:center">
-                            <option value="LOW">Low</option>
-                            <option value="HIGH">High</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-            <br/>
-            <span><label class="ui-text-label">Power Management Rules</label></span><br/><br/>
-            <table class="tf_panel-table" style="border-spacing: 0px;">
-                <tr>
-                    <td style="text-align:left">High</td>
-                    <td style="text-align:left">
-                        <select id="high-role" class="ui-state-default ui-corner-all" >
-                            <option value='1'>Allow</option>
-                            <option value='0'>Deny</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">Low</td>
-                    <td style="text-align:left">
-                        <select id="low-role" class="ui-state-default ui-corner-all" >
-                            <option value='1'>Allow</option>
-                            <option value='0'>Deny</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-            <br/>
-            <div>---------------------------------------------------------------------</div>
             <div ></div>
             <br/>
             <table class="tf_panel-table" style="border-spacing: 0px;">
@@ -69,7 +94,7 @@
                 </tr>
                 <tr>
                     <td style="text-align:left"> 
-                        <select id="display-state" class="ui-state-default ui-corner-all" style="width:60%; align:center">
+                        <select id="display-power-state" class="ui-state-default ui-corner-all" style="width:60%; align:center">
                             <option value="OFF">Off</option>
                             <option value="DIM">Dim</option>
                             <option value="NORMAL">Normal</option>

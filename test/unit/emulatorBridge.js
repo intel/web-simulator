@@ -16,9 +16,9 @@
 // TODO: make more modular (be able to boot one module at a time)
 describeBrowser("emulator_bridge", function () {
     var emulatorBridge = require('ripple/emulatorBridge'),
-        constants = require('ripple/constants'),
         platform = require('ripple/platform'),
         old_gElById,
+        _currentPlatformInit,
         _emulatedBody,
         _emulatedHtml,
         _emulatedDocument,
@@ -33,7 +33,7 @@ describeBrowser("emulator_bridge", function () {
         // TODO: hackish stub for now
         old_gElById = document.getElementById;
         document.getElementById = function (id) {
-            if (id === constants.COMMON.VIEWPORT_CONTAINER) {
+            if (id === "viewport-container") {
                 return _emulatedViewport;
             }
             else {
@@ -43,6 +43,7 @@ describeBrowser("emulator_bridge", function () {
 
         window.tinyHippos = {};
 
+        _currentPlatformInit = jasmine.createSpy('platform.current().initialize');
         _emulatedViewport = document.createElement("section");
         _emulatedDocument = document.createElement("section");
         _emulatedHtml = document.createElement("section");
@@ -55,13 +56,16 @@ describeBrowser("emulator_bridge", function () {
         _emulatedDocument.appendChild(_emulatedHtml);
         _emulatedViewport.appendChild(_emulatedDocument);
 
-        spyOn(platform, "current").andReturn({objects: {
-            foo: {a: 1},
-            bar: {b: 1},
-            woot: [1, 2, 3, 4, 5]
-        }});
+        spyOn(platform, "current").andReturn({
+            initialize: _currentPlatformInit,
+            objects: {
+                foo: {a: 1},
+                bar: {b: 1},
+                woot: [1, 2, 3, 4, 5]
+            }
+        });
 
-        emulatorBridge.link(_emulatedFrame);
+        emulatorBridge.link(_emulatedFrame.contentWindow);
     });
 
     afterEach(function () {
@@ -113,6 +117,10 @@ describeBrowser("emulator_bridge", function () {
     it("it marshals XMLHttpRequest", function () {
         expect(window.XMLHttpRequest).toBeDefined();
         expect(window.XMLHttpRequest).toBe(_emulatedFrame.contentWindow.XMLHttpRequest);
+    });
+
+    it("initializes the current platform (if method exists)", function () {
+        expect(_currentPlatformInit).toHaveBeenCalledWith(_emulatedFrame.contentWindow);
     });
 
     it("it marshals over everything in the sandbox", function () {

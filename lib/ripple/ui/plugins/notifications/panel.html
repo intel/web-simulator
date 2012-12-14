@@ -1,0 +1,87 @@
+<!--
+ *  Copyright 2011 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<section id="notification-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Notification</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+
+    <section class="info ui-widget-content ui-corner-all" style="display:none;">
+        <h3 class="PanelSectionTitle">Posted Notifications</h3>
+        <div id="notification-box">
+            <div id="notification-template">
+                <h3 class="config-accordion-node-title ui-text-pass">#title</h3>
+                <div>
+                    <table id="notification-info" class="preferences-table">
+                        <tr>
+                            <td><label class="ui-text-label">ID</label></td>
+                            <td>#id</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Title</label></td>
+                            <td>#title</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Content</label></td>
+                            <td>#content</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Type</label></td>
+                            <td>#type</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Status Type</label></td>
+                            <td>#statusType</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Posted Time</label></td>
+                            <td>#postedTime</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Icon Path</label></td>
+                            <td>#iconPath</td>
+                        </tr>
+                            <td><label class="ui-text-label">Sound Path</label></td>
+                            <td>#soundPath</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Vibration</label></td>
+                            <td>#vibration</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Service</label></td>
+                            <td>#service</td>
+                        </tr>
+                        <tr style="display:#displayBar">
+                            <td><label class="ui-text-label">ProgressValue</label></td>
+                            <td>
+                                <div id="progress-bar-box">
+                                    <div id=#progressBarValue class="progress-bar"></div>
+                                </div>
+                                <div id="progress-bar-value">#progressValue</div>
+                            </td>
+                        </tr>
+                    </table>
+                    <button id=#id class="remove-notification-btn">Remove</button>
+                </div>
+            </div>
+        </div>
+        <button id="remove-all-notifications-btn" style="display: none;">Remove All</button>
+    </section>
+</section>
