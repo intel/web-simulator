@@ -2174,7 +2174,7 @@ textarea {
 /*sensors*/
 
 #sensors input, #sensors select, #sensors button {
-    margin-left: 20px;
+    margin-left: 5px;
 }
 
 #accelerometer-canvas {
