@@ -90,15 +90,15 @@
             <br/>
             <table class="tf_panel-table" style="border-spacing: 0px;">
                 <tr>
-                    <td style="text-align:left"><label class="ui-text-label" id="diplay-brightness-label">Display:(brightness = 0.3)</label></td>
+                    <td style="text-align:left"><label class="ui-text-label" id="display-brightness-label">Display:(brightness = 0.3)</label></td>
                 </tr>
                 <tr>
                     <td style="text-align:left"> 
                         <select id="display-power-state" class="ui-state-default ui-corner-all" style="width:60%; align:center">
-                            <option value="OFF">Off</option>
-                            <option value="DIM">Dim</option>
-                            <option value="NORMAL">Normal</option>
-                            <option value="BRIGHT">Bright</option>
+                            <option value="SCREEN_OFF">Off</option>
+                            <option value="SCREEN_DIM">Dim</option>
+                            <option value="SCREEN_NORMAL">Normal</option>
+                            <option value="SCREEN_BRIGHT">Bright</option>
                         </select>
                     </td>
                 </tr>
@@ -109,7 +109,7 @@
                 <tr>
                     <td style="text-align:left">Off</td>
                     <td style="text-align:left">
-                        <select id="off-role" class="ui-state-default ui-corner-all" >
+                        <select id="screen_off-rule" class="ui-state-default ui-corner-all" >
                             <option value='1'>Allow</option>
                             <option value='0'>Deny</option>
                         </select>
@@ -118,7 +118,7 @@
                 <tr>
                     <td style="text-align:left">Dim</td>
                     <td style="text-align:left">
-                        <select id="dim-role" class="ui-state-default ui-corner-all" >
+                        <select id="screen_dim-rule" class="ui-state-default ui-corner-all" >
                             <option value='1'>Allow</option>
                             <option value='0'>Deny</option>
                         </select>
@@ -127,7 +127,7 @@
                 <tr>
                     <td style="text-align:left">Normal</td>
                     <td style="text-align:left">
-                        <select id="normal-role" class="ui-state-default ui-corner-all" >
+                        <select id="screen_normal-rule" class="ui-state-default ui-corner-all" >
                             <option value='1'>Allow</option>
                             <option value='0'>Deny</option>
                         </select>
@@ -136,7 +136,7 @@
                 <tr>
                     <td style="text-align:left">Bright</td>
                     <td style="text-align:left">
-                        <select id="bright-role" class="ui-state-default ui-corner-all" >
+                        <select id="screen_bright-rule" class="ui-state-default ui-corner-all" >
                             <option value='1'>Allow</option>
                             <option value='0'>Deny</option>
                         </select>
