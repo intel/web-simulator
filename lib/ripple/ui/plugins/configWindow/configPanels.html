@@ -14,20 +14,22 @@
     <section style="display: block; margin-top:0;">
     <table class="configure-window-panel-table">
         <tbody>
-        <tr><td colspan=2><label class="configure-window-text-label">Resolution</label></td></tr>
+        <tr><td colspan="2"><label class="configure-window-text-label">Resolution</label></td></tr>
         <tr>
-            <td colspan=2><input type="radio" name="resolution-type" checked="checked" value="predefined" />&nbsp;&nbsp;
+            <td colspan="2">
+                <input type="radio" name="resolution-type" checked="checked" value="predefined" />&nbsp;&nbsp;
                 <select id="device-select" class="ui-state-default ui-corner-all configure-window-input"></select></td>
         </tr>
         <tr>
-            <td colspan=2><input type="radio" name="resolution-type" value="custom" />&nbsp;&nbsp;
-			    <label class="configure-window-text-label2">Custom:</label>
-                <input type="number" id="resolution-custom-width" type="text" class="ui-state-default ui-corner-all configure-window-input" style="height:26px; width:100px;"/>&nbsp;
-                <label class="configure-window-text-label2">X</label>&nbsp;
-                <input type="number"id="resolution-custom-height" type="text" class="ui-state-default ui-corner-all configure-window-input" style="height:26px; width:100px;" />
+            <td colspan="2">
+                <input type="radio" name="resolution-type" value="custom" />
+                <label class="configure-window-text-label2">Custom:</label>
+                <input type="number" id="resolution-custom-width" class="ui-state-default ui-corner-all configure-window-input" style="height:26px; width:45px"/>
+                <label class="configure-window-text-label2">X</label>
+                <input type="number"id="resolution-custom-height" class="ui-state-default ui-corner-all configure-window-input" style="height:26px; width:45px" />
             </td>
         </tr>
-        <tr><td colspan=2><label id="custom-resolution-error" style="color:#AA5500; padding:30px;">* Width and Height: Valid from 200 to 2000</label></td></tr>
+        <tr><td colspan="2"><label id="custom-resolution-error" style="color:#AA5500; padding:30px;">* Width and Height: Valid from 200 to 2000</label></td></tr>
         </tbody>
     </table>
     </section>
