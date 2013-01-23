@@ -1661,8 +1661,9 @@ textarea {
     text-align: left;
 }
 
-.configure-window-panel-table td input[type^=text], .panel-table td input[type^=number] {
+.configure-window-panel-table td input[type^=text], .configure-window-panel-table td input[type^=number] {
     width: 220px;
+    padding-left:5px;
 }
 
 .configure-window-panel-table td:nth-child(1) {
