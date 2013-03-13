@@ -2034,6 +2034,36 @@ textarea {
 }
 
 /* ------------------------------>
+    Application message */
+
+.app-dialog-table {
+    border: 1px solid #5A99BA;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.app-dialog-table th {
+    background-color: #5A99BA;
+    background-radius: 6px;
+    color: #FFFFFF;
+}
+
+.app-dialog-table td:nth-child(1) {
+    width: 20%;
+    text-align: right;
+    font-weight: bold;
+}
+
+.app-dialog-table td:nth-child(2) {
+    width: 80%;
+    text-align: left;
+}
+
+/* ------------------------------>
     Communication Panel */
 
 #communication-viewport {
