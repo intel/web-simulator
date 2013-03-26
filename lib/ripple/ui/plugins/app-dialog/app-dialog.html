@@ -1,0 +1,47 @@
+<div id="app-dialog" style="background: #ffffff; padding:0; margin-left:0;" class="ui-state-default ui-corner-bottom" align="center" title="Application Module Message">
+<div style="padding:0; margin-left:0;">
+<div id="app-dialog-box">
+    <div id="app-dialog-template">
+        <div style="margin-top:5px;">&nbsp;</div>
+        <div style="font-weight: bold;">Pseudo-application - "#application-name",<br> has been tried to launch by launchAppControl() API.</div>
+        <div style="margin-top:2px;">&nbsp;</div>
+        <div align=center style="font-weight: bold; color: #5A99BA;">RequestedApplicationControl</div>
+            <table class="app-dialog-table" style="width: 90%; height: auto" align=center>
+                <tr><th colspan=2>Attribute: appControl</th></tr>
+                <tr><td>operation:</td><td>#appControl-operation</td></tr>
+                <tr><td>uri:</td><td>#appControl-uri</td></tr>
+                <tr><td>mime:</td><td>#appControl-mime</td></tr>
+                <tr><td>category:</td><td>#appControl-category</td></tr>
+                <tr><td>data:</td><td>#appControl-data</td></tr>
+            </table>
+        <table class="app-dialog-table" style="width: 90%; height: auto; margin-top:5px;" align=center>
+            <tr><th colspan=2>Methods</th></tr>
+            <tr><td colspan=2 style="text-align: left;">Send the result to the caller:</td></tr>
+            <tr><td><input type='radio' name='app-dialog-reply-type' value='replyResult' checked></td><td>ReplyResult(data)</td></tr>
+            <tr><td>&nbsp;</td><td><textarea class='ui-corner-all' style='width: 95%;' rows='2' id='app-dialog-reply-json' maxlength='256' placeholder='data(JSON format)'></textarea></td></tr>
+            <tr><td><input type='radio' name='app-dialog-reply-type' value='replyFailure'></td><td>ReplyFailure()</td></tr>
+            <tr><td>&nbsp;</td><td><button id='app-dialog-generate-reply' class='PanelButtonStyle'><span class='ui-button-text'>Generate reply callback</span></button><td></td></tr>
+        </table>
+        <div style="margin-top:20px;">&nbsp;</div>
+    </div>
+
+
+    <div id="app-dialog2-template" style="display: none;">
+        <div style="">&nbsp;</div>
+        <div style="font-weight: bold; margin-top:5px;">Pseudo-application - "#application-name"(#application-id),<br> has been tried to launch by launch() API.</div>
+        <div style="font-weight: bold; margin-top:20px;">Due to Web Simulator is lightweight development tool which only support single application instance at one time.</div>
+        <div style="font-weight: bold; margin-top:4px;">Please click the following button to return the original application.</div>
+        <div style="font-weight: bold; margin-top:25px;"><button id="app-dialog-return-btn" class="PanelButtonStyle"><span class="ui-button-text">OK</span></button></div>
+        <div style="margin-top:10px;">&nbsp;</div>
+    </div>
+
+
+    <div id="app-dialog3-template" style="display: none;">
+        <div style="">&nbsp;</div>
+        <div style="font-weight: bold; margin-top:5px;">Application - #application-name(#application-id), has been tried to #application-operation by #application-operation() API.</div>
+        <div style="font-weight: bold; margin-top:4px;">Please click the following button to #application-verb the original application.</div>
+        <div style="font-weight: bold; margin-top:80px;"><button id="#application-btn" class="PanelButtonStyle"><span class="ui-button-text">#next-command</span></button></div>
+    </div>
+</div>
+
+</div>
