@@ -1322,6 +1322,17 @@ fieldset {
     color:#e0e0e0;
 }
 
+.PanelButtonStyle:disabled {
+    color: #d3d3d3;
+}
+
+.PanelButtonStyle[disabled]:hover {
+    color: #d3d3d3;
+    border: 1px solid #a1a1a1;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#ececec));
+    background-image: -webkit-linear-gradient(top, #fbfbfb, #ececec);
+}
+
 .urlBox {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
