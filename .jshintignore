@@ -3,4 +3,5 @@ node_modules
 thirdparty
 ext
 pkg
-services
+snapshot
+test
