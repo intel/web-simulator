@@ -51,7 +51,9 @@
             <rating>5</rating>
 
             <album>red-green</album>
-            <artists>David</artists>
+            <artists>
+                <artist>David</artist>
+            </artists>
             <duration>123000</duration>
             <width>220</width>
             <height>180</height>
@@ -80,7 +82,9 @@
             <rating>5</rating>
 
             <album>galaxy</album>
-            <artists>David</artists>
+            <artists>
+                <artist>David</artist>
+            </artists>
             <duration>156000</duration>
             <width>220</width>
             <height>180</height>
@@ -108,8 +112,12 @@
             <rating>0</rating>
 
             <album>Samsung</album>
-            <genres>New Age</genres>
-            <artists>Samsung</artists>
+            <genres>
+                <genre>New Age</genre>
+            </genres>
+            <artists>
+                <artist>Samsung</artist>
+            </artists>
             <copyright>Samsung</copyright>
             <bitrate>131072</bitrate>
             <duration>156000</duration>
@@ -137,9 +145,15 @@
             <rating>3</rating>
 
             <album>My Heart Will Go On</album>
-            <genres>pop music</genres>
-            <artists>Geline Dion</artists>
-            <composers>James Horner</composers>
+            <genres>
+                <genre>pop music</genre>
+            </genres>
+            <artists>
+                <artist>Geline Dion</artist>
+            </artists>
+            <composers>
+                <composer>James Horner</composer>
+            </composers>
             <lyrics>
                 <type>UNSYNCHRONIZED</type>
                 <texts>
@@ -174,9 +188,15 @@
             <rating>4</rating>
 
             <album>rock</album>
-            <genres>Rock and Roll</genres>
-            <artists>Emile</artists>
-            <composers>Emile</composers>
+            <genres>
+                <genre>Rock and Roll</genre>
+            </genres>
+            <artists>
+                <artist>Emile</artist>
+            </artists>
+            <composers>
+                <composer>Emile</composer>
+            </composers>
             <copyright>Rocky Dream Works</copyright>
             <bitrate>128000</bitrate>
             <trackNumber>2</trackNumber>
