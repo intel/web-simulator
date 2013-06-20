@@ -5,3 +5,4 @@ ext
 pkg
 snapshot
 test
+lib/ripple/platform/wac/
