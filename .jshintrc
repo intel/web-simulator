@@ -70,13 +70,11 @@
     ],
  
     "node" : true,
-    "es5" : true,
     "browser" : false,
- 
+
     "boss" : false,
     "curly": false,
     "bitwise" : true,
-    "white": true,
     "indent": 4,
     "evil": false,
     "devel": true,
@@ -89,11 +87,12 @@
     "noarg": true,
     "noempty": false,
     "nonew": false,
-    "nomen": false,
-    "onevar": true,
+    "onevar": false,
     "plusplus": false,
     "regexp": false,
     "undef": true,
     "sub": true,
-    "strict": false
+    "strict": false,
+    "unused": true,
+    "trailing": true
 }

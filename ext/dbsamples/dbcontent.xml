@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget xmlns:tizen="http://tizen.org/ns/widgets">
+    <contents>
+        <video>
+            <editableAttributes>
+                <attr>name</attr>
+                <attr>description</attr>
+                <attr>rating</attr>
+                <attr>geolocation</attr>
+            </editableAttributes>
+            <id>525AFEE8-1355-4F48-97B7-8C4E7640D94E</id>
+            <name>webapi-tizen-content-test_video.mp4</name>
+            <type>VIDEO</type>
+            <mimeType>video/x-msvideo</mimeType>
+            <title>webapi-tizen-content-test_video</title>
+            <contentURI>/opt/usr/media/webapi-tizen-content-tests/webapi-tizen-content-test_video.mp4</contentURI>
+            <thumbnailURIs>
+                <URI>desktop/webapi-tizen-content-test_video.lnk</URI>
+            </thumbnailURIs>
+            <releaseDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</releaseDate>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+            <size>92225</size>
+            <rating>0</rating>
+
+            <duration>5005</duration>
+            <width>80</width>
+            <height>128</height>
+        </video>
+
+        <video>
+            <editableAttributes>
+                <attr>name</attr>
+                <attr>description</attr>
+                <attr>rating</attr>
+                <attr>geolocation</attr>
+            </editableAttributes>
+            <id>BD0EF737-AD0A-494D-810C-332CF339696E</id>
+            <name>red-green.avi</name>
+            <type>VIDEO</type>
+            <mimeType>video/x-msvideo</mimeType>
+            <title>red-green</title>
+            <contentURI>/opt/usr/media/Videos/red-green.avi</contentURI>
+            <thumbnailURIs>
+                <URI>desktop/red-green.lnk</URI>
+            </thumbnailURIs>
+            <releaseDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</releaseDate>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+            <size>5096078</size>
+            <description>Universe View</description>
+            <rating>5</rating>
+
+            <album>red-green</album>
+            <artists>
+                <artist>David</artist>
+            </artists>
+            <duration>123000</duration>
+            <width>220</width>
+            <height>180</height>
+        </video>
+
+        <video>
+            <editableAttributes>
+                <attr>name</attr>
+                <attr>description</attr>
+                <attr>rating</attr>
+                <attr>geolocation</attr>
+            </editableAttributes>
+            <id>A9209D42-A1A5-480B-96E3-DE4F777D8035</id>
+            <name>galaxy.rmvb</name>
+            <type>VIDEO</type>
+            <mimeType>video/x-msvideo</mimeType>
+            <title>Galaxy</title>
+            <contentURI>/opt/storage/sdcard/Videos/galaxy.rmvb</contentURI>
+            <thumbnailURIs>
+                <URI>desktop/galaxy.lnk</URI>
+            </thumbnailURIs>
+            <releaseDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</releaseDate>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+            <size>4236078</size>
+            <description>Universe View</description>
+            <rating>5</rating>
+
+            <album>galaxy</album>
+            <artists>
+                <artist>David</artist>
+            </artists>
+            <duration>156000</duration>
+            <width>220</width>
+            <height>180</height>
+        </video>
+
+        <audio>
+            <editableAttributes>
+                <attr>name</attr>
+                <attr>description</attr>
+                <attr>rating</attr>
+            </editableAttributes>
+            <id>CFCE0D3B-6446-42BF-A2DC-E23DD4221676</id>
+            <name>webapi-tizen-content-test_audio.mp3</name>
+            <type>AUDIO</type>
+            <mimeType>audio/x-msaudio</mimeType>
+            <title>Over the horizon</title>
+            <contentURI>/opt/usr/media/webapi-tizen-content-tests/webapi-tizen-content-test_audio.mp3</contentURI>
+            <thumbnailURIs>
+                <URI>desktop/webapi-tizen-content-test_audio.lnk</URI>
+            </thumbnailURIs>
+            <releaseDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</releaseDate>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+            <size>2703047</size>
+            <description>Samsung</description>
+            <rating>0</rating>
+
+            <album>Samsung</album>
+            <genres>
+                <genre>New Age</genre>
+            </genres>
+            <artists>
+                <artist>Samsung</artist>
+            </artists>
+            <copyright>Samsung</copyright>
+            <bitrate>131072</bitrate>
+            <duration>156000</duration>
+        </audio>
+
+        <audio>
+            <editableAttributes>
+                <attr>name</attr>
+                <attr>description</attr>
+                <attr>rating</attr>
+            </editableAttributes>
+            <id>8F83F3EB-6DAA-4C95-A4A8-E39B0D4EE87C</id>
+            <name>My Heart Will Go On.mp3</name>
+            <type>AUDIO</type>
+            <mimeType>audio/x-msaudio</mimeType>
+            <title>My Heart Will Go On</title>
+            <contentURI>/opt/usr/media/Sounds/My Heart Will Go On.mp3</contentURI>
+            <thumbnailURIs>
+                <URI>desktop/My Heart Will Go On.lnk</URI>
+            </thumbnailURIs>
+            <releaseDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</releaseDate>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+            <size>5662312</size>
+            <description>Creative mp3</description>
+            <rating>3</rating>
+
+            <album>My Heart Will Go On</album>
+            <genres>
+                <genre>pop music</genre>
+            </genres>
+            <artists>
+                <artist>Geline Dion</artist>
+            </artists>
+            <composers>
+                <composer>James Horner</composer>
+            </composers>
+            <lyrics>
+                <type>UNSYNCHRONIZED</type>
+                <texts>
+                    <text>Once more you open the door. And you're here in my heart. And my heart will go on and on.</text>
+                </texts>
+            </lyrics>
+            <copyright>J and J Studio</copyright>
+            <bitrate>138240</bitrate>
+            <trackNumber>1</trackNumber>
+            <duration>352000</duration>
+        </audio>
+
+        <audio>
+            <editableAttributes>
+                <attr>name</attr>
+                <attr>description</attr>
+                <attr>rating</attr>
+            </editableAttributes>
+            <id>0FE5262E-3FDD-4465-A61E-267A5A44A2A7</id>
+            <name>rock.mp3</name>
+            <type>AUDIO</type>
+            <mimeType>audio/x-msaudio</mimeType>
+            <title>Rock</title>
+            <contentURI>/opt/storage/sdcard/Sounds/rock.mp3</contentURI>
+            <thumbnailURIs>
+                <URI>desktop/rock.lnk</URI>
+            </thumbnailURIs>
+            <releaseDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</releaseDate>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+            <size>3670016</size>
+            <description>Pop Song</description>
+            <rating>4</rating>
+
+            <album>rock</album>
+            <genres>
+                <genre>Rock and Roll</genre>
+            </genres>
+            <artists>
+                <artist>Emile</artist>
+            </artists>
+            <composers>
+                <composer>Emile</composer>
+            </composers>
+            <copyright>Rocky Dream Works</copyright>
+            <bitrate>128000</bitrate>
+            <trackNumber>2</trackNumber>
+            <duration>230000</duration>
+        </audio>
+
+        <image>
+            <editableAttributes>
+                <attr>name</attr>
+                <attr>description</attr>
+                <attr>rating</attr>
+                <attr>geolocation</attr>
+                <attr>orientation</attr>
+            </editableAttributes>
+            <id>1553F420-4FFC-4B6E-AD86-A9DEB3625375</id>
+            <name>seagull.gif</name>
+            <type>IMAGE</type>
+            <mimeType>image/gif</mimeType>
+            <title>Seagull</title>
+            <contentURI>/opt/usr/media/Images/seagull.gif</contentURI>
+            <thumbnailURIs>
+                <URI>desktop/seagull.lnk</URI>
+            </thumbnailURIs>
+            <releaseDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</releaseDate>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+            <size>391168</size>
+            <description>Natural Animation</description>
+            <rating>1</rating>
+
+            <width>800</width>
+            <height>600</height>
+            <orientation>FLIP_HORIZONTAL</orientation>
+        </image>
+
+        <image>
+            <editableAttributes>
+                <attr>name</attr>
+                <attr>description</attr>
+                <attr>rating</attr>
+                <attr>geolocation</attr>
+                <attr>orientation</attr>
+            </editableAttributes>
+            <id>291C723B-7DFB-471F-8FF1-5E8A224BB7C5</id>
+            <name>webapi-tizen-content-test_image.png</name>
+            <type>IMAGE</type>
+            <mimeType>image/png</mimeType>
+            <title>webapi-tizen-content-test_image</title>
+            <contentURI>/opt/usr/media/webapi-tizen-content-tests/webapi-tizen-content-test_image.png</contentURI>
+            <thumbnailURIs>
+                <URI>desktop/webapi-tizen-content-test_image.lnk</URI>
+            </thumbnailURIs>
+            <releaseDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</releaseDate>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+            <size>116454</size>
+            <rating>0</rating>
+
+            <width>320</width>
+            <height>240</height>
+            <orientation>NORMAL</orientation>
+        </image>
+    </contents>
+
+    <directories>
+        <directory>
+            <id>E718584C-B72E-4E85-917B-DDDA95A18B0B</id>
+            <directoryURI>/opt/usr/media/Images/</directoryURI>
+            <title>Images</title>
+            <storageType>INTERNAL</storageType>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+        </directory>
+
+        <directory>
+            <id>5BB9A98B-303F-4595-B507-01B7175BB90D</id>
+            <directoryURI>/opt/usr/media/Sounds/</directoryURI>
+            <title>Sounds</title>
+            <storageType>INTERNAL</storageType>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+        </directory>
+
+        <directory>
+            <id>F71CE175-3345-4BC9-9AAB-23335A1DCC6F</id>
+            <directoryURI>/opt/usr/media/Videos/</directoryURI>
+            <title>Videos</title>
+            <storageType>INTERNAL</storageType>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+        </directory>
+
+        <directory>
+            <id>55CB28E5-CF6D-454F-B634-E4D94F0755F8</id>
+            <directoryURI>/opt/usr/media/webapi-tizen-content-tests/</directoryURI>
+            <title>Tests</title>
+            <storageType>INTERNAL</storageType>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+        </directory>
+
+        <directory>
+            <id>EC3AD0ED-57DF-46AE-B95D-072FBE33D529</id>
+            <directoryURI>/opt/storage/sdcard/Sounds/</directoryURI>
+            <title>External Sounds</title>
+            <storageType>EXTERNAL</storageType>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+        </directory>
+
+        <directory>
+            <id>4E2B7B57-7090-4DFA-A7DA-8A77F747699A</id>
+            <directoryURI>/opt/storage/sdcard/Videos/</directoryURI>
+            <title>External Videos</title>
+            <storageType>EXTERNAL</storageType>
+            <modifiedDate>Tue Jun 04 2013 09:49:55 GMT+0800 (CST)</modifiedDate>
+        </directory>
+    </directories>
+</widget>
