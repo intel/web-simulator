@@ -26,6 +26,7 @@ module.exports = function () {
         thirdparty = [],
         configWindow = [],
         configPanels = [],
+        hwkeysPanel = [],
         src = {
             info: JSON.parse(fs.readFileSync(_c.PACKAGE_JSON, "utf-8")),
             js: "",
@@ -33,6 +34,7 @@ module.exports = function () {
             panels: "",
             dialogs: "",
             configWindow: "",
+            hwkeysPanel: "",
             html: "",
             skins: ""
         };
@@ -61,6 +63,7 @@ module.exports = function () {
     utils.collect(_c.UI, dialogs, matches("dialog.html"));
     utils.collect(_c.UI, configWindow, matches("configWindow.html"));
     utils.collect(_c.UI, configPanels, matches("configPanels.html"));
+    utils.collect(_c.UI, hwkeysPanel, matches("hwkeysPanel.html"));
 
     utils.collect(_c.THIRDPARTY, thirdparty, function (path) {
         return _c.thirdpartyIncludes.some(function (file) {
@@ -75,6 +78,7 @@ module.exports = function () {
     src.dialogs += compile(dialogs);
     src.overlays += compile(overlays);
     src.configWindow += compile(configWindow);
+    src.hwkeysPanel += compile(hwkeysPanel);
     configPanels = compile(configPanels);
 
     src.configWindow = src.configWindow.replace(/#CONFIG_PANELS#/g, configPanels);
