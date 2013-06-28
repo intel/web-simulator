@@ -1,0 +1,1 @@
+- tree should take an optional comparator function
