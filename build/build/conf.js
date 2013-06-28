@@ -41,6 +41,7 @@ module.exports = {
         "ShaderSkin.js",
         "draw.js",
         "jWorkflow/jworkflow-min-0.4.0.js",
-        "OpenLayers.js"
+        "OpenLayers.js",
+        "redblack/redblack.js"
     ]
 };
