@@ -1,0 +1,27 @@
+{
+  "name": "redblack",
+  "version": "0.1.2",
+  "description": "Red-black tree for Node.js and the browser",
+  "homepage": "http://github.com/scttnlsn/redblack.js",
+  "author": {
+    "name": "Scott Nelson",
+    "email": "scottbnel@gmail.com"
+  },
+  "main": "redblack.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/scttnlsn/redblack.js.git"
+  },
+  "devDependencies": {
+    "mocha": ">= 0.9.0",
+    "uglify-js": ">= 1.2.4"
+  },
+  "readme": "redblack.js\n===========\n\nredblack.js is a red-black tree implementation for Node.js and the browser.\n\nUsage\n-----\n\n    var tree = redblack.tree();\n    \n    tree.insert('foo', 'bar');\n    tree.get('foo'); // -> 'bar'\n    \n    tree.delete('foo');\n    tree.get('foo'); // -> null\n    \n    tree.forEach(function(value, key) {\n        console.log(key + '=' + value);\n    });\n\nDownload\n--------\n\nReleases are available on [GitHub](https://github.com/scttnlsn/redblack.js/downloads)\nor via [NPM](http://search.npmjs.org/#/redblack).\n\n    npm install redblack\n\n**Development:** [redblack.js](https://raw.github.com/scttnlsn/redblack.js/master/redblack.js)\n\n**Production:**  [redblack.min.js](https://raw.github.com/scttnlsn/redblack.js/master/redblack.min.js)\n\nTree API\n--------\n\n### insert(key, value)\n\nInsert the given key/value pair into the tree.\n\n*Arguments:*\n\n* key\n* value\n\n### get(key)\n\nGet the value mapped to the given key or `null` if no such value exists.\n\n*Arguments:*\n\n* key\n\n### delete(key)\n\nRemove the given key from the tree\n\n*Arguments:*\n\n* key\n\n### range(start, end)\n\nReturns a [Cursor](#cursor) (see below) for traversing the tree in the given range (inclusive).\n\n*Arguments:*\n\n* start - the lower bound of the range, if `undefined` then assumed to be the minimum value in the tree\n* end - the upper bound of the range, if `undefined` the assumed to be the maximum value in the tree\n\n### forEach(iterator)\n\n[Cursor](#cursor) shortcut for iterating over the entire tree (see [forEach](#forEach) below).\n\n### map(iterator)\n\n[Cursor](#cursor) shortcut for mapping over the entire tree (see [map](#map) below).\n\n<a name=\"cursor\" />\nCursor API\n----------\n\n<a name=\"forEach\" />\n### forEach(iterator)\n\nIterate over a set of nodes in order.\n\n*Arguments:*\n\n* iterator(value, key, tree)\n\n<a name=\"map\" />\n### map(iterator)\n\nMap over a set of nodes in order.\n\n*Arguments:*\n\n* iterator(value, key, tree) - should return a result",
+  "readmeFilename": "README.md",
+  "_id": "redblack@0.1.2",
+  "dist": {
+    "shasum": "8cdeb10579a732dec3bcf74612e5b56bf3f7fa2a"
+  },
+  "_from": "redblack@",
+  "_resolved": "http://registry.npmjs.org/redblack/-/redblack-0.1.2.tgz"
+}
