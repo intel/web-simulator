@@ -2305,11 +2305,10 @@ textarea {
     );
 }
 
-.hwkeys-tab-div{
+.hwkeys-title-div{
     font-size:14px;
     font-weight:bold;
     color: #dddddd;
-    background-image:url('tab-bg.png');
     width:120px;
     height:30px;
     text-align:center;
