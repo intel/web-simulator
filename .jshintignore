@@ -6,3 +6,4 @@ pkg
 snapshot
 test
 lib/ripple/platform/wac/
+lib/ripple/platform/tizen/2.0/syncml-js-lib
