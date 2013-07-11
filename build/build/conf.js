@@ -42,6 +42,8 @@ module.exports = {
         "draw.js",
         "jWorkflow/jworkflow-min-0.4.0.js",
         "OpenLayers.js",
+        "underscore-min.js",
+        "async.js",
         "redblack/redblack.js"
     ]
 };
