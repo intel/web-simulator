@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget xmlns:tizen="http://tizen.org/ns/widgets">
+    <apps>
+        <node name="http://tizen.org/viewer">
+            <id>http://tizen.org/viewer</id>
+            <name>Tizen viewer</name>
+            <iconPath>001.png</iconPath>
+            <version>1.9</version>
+            <show>true</show>
+            <categories>
+                <i>media</i>
+            </categories>
+            <size>5120</size>
+            <packageId>TEST_APP_ID</packageId>
+            <sharedURI>/usr/local/share/viewer</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/view</operation>
+            <appControl>
+                <uri>http://tizen.org/appcontrol/uri/view</uri>
+                <mime>image/*</mime>
+                <category>media</category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="http://tizen.org/player">
+            <id>http://tizen.org/player</id>
+            <name>Tizen player</name>
+            <iconPath>002.png</iconPath>
+            <version>2.0</version>
+            <show>true</show>
+            <categories>
+                <i>media</i>
+            </categories>
+            <size>2048</size>
+            <packageId>TEST_APP_ID</packageId>
+            <sharedURI>/usr/local/share/player</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/play</operation>
+            <appControl>
+                <uri>http://tizen.org/appcontrol/uri/play</uri>
+                <mime>video/*</mime>
+                <category>media</category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_SIGNER</type>
+            <value></value>
+        </node>
+        <node name="http://tizen.org/dummy">
+            <id>http://tizen.org/dummy</id>
+            <name>Tizen dummy</name>
+            <iconPath>dummy.png</iconPath>
+            <version>1.7</version>
+            <show>true</show>
+            <categories>
+                <i>media</i>
+            </categories>
+            <size>3094</size>
+            <packageId>EXAMPLE_ID</packageId>
+            <sharedURI>/usr/local/share/dummy</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/dummy</operation>
+            <appControl>
+                <uri>http://tizen.org/appcontrol/uri/dummy</uri>
+                <mime>video/*</mime>
+                <category>media</category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_SIGNER</type>
+            <value></value>
+        </node>
+        <node name="http://tizen.org/dialer">
+            <id>http://tizen.org/dialer</id>
+            <name>Tizen dialer</name>
+            <iconPath>002.png</iconPath>
+            <version>2.1</version>
+            <show>true</show>
+            <categories>
+                <i>dialer</i>
+            </categories>
+            <size>2048</size>
+            <packageId>SAMPLE_ID</packageId>
+            <sharedURI>/usr/local/share/dialer</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/call</operation>
+            <appControl>
+                <uri>http://tizen.org/appcontrol/uri/call</uri>
+                <mime>application/xml</mime>
+                <category>dialer</category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="http://tizen.org/sender">
+            <id>http://tizen.org/sender</id>
+            <name>Tizen sender</name>
+            <iconPath>005.png</iconPath>
+            <version>2.2</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <size>2048</size>
+            <packageId>SAMPLE_ID</packageId>
+            <sharedURI>/usr/local/share/sender</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/send_text</operation>
+            <appControl>
+                <uri>http://tizen.org/appcontrol/uri/send_text</uri>
+                <mime>text/plain</mime>
+                <category>message</category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="api1pack00.WebAPITizenPackageTests">
+            <id>api1pack00.WebAPITizenPackageTests</id>
+            <name>Tizen test app</name>
+            <iconPath>001.png</iconPath>
+            <version>2.2</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <size>2048</size>
+            <packageId>api1pack00</packageId>
+            <sharedURI>/usr/local/share/apiuri</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/view</operation>
+            <appControl>
+                <uri>http://www.tizen.org</uri>
+                <mime></mime>
+                <category></category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="api1appli1.TCTAppControl">
+            <id>api1appli1.TCTAppControl</id>
+            <name>api1appli1 TCTAppControl</name>
+            <iconPath>001.png</iconPath>
+            <version>2.4</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <size>2048</size>
+            <packageId>api1pack00</packageId>
+            <sharedURI>/usr/local/share/apiuri</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/TCTAppControl</operation>
+            <appControl>
+                <uri>http://www.tizen.org</uri>
+                <mime></mime>
+                <category></category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="testpack00.autoWebapiTizenPackageTestApplication">
+            <id>testpack00.autoWebapiTizenPackageTestApplication</id>
+            <name>Tizen test app 2</name>
+            <iconPath>002.png</iconPath>
+            <version>3.0</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <size>2048</size>
+            <packageId>testpack00</packageId>
+            <sharedURI>/usr/local/share/apiuri2</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/pick</operation>
+            <appControl>
+                <uri>http://www.tizen.org</uri>
+                <mime></mime>
+                <category></category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="testpack01.testLaunch">
+            <id>testpack01.testLaunch</id>
+            <name>Tizen test launch</name>
+            <iconPath>003.png</iconPath>
+            <version>3.0</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <size>2048</size>
+            <packageId>testpack01</packageId>
+            <sharedURI>/usr/local/share/apiuri3</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/tct/launch</operation>
+            <appControl>
+                <uri>http://www.tizen.org</uri>
+                <mime></mime>
+                <category></category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+    </apps>
+    <installedAppList>
+        <node name="http://tizen.org/dialer">
+            <id>http://tizen.org/dialer</id>
+            <name>Tizen dialer</name>
+            <iconPath>002.png</iconPath>
+            <version>2.1</version>
+            <show>true</show>
+            <categories>
+                <i>dialer</i>
+            </categories>
+            <installDate>2013-08-30 15:30:00</installDate>
+            <size>2048</size>
+            <packageId>SAMPLE_ID</packageId>
+            <sharedURI>/usr/local/share/dialer</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/call</operation>
+            <appControl>
+                <uri>http://tizen.org/appcontrol/uri/call</uri>
+                <mime>application/xml</mime>
+                <category>dialer</category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="http://tizen.org/sender">
+            <id>http://tizen.org/sender</id>
+            <name>Tizen sender</name>
+            <iconPath>005.png</iconPath>
+            <version>2.2</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <installDate>2013-08-30 15:30:00</installDate>
+            <size>2048</size>
+            <packageId>SAMPLE_ID</packageId>
+            <sharedURI>/usr/local/share/sender</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/send_text</operation>
+            <appControl>
+                <uri>http://tizen.org/appcontrol/uri/send_text</uri>
+                <mime>text/plain</mime>
+                <category>message</category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="api1pack00.WebAPITizenPackageTests">
+            <id>api1pack00.WebAPITizenPackageTests</id>
+            <name>Tizen test app</name>
+            <iconPath>001.png</iconPath>
+            <version>2.2</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <installDate>2013-08-30 15:30:00</installDate>
+            <size>2048</size>
+            <packageId>api1pack00</packageId>
+            <sharedURI>/usr/local/share/apiuri</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/view</operation>
+            <appControl>
+                <uri>http://www.tizen.org</uri>
+                <mime></mime>
+                <category></category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="api1appli1.TCTAppControl">
+            <id>api1appli1.TCTAppControl</id>
+            <name>api1appli1 TCTAppControl</name>
+            <iconPath>001.png</iconPath>
+            <version>2.4</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <installDate>2013-08-30 15:30:00</installDate>
+            <size>2048</size>
+            <packageId>api1pack00</packageId>
+            <sharedURI>/usr/local/share/apiuri</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/TCTAppControl</operation>
+            <appControl>
+                <uri>http://www.tizen.org</uri>
+                <mime></mime>
+                <category></category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="testpack00.autoWebapiTizenPackageTestApplication">
+            <id>testpack00.autoWebapiTizenPackageTestApplication</id>
+            <name>Tizen test app 2</name>
+            <iconPath>002.png</iconPath>
+            <version>3.0</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <installDate>2013-08-30 15:30:00</installDate>
+            <size>2048</size>
+            <packageId>testpack00</packageId>
+            <sharedURI>/usr/local/share/apiuri2</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/pick</operation>
+            <appControl>
+                <uri>http://www.tizen.org</uri>
+                <mime></mime>
+                <category></category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+        <node name="testpack01.testLaunch">
+            <id>testpack01.testLaunch</id>
+            <name>Tizen test launch</name>
+            <iconPath>003.png</iconPath>
+            <version>3.0</version>
+            <show>true</show>
+            <categories>
+                <i>message</i>
+            </categories>
+            <installDate>2013-08-30 15:30:00</installDate>
+            <size>2048</size>
+            <packageId>testpack01</packageId>
+            <sharedURI>/usr/local/share/apiuri3</sharedURI>
+            <operation>http://tizen.org/appcontrol/operation/tct/launch</operation>
+            <appControl>
+                <uri>http://www.tizen.org</uri>
+                <mime></mime>
+                <category></category>
+                <data></data>
+            </appControl>
+            <type>AUTHOR_ROOT</type>
+            <value></value>
+        </node>
+    </installedAppList>
+</widget>
