@@ -1,0 +1,205 @@
+<!--
+ *  Copyright 2013 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="vehicle-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Vehicle Information</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+
+    <section class="info ui-widget-content ui-corner-all">
+        <p>
+            The Vehicle Information provides all vehicle properties that current system supports.
+        </p>
+        <section id="vehicle-supported-properties" class="ui-accordion ui-widget ui-helper-reset ui-accordion-icons" role="tablist">
+            <div class="ui-corner-all">
+                <h3 class="config-accordion-node-title ui-accordion-header ui-helper-reset ui-state-active ui-corner-top" role="tab" aria-expanded="true" tabindex="0">
+                    <span class="ui-icon ui-icon-triangle-1-s"></span>
+                    <a href="#" class="ui-text">Set Supported Properties</a>
+                </h3>
+                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" role="tabpanel">
+                    <table class="panel-table vehicle-check">
+                        <tr>
+                            <td><label class="ui-text-label">VehicleSpeed</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="VehicleSpeed-checkbox" name="vehicle-supported" checked="checked" value="VehicleSpeed" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">EngineSpeed</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="EngineSpeed-checkbox" name="vehicle-supported" value="EngineSpeed" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">VehiclePowerMode</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="VehiclePowerMode-checkbox" name="vehicle-supported" checked="checked" value="VehiclePowerMode" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">TripMeters</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="TripMeters-checkbox" name="vehicle-supported" value="TripMeters" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Acceleration</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="Acceleration-checkbox" name="vehicle-supported" value="Acceleration" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Transmission</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="Transmission-checkbox" name="vehicle-supported" value="Transmission" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">CruiseControlStatus</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="CruiseControlStatus-checkbox" name="vehicle-supported" value="CruiseControlStatus" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">WheelBrake</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="WheelBrake-checkbox" name="vehicle-supported" value="WheelBrake" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">LightStatus</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="LightStatus-checkbox" name="vehicle-supported" checked="checked" value="LightStatus" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">InteriorLightStatus</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="InteriorLightStatus-checkbox" name="vehicle-supported" value="InteriorLightStatus" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Horn</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="Horn-checkbox" name="vehicle-supported" value="Horn" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Fuel</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="Fuel-checkbox" name="vehicle-supported" value="Fuel" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">EngineOil</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="EngineOil-checkbox" name="vehicle-supported" value="EngineOil" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">ExteriorBrightness</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="ExteriorBrightness-checkbox" name="vehicle-supported" value="ExteriorBrightness" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Temperature</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="Temperature-checkbox" name="vehicle-supported" value="Temperature" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">RainSensor</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="RainSensor-checkbox" name="vehicle-supported" value="RainSensor" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">WindshieldWiper</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="WindshieldWiper-checkbox" name="vehicle-supported" value="WindshieldWiper" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">HVAC</label></td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" id="HVAC-checkbox" name="vehicle-supported" checked="checked" value="HVAC" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="ui-corner-all">
+                <h3 class="config-accordion-node-title ui-accordion-header ui-helper-reset ui-state-active ui-corner-top" role="tab" aria-expanded="true" tabindex="1">
+                    <span class="ui-icon ui-icon-triangle-1-s"></span>
+                    <a href="#" class="ui-text">Vehicle Running</a>
+                </h3>
+                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" role="tabpanel">
+                    <table class="panel-table">
+                        <tr>
+                            <td align="right">
+                                <div>
+                                    <button id="vehicle-run" class="PanelButtonStyle">Run</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="panel-table vehicle-info">
+                    </table>
+                </div>
+            </div>
+        </section>
+    </section>
+</section>
+
