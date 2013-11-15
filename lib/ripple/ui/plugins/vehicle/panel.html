@@ -26,43 +26,61 @@
             The Vehicle Information provides all vehicle properties that current system supports.
         </p>
         <section id="vehicle-supported-properties" class="ui-accordion ui-widget ui-helper-reset ui-accordion-icons" role="tablist">
-        <div class="ui-corner-all">
-            <h3 class="config-accordion-node-title ui-accordion-header ui-helper-reset ui-state-active ui-corner-top" role="tab" aria-expanded="true" tabindex="0">
-                <span class="ui-icon ui-icon-triangle-1-s"></span>
-                <a href="#" class="ui-text">Set Supported Properties</a>
-            </h3>
-            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" role="tabpanel">
-                <div id="vehicle-supported-types" style="display: none;">
-                    <input type="checkbox" id="VehicleSpeed-supported" name="vehicle-supported" value="VehicleSpeed" />
-                    <input type="checkbox" id="EngineSpeed-supported" name="vehicle-supported" value="EngineSpeed" />
-                    <input type="checkbox" id="Transmission-supported" name="vehicle-supported" value="Transmission" />
-                    <input type="checkbox" id="Horn-supported" name="vehicle-supported" value="Horn" />
+            <div class="ui-corner-all">
+                <h3 class="config-accordion-node-title" role="tab" tabindex="0">
+                    <span class="ui-icon ui-icon-triangle-1-e"></span>
+                    <a href="#" class="ui-text">Vehicle Config</a>
+                </h3>
+                <div class="ui-accordion-content" role="tabpanel">
+                    <div id="vehicle-config-car">
+                        <label for="vehicle-config-cars">Cars:</label>
+                        <select id="vehicle-config-cars">
+                            <option value="Car1">Car One</option>
+                            <option value="Car2">Car Two</option>
+                        </select>
+                    </div>
+                    <table id="vehicle-config-view">
+                    </table>
                 </div>
-                <table id="vehicle-supported-view">
-                    <tr>
-                        <td id="VehicleSpeed-view" class="vehicle-unsupported">VehicleSpeed</td>
-                        <td id="EngineSpeed-view" class="vehicle-unsupported">EngineSpeed</td>
-                    </tr>
-                    <tr>
-                        <td id="Transmission-view" class="vehicle-supported">Transmission</td>
-                        <td id="Horn-view" class="vehicle-unsupported">Horn</td>
-                    </tr>
-                </table>
             </div>
-        </div>
-        <div class="ui-corner-all">
-            <h3 class="config-accordion-node-title ui-accordion-header ui-helper-reset ui-state-active ui-corner-top" role="tab" aria-expanded="true" tabindex="1">
-                <span class="ui-icon ui-icon-triangle-1-s"></span>
-                <a href="#" class="ui-text">Vehicle Running</a>
-            </h3>
-            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" role="tabpanel">
-                <div class="vehicle-run-container">
-                    <button id="vehicle-run" class="PanelButtonStyle">Run</button>
+            <div class="ui-corner-all">
+                <h3 class="config-accordion-node-title" role="tab" tabindex="0">
+                    <span class="ui-icon ui-icon-triangle-1-e"></span>
+                    <a href="#" class="ui-text">Supported Properties</a>
+                </h3>
+                <div class="ui-accordion-content" role="tabpanel">
+                    <div id="vehicle-supported-types" style="display: none;">
+                    </div>
+                    <div class="vehicle-supported-search-container">
+                        <input type="text" id="vehicle-supported-search" value="" />
+                    </div>
+                    <table id="vehicle-supported-view">
+                    </table>
                 </div>
-                <table class="vehicle-supported-info">
-                </table>
             </div>
-        </div>
+            <div class="ui-corner-all">
+                <h3 class="config-accordion-node-title" role="tab" tabindex="1">
+                    <span class="ui-icon ui-icon-triangle-1-e"></span>
+                    <a href="#" class="ui-text">Vehicle Settings</a>
+                </h3>
+                <div class="ui-accordion-content" role="tabpanel">
+                    <div id="vehicle-properties-setting">
+                    </div>
+                </div>
+            </div>
+            <div class="ui-corner-all">
+                <h3 class="config-accordion-node-title" role="tab" tabindex="2">
+                    <span class="ui-icon ui-icon-triangle-1-e"></span>
+                    <a href="#" class="ui-text">Simulate car running</a>
+                </h3>
+                <div class="ui-accordion-content" role="tabpanel">
+                    <div class="vehicle-run-container">
+                        <button id="vehicle-run" class="PanelButtonStyle">Run</button>
+                    </div>
+                    <table class="vehicle-supported-info">
+                    </table>
+                </div>
+            </div>
         </section>
     </section>
 </section>
