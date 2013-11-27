@@ -2260,6 +2260,21 @@ textarea {
     text-align: left;
 }
 
+#vehicle-container .vehicle-noSet {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 97%;
+    background-color: #F1EDED;
+    opacity: 0.6;
+}
+
+#vehicle-container .vehicle-noSet div {
+    font-size: 2em;
+    margin: 50% 0 0 26%;
+}
+
+
 
 /* ------------------------------>
     UI.Battery */

@@ -21,7 +21,7 @@
         </section>
     </section>
 
-    <section class="info ui-widget-content ui-corner-all">
+    <section class="info ui-widget-content ui-corner-all" style="display: none;">
         <p>
             The Vehicle Information provides all vehicle properties that current system supports.
         </p>
@@ -41,6 +41,9 @@
                     </div>
                     <table id="vehicle-config-view">
                     </table>
+                    <div id="vehicle-config-noSet" class="vehicle-noSet" style="display: none;">
+                        <div>Cannot Set</div>
+                    </div>
                 </div>
             </div>
             <div class="ui-corner-all">
@@ -56,6 +59,9 @@
                     </div>
                     <table id="vehicle-supported-view">
                     </table>
+                    <div id="vehicle-supported-noSet" class="vehicle-noSet" style="display: none;">
+                        <div>Cannot Set</div>
+                    </div>
                 </div>
             </div>
             <div class="ui-corner-all">
@@ -84,4 +90,3 @@
         </section>
     </section>
 </section>
-
