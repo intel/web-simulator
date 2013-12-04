@@ -2160,6 +2160,121 @@ textarea {
      clip: rect(1px,1px,1px,1px);
  }
 
+/* ------------------------------>
+    Vehicle Management Panel */
+
+#vehicle-container .ui-accordion .ui-accordion-content {
+    padding: 0 5px 0 5px;
+}
+
+/*view*/
+#vehicle-container #vehicle-supported-view {
+    width: 100%;
+}
+
+#vehicle-container #vehicle-supported-view td {
+    border: 0;
+    height: 25px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 33%;
+    word-break: break-all;
+}
+
+#vehicle-container #vehicle-supported-search {
+    width: 100%;
+}
+
+#vehicle-container .vehicle-supported {
+    background-color: #8ADA8A;
+}
+
+#vehicle-container .vehicle-unsupported {
+    background-color: #DCDCDC;
+}
+
+#vehicle-container #vehicle-config-car label {
+    margin-left: 5px;
+}
+
+#vehicle-container #vehicle-config-car select {
+    width: 54%;
+    margin-left: 86px;
+    border-radius: 5px;
+}
+
+#vehicle-container #vehicle-config-view .vehicle-property-setting-title {
+    font-weight: bold;
+    background-color: #DCDCDC;
+    height: 25px;
+    padding-left: 5px;
+    border-radius: 10px;
+}
+
+#vehicle-container #vehicle-config-view td input {
+    text-align: right;
+}
+
+/*setting*/
+#vehicle-container .vehicle-property-setting {
+    width: 100%;
+}
+
+#vehicle-container .vehicle-property-setting .vehicle-property-setting-title {
+    font-weight: bold;
+    background-color: #DCDCDC;
+    height: 25px;
+    padding-left: 5px;
+    border-radius: 10px;
+}
+
+#vehicle-container .vehicle-property-setting td select {
+    width: 100%;
+    text-align: right;
+}
+
+#vehicle-container .vehicle-property-setting td input {
+    text-align: right;
+}
+
+/*search*/
+#vehicle-container .vehicle-supported-search-container {
+    margin-right: 30px;
+    margin-left: 5px;
+}
+
+/*run*/
+#vehicle-container .vehicle-supported-info {
+    width: 100%;
+}
+
+#vehicle-container .vehicle-supported-info td {
+    border: 0;
+    height: 25px;
+}
+
+#vehicle-container .vehicle-property-title {
+    background-color: #DCDCDC;
+    font-weight: bold;
+    text-align: left;
+}
+
+#vehicle-container .vehicle-noSet {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 97%;
+    background-color: #F1EDED;
+    opacity: 0.6;
+}
+
+#vehicle-container .vehicle-noSet div {
+    font-size: 2em;
+    margin: 50% 0 0 26%;
+}
+
+
 
 /* ------------------------------>
     UI.Battery */
