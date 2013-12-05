@@ -2163,6 +2163,10 @@ textarea {
 /* ------------------------------>
     Vehicle Management Panel */
 
+#vehicle-container input[type="text"] {
+    width: 110px;
+}
+
 #vehicle-container .ui-accordion .ui-accordion-content {
     padding: 0 5px 0 5px;
 }
@@ -2199,9 +2203,13 @@ textarea {
 }
 
 #vehicle-container #vehicle-config-car select {
-    width: 54%;
-    margin-left: 86px;
+    width: 40%;
+    margin-left: 130px;
     border-radius: 5px;
+}
+
+#vehicle-container #vehicle-config-view {
+    width: 100%;
 }
 
 #vehicle-container #vehicle-config-view .vehicle-property-setting-title {
@@ -2212,8 +2220,10 @@ textarea {
     border-radius: 10px;
 }
 
-#vehicle-container #vehicle-config-view td input {
+#vehicle-container #vehicle-config-view .vehicle-property-setting-set {
     text-align: right;
+    height: 25px;
+    padding-right: 10px;
 }
 
 /*setting*/
@@ -2249,9 +2259,20 @@ textarea {
     width: 100%;
 }
 
+#vehicle-container .vehicle-run-container {
+    height: 25px;
+    width: 40%;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5px 0 5px 20px;
+    text-align: center;
+    padding: 5px 0 0 0;
+}
+
 #vehicle-container .vehicle-supported-info td {
     border: 0;
     height: 25px;
+    border-radius: 10px;
 }
 
 #vehicle-container .vehicle-property-title {
