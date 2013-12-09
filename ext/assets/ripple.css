@@ -2171,6 +2171,85 @@ textarea {
     padding: 0 5px 0 5px;
 }
 
+#vehicle-container .vehicle-property-header {
+    font-weight: bold;
+    background-color: #DCDCDC;
+    height: 25px;
+    padding-left: 5px;
+    border-radius: 10px;
+}
+
+#vehicle-container .vehicle-property-label {
+    padding-left: 10px;
+}
+
+#vehicle-container .vehicle-property-value {
+    text-align: right;
+    height: 25px;
+    padding-right: 10px;
+}
+
+#vehicle-container .vehicle-property-value input {
+    width: 100px;
+    text-align: right;
+}
+
+#vehicle-container .vehicle-property-value select {
+    width: 125px;
+    background-color: #FFFFFF;
+}
+
+/*configuration*/
+#vehicle-container .vehicle-configuration-switch label {
+    margin-left: 5px;
+}
+
+#vehicle-container .vehicle-configuration-switch select {
+    margin-left: 90px;
+    border-radius: 5px;
+    width: 35%;
+}
+
+#vehicle-container #vehicle-configuration-show {
+    width: 100%;
+}
+
+/*supported*/
+#vehicle-container #vehicle-supported-query {
+    width: 85%;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+
+#vehicle-container #vehicle-supported-show {
+    width: 100%;
+}
+
+#vehicle-container #vehicle-supported-show td {
+    border: 0;
+    height: 25px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 33%;
+    word-break: break-all;
+}
+
+#vehicle-container #vehicle-supported-show .vehicle-property-supported {
+    background-color: #8ADA8A;
+}
+
+#vehicle-container #vehicle-supported-show .vehicle-property-unsupported {
+    background-color: #DCDCDC;
+}
+
+/* ------------------------------>
+    Vehicle Management Panel */
+
+#vehicle-container .ui-accordion .ui-accordion-content {
+    padding: 0 5px 0 5px;
+}
+
 /*view*/
 #vehicle-container #vehicle-supported-view {
     width: 100%;
