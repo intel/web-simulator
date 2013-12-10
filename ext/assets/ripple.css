@@ -2243,6 +2243,22 @@ textarea {
     background-color: #DCDCDC;
 }
 
+/*auto*/
+#vehicle-container #vehicle-running-auto {
+    border-radius: 10px;
+    border: 1px solid #CDCDCD;
+    background: #DCDCDC;
+    height: 25px;
+    width: 120px;
+    cursor: pointer;
+    margin: 5px 0 5px 10px;
+    padding: 5px 0 0 30px;
+}
+
+#vehicle-container #vehicle-running-show {
+    width: 100%;
+}
+
 /* ------------------------------>
     Vehicle Management Panel */
 
