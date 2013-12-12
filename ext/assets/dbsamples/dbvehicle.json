@@ -1,0 +1,33 @@
+{
+    "supported": ["VehicleSpeed", "EngineSpeed", "VehiclePowerMode", "TripMeter",
+        "Acceleration", "Transmission", "CruiseControlStatus", "WheelBrake",
+        "LightStatus", "InteriorLightStatus", "Horn", "Fuel", "EngineOil",
+        "Location", "ExteriorBrightness", "Temperature", "RainSensor",
+        "WindshieldWiper", "HVAC", "WindowStatus", "Sunroof", "ConvertibleRoof",
+        "VehicleId", "Size", "FuelInfo", "VehicleType", "Doors",
+        "TransmissionGearType", "WheelInformation", "Odometer", "Fluid", "Battery",
+        "TirePressure", "TireTemperature", "SecurityAlert", "ParkingBrake",
+        "ParkingLight", "HazardLight", "AntilockBrakingSystem", "TractionControlSystem",
+        "VehicleTopSpeedLimit", "AirbagStatus", "DoorStatus", "SeatBeltStatus",
+        "OccupantStatus", "ObstacleDistance", "NightMode", "DrivingMode"],
+    "newestHistory": null,
+    "currentConfiguration": 0,
+    "configurationData": [
+        ["AFA", "21D1M2883N342FFG7", 2096, 1860, 4779, 0, 0, 0, [2, 2], 0, 1953, 2000, 1465, true],
+        ["KMH", "21D1M2888N342FFL7", 2125, 1961, 4901, 4, 3, 4, [2, 2], 2, 1964, 2000, 1470, true]
+    ],
+    "settingData": [
+        0, 0, true, 0, true, false, false, false, false, false, false, false, false, false, false, false, false,
+        0, "0x04", 0, 0, false, false, false, false, false, false, 0, 0, 0, true, true, true, true, true, true, 120,
+        0, true, 2, 0, true, true, false, 0, 10, false, 0, 0, 0, 0, 220, 0.5, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    "autoRunningData": [
+        [0,   0,    1, [23, 7876, 124, 4577],     0,   0,   0,   87, 251, 250, 85, 15, 0,   0,  0,  0,   0,   0,  0,  0,   0,  0,  2, 15000],
+        [60,  2500, 0, [23, 7876, 124, 4577, 10], 10,  10,  10,  80, 251, 59,  87, 15, 150, 10, 59, -15, -89, 16, 69, 456, 5,  0, 10, 1213],
+        [120, 2800, 1, [23, 7876, 124, 4577, 25], 120, 120, 120, 65, 251, 59,  87, 15, 78,  20, 54, -97, -54, 124, 65, 45, 15, 0, 9, 250],
+        [180, 3200, 1, [23, 7876, 124, 4577, 25], 120, 120, 120, 65, 251, 59,  87, 15, 78,  40, 54, -97, -54, 124, 65, 45, 20, 0, 9, 250],
+        [200, 3500, 1, [23, 7876, 124, 4577, 25], 120, 120, 120, 65, 251, 59,  87, 15, 78,  60, 54, -97, -54, 124, 65, 45, 22, 0, 9, 250],
+        [300, 3900, 1, [23, 7876, 124, 4577, 25], 120, 120, 120, 65, 251, 59,  87, 15, 78,  80, 54, -97, -54, 124, 65, 45, 21, 0, 9, 250],
+        [240, 3600, 1, [23, 7876, 124, 4577, 25], 120, 120, 120, 65, 251, 59,  87, 15, 78,  70, 54, -97, -54, 124, 65, 45, 20, 0, 9, 250],
+        [100, 2600, 1, [23, 7876, 124, 4577, 25], 120, 120, 120, 65, 251, 59,  87, 15, 78,  30, 54, -97, -54, 124, 65, 45, 21, 0, 9, 250]
+    ]
+}

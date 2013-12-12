@@ -2171,12 +2171,61 @@ textarea {
     padding: 0 5px 0 5px;
 }
 
-/*view*/
-#vehicle-container #vehicle-supported-view {
+#vehicle-container .vehicle-property-header {
+    font-weight: bold;
+    background-color: #DCDCDC;
+    height: 25px;
+    padding-left: 5px;
+    border-radius: 10px;
+}
+
+#vehicle-container .vehicle-property-label {
+    padding-left: 10px;
+}
+
+#vehicle-container .vehicle-property-value {
+    text-align: right;
+    height: 25px;
+    padding-right: 10px;
+}
+
+#vehicle-container .vehicle-property-value input {
+    width: 100px;
+    text-align: right;
+}
+
+#vehicle-container .vehicle-property-value select {
+    width: 125px;
+    background-color: #FFFFFF;
+}
+
+/*configuration*/
+#vehicle-container .vehicle-configuration-switch label {
+    margin-left: 5px;
+}
+
+#vehicle-container .vehicle-configuration-switch select {
+    margin-left: 90px;
+    border-radius: 5px;
+    width: 35%;
+}
+
+#vehicle-container #vehicle-configuration-show {
     width: 100%;
 }
 
-#vehicle-container #vehicle-supported-view td {
+/*supported*/
+#vehicle-container #vehicle-supported-query {
+    width: 85%;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+
+#vehicle-container #vehicle-supported-show {
+    width: 100%;
+}
+
+#vehicle-container #vehicle-supported-show td {
     border: 0;
     height: 25px;
     text-align: center;
@@ -2186,116 +2235,29 @@ textarea {
     word-break: break-all;
 }
 
-#vehicle-container #vehicle-supported-search {
-    width: 100%;
-}
-
-#vehicle-container .vehicle-supported {
+#vehicle-container #vehicle-supported-show .vehicle-property-supported {
     background-color: #8ADA8A;
 }
 
-#vehicle-container .vehicle-unsupported {
+#vehicle-container #vehicle-supported-show .vehicle-property-unsupported {
     background-color: #DCDCDC;
 }
 
-#vehicle-container #vehicle-config-car label {
-    margin-left: 5px;
-}
-
-#vehicle-container #vehicle-config-car select {
-    width: 40%;
-    margin-left: 130px;
-    border-radius: 5px;
-}
-
-#vehicle-container #vehicle-config-view {
-    width: 100%;
-}
-
-#vehicle-container #vehicle-config-view .vehicle-property-setting-title {
-    font-weight: bold;
-    background-color: #DCDCDC;
-    height: 25px;
-    padding-left: 5px;
+/*auto*/
+#vehicle-container #vehicle-running-auto {
     border-radius: 10px;
-}
-
-#vehicle-container #vehicle-config-view .vehicle-property-setting-set {
-    text-align: right;
+    border: 1px solid #CDCDCD;
+    background: #DCDCDC;
     height: 25px;
-    padding-right: 10px;
-}
-
-/*setting*/
-#vehicle-container .vehicle-property-setting {
-    width: 100%;
-}
-
-#vehicle-container .vehicle-property-setting .vehicle-property-setting-title {
-    font-weight: bold;
-    background-color: #DCDCDC;
-    height: 25px;
-    padding-left: 5px;
-    border-radius: 10px;
-}
-
-#vehicle-container .vehicle-property-setting td select {
-    width: 100%;
-    text-align: right;
-}
-
-#vehicle-container .vehicle-property-setting td input {
-    text-align: right;
-}
-
-/*search*/
-#vehicle-container .vehicle-supported-search-container {
-    margin-right: 30px;
-    margin-left: 5px;
-}
-
-/*run*/
-#vehicle-container .vehicle-supported-info {
-    width: 100%;
-}
-
-#vehicle-container .vehicle-run-container {
-    height: 25px;
-    width: 40%;
-    border-radius: 10px;
+    width: 120px;
     cursor: pointer;
-    margin: 5px 0 5px 20px;
-    text-align: center;
-    padding: 5px 0 0 0;
+    margin: 5px 0 5px 10px;
+    padding: 5px 0 0 30px;
 }
 
-#vehicle-container .vehicle-supported-info td {
-    border: 0;
-    height: 25px;
-    border-radius: 10px;
+#vehicle-container #vehicle-running-show {
+    width: 100%;
 }
-
-#vehicle-container .vehicle-property-title {
-    background-color: #DCDCDC;
-    font-weight: bold;
-    text-align: left;
-}
-
-#vehicle-container .vehicle-noSet {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 97%;
-    background-color: #F1EDED;
-    opacity: 0.6;
-}
-
-#vehicle-container .vehicle-noSet div {
-    font-size: 2em;
-    margin: 50% 0 0 26%;
-}
-
-
 
 /* ------------------------------>
     UI.Battery */
