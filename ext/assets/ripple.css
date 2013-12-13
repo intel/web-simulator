@@ -2163,10 +2163,6 @@ textarea {
 /* ------------------------------>
     Vehicle Management Panel */
 
-#vehicle-container input[type="text"] {
-    width: 110px;
-}
-
 #vehicle-container .ui-accordion .ui-accordion-content {
     padding: 0 5px 0 5px;
 }
@@ -2190,13 +2186,14 @@ textarea {
 }
 
 #vehicle-container .vehicle-property-value input {
-    width: 100px;
-    text-align: right;
+    width: 120px;
+    border-radius: 10px;
 }
 
 #vehicle-container .vehicle-property-value select {
     width: 125px;
     background-color: #FFFFFF;
+    border-radius: 10px;
 }
 
 /*configuration*/
