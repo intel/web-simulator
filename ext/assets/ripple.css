@@ -2256,6 +2256,22 @@ textarea {
     width: 100%;
 }
 
+#vehicle-container .vehicle-property-array button {
+    width: 60px;
+    border-radius: 8px;
+}
+
+#vehicle-container .vehicle-property-array .vehicle-property-arrayOk {
+    width: 100px;
+}
+
+#vehicle-container .vehicle-property-array input {
+    width: 100px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 /* ------------------------------>
     UI.Battery */
 
