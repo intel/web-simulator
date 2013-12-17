@@ -2220,6 +2220,7 @@ textarea {
 
 #vehicle-container #vehicle-supported-show {
     width: 100%;
+    margin: 5px 5px 5px 0;
 }
 
 #vehicle-container #vehicle-supported-show td {
