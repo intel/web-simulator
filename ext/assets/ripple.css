@@ -2163,10 +2163,6 @@ textarea {
 /* ------------------------------>
     Vehicle Management Panel */
 
-#vehicle-container input[type="text"] {
-    width: 110px;
-}
-
 #vehicle-container .ui-accordion .ui-accordion-content {
     padding: 0 5px 0 5px;
 }
@@ -2190,13 +2186,14 @@ textarea {
 }
 
 #vehicle-container .vehicle-property-value input {
-    width: 100px;
-    text-align: right;
+    width: 120px;
+    border-radius: 10px;
 }
 
 #vehicle-container .vehicle-property-value select {
-    width: 125px;
+    width: 135px;
     background-color: #FFFFFF;
+    border-radius: 10px;
 }
 
 /*configuration*/
@@ -2257,6 +2254,41 @@ textarea {
 
 #vehicle-container #vehicle-running-show {
     width: 100%;
+}
+
+#vehicle-container .vehicle-property-arrayItem {
+    margin-left: 70px;
+}
+
+#vehicle-container .vehicle-property-array button {
+    width: 60px;
+    border-radius: 8px;
+}
+
+#vehicle-container .vehicle-property-array .vehicle-property-arrayOk {
+    width: 100px;
+    margin-left: 155px;
+}
+
+#vehicle-container .vehicle-property-array input {
+    width: 100px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#vehicle-container .vehicle-properties-noSet {
+    width: 100%;
+    height: 85%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.6;
+    background-color: #EBE9E9;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 90px;
+    text-align: center;
 }
 
 /* ------------------------------>
