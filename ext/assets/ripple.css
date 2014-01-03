@@ -2233,11 +2233,11 @@ textarea {
     word-break: break-all;
 }
 
-#vehicle-container #vehicle-supported-show .vehicle-property-supported {
+#vehicle-container .vehicle-property-supported {
     background-color: #8ADA8A;
 }
 
-#vehicle-container #vehicle-supported-show .vehicle-property-unsupported {
+#vehicle-container .vehicle-property-unsupported {
     background-color: #DCDCDC;
 }
 
@@ -2245,7 +2245,6 @@ textarea {
 #vehicle-container #vehicle-running-auto {
     border-radius: 10px;
     border: 1px solid #CDCDCD;
-    background: #DCDCDC;
     height: 25px;
     width: 120px;
     cursor: pointer;
