@@ -15,234 +15,252 @@
 -->
 
 <section id="package-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Packages and Applications</section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png"/></span>
-        </section>
+<section class="h2 info-header">
+    <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Packages and
+        Applications
     </section>
-    <section class="info ui-widget-content ui-corner-all" style="display: none;">
-        <div id="package-select">
-            <ul>
-                <li><a href="#packagetab">Packages</a></li>
-                <li><a href="#applicationtab">Applications</a></li>
-            </ul>
-            <!-- package tab -->
-            <div id="packagetab" class="ui-tabs-panel ui-widget-content clearfix">
-                <h3 class="PanelSectionTitle">Package List</h3>
-                <table style="width: 100%">
-                    <tr>
-                        <td>
-                            <select id="package-list-select" class="ui-state-default ui-corner-all" style="width: 100%">
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <div id="package-list-box"><div id="package-list-template">
-                <div style="border: 1px solid #AAA; padding: 0.4em 1em !important;" class="ui-corner-all">
-                    <div>
-                        <h3>Package Information</h3>
-                        <table class="preferences-table">
-                            <tr>
-                                <td><label class="ui-text-label">Path</label></td>
-                                <td>#Path</td>
-                            </tr>
-                            <tr>
-                                <td><label class="ui-text-label">ID</label></td>
-                                <td>#ID</td>
-                            </tr>
-                            <tr>
-                                <td><label class="ui-text-label">Name</label></td>
-                                <td>#Name</td>
-                            </tr>
-                            <tr>
-                                <td><label class="ui-text-label">Icon Path</label></td>
-                                <td>#IconPath</td>
-                            </tr>
-                            <tr>
-                                <td><label class="ui-text-label">Version</label></td>
-                                <td>#Version</td>
-                            </tr>
-                            <tr>
-                                <td><label class="ui-text-label">Total Size</label></td>
-                                <td>#TotalSize</td>
-                            </tr>
-                            <tr>
-                                <td><label class="ui-text-label">Data Size</label></td>
-                                <td>#DataSize</td>
-                            </tr>
-                            <tr>
-                                <td><label class="ui-text-label">Author</label></td>
-                                <td>#Author</td>
-                            </tr>
-                            <tr>
-                                <td><label class="ui-text-label">Description</label></td>
-                                <td>#Description</td>
-                            </tr>
-                            <tr>
-                                <td><label class="ui-text-label">APP List</label></td>
-                                <td>#APPList</td>
-                            </tr>
-                        </table>
-                        <button id="package-install-btn" class="PanelButtonStyle" style="width: 100%; margin: 0.5em 0; display: none;">
-                            <span class="ui-button-text">Install</span>
-                        </button>
-                        <button id="package-update-btn" class="PanelButtonStyle" style="width: 100%; margin: 0.5em 0; display: none;">
-                            <span class="ui-button-text">Update</span>
-                        </button>
-                    </div>
-                </div>
-                </div></div>
-                <br>
-                <hr>
-                <h3 class="PanelSectionTitle">Installed packages</h3>
-                <div id="package-installed-box">
-                    <div id="package-installed-template">
-                        <h3 class="config-accordion-node-title ui-text-pass">
-                            <div style="padding-top:5px;">
-                            <table >
-                                <tr>
-                                    <td><img src="images/tizen-sdk-menu.png" style="height: 30px; width: 30px;"/></td>
-                                    <td><div style="width:200px; height:20px; overflow:hidden; white-space: nowrap; text-overflow: ellipsis;">
-                                            <label class="ui-text-label">#Name</label></div></td>
-                                </tr>
-                            </table>
-                        </div>
-                        </h3>
-                        <div>
-                            <table class="preferences-table">
-                                <tr>
-                                    <td><label class="ui-text-label">ID</label></td>
-                                    <td>#ID</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="ui-text-label">Name</label></td>
-                                    <td>#Name</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="ui-text-label">Icon Path</label></td>
-                                    <td>#IconPath</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="ui-text-label">Version</label></td>
-                                    <td>#Version</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="ui-text-label">Total Size</label></td>
-                                    <td>#TotalSize</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="ui-text-label">Data Size</label></td>
-                                    <td>#DataSize</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="ui-text-label">Last Modified</label></td>
-                                    <td>#LastModified</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="ui-text-label">Author</label></td>
-                                    <td>#Author</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="ui-text-label">Description</label></td>
-                                    <td>#Description</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="ui-text-label">APP IDs</label></td>
-                                    <td>#APPIDs</td>
-                                </tr>
-                            </table>
-                            <button id=#ID class="package-remove-btn PanelButtonStyle" style="width: 100%; margin: 0.5em 0; background:#EEAAAA;">
-                                <span class="ui-button-text">Uninstall</span>
-                            </button>
-                            <div align="center">
-                                <span id=msg-#ID  style="color: #AA5500; font-size:120%">&nbsp;</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Applications tab -->
-            <div id="applicationtab" class="ui-tabs-panel ui-widget-content clearfix">
-                <br>
-                <h3 class="PanelSectionTitle">Installed Applications</h3>
-                <div id="application-installed-box">
-                    <div id="application-installed-template">
-                        <h3 class="config-accordion-node-title ui-text-pass">
-                            <td><div style="padding: 0.4em 1em !important;">#Name</div></td>
-                        </h3>
-                        <div>
-                                <h3>Application Information</h3>
-                                <table class="preferences-table">
-                                    <tr>
-                                        <td><label class="ui-text-label">ID</label></td>
-                                        <td>#ID</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Name</label></td>
-                                        <td>#Name</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Icon Path</label></td>
-                                        <td>#IconPath</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Version</label></td>
-                                        <td>#Version</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Show</label></td>
-                                        <td>#Show</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Categories</label></td>
-                                        <td>#Categories</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Installed Date</label></td>
-                                        <td>#InstallDate</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Size</label></td>
-                                        <td>#Size</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Package ID</label></td>
-                                        <td>#PackageID</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Shared URI</label></td>
-                                        <td>#SharedURI</td>
-                                    </tr>
-                                    <tr><td colspan="2"><hr></td></tr>
-                                </table>
-                                <h3>Binding Control Operation</h3>
-                                <table class="preferences-table">
-                                    <tr>
-                                        <td><label class="ui-text-label">Operation</label></td>
-                                        <td>#Operation</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">URI</label></td>
-                                        <td>#URI</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">MIME</label></td>
-                                        <td>#MIME</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Category</label></td>
-                                        <td>#category</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label class="ui-text-label">Data</label></td>
-                                        <td>#Data</td>
-                                    </tr>
-                                </table>
-                        </div>
-                    </div>
+    <section class="drag-handle">
+        <span><img src="images/menuDraggerIcon.png"/></span>
+    </section>
+</section>
+<section class="info ui-widget-content ui-corner-all" style="display: none;">
+<div id="package-select">
+<ul>
+    <li><a href="#packagetab">Packages</a></li>
+    <li><a href="#applicationtab">Applications</a></li>
+</ul>
+<!-- package tab -->
+<div id="packagetab" class="ui-tabs-panel ui-widget-content clearfix">
+    <h3 class="PanelSectionTitle">Package List</h3>
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <select id="package-list-select" class="ui-state-default ui-corner-all" style="width: 100%">
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div id="package-list-box">
+        <div id="package-list-template">
+            <div style="border: 1px solid #AAA; padding: 0.4em 1em !important;" class="ui-corner-all">
+                <div>
+                    <h3>Package Information</h3>
+                    <table class="preferences-table">
+                        <tr>
+                            <td><label class="ui-text-label">Path</label></td>
+                            <td>#Path</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">ID</label></td>
+                            <td>#ID</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Name</label></td>
+                            <td>#Name</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Icon Path</label></td>
+                            <td>#IconPath</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Version</label></td>
+                            <td>#Version</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Total Size</label></td>
+                            <td>#TotalSize</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Data Size</label></td>
+                            <td>#DataSize</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Author</label></td>
+                            <td>#Author</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">Description</label></td>
+                            <td>#Description</td>
+                        </tr>
+                        <tr>
+                            <td><label class="ui-text-label">APP List</label></td>
+                            <td>#APPList</td>
+                        </tr>
+                    </table>
+                    <button id="package-install-btn" class="PanelButtonStyle"
+                            style="width: 100%; margin: 0.5em 0; display: none;">
+                        <span class="ui-button-text">Install</span>
+                    </button>
+                    <button id="package-update-btn" class="PanelButtonStyle"
+                            style="width: 100%; margin: 0.5em 0; display: none;">
+                        <span class="ui-button-text">Update</span>
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    <br>
+    <hr>
+    <h3 class="PanelSectionTitle">Installed packages</h3>
+
+    <div id="package-installed-box">
+        <div id="package-installed-template">
+            <h3 class="config-accordion-node-title ui-text-pass">
+                <div style="padding-top:5px;">
+                    <table>
+                        <tr>
+                            <td><img src="images/tizen-sdk-menu.png" style="height: 30px; width: 30px;"/></td>
+                            <td>
+                                <div style="width:200px; height:20px; overflow:hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                    <label class="ui-text-label">#Name</label></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </h3>
+            <div>
+                <table class="preferences-table">
+                    <tr>
+                        <td><label class="ui-text-label">ID</label></td>
+                        <td>#ID</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Name</label></td>
+                        <td>#Name</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Icon Path</label></td>
+                        <td>#IconPath</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Version</label></td>
+                        <td>#Version</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Total Size</label></td>
+                        <td>#TotalSize</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Data Size</label></td>
+                        <td>#DataSize</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Last Modified</label></td>
+                        <td>#LastModified</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Author</label></td>
+                        <td>#Author</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Description</label></td>
+                        <td>#Description</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">APP IDs</label></td>
+                        <td>#APPIDs</td>
+                    </tr>
+                </table>
+                <button id=#ID class="package-remove-btn PanelButtonStyle"
+                        style="width: 100%; margin: 0.5em 0; background:#EEAAAA;">
+                    <span class="ui-button-text">Uninstall</span>
+                </button>
+                <div align="center">
+                    <span id=msg-#ID style="color: #AA5500; font-size:120%">&nbsp;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Applications tab -->
+<div id="applicationtab" class="ui-tabs-panel ui-widget-content clearfix">
+    <br>
+
+    <h3 class="PanelSectionTitle">Installed Applications</h3>
+
+    <div id="application-installed-box">
+        <div id="application-installed-template">
+            <h3 class="config-accordion-node-title ui-text-pass">
+                <td>
+                    <div style="padding: 0.4em 1em !important;">#Name</div>
+                </td>
+            </h3>
+            <div>
+                <h3>Application Information</h3>
+                <table class="preferences-table">
+                    <tr>
+                        <td><label class="ui-text-label">ID</label></td>
+                        <td>#ID</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Name</label></td>
+                        <td>#Name</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Icon Path</label></td>
+                        <td>#IconPath</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Version</label></td>
+                        <td>#Version</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Show</label></td>
+                        <td>#Show</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Categories</label></td>
+                        <td>#Categories</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Installed Date</label></td>
+                        <td>#InstallDate</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Size</label></td>
+                        <td>#Size</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Package ID</label></td>
+                        <td>#PackageID</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Shared URI</label></td>
+                        <td>#SharedURI</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <hr>
+                        </td>
+                    </tr>
+                </table>
+                <h3>Binding Control Operation</h3>
+                <table class="preferences-table">
+                    <tr>
+                        <td><label class="ui-text-label">Operation</label></td>
+                        <td>#Operation</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">URI</label></td>
+                        <td>#URI</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">MIME</label></td>
+                        <td>#MIME</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Category</label></td>
+                        <td>#category</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">Data</label></td>
+                        <td>#Data</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</section>
 </section>

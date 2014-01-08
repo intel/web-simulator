@@ -15,7 +15,8 @@
 -->
 <section id="gps-container" class="ui-box ui-state-default">
     <section class="h2 info-header" style="z-index:900;">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Geolocation</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Geolocation
+        </section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
@@ -30,12 +31,14 @@
             <br/><br/>
         </div>
 
-        <div>Draw your route by click on the point button and then click on the map at desired location points.Double-click to end route.</div>
+        <div>Draw your route by click on the point button and then click on the map at desired location
+            points.Double-click to end route.
+        </div>
         <div id="geo-map">
             <div id="geo-map-container"></div>
             <button id="clear-route-btn">clear</button>
             <button id="set-route-btn">
-                <img src="images/marker_icon.png"></img>
+                <img src="images/marker_icon.png" />
             </button>
             <button id="geo-map-zoom-decrease" class="geo-map-zoom-btn PanelButtonStyle">
                 <span class="ui-button-text">-</span>
@@ -58,20 +61,21 @@
             <tr>
                 <td>
                     <label id="play-route-speed-label"></label>
-                    <input id="play-route-speed" type="range" value="1" min="1" max="20" step="1" class="ui-state-default ui-corner-all">
+                    <input id="play-route-speed" type="range" value="1" min="1" max="20" step="1"
+                           class="ui-state-default ui-corner-all">
                 </td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td>
                     <button id="back-route-btn">
-                        <img src="images/back.png"></img>
+                        <img src="images/back.png" />
                     </button>
                     <button id="play-route-btn">
-                        <img id="play-btn-icon" src="images/play.png"></img>
+                        <img id="play-btn-icon" src="images/play.png" />
                     </button>
                     <button id="forward-route-btn">
-                        <img src="images/forward.png"></img>
+                        <img src="images/forward.png" />
                     </button>
                 </td>
             </tr>
@@ -96,18 +100,21 @@
                 <td><input id="geo-cellid" class="ui-corner-all" type="number" value=""></td>
             </tr>
             <tr>
-                <td><label id="label-geo-accuracy" class="ui-text-label" for="geo-accuracy">Accuracy(meters)</label></td>
+                <td><label id="label-geo-accuracy" class="ui-text-label" for="geo-accuracy">Accuracy(meters)</label>
+                </td>
                 <td><input id="geo-accuracy" class="ui-corner-all" type="number" value=""></td>
             </tr>
             <tr>
-                <td><label id="label-geo-altitudeaccuracy" class="ui-text-label" for="geo-altitudeaccuracy">Altitude Accuracy</label></td>
+                <td><label id="label-geo-altitudeaccuracy" class="ui-text-label" for="geo-altitudeaccuracy">Altitude
+                    Accuracy</label></td>
                 <td><input id="geo-altitudeaccuracy" class="ui-corner-all" type="number" value=""></td>
             </tr>
             <tr id="geo-heading-container">
                 <td><label id="label-geo-heading" class="ui-text-label" for="geo-heading">Heading</label></td>
                 <td>
                     <label id="geo-heading-label" class="range-label-left">N</label>
-                    <input id="geo-heading" type="range" value="0" min="0" max="359.5" step="0.5" class="ui-state-default ui-corner-all">
+                    <input id="geo-heading" type="range" value="0" min="0" max="359.5" step="0.5"
+                           class="ui-state-default ui-corner-all">
                 </td>
             </tr>
             <tr id="geo-speed-container">
@@ -118,7 +125,8 @@
                 <td><span class="ui-text-label">GPS Delay (seconds)</span></td>
                 <td>
                     <label id="geo-delay-label" class="range-label-left">0</label>
-                    <input id="geo-delay" type="range" value="0" min="0" max="30" class="ui-state-default ui-corner-all">
+                    <input id="geo-delay" type="range" value="0" min="0" max="30"
+                           class="ui-state-default ui-corner-all">
                 </td>
             </tr>
             <tr id="geo-timeout-container">
@@ -126,15 +134,19 @@
                     <span class="ui-text-label">Simulate GPS Timeout</span>
                 </td>
                 <td>
-                    <input id="geo-timeout" type="checkbox" />
+                    <input id="geo-timeout" type="checkbox"/>
                 </td>
             </tr>
         </table>
 
-        <div id="disable_geo_panel" style="DISPLAY:none; position: absolute; z-index:800; top:120px; left:0; height:445px; width:100%; background-color:rgba(0, 0, 0, 0.2);">
-            <div  style="position: absolute; top: 45%; width: 100%">
+        <div id="disable_geo_panel"
+             style="DISPLAY:none; position: absolute; z-index:800; top:120px; left:0; height:445px; width:100%; background-color:rgba(0, 0, 0, 0.2);">
+            <div style="position: absolute; top: 45%; width: 100%">
                 <div style="position: relative; top: -50%; width: 100%">
-                    <div align="center" style="padding: 6px; font-size: 22px; font-weight: bold; color: #666666; background-color:#ffffff;">Network is not available</div>
+                    <div align="center"
+                         style="padding: 6px; font-size: 22px; font-weight: bold; color: #666666; background-color:#ffffff;">
+                        Network is not available
+                    </div>
                 </div>
             </div>
         </div>

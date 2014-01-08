@@ -15,24 +15,35 @@
 -->
 <section id="geoDB-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Geo Database</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Geo Database
+        </section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
 
     <section class="info ui-widget-content ui-corner-all" style="display: none;">
-    <p></p><select id="geo-select" class="ui-state-default ui-corner-all"></select>
+        <p></p><select id="geo-select" class="ui-state-default ui-corner-all"></select>
 
 
-        <table id= "geoDB-table" class="panel-table">
+        <table id="geoDB-table" class="panel-table">
             <tr>
                 <td colspan=2>
-    <button id="geoDB-add" class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text">Add</span></button>
-    <button id="geoDB-modify" class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text">Modify</span></button>
-    <button id="geoDB-delete" class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text">Delete</span></button>
-                    <button id="geoDB-save" class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text">Save</span></button>
-                    <button id="geoDB-cancel" class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text">Cancel</span></button>
+                    <button id="geoDB-add"
+                            class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Add</span></button>
+                    <button id="geoDB-modify"
+                            class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Modify</span></button>
+                    <button id="geoDB-delete"
+                            class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Delete</span></button>
+                    <button id="geoDB-save"
+                            class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Save</span></button>
+                    <button id="geoDB-cancel"
+                            class="geo-map-zoom-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text">Cancel</span></button>
                 </td>
             </tr>
             <tr>
@@ -53,8 +64,10 @@
                 <td><input id="geoDB-accuracy" class="ui-state-default ui-corner-all" type="number" value=""></td>
             </tr>
             <tr>
-                <td><label id="label-geoDB-altitudeaccuracy" class="ui-text-label" for="geoDB-altitudeAccuracy">Altitude Accuracy</label></td>
-                <td><input id="geoDB-altitudeAccuracy" class="ui-state-default ui-corner-all" type="number" value=""></td>
+                <td><label id="label-geoDB-altitudeaccuracy" class="ui-text-label" for="geoDB-altitudeAccuracy">Altitude
+                    Accuracy</label></td>
+                <td><input id="geoDB-altitudeAccuracy" class="ui-state-default ui-corner-all" type="number" value="">
+                </td>
             </tr>
             <tr>
                 <td><label id="label-geoDB-heading" class="ui-text-label" for="geoDB-heading">Heading</label></td>
@@ -64,43 +77,43 @@
                 <td><label id="label-geoDB-speed" class="ui-text-label" for="geoDB-speed">Speed</label></td>
                 <td><input id="geoDB-speed" class="ui-state-default ui-corner-all" type="number" value=""></td>
             </tr>
-            <tr><td colspan=2><hr width="100%"></td></tr>
+            <tr>
+                <td colspan=2>
+                    <hr width="100%">
+                </td>
+            </tr>
             <tr>
                 <td><label id="label-geoDB-country" class="ui-text-label" for="geoDB-country">country</label></td>
                 <td><input id="geoDB-country" class="ui-state-default ui-corner-all" type="string" value=""></td>
-            </td>
             <tr>
                 <td><label id="label-geoDB-region" class="ui-text-label" for="geoDB-region">region</label></td>
                 <td><input id="geoDB-region" class="ui-state-default ui-corner-all" type="string" value=""></td>
-            </td>
             <tr>
                 <td><label id="label-geoDB-county" class="ui-text-label" for="geoDB-county">county</label></td>
                 <td><input id="geoDB-county" class="ui-state-default ui-corner-all" type="string" value=""></td>
-            </td>
             <tr>
                 <td><label id="label-geoDB-city" class="ui-text-label" for="geoDB-city">city</label></td>
                 <td><input id="geoDB-city" class="ui-state-default ui-corner-all" type="string" value=""></td>
-            </td>
             <tr>
                 <td><label id="label-geoDB-street" class="ui-text-label" for="geoDB-street">street</label></td>
                 <td><input id="geoDB-street" class="ui-state-default ui-corner-all" type="string" value=""></td>
-            </td>
             <tr>
-                <td><label id="label-geoDB-streetNumber" class="ui-text-label" for="geoDB-streetNumber">streetNumber</label></td>
+                <td><label id="label-geoDB-streetNumber" class="ui-text-label"
+                           for="geoDB-streetNumber">streetNumber</label></td>
                 <td><input id="geoDB-streetNumber" class="ui-state-default ui-corner-all" type="string" value=""></td>
-            </td>
             <tr>
                 <td><label id="label-geoDB-premises" class="ui-text-label" for="geoDB-premises">premises</label></td>
                 <td><input id="geoDB-premises" class="ui-state-default ui-corner-all" type="string" value=""></td>
-            </td>
             <tr>
-                <td><label id="label-geoDB-additionalInformation" class="ui-text-label" for="geoDB-additionalInformation">additionalInformation</label></td>
-                <td><input id="geoDB-additionalInformation" class="ui-state-default ui-corner-all" type="string" value=""></td>
-            </td>
+                <td><label id="label-geoDB-additionalInformation" class="ui-text-label"
+                           for="geoDB-additionalInformation">additionalInformation</label></td>
+                <td><input id="geoDB-additionalInformation" class="ui-state-default ui-corner-all" type="string"
+                           value=""></td>
             <tr>
-                <td><label id="label-geoDB-postalCode" class="ui-text-label" for="geoDB-postalCode">postalCode</label></td>
+                <td><label id="label-geoDB-postalCode" class="ui-text-label" for="geoDB-postalCode">postalCode</label>
+                </td>
                 <td><input id="geoDB-postalCode" class="ui-state-default ui-corner-all" type="string" value=""></td>
-            </td>
+            </tr>
         </table>
     </section>
 </section>

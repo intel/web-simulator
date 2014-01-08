@@ -25,11 +25,20 @@
                     params[key] = value;
                 });
 
-                if (params['url'] !== undefined) {
-                    url = "ripple.html?url=" + params['url'];
+                url = "ripple.html";
+
+                if (params['platform'] !== undefined) {
+                    if (params['url'] !== undefined) {
+                        url += "?url=" + params['url'] + "&platform=" + params['platform'];
+                    }
+                    else {
+                        url += "?platform=" + params['platform'];
+                    }
                 }
                 else {
-                    url = "ripple.html";
+                    if (params['url'] !== undefined) {
+                        url += "?url=" + params['url'];
+                    }
                 }
 
                 if (!supportedBrowser.test(navigator.userAgent)) {

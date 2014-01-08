@@ -15,7 +15,8 @@
 -->
 <section id="communication-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Communications</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Communications
+        </section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
@@ -31,22 +32,26 @@
                 <p>Use this area to simulate a telephone conversation.</p>
                 <table class="panel-table" style="border-spacing: 6px;">
                     <tr>
-                    <td><span class="ui-text-label" id="isVideoCallLabel">isVideoCall?</span></td>
-                    <td><input id="is-videoCall" type="checkbox"/></td>
+                        <td><span class="ui-text-label" id="isVideoCallLabel">isVideoCall?</span></td>
+                        <td><input id="is-videoCall" type="checkbox"/></td>
 
                     </tr>
                     <tr>
-                        <td style="width:100%;"><input id="communication-callerName" style="width:100%;" maxlength="32" class="ui-corner-all" type="text" value="" placeholder="caller's name"/></td>
+                        <td style="width:100%;"><input id="communication-callerName" style="width:100%;" maxlength="32"
+                                                       class="ui-corner-all" type="text" value=""
+                                                       placeholder="caller's name"/></td>
                     </tr>
                     <tr>
-                        <td><input id="communication-callNum" style="width:100%;" class="ui-corner-all" type="text" maxlength="32" value="" placeholder="caller's number"/></td>
+                        <td><input id="communication-callNum" style="width:100%;" class="ui-corner-all" type="text"
+                                   maxlength="32" value="" placeholder="caller's number"/></td>
                     </tr>
                     <tr>
-                        <td id='communication-cellularStatus' style='color:#aa0000;';>Cellular radio is off. Turn it on from Network Management Panel.</td>
+                        <td id='communication-cellularStatus' style='color:#aa0000;'>Cellular radio is off. Turn it on from Network Management Panel.</td>
                     </tr>
                     <tr>
                         <td>
-                            <button id="communication-callStart" class="PanelButtonStyle" style="width: 40%; margin:0.5em 0;">
+                            <button id="communication-callStart" class="PanelButtonStyle"
+                                    style="width: 40%; margin:0.5em 0;">
                                 <span class="ui-button-text">Call</span>
                             </button>
                         </td>
@@ -61,20 +66,26 @@
                 <p>Use this area to simulate a message conversation.</p>
                 <table class="panel-table" style="border-spacing: 6px;">
                     <tr>
-                        <td style="width:100%;"><input class="ui-corner-all" style="width: 88%" id="communication-senderName" type="text" maxlength="32" placeholder="Sender's name"/></td>
+                        <td style="width:100%;"><input class="ui-corner-all" style="width: 88%"
+                                                       id="communication-senderName" type="text" maxlength="32"
+                                                       placeholder="Sender's name"/></td>
                     </tr>
                     <tr>
-                        <td><select id="communication-msgType" style="width:40%; float:left;" class="ui-corner-all"></select></td>
+                        <td><select id="communication-msgType" style="width:40%; float:left;"
+                                    class="ui-corner-all"></select></td>
                     </tr>
                     <tr>
-                        <td><textarea class="ui-corner-all" style="width: 88%;" rows="6" id="communication-messageContent" maxlength="256" placeholder="Enter message here"></textarea></td>
+                        <td><textarea class="ui-corner-all" style="width: 88%;" rows="6"
+                                      id="communication-messageContent" maxlength="256"
+                                      placeholder="Enter message here"></textarea></td>
                     </tr>
                     <tr>
-                        <td id='communication-messageRadioStatus' style='color:#aa0000;';></td>
+                        <td id='communication-messageRadioStatus' style='color:#aa0000;'></td>
                     </tr>
                     <tr>
                         <td>
-                            <button id="communication-sendMessage" class="PanelButtonStyle" style="width:40%; margin:0.5em 0;">
+                            <button id="communication-sendMessage" class="PanelButtonStyle"
+                                    style="width:40%; margin:0.5em 0;">
                                 <span class="ui-button-text">Send</span>
                             </button>
                         </td>
@@ -90,25 +101,26 @@
                 </button>
                 <section id="communication-messageOut" style="display:none;">
                     <table style="border-spacing: 6px;">
-                    <tr class="communication-msgOut">
-                        <td >Sim</td>
-                        <td>&rarr;</td>
-                        <td></td>
-                    </tr>
+                        <tr class="communication-msgOut">
+                            <td>Sim</td>
+                            <td>&rarr;</td>
+                            <td></td>
+                        </tr>
                     </table>
                 </section>
                 <section id="communication-messageIn" style="display:none;">
                     <table style="border-spacing: 6px;">
-                    <tr class="communication-msgIn">
-                        <td></td>
-                        <td>&larr;</td>
-                        <td>Device</td>
-                    </tr>
+                        <tr class="communication-msgIn">
+                            <td></td>
+                            <td>&larr;</td>
+                            <td>Device</td>
+                        </tr>
                     </table>
                 </section>
             </div>
             <div id="pushSettings" class="ui-tabs-panel ui-widget-content clearfix">
                 <p>Use this area to simulate a push server.</p>
+
                 <div id="communication-push-header" style="display:none; background-color:#D3D1D1;">
                     <table class="panel-table">
                         <tr>
@@ -125,12 +137,14 @@
                 <table class="panel-table" style="border-spacing: 6px;">
                     <tr>
                         <td>
-                            <input class="ui-corner-all" id="communication-push-msg" type="text" style="width: 90%" maxlength="64" placeholder="Alert message" />
+                            <input class="ui-corner-all" id="communication-push-msg" type="text" style="width: 90%"
+                                   maxlength="64" placeholder="Alert message"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <textarea class="ui-corner-all" id="communication-push-data" style="width: 90%" rows="8" maxlength="256" placeholder="Application data"></textarea>
+                            <textarea class="ui-corner-all" id="communication-push-data" style="width: 90%" rows="8"
+                                      maxlength="256" placeholder="Application data"></textarea>
                         </td>
                     </tr>
                     <tr>

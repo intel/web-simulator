@@ -23,11 +23,14 @@
     <section id="call" class="info ui-widget-content ui-corner-all" style="display: none;">
         <section class="call-info">
             <h3 class="PanelSectionTitle">Local Party</h3>
+
             <div id="call-status" style="position:absolute; width:85%; height:120px; z-index:200; padding:10px; background-color:rgba(0, 0, 0, 0.9); color: white; display: none; border-style:solid;
 border-width:3px; border-bottom-width:0px; border-color: gray;"></div>
             <table id="call-local-dialer" class="tf_panel-table2">
                 <tr>
-                    <td><image src="images/contact-icon.png"></td>
+                    <td>
+                        <image src="images/contact-icon.png" />
+                    </td>
                     <td><label class="ui-text-label">Simulator Bot</label></td>
                 </tr>
                 <tr>
@@ -36,15 +39,20 @@ border-width:3px; border-bottom-width:0px; border-color: gray;"></div>
                 </tr>
                 <tr>
                     <td>
-                        <button id="call-local-call" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <button id="call-local-call"
+                                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
                             <span id="call-local-text" class="ui-button-text">Call</span>
                         </button>
                     </td>
                     <td><select id="call-local-phone-number" class="ui-state-default ui-corner-all"></select></td>
                 </tr>
-                <tr><td colspan="2">&nbsp;---------------------------------------------------------------------------</td></tr>
+                <tr>
+                    <td colspan="2">&nbsp;---------------------------------------------------------------------------
+                    </td>
+                </tr>
             </table>
-        	<h3 class="PanelSectionTitle">Remote Party</h3>
+            <h3 class="PanelSectionTitle">Remote Party</h3>
+
             <div id="remote-call-status" style="position:absolute; width:85%; height:120px; z-index:200; padding:10px; background-color:rgba(0, 0, 0, 0.9); color: white; display: none; border-style:solid;
 border-width:3px; border-bottom-width:0px; border-color: gray;"></div>
             <table id="call-remote-dialer" class="tf_panel-table2">
@@ -55,12 +63,15 @@ border-width:3px; border-bottom-width:0px; border-color: gray;"></div>
                 </tr>
                 -->
                 <tr>
-                    <td><image src="images/contact-icon.png"></td>
+                    <td>
+                        <image src="images/contact-icon.png" />
+                    </td>
                     <td><label class="ui-text-label"><span id="remotePartyName"></span></label></td>
                 </tr>
                 <tr>
                     <td>
-                        <button id="call-remote-call" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <button id="call-remote-call"
+                                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
                             <span id="call-remote-text" class="ui-button-text">Call</span>
                         </button>
                     </td>
@@ -68,9 +79,12 @@ border-width:3px; border-bottom-width:0px; border-color: gray;"></div>
                         <label class="ui-text-label" style="font-size:14px;">Simulator Bot</label>
                     </td>
                 </tr>
-                <tr><td colspan="2">&nbsp;---------------------------------------------------------------------------</td></tr>
+                <tr>
+                    <td colspan="2">&nbsp;---------------------------------------------------------------------------
+                    </td>
+                </tr>
             </table>
-        	<h3 class="PanelSectionTitle">End call with</h3>
+            <h3 class="PanelSectionTitle">End call with</h3>
             <table id="call-exception" class="tf_panel-table2">
                 <tr>
                     <td><label class="ui-text-label">Reason</label></td>

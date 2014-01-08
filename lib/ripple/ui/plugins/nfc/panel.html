@@ -15,270 +15,281 @@
 -->
 
 <section id="nfc-container" class="ui-box ui-state-default">
-    <section class="h2 info-header">
-        <section class="collapse-handle">
-            <span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>NFC Adapter
-        </section>
-        <section class="drag-handle">
-            <span><img src="images/menuDraggerIcon.png" /></span>
-        </section>
+<section class="h2 info-header">
+    <section class="collapse-handle">
+        <span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>NFC Adapter
     </section>
+    <section class="drag-handle">
+        <span><img src="images/menuDraggerIcon.png"/></span>
+    </section>
+</section>
 
-    <section id="nfc" class="info ui-widget-content ui-corner-all" style="display: none;">
-        <table class="panel-table">
-        <tr>
+<section id="nfc" class="info ui-widget-content ui-corner-all" style="display: none;">
+<table class="panel-table">
+    <tr>
         <td><label class="ui-text-label">Power</label></td>
         <td><select id="nfc-power" class="ui-state-default ui-corner-all">
             <option value="On">On</option>
             <option value="Off">Off</option>
-            </select>
+        </select>
         </td>
-        </table>
+</table>
 
-        <div id="nfc-main-container">
-        <table class="panel-table">
-        </tr>
-        <tr>
+<div id="nfc-main-container">
+<table class="panel-table">
+    </tr>
+    <tr>
         <td><label class="ui-text-label">Polling</label></td>
         <td><select id="nfc-polling" class="ui-state-default ui-corner-all">
             <option value="On">On</option>
             <option value="Off">Off</option>
-            </select>
-        </td>
-        </tr>
-        </table>
-        <select id="nfc-type" style="width: 50%" class="ui-state-default ui-corner-all">
-            <option value="Tag">NFC Tag</option>
-            <option value="Peer">NFC Peer</option>
         </select>
-        <div style="border: 1px solid #AAA; padding: 0.4em 1em !important;" class="ui-corner-all">
-            <!-- NFCTag -->
-            <div id="nfc-nfctag">
-                <table class="panel-table">
-                <tr>
-                    <td><label class="ui-text-label">Connection Status</label></td>
-                    <td><span id="nfc-tag-connection">Disconnected</span></td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">Type</label></td>
-                    <td><select id="nfc-tag-type" class="ui-state-default ui-corner-all">
-                        <option value="GENERIC_TARGET">Generic Target</option>
-                        <option value="ISO14443_A">ISO14443-A</option>
-                        <option value="ISO14443_4A">ISO14443-4A</option>
-                        <option value="ISO14443_3A">ISO14443-3A</option>
-                        <option value="MIFARE_MINI">Mifare Mini</option>
-                        <option value="MIFARE_1K">Mifare 1K</option>
-                        <option value="MIFARE_4K">Mifare 4K</option>
-                        <option value="MIFARE_ULTRA">Mifare Ultra</option>
-                        <option value="MIFARE_DESFIRE">Mifare Desfire</option>
-                        <option value="ISO14443_B">ISO14443-B</option>
-                        <option value="ISO14443_4B">ISO14443-4B</option>
-                        <option value="ISO14443_BPRIME">ISO14443-Bprime</option>
-                        <option value="FELICA">Felica</option>
-                        <option value="JEWEL">Jewel</option>
-                        <option value="ISO15693">ISO15693</option>
-                        <option value="UNKNOWN_TARGET">Unknown Target</option>
-                        </select>
-                        <span id="nfc-tag-type-text" style="display: none;"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">Support NDEF</label></td>
-                    <td><select id="nfc-tag-NDEF-support" class="ui-state-default ui-corner-all">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                        </select>
-                        <span id="nfc-tag-NDEF-support-text" style="display: none;"></span>
-                    </td>
-                </tr>
-                </table>
-                <div style="border: 1px solid #AAA; padding: 0.4em 1em !important;" class="ui-corner-all">
-                <div id="nfc-tag-ndef-container">
-                <div class="ui-corner-all">
-                    <h3 class="config-accordion-node-title">
-                        <a href="#" class="ui-text-pass">NDEF 1</a>
-                    </h3>
-                    <div>
-                        <div>
-                            <div class="config-accordion-node-content-attributes-title">Record 1</div>
-                            <table class="preferences-table">
-                            <tr>
-                                <td><label class="ui-text-label">TNF</label></td>
-                                <td>Well Known</td>
-                            </tr>
-                                <td><label class="ui-text-label">Type</label></td>
-                                <td>TypeA</td>
-                            </tr>
-                                <td><label class="ui-text-label">ID</label></td>
-                                <td>ID001</td>
-                            </tr>
-                            </tr>
-                                <td><label class="ui-text-label">Payload</label></td>
-                                <td>This is 1st payload</td>
-                            </tr>
-                            </table>
-                        </div>
-                        <br>
-                        <div>
-                            <div class="config-accordion-node-content-attributes-title">Record 2</div>
-                            <table class="preferences-table">
-                            <tr>
-                                <td><label class="ui-text-label">TNF</label></td>
-                                <td>Well Known</td>
-                            </tr>
-                                <td><label class="ui-text-label">Type</label></td>
-                                <td>TypeA</td>
-                            </tr>
-                                <td><label class="ui-text-label">ID</label></td>
-                                <td>ID002</td>
-                            </tr>
-                            </tr>
-                                <td><label class="ui-text-label">Payload</label></td>
-                                <td>This is 2nd payload</td>
-                            </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui-corner-all">
-                    <h3 class="config-accordion-node-title">
-                        <a href="#" class="ui-text-pass">NDEF 2</a>
-                    </h3>
-                    <div>
-                        <div>
-                            <div class="config-accordion-node-content-attributes-title">Record 1</div>
-                            <table class="preferences-table">
-                            <tr>
-                                <td><label class="ui-text-label">TNF</label></td>
-                                <td>Well Known</td>
-                            </tr>
-                                <td><label class="ui-text-label">Type</label></td>
-                                <td>TypeA</td>
-                            </tr>
-                                <td><label class="ui-text-label">ID</label></td>
-                                <td>ID001</td>
-                            </tr>
-                            </tr>
-                                <td><label class="ui-text-label">Payload</label></td>
-                                <td>This is 1st payload</td>
-                            </tr>
-                            </table>
-                        </div>
-                        <br>
-                        <div>
-                            <div class="config-accordion-node-content-attributes-title">Record 2</div>
-                            <table class="preferences-table">
-                            <tr>
-                                <td><label class="ui-text-label">TNF</label></td>
-                                <td>Well Known</td>
-                            </tr>
-                                <td><label class="ui-text-label">Type</label></td>
-                                <td>TypeA</td>
-                            </tr>
-                                <td><label class="ui-text-label">ID</label></td>
-                                <td>ID002</td>
-                            </tr>
-                            </tr>
-                                <td><label class="ui-text-label">Payload</label></td>
-                                <td>This is 2nd payload</td>
-                            </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div id="nfc-tag-raw-container" style="display: none;">
-                    <table class="preferences-table">
-                    <tr>
-                    <td><label class="ui-text-label">Raw Data</label></td>
-                    </tr>
-                    <tr>
-                    <td><textarea id="nfc-raw-data" class="ui-corner-all" rows="8" style="width: 90%;"></textarea></td>
-                    </tr>
-                    </table>
-                </div>
-                </div>
-            </div>
-            <!-- NFCPeer -->
-            <div id="nfc-nfcpeer" style="display: none;">
-                <table class="panel-table">
-                <tr>
-                    <td><label class="ui-text-label">Connection Status</label></td>
-                    <td><span id="nfc-peer-connection">Disconnected</span></td>
-                </tr>
-                </table>
-                <div class="ui-corner-all">
-                    <h3 class="config-accordion-node-title">
-                        <a href="#" class="ui-text-pass">NDEF</a>
-                    </h3>
-                    <div>
-                        <div>
-                            <div class="config-accordion-node-content-attributes-title">Record 1</div>
-                            <table class="preferences-table">
-                            <tr>
-                                <td><label class="ui-text-label">TNF</label></td>
-                                <td>Well Known</td>
-                            </tr>
-                                <td><label class="ui-text-label">Type</label></td>
-                                <td>TypeA</td>
-                            </tr>
-                                <td><label class="ui-text-label">ID</label></td>
-                                <td>ID001</td>
-                            </tr>
-                            </tr>
-                                <td><label class="ui-text-label">Payload</label></td>
-                                <td>This is 1st payload</td>
-                            </tr>
-                            </table>
-                        </div>
-                        <br>
-                        <div>
-                            <div class="config-accordion-node-content-attributes-title">Record 2</div>
-                            <table class="preferences-table">
-                            <tr>
-                                <td><label class="ui-text-label">TNF</label></td>
-                                <td>Well Known</td>
-                            </tr>
-                                <td><label class="ui-text-label">Type</label></td>
-                                <td>TypeA</td>
-                            </tr>
-                                <td><label class="ui-text-label">ID</label></td>
-                                <td>ID002</td>
-                            </tr>
-                            </tr>
-                                <td><label class="ui-text-label">Payload</label></td>
-                                <td>This is 2nd payload</td>
-                            </tr>
-                            </table>
-                        </div>
-                <div align="center">
-                    <span id="nfc-peer-send-msg" style="color: #AA5500; font-size:120%">&nbsp;</span>
-                </div>
+        </td>
+    </tr>
+</table>
+<select id="nfc-type" style="width: 50%" class="ui-state-default ui-corner-all">
+    <option value="Tag">NFC Tag</option>
+    <option value="Peer">NFC Peer</option>
+</select>
+
+<div style="border: 1px solid #AAA; padding: 0.4em 1em !important;" class="ui-corner-all">
+<!-- NFCTag -->
+<div id="nfc-nfctag">
+    <table class="panel-table">
+        <tr>
+            <td><label class="ui-text-label">Connection Status</label></td>
+            <td><span id="nfc-tag-connection">Disconnected</span></td>
+        </tr>
+        <tr>
+            <td><label class="ui-text-label">Type</label></td>
+            <td><select id="nfc-tag-type" class="ui-state-default ui-corner-all">
+                <option value="GENERIC_TARGET">Generic Target</option>
+                <option value="ISO14443_A">ISO14443-A</option>
+                <option value="ISO14443_4A">ISO14443-4A</option>
+                <option value="ISO14443_3A">ISO14443-3A</option>
+                <option value="MIFARE_MINI">Mifare Mini</option>
+                <option value="MIFARE_1K">Mifare 1K</option>
+                <option value="MIFARE_4K">Mifare 4K</option>
+                <option value="MIFARE_ULTRA">Mifare Ultra</option>
+                <option value="MIFARE_DESFIRE">Mifare Desfire</option>
+                <option value="ISO14443_B">ISO14443-B</option>
+                <option value="ISO14443_4B">ISO14443-4B</option>
+                <option value="ISO14443_BPRIME">ISO14443-Bprime</option>
+                <option value="FELICA">Felica</option>
+                <option value="JEWEL">Jewel</option>
+                <option value="ISO15693">ISO15693</option>
+                <option value="UNKNOWN_TARGET">Unknown Target</option>
+            </select>
+                <span id="nfc-tag-type-text" style="display: none;"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="ui-text-label">Support NDEF</label></td>
+            <td><select id="nfc-tag-NDEF-support" class="ui-state-default ui-corner-all">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+                <span id="nfc-tag-NDEF-support-text" style="display: none;"></span>
+            </td>
+        </tr>
+    </table>
+    <div style="border: 1px solid #AAA; padding: 0.4em 1em !important;" class="ui-corner-all">
+        <div id="nfc-tag-ndef-container">
+            <div class="ui-corner-all">
+                <h3 class="config-accordion-node-title">
+                    <a href="#" class="ui-text-pass">NDEF 1</a>
+                </h3>
+
                 <div>
-                    <button class="PanelButtonStyle" id="nfc-peer-send" style="width: 100%;"><span class="ui-button-text">Send</span></button>
-                </div>
+                    <div>
+                        <div class="config-accordion-node-content-attributes-title">Record 1</div>
+                        <table class="preferences-table">
+                            <tr>
+                                <td><label class="ui-text-label">TNF</label></td>
+                                <td>Well Known</td>
+                            </tr>
+                            <td><label class="ui-text-label">Type</label></td>
+                            <td>TypeA</td>
+                            </tr>
+                            <td><label class="ui-text-label">ID</label></td>
+                            <td>ID001</td>
+                            </tr>
+                            </tr>
+                            <td><label class="ui-text-label">Payload</label></td>
+                            <td>This is 1st payload</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+
+                    <div>
+                        <div class="config-accordion-node-content-attributes-title">Record 2</div>
+                        <table class="preferences-table">
+                            <tr>
+                                <td><label class="ui-text-label">TNF</label></td>
+                                <td>Well Known</td>
+                            </tr>
+                            <td><label class="ui-text-label">Type</label></td>
+                            <td>TypeA</td>
+                            </tr>
+                            <td><label class="ui-text-label">ID</label></td>
+                            <td>ID002</td>
+                            </tr>
+                            </tr>
+                            <td><label class="ui-text-label">Payload</label></td>
+                            <td>This is 2nd payload</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
-        <br>
-        <div>
-            <table id="nfc-output-table" class="preferences-table" style="display: none;">
-            <tr>
-            <td><label class="ui-text-label">Receive Data</label></td>
-            </tr>
-            <tr>
-            <td><textarea id="nfc-output" class="ui-corner-all" rows="4" style="width: 92%" readonly></textarea></td>
-            </tr>
+            <div class="ui-corner-all">
+                <h3 class="config-accordion-node-title">
+                    <a href="#" class="ui-text-pass">NDEF 2</a>
+                </h3>
+
+                <div>
+                    <div>
+                        <div class="config-accordion-node-content-attributes-title">Record 1</div>
+                        <table class="preferences-table">
+                            <tr>
+                                <td><label class="ui-text-label">TNF</label></td>
+                                <td>Well Known</td>
+                            </tr>
+                            <td><label class="ui-text-label">Type</label></td>
+                            <td>TypeA</td>
+                            </tr>
+                            <td><label class="ui-text-label">ID</label></td>
+                            <td>ID001</td>
+                            </tr>
+                            </tr>
+                            <td><label class="ui-text-label">Payload</label></td>
+                            <td>This is 1st payload</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+
+                    <div>
+                        <div class="config-accordion-node-content-attributes-title">Record 2</div>
+                        <table class="preferences-table">
+                            <tr>
+                                <td><label class="ui-text-label">TNF</label></td>
+                                <td>Well Known</td>
+                            </tr>
+                            <td><label class="ui-text-label">Type</label></td>
+                            <td>TypeA</td>
+                            </tr>
+                            <td><label class="ui-text-label">ID</label></td>
+                            <td>ID002</td>
+                            </tr>
+                            </tr>
+                            <td><label class="ui-text-label">Payload</label></td>
+                            <td>This is 2nd payload</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="nfc-tag-raw-container" style="display: none;">
+            <table class="preferences-table">
+                <tr>
+                    <td><label class="ui-text-label">Raw Data</label></td>
+                </tr>
+                <tr>
+                    <td><textarea id="nfc-raw-data" class="ui-corner-all" rows="8" style="width: 90%;"></textarea></td>
+                </tr>
             </table>
         </div>
-        <div align="center">
-            <span id="nfc-attach-msg" style="color: #AA5500; font-size:120%">&nbsp;</span>
-        </div>
-        <div>
-            <button class="PanelButtonStyle" id="nfc-attach" style="width: 100%;"><span class="ui-button-text">Attach</span></button>
-        </div>
-        </div>
-        </section>
     </div>
+</div>
+<!-- NFCPeer -->
+<div id="nfc-nfcpeer" style="display: none;">
+    <table class="panel-table">
+        <tr>
+            <td><label class="ui-text-label">Connection Status</label></td>
+            <td><span id="nfc-peer-connection">Disconnected</span></td>
+        </tr>
+    </table>
+    <div class="ui-corner-all">
+        <h3 class="config-accordion-node-title">
+            <a href="#" class="ui-text-pass">NDEF</a>
+        </h3>
+
+        <div>
+            <div>
+                <div class="config-accordion-node-content-attributes-title">Record 1</div>
+                <table class="preferences-table">
+                    <tr>
+                        <td><label class="ui-text-label">TNF</label></td>
+                        <td>Well Known</td>
+                    </tr>
+                    <td><label class="ui-text-label">Type</label></td>
+                    <td>TypeA</td>
+                    </tr>
+                    <td><label class="ui-text-label">ID</label></td>
+                    <td>ID001</td>
+                    </tr>
+                    </tr>
+                    <td><label class="ui-text-label">Payload</label></td>
+                    <td>This is 1st payload</td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+
+            <div>
+                <div class="config-accordion-node-content-attributes-title">Record 2</div>
+                <table class="preferences-table">
+                    <tr>
+                        <td><label class="ui-text-label">TNF</label></td>
+                        <td>Well Known</td>
+                    </tr>
+                    <td><label class="ui-text-label">Type</label></td>
+                    <td>TypeA</td>
+                    </tr>
+                    <td><label class="ui-text-label">ID</label></td>
+                    <td>ID002</td>
+                    </tr>
+                    </tr>
+                    <td><label class="ui-text-label">Payload</label></td>
+                    <td>This is 2nd payload</td>
+                    </tr>
+                </table>
+            </div>
+            <div align="center">
+                <span id="nfc-peer-send-msg" style="color: #AA5500; font-size:120%">&nbsp;</span>
+            </div>
+            <div>
+                <button class="PanelButtonStyle" id="nfc-peer-send" style="width: 100%;"><span class="ui-button-text">Send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div>
+    <table id="nfc-output-table" class="preferences-table" style="display: none;">
+        <tr>
+            <td><label class="ui-text-label">Receive Data</label></td>
+        </tr>
+        <tr>
+            <td><textarea id="nfc-output" class="ui-corner-all" rows="4" style="width: 92%" readonly></textarea></td>
+        </tr>
+    </table>
+</div>
+<div align="center">
+    <span id="nfc-attach-msg" style="color: #AA5500; font-size:120%">&nbsp;</span>
+</div>
+<div>
+    <button class="PanelButtonStyle" id="nfc-attach" style="width: 100%;"><span class="ui-button-text">Attach</span>
+    </button>
+</div>
+</div>
+</div>
+</section>
+</div>
 </section>
     
