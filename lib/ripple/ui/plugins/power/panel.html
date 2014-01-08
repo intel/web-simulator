@@ -15,14 +15,15 @@
 -->
 <section id="power-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Power Manager</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Power Manager
+        </section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
     </section>
 
     <section class="info ui-widget-content ui-corner-all" style="display: none;">
-    <span class="PanelSectionTitle">Battery</span>
+        <span class="PanelSectionTitle">Battery</span>
         <table class="panel-table">
             <tr>
                 <td>
@@ -39,7 +40,8 @@
             </tr>
             <tr>
                 <td>
-                    <input id="battery-volume" type="number" value="100" min="0" max="100" step="1" style="width: 100px" class="ui-state-default ui-corner-all">
+                    <input id="battery-volume" type="number" value="100" min="0" max="100" step="1" style="width: 100px"
+                           class="ui-state-default ui-corner-all">
                     <label id="battery-volume-label" style="display:none"></label>
                     <label>%</label>
                 </td>
@@ -69,13 +71,16 @@
         <div id="simulate-low-battery" title="Simulate low battery">
             <p style="margin-left:5px">
                 <label>Start at :&nbsp;&nbsp;</label>
-                <input id="low-battery-start-at" type="number" value="20" min="0" max="100" step="1" class="ui-state-default ui-corner-all">
+                <input id="low-battery-start-at" type="number" value="20" min="0" max="100" step="1"
+                       class="ui-state-default ui-corner-all">
                 <label>%</label>
             </p>
+
             <p style="margin-left:5px">
                 <label>Drop to 0% over :&nbsp;&nbsp;</label>
                 <input id="low-battery-remain-time" value="1200"> Second(s)
             </p>
+
             <p align="right">
                 <button id="simulate-low-battery-cancel">Cancel</button>
                 <button id="simulate-low-battery-start">Start</button>

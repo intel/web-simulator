@@ -15,7 +15,8 @@
 -->
 <section id="preferences" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Storage</section>
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Storage
+        </section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
@@ -23,7 +24,12 @@
 
     <section id="preferences-list" class="info ui-widget-content ui-corner-all" style="display: none;">
         <table class="preferences-table ui-widget-content">
-            <thead><tr><th><label class="ui-text-label">Key</label></th><th><label class="ui-text-label">Value</label></th></tr></thead>
+            <thead>
+            <tr>
+                <th><label class="ui-text-label">Key</label></th>
+                <th><label class="ui-text-label">Value</label></th>
+            </tr>
+            </thead>
             <tbody id="preferences-list-body"></tbody>
         </table>
 
@@ -31,7 +37,8 @@
         <span class="preferences-count">Total:&nbsp;</span>
         <span class="ui-text-highlight preferences-note">(read-only preference colour)</span><br/>
 
-        <button id="preferences-clear-button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+        <button id="preferences-clear-button"
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
             <span class="ui-button-text">Clear All</span>
         </button>
     </section>
