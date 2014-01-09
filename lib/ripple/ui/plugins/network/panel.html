@@ -28,12 +28,13 @@
             <tr>
                 <td><label class="ui-text-label">WiFi</label></td>
                 <td>
-                <div id="wifi-radio">
-                    <input type="radio" id="wifi-radio1" name="radio-wifi" />
-                    <label id="wifi-radio1-label" for="wifi-radio1">On</label>
-                    <input type="radio" id="wifi-radio2" name="radio-wifi" />
-                    <label id="wifi-radio2-label" for="wifi-radio2">Off</label>
-                </div></td>
+                    <div id="wifi-radio">
+                        <input type="radio" id="wifi-radio1" name="radio-wifi" />
+                        <label id="wifi-radio1-label" for="wifi-radio1">On</label>
+                        <input type="radio" id="wifi-radio2" name="radio-wifi" />
+                        <label id="wifi-radio2-label" for="wifi-radio2">Off</label>
+                    </div>
+                </td>
             </tr>
         </table>
         <table class="panel-table">
@@ -41,14 +42,18 @@
                 <td colspan="2"><hr></td>
             </tr>
             <tr>
-                <td><label class="ui-text-label">Cellular Network</label><span style="color:#333333; font-size:9px;" id="panel_flight_mode_notice">(Flight Mode)</span></td>
                 <td>
-                <div id="cellular-radio">
-                    <input type="radio" id="cellular-radio1" name="radio-cellular" />
-                    <label id="cellular-radio1-label" for="cellular-radio1">On</label>
-                    <input type="radio" id="cellular-radio2" name="radio-cellular" />
-                    <label id="cellular-radio2-label" for="cellular-radio2">Off</label>
-                </div></td>
+                    <label class="ui-text-label">Cellular Network</label>
+                    <span style="color:#333333; font-size:9px;" id="panel_flight_mode_notice">(Flight Mode)</span>
+                </td>
+                <td>
+                    <div id="cellular-radio">
+                        <input type="radio" id="cellular-radio1" name="radio-cellular" />
+                        <label id="cellular-radio1-label" for="cellular-radio1">On</label>
+                        <input type="radio" id="cellular-radio2" name="radio-cellular" />
+                        <label id="cellular-radio2-label" for="cellular-radio2">Off</label>
+                    </div>
+                </td>
             </tr>
         </table>
         <table class="panel-table">
@@ -58,27 +63,29 @@
             <tr>
                 <td><label class="ui-text-label">NFC</label></td>
                 <td>
-                <div id="nfc-radio">
-                    <input type="radio" id="nfc-radio1" name="radio-NFC" />
-                    <label id="nfc-radio1-label" for="nfc-radio1">On</label>
-                    <input type="radio" id="nfc-radio2" name="radio-NFC" checked="checked" />
-                    <label id="nfc-radio2-label" for="nfc-radio2">Off</label>
-                </div></td>
+                    <div id="nfc-radio">
+                        <input type="radio" id="nfc-radio1" name="radio-NFC" />
+                        <label id="nfc-radio1-label" for="nfc-radio1">On</label>
+                        <input type="radio" id="nfc-radio2" name="radio-NFC" checked="checked" />
+                        <label id="nfc-radio2-label" for="nfc-radio2">Off</label>
+                    </div>
+                </td>
             </tr>
         </table>
         <div id="nfc-main-container" style="display:none; background-color:#D3D1D1;">
             <h3></h3>
             <div style="padding: 0.4em 1em !important;">
-            <table class="panel-table">
-            <tr>
-                <td><label class="ui-text-label">Power Status</label></td>
-                <td><select id="nfc-power" class="ui-state-default ui-corner-all">
-                    <option value="On">On</option>
-                    <option value="Off">Off</option>
-                    </select>
-                </td>
-            </tr>
-            </table>
+                <table class="panel-table">
+                    <tr>
+                        <td><label class="ui-text-label">Power Status</label></td>
+                        <td>
+                            <select id="nfc-power" class="ui-state-default ui-corner-all">
+                                <option value="On">On</option>
+                                <option value="Off">Off</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <select id="nfc-type" style="width: 50%" class="ui-state-default ui-corner-all">
                 <option value="Tag">NFC Tag</option>
@@ -95,32 +102,36 @@
                         <tr>
                             <td><label class="ui-text-label">Type</label></td>
                             <td>
-                            <select id="nfc-tag-type" class="ui-state-default ui-corner-all">
-                                <option value="GENERIC_TARGET">Generic Target</option>
-                                <option value="ISO14443_A">ISO14443-A</option>
-                                <option value="ISO14443_4A">ISO14443-4A</option>
-                                <option value="ISO14443_3A">ISO14443-3A</option>
-                                <option value="MIFARE_MINI">Mifare Mini</option>
-                                <option value="MIFARE_1K">Mifare 1K</option>
-                                <option value="MIFARE_4K">Mifare 4K</option>
-                                <option value="MIFARE_ULTRA">Mifare Ultra</option>
-                                <option value="MIFARE_DESFIRE">Mifare Desfire</option>
-                                <option value="ISO14443_B">ISO14443-B</option>
-                                <option value="ISO14443_4B">ISO14443-4B</option>
-                                <option value="ISO14443_BPRIME">ISO14443-Bprime</option>
-                                <option value="FELICA">Felica</option>
-                                <option value="JEWEL">Jewel</option>
-                                <option value="ISO15693">ISO15693</option>
-                                <option value="UNKNOWN_TARGET">Unknown Target</option>
-                            </select><span id="nfc-tag-type-text" style="display: none;"></span></td>
+                                <select id="nfc-tag-type" class="ui-state-default ui-corner-all">
+                                    <option value="GENERIC_TARGET">Generic Target</option>
+                                    <option value="ISO14443_A">ISO14443-A</option>
+                                    <option value="ISO14443_4A">ISO14443-4A</option>
+                                    <option value="ISO14443_3A">ISO14443-3A</option>
+                                    <option value="MIFARE_MINI">Mifare Mini</option>
+                                    <option value="MIFARE_1K">Mifare 1K</option>
+                                    <option value="MIFARE_4K">Mifare 4K</option>
+                                    <option value="MIFARE_ULTRA">Mifare Ultra</option>
+                                    <option value="MIFARE_DESFIRE">Mifare Desfire</option>
+                                    <option value="ISO14443_B">ISO14443-B</option>
+                                    <option value="ISO14443_4B">ISO14443-4B</option>
+                                    <option value="ISO14443_BPRIME">ISO14443-Bprime</option>
+                                    <option value="FELICA">Felica</option>
+                                    <option value="JEWEL">Jewel</option>
+                                    <option value="ISO15693">ISO15693</option>
+                                    <option value="UNKNOWN_TARGET">Unknown Target</option>
+                                </select>
+                                <span id="nfc-tag-type-text" style="display: none;"></span>
+                            </td>
                         </tr>
                         <tr>
                             <td><label class="ui-text-label">Support NDEF</label></td>
                             <td>
-                            <select id="nfc-tag-NDEF-support" class="ui-state-default ui-corner-all">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select><span id="nfc-tag-NDEF-support-text" style="display: none;"></span></td>
+                                <select id="nfc-tag-NDEF-support" class="ui-state-default ui-corner-all">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                                <span id="nfc-tag-NDEF-support-text" style="display: none;"></span>
+                            </td>
                         </tr>
                     </table>
                     <div style="border: 1px solid #AAA; padding: 0.4em 1em !important;" class="ui-corner-all">
@@ -129,41 +140,45 @@
                                 <h3 class="config-accordion-node-title"><a href="#" class="ui-text-pass">NDEF 1</a></h3>
                                 <div>
                                     <div>
-                                        <div class="config-accordion-node-content-attributes-title">
-                                            Record 1
-                                        </div>
+                                        <div class="config-accordion-node-content-attributes-title">Record 1</div>
                                         <table class="preferences-table">
                                             <tr>
                                                 <td><label class="ui-text-label">TNF</label></td>
                                                 <td>Well Known</td>
                                             </tr>
-                                            <td><label class="ui-text-label">Type</label></td>
-                                            <td>TypeA</td>
-                                            </tr> <td><label class="ui-text-label">ID</label></td>
-                                            <td>ID001</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">Type</label></td>
+                                                <td>TypeA</td>
                                             </tr>
-                                            </tr> <td><label class="ui-text-label">Payload</label></td>
-                                            <td>This is 1st payload</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">ID</label></td>
+                                                <td>ID001</td>
+                                            </tr>
+                                            <tr>
+                                                <td><label class="ui-text-label">Payload</label></td>
+                                                <td>This is 1st payload</td>
                                             </tr>
                                         </table>
                                     </div>
                                     <br>
                                     <div>
-                                        <div class="config-accordion-node-content-attributes-title">
-                                            Record 2
-                                        </div>
+                                        <div class="config-accordion-node-content-attributes-title">Record 2</div>
                                         <table class="preferences-table">
                                             <tr>
                                                 <td><label class="ui-text-label">TNF</label></td>
                                                 <td>Well Known</td>
                                             </tr>
-                                            <td><label class="ui-text-label">Type</label></td>
-                                            <td>TypeA</td>
-                                            </tr> <td><label class="ui-text-label">ID</label></td>
-                                            <td>ID002</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">Type</label></td>
+                                                <td>TypeA</td>
                                             </tr>
-                                            </tr> <td><label class="ui-text-label">Payload</label></td>
-                                            <td>This is 2nd payload</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">ID</label></td>
+                                                <td>ID002</td>
+                                            </tr>
+                                            <tr>
+                                                <td><label class="ui-text-label">Payload</label></td>
+                                                <td>This is 2nd payload</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -173,41 +188,45 @@
                                 <h3 class="config-accordion-node-title"><a href="#" class="ui-text-pass">NDEF 2</a></h3>
                                 <div>
                                     <div>
-                                        <div class="config-accordion-node-content-attributes-title">
-                                            Record 1
-                                        </div>
+                                        <div class="config-accordion-node-content-attributes-title">Record 1</div>
                                         <table class="preferences-table">
                                             <tr>
                                                 <td><label class="ui-text-label">TNF</label></td>
                                                 <td>Well Known</td>
                                             </tr>
-                                            <td><label class="ui-text-label">Type</label></td>
-                                            <td>TypeA</td>
-                                            </tr> <td><label class="ui-text-label">ID</label></td>
-                                            <td>ID003</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">Type</label></td>
+                                                <td>TypeA</td>
                                             </tr>
-                                            </tr> <td><label class="ui-text-label">Payload</label></td>
-                                            <td>This is 1st payload</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">ID</label></td>
+                                                <td>ID003</td>
+                                            </tr>
+                                            <tr>
+                                                <td><label class="ui-text-label">Payload</label></td>
+                                                <td>This is 1st payload</td>
                                             </tr>
                                         </table>
                                     </div>
                                     <br>
                                     <div>
-                                        <div class="config-accordion-node-content-attributes-title">
-                                            Record 2
-                                        </div>
+                                        <div class="config-accordion-node-content-attributes-title">Record 2</div>
                                         <table class="preferences-table">
                                             <tr>
                                                 <td><label class="ui-text-label">TNF</label></td>
                                                 <td>Well Known</td>
                                             </tr>
-                                            <td><label class="ui-text-label">Type</label></td>
-                                            <td>TypeA</td>
-                                            </tr> <td><label class="ui-text-label">ID</label></td>
-                                            <td>ID004</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">Type</label></td>
+                                                <td>TypeA</td>
                                             </tr>
-                                            </tr> <td><label class="ui-text-label">Payload</label></td>
-                                            <td>This is 2nd payload</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">ID</label></td>
+                                                <td>ID004</td>
+                                            </tr>
+                                            <tr>
+                                                <td><label class="ui-text-label">Payload</label></td>
+                                                <td>This is 2nd payload</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -217,41 +236,45 @@
                                 <h3 class="config-accordion-node-title"><a href="#" class="ui-text-pass">NDEF 3</a></h3>
                                 <div>
                                     <div>
-                                        <div class="config-accordion-node-content-attributes-title">
-                                            Record 1
-                                        </div>
+                                        <div class="config-accordion-node-content-attributes-title">Record 1</div>
                                         <table class="preferences-table">
                                             <tr>
                                                 <td><label class="ui-text-label">TNF</label></td>
                                                 <td>Well Known</td>
                                             </tr>
-                                            <td><label class="ui-text-label">Type</label></td>
-                                            <td>TypeA</td>
-                                            </tr> <td><label class="ui-text-label">ID</label></td>
-                                            <td>ID005</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">Type</label></td>
+                                                <td>TypeA</td>
                                             </tr>
-                                            </tr> <td><label class="ui-text-label">Payload</label></td>
-                                            <td>This is 1st payload</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">ID</label></td>
+                                                <td>ID005</td>
+                                            </tr>
+                                            <tr>
+                                                <td><label class="ui-text-label">Payload</label></td>
+                                                <td>This is 1st payload</td>
                                             </tr>
                                         </table>
                                     </div>
                                     <br>
                                     <div>
-                                        <div class="config-accordion-node-content-attributes-title">
-                                            Record 2
-                                        </div>
+                                        <div class="config-accordion-node-content-attributes-title">Record 2</div>
                                         <table class="preferences-table">
                                             <tr>
                                                 <td><label class="ui-text-label">TNF</label></td>
                                                 <td>Well Known</td>
                                             </tr>
-                                            <td><label class="ui-text-label">Type</label></td>
-                                            <td>TypeA</td>
-                                            </tr> <td><label class="ui-text-label">ID</label></td>
-                                            <td>ID006</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">Type</label></td>
+                                                <td>TypeA</td>
                                             </tr>
-                                            </tr> <td><label class="ui-text-label">Payload</label></td>
-                                            <td>This is 2nd payload</td>
+                                            <tr>
+                                                <td><label class="ui-text-label">ID</label></td>
+                                                <td>ID006</td>
+                                            </tr>
+                                            <tr>
+                                                <td><label class="ui-text-label">Payload</label></td>
+                                                <td>This is 2nd payload</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -282,41 +305,45 @@
                         <h3 class="config-accordion-node-title"><a href="#" class="ui-text-pass">NDEF</a></h3>
                         <div>
                             <div>
-                                <div class="config-accordion-node-content-attributes-title">
-                                    Record 1
-                                </div>
+                                <div class="config-accordion-node-content-attributes-title">Record 1</div>
                                 <table class="preferences-table">
                                     <tr>
                                         <td><label class="ui-text-label">TNF</label></td>
                                         <td>Well Known</td>
                                     </tr>
-                                    <td><label class="ui-text-label">Type</label></td>
-                                    <td>TypeA</td>
-                                    </tr> <td><label class="ui-text-label">ID</label></td>
-                                    <td>ID001</td>
+                                    <tr>
+                                        <td><label class="ui-text-label">Type</label></td>
+                                        <td>TypeA</td>
                                     </tr>
-                                    </tr> <td><label class="ui-text-label">Payload</label></td>
-                                    <td>This is 1st payload</td>
+                                    <tr>
+                                        <td><label class="ui-text-label">ID</label></td>
+                                        <td>ID001</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="ui-text-label">Payload</label></td>
+                                        <td>This is 1st payload</td>
                                     </tr>
                                 </table>
                             </div>
                             <br>
                             <div>
-                                <div class="config-accordion-node-content-attributes-title">
-                                    Record 2
-                                </div>
+                                <div class="config-accordion-node-content-attributes-title">Record 2</div>
                                 <table class="preferences-table">
                                     <tr>
                                         <td><label class="ui-text-label">TNF</label></td>
                                         <td>Well Known</td>
                                     </tr>
-                                    <td><label class="ui-text-label">Type</label></td>
-                                    <td>TypeA</td>
-                                    </tr> <td><label class="ui-text-label">ID</label></td>
-                                    <td>ID002</td>
+                                    <tr>
+                                        <td><label class="ui-text-label">Type</label></td>
+                                        <td>TypeA</td>
                                     </tr>
-                                    </tr> <td><label class="ui-text-label">Payload</label></td>
-                                    <td>This is 2nd payload</td>
+                                    <tr>
+                                        <td><label class="ui-text-label">ID</label></td>
+                                        <td>ID002</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="ui-text-label">Payload</label></td>
+                                        <td>This is 2nd payload</td>
                                     </tr>
                                 </table>
                             </div>
@@ -338,7 +365,7 @@
                             <td><label class="ui-text-label">Receive Data</label></td>
                         </tr>
                         <tr>
-                            <td>                            <textarea id="nfc-output" class="ui-corner-all" rows="4" style="width: 92%" readonly></textarea></td>
+                            <td><textarea id="nfc-output" class="ui-corner-all" rows="4" style="width: 92%" readonly></textarea></td>
                         </tr>
                     </table>
                 </div>
@@ -359,45 +386,51 @@
             <tr>
                 <td><label class="ui-text-label">Bluetooth</label></td>
                 <td>
-                <div id="bluetooth-radio">
-                    <input type="radio" id="bluetooth-radio1" name="radio-bt" />
-                    <label id="bluetooth-radio1-label" for="bluetooth-radio1">On</label>
-                    <input type="radio" id="bluetooth-radio2" name="radio-bt" checked="checked" />
-                    <label id="bluetooth-radio2-label" for="bluetooth-radio2">Off</label>
-                </div></td>
+                    <div id="bluetooth-radio">
+                        <input type="radio" id="bluetooth-radio1" name="radio-bt" />
+                        <label id="bluetooth-radio1-label" for="bluetooth-radio1">On</label>
+                        <input type="radio" id="bluetooth-radio2" name="radio-bt" checked="checked" />
+                        <label id="bluetooth-radio2-label" for="bluetooth-radio2">Off</label>
+                    </div>
+                </td>
             </tr>
         </table>
         <div id="bluetooth-main-container" style="display:none; background-color:#D3D1D1;">
             <h3 class="PanelSectionTitle"><br>Bluetooth Adapter</h3>
 
             <table class="preferences-table">
-            <tr>
-                <td><label class="ui-text-label">Name</label></td>
-                <td><span id="bt-adapter-name">Tizen BT Adapter</span></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Address</label></td>
-                <td>12:34:56:78:90:AB</td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Powered</label></td>
-                <td><span id="bt-adapter-power">Off</span></td>
-            </tr>
-            <tr>
-                <td><label class="ui-text-label">Visible</label></td>
-                <td><span id="bt-adapter-visible">Off</span></td>
-            </tr>
+                <tr>
+                    <td><label class="ui-text-label">Name</label></td>
+                    <td><span id="bt-adapter-name">Tizen BT Adapter</span></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">Address</label></td>
+                    <td>12:34:56:78:90:AB</td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">Powered</label></td>
+                    <td><span id="bt-adapter-power">Off</span></td>
+                </tr>
+                <tr>
+                    <td><label class="ui-text-label">Visible</label></td>
+                    <td><span id="bt-adapter-visible">Off</span></td>
+                </tr>
             </table>
             <h3 class="PanelSectionTitle">Simulated Devices</h3>
             <table>
-                <tr><td style="width: 75%">
-                    <select id="network-bt-device-select" class="ui-state-default ui-corner-all" style="width: 100%">
-                        <option>BT Device 1</option>
-                        <option>BT Device 2</option>
-                    </select>
-                </td><td>
-                    <button id="network-bt-nearby-btn" class="PanelButtonStyle" style="width: 100%; margin: 0.5em 0;"><span class="ui-button-text">Nearby</span></button>
-                </td></tr>
+                <tr>
+                    <td style="width: 75%">
+                        <select id="network-bt-device-select" class="ui-state-default ui-corner-all" style="width: 100%">
+                            <option>BT Device 1</option>
+                            <option>BT Device 2</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button id="network-bt-nearby-btn" class="PanelButtonStyle" style="width: 100%; margin: 0.5em 0;">
+                            <span class="ui-button-text">Nearby</span>
+                        </button>
+                    </td>
+                </tr>
             </table>
         </div>
         <div id="network-bt-box">
@@ -468,43 +501,42 @@
 
                     <div style="border: 1px solid #AAA; padding: 0.4em 1em !important;" class="ui-corner-all">
                         <table>
-                        </tr>
-                            <td><label class="ui-text-label">UUID</label></td>
-                            <td id=network-bt-uuid-#id>#service-uuid</td>
-                        </tr>
-                        <tr>
-                            <td><label class="ui-text-label">Protocol</label></td>
-                            <td id=network-bt-protocol-#id>#service-protocol</td>
-                        </tr>
-                        <tr>
-                            <td><label class="ui-text-label">State</label></td>
-                            <!--<td id="network-bt-state">#state</td> -->
-                            <td id=service-state-#id>
-                            #service-state
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label class="ui-text-label">Raw Data</label></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><textarea id=service-transfer-textarea-#id class="ui-corner-all" rows="4" style="width: 90%;"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                            <button id=#address class="network-bt-send-btn PanelButtonStyle" style="width: 100%; margin: 0.5em 0;">
-                            <span class="ui-button-text">
-                            Send Data
-                            </span>
-                            </button></td>
-                        </tr>
-                        <tr>
-                            <td><label class="ui-text-label">Receive</label></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><textarea id=service-receive-textarea-#id class="ui-corner-all" rows="4" style="width: 90%;" readonly></textarea></td>
-                        </tr>
+                            <tr>
+                                <td><label class="ui-text-label">UUID</label></td>
+                                <td id=network-bt-uuid-#id>#service-uuid</td>
+                            </tr>
+                            <tr>
+                                <td><label class="ui-text-label">Protocol</label></td>
+                                <td id=network-bt-protocol-#id>#service-protocol</td>
+                            </tr>
+                            <tr>
+                                <td><label class="ui-text-label">State</label></td>
+                                <!--<td id="network-bt-state">#state</td> -->
+                                <td id=service-state-#id>
+                                #service-state
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="ui-text-label">Raw Data</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><textarea id=service-transfer-textarea-#id class="ui-corner-all" rows="4" style="width: 90%;"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button id=#address class="network-bt-send-btn PanelButtonStyle" style="width: 100%; margin: 0.5em 0;">
+                                        <span class="ui-button-text">Send Data</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="ui-text-label">Receive</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><textarea id=service-receive-textarea-#id class="ui-corner-all" rows="4" style="width: 90%;" readonly></textarea></td>
+                            </tr>
                         </table>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
