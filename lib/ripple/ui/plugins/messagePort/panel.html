@@ -1,0 +1,113 @@
+<!--
+ *  Copyright 2014 Intel Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<section id="messagePort-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Message Port</section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png"/></span>
+        </section>
+    </section>
+
+    <section class="info ui-widget-content ui-corner-all" style="display: none;">
+        <div id="current-app-info">
+            <h3 class="PanelSectionTitle">Local Message Ports</h3>
+            <div id="current-app-local-port" style="padding-left: 1em;"></div>
+            <h3 class="PanelSectionTitle">Remote Message Ports</h3>
+            <div id="current-app-remote-port" style="padding-left: 1em;"></div>
+        </div>
+        <div id="messagePort-remote-template" style="display: none;">
+            <div id="#RemoteApplicationId-container" class="ui-corner-all">
+                <h3 class="config-accordion-node-title" role="tab" tabindex="0">
+                    <span class="ui-icon ui-icon-triangle-1-e"></span>
+                    <a href="#" style="padding: 0.4em 1em !important; color: #80ac27 !important;">#RemoteApplicationName(#RemoteApplicationId)</a>
+                </h3>
+                <div class="ui-accordion-content" role="tabpanel" style="padding: 0;">
+                    <div id="#RemoteApplicationId-operations" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+                        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                            <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="##RemoteApplicationId-receiving">Receiving</a></li>
+                            <li class="ui-state-default ui-corner-top"><a href="##RemoteApplicationId-sending">Sending</a></li>
+                            <li class="ui-state-default ui-corner-top"><a href="##RemoteApplicationId-options">Options</a></li>
+                        </ul>
+                        <div id="#RemoteApplicationId-receiving" class="ui-tabs-panel ui-widget-content clearfix ui-corner-bottom">
+                            #RemoteApplicationPortHtml
+                        </div>
+                        <div id="#RemoteApplicationId-sending" class="ui-tabs-panel ui-widget-content clearfix ui-corner-bottom ui-tabs-hide">
+                            <table class="panel-table" style="border-spacing: 6px;">
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        To current application's message port.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select id="#RemoteApplicationId-local-port" class="ui-state-default ui-corner-all messageport-current-ports" style="width: 99%" disabled>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        Data Item
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="ui-corner-all" id="#RemoteApplicationId-key" type="text" value="" style="width: 90%; height: 25px;" placeholder="Key" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <textarea class="ui-corner-all" id="#RemoteApplicationId-value" style="width: 90%;" rows="6" maxlength="256" placeholder="Value"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button id="#RemoteApplicationId-send" class="PanelButtonStyle" style="width: 100%;" disabled>
+                                            <span class="ui-button-text">Send</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button id="#RemoteApplicationId-clear" class="PanelButtonStyle" style="width: 100%;">
+                                            <span class="ui-button-text">Clear</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div id="#RemoteApplicationId-access" style="color: #FF0000; margin-left: 8px; margin-right: 8px; display: none;">
+                            </div>
+                        </div>
+                        <div id="#RemoteApplicationId-options" class="ui-tabs-panel ui-widget-content clearfix ui-corner-bottom ui-tabs-hide">
+                            <table class="panel-table" style="border-spacing: 6px;">
+                                <tr>
+                                    <td>
+                                        <p><strong>Certificate</strong></p>
+                                        <p><input id="#RemoteApplicationId-isTrusted" type="checkbox" value="true" checked />
+                                        <label for="#RemoteApplicationId-isTrusted">Same as current application</label>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section id="messagePort-remote-applications" class="ui-accordion ui-widget ui-helper-reset ui-accordion-icons" role="tablist">
+        </section>
+    </section>
+</section>
