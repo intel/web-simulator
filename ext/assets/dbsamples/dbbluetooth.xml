@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <widget xmlns:tizen="http://tizen.org/ns/widgets">
-    <node name="00:02:60:00:05:63">
+    <node name="22:33:44:12:34:56">
         <name>Tizen Phone</name>
-        <address>00:02:60:00:05:63</address>
+        <address>22:33:44:12:34:56</address>
         <deviceClass>
             <major>0x02</major>
             <majorName>PHONE</majorName>
@@ -48,7 +48,7 @@
         <isTrusted>true</isTrusted>
         <services>
             <node name="3537D485-0C1E-445A-A066-43FAFCFB61D1">
-                <name>Data Exchange</name>
+                <name>Data Transfer</name>
                 <uuid>3537D485-0C1E-445A-A066-43FAFCFB61D1</uuid>
                 <protocol>RFCOMM</protocol>
             </node>
@@ -74,6 +74,30 @@
             <node name="3537D485-0C1E-445A-A066-43FAFCFB61D1">
                 <name>Data Transfer</name>
                 <uuid>3537D485-0C1E-445A-A066-43FAFCFB61D1</uuid>
+                <protocol>RFCOMM</protocol>
+            </node>
+        </services>
+    </node>
+    <node name="00:02:60:00:05:63">
+        <name>Tcthelper</name>
+        <address>00:02:60:00:05:63</address>
+        <deviceClass>
+            <major>0x09</major>
+            <majorName>HEALTH</majorName>
+            <minor>0x05</minor>
+            <minorName>HEALTH_PULSE_OXIMETER</minorName>
+            <services>
+                <i>0x0080</i>
+            </services>
+            <servicesName>
+                <i>OBJECT_TRANSFER</i>
+            </servicesName>
+        </deviceClass>
+        <isTrusted>false</isTrusted>
+        <services>
+            <node name="5BCE9431-6C75-32AB-AFE0-2EC108A30860">
+                <name>Data Exchange</name>
+                <uuid>5BCE9431-6C75-32AB-AFE0-2EC108A30860</uuid>
                 <protocol>RFCOMM</protocol>
             </node>
         </services>
