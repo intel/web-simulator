@@ -1,0 +1,14 @@
+{
+    "wupLCsnsEnapp1": {
+        "name": "app1",
+        "ports": {
+            "MessagePortA": false,
+            "MessagePortB": true
+        },
+        "reply": [{
+            "key": "Result",
+            "value": "OK"
+        }],
+        "certificate": true
+    }
+}
