@@ -33,14 +33,14 @@
             <div id="#RemoteApplicationId-container" class="ui-corner-all">
                 <h3 class="config-accordion-node-title" role="tab" tabindex="0">
                     <span class="ui-icon ui-icon-triangle-1-e"></span>
-                    <a href="#" style="padding: 0.4em 1em !important; color: #80ac27 !important;">#RemoteApplicationName(#RemoteApplicationId)</a>
+                    <a href="#" style="padding: 0.4em 1em; color: #80AC27;">#RemoteApplicationName&nbsp;(#RemoteApplicationId)</a>
                 </h3>
                 <div class="ui-accordion-content" role="tabpanel" style="padding: 0;">
                     <div id="#RemoteApplicationId-operations" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
                         <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
                             <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="##RemoteApplicationId-receiving">Receiving</a></li>
                             <li class="ui-state-default ui-corner-top"><a href="##RemoteApplicationId-sending">Sending</a></li>
-                            <li class="ui-state-default ui-corner-top"><a href="##RemoteApplicationId-options">Options</a></li>
+                            <li class="ui-state-default ui-corner-top"><a href="##RemoteApplicationId-options">Properties</a></li>
                         </ul>
                         <div id="#RemoteApplicationId-receiving" class="ui-tabs-panel ui-widget-content clearfix ui-corner-bottom">
                             #RemoteApplicationPortHtml
@@ -96,9 +96,7 @@
                                 <tr>
                                     <td>
                                         <p><strong>Certificate</strong></p>
-                                        <p><input id="#RemoteApplicationId-isTrusted" type="checkbox" value="true" checked />
-                                        <label for="#RemoteApplicationId-isTrusted">Same as current application</label>
-                                        </p>
+                                        <p>#RemoteApplicationIsTrusted</p>
                                     </td>
                                 </tr>
                             </table>
