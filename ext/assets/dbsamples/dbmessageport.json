@@ -10,5 +10,17 @@
             "value": "OK"
         }],
         "certificate": true
+    },
+    "w5GBmFbY00app2": {
+        "name": "app2",
+        "ports": {
+            "MessagePortC": true,
+            "MessagePortD": false
+        },
+        "reply": [{
+            "key": "Result",
+            "value": "OK"
+        }],
+        "certificate": false
     }
 }
