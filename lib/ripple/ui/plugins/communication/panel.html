@@ -15,7 +15,9 @@
 -->
 <section id="communication-container" class="ui-box ui-state-default">
     <section class="h2 info-header">
-        <section class="collapse-handle"><span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Communications</section>
+        <section class="collapse-handle">
+            <span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Communications
+        </section>
         <section class="drag-handle">
             <span><img src="images/menuDraggerIcon.png"/></span>
         </section>
@@ -31,18 +33,21 @@
                 <p>Use this area to simulate a telephone conversation.</p>
                 <table class="panel-table" style="border-spacing: 6px;">
                     <tr>
-                    <td><span class="ui-text-label" id="isVideoCallLabel">isVideoCall?</span></td>
-                    <td><input id="is-videoCall" type="checkbox"/></td>
-
+                        <td><span class="ui-text-label" id="isVideoCallLabel">isVideoCall?</span></td>
+                        <td><input id="is-videoCall" type="checkbox"/></td>
                     </tr>
                     <tr>
-                        <td style="width:100%;"><input id="communication-callerName" style="width:100%;" maxlength="32" class="ui-corner-all" type="text" value="" placeholder="caller's name"/></td>
+                        <td style="width:100%;">
+                            <input id="communication-callerName" style="width:100%;" maxlength="32" class="ui-corner-all" type="text" value="" placeholder="caller's name"/>
+                        </td>
                     </tr>
                     <tr>
-                        <td><input id="communication-callNum" style="width:100%;" class="ui-corner-all" type="text" maxlength="32" value="" placeholder="caller's number"/></td>
+                        <td>
+                            <input id="communication-callNum" style="width:100%;" class="ui-corner-all" type="text" maxlength="32" value="" placeholder="caller's number"/>
+                        </td>
                     </tr>
                     <tr>
-                        <td id='communication-cellularStatus' style='color:#aa0000;';>Cellular radio is off. Turn it on from Network Management Panel.</td>
+                        <td id='communication-cellularStatus' style='color:#aa0000;'>Cellular radio is off. Turn it on from Network Management Panel.</td>
                     </tr>
                     <tr>
                         <td>
@@ -61,16 +66,20 @@
                 <p>Use this area to simulate a message conversation.</p>
                 <table class="panel-table" style="border-spacing: 6px;">
                     <tr>
-                        <td style="width:100%;"><input class="ui-corner-all" style="width: 88%" id="communication-senderName" type="text" maxlength="32" placeholder="Sender's name"/></td>
+                        <td style="width:100%;">
+                            <input class="ui-corner-all" style="width: 88%" id="communication-senderName" type="text" maxlength="32" placeholder="Sender's name"/>
+                        </td>
                     </tr>
                     <tr>
                         <td><select id="communication-msgType" style="width:40%; float:left;" class="ui-corner-all"></select></td>
                     </tr>
                     <tr>
-                        <td><textarea class="ui-corner-all" style="width: 88%;" rows="6" id="communication-messageContent" maxlength="256" placeholder="Enter message here"></textarea></td>
+                        <td>
+                            <textarea class="ui-corner-all" style="width: 88%;" rows="6" id="communication-messageContent" maxlength="256" placeholder="Enter message here"></textarea>
+                        </td>
                     </tr>
                     <tr>
-                        <td id='communication-messageRadioStatus' style='color:#aa0000;';></td>
+                        <td id='communication-messageRadioStatus' style='color:#aa0000;'></td>
                     </tr>
                     <tr>
                         <td>
