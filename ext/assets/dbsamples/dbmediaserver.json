@@ -1,0 +1,141 @@
+{
+    "server": {
+        "id": "5574bd17-7b83-4a5f-8709-56efe5bd5a98",
+        "friendlyName": "intel_media_server_network"
+    },
+    "items": [{
+        "Type": "video",
+        "Path": "/video/mediaserver_video_1.mp4",
+        "DisplayName": "mediaserver_video_1.mp4",
+        "URLs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/video/mediaserver_video_1.mp4"],
+        "ThumbnailURIs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/video/mediaserver_video_1.mp4"],
+        "MIMEType": "video/x-msvideo",
+        "Rating": 0,
+        "Size": 493983,
+        "Duration": 10,
+        "Album": "Unknown",
+        "Artists": ["Unknown"],
+        "Width": 320,
+        "Height": 240
+    },{
+        "Type": "video",
+        "Path": "/video/mediaserver_video_2.mp4",
+        "DisplayName": "mediaserver_video_2.mp4",
+        "URLs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/video/mediaserver_video_2.mp4"],
+        "ThumbnailURIs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/video/mediaserver_video_2.mp4"],
+        "MIMEType": "video/x-msvideo",
+        "Rating": 0,
+        "Size": 494102,
+        "Duration": 10,
+        "Album": "Unknown",
+        "Artists": ["The artist name"],
+        "Width": 320,
+        "Height": 240
+    },{
+        "Type": "video",
+        "Path": "/video/mediaserver_video_4.mp4",
+        "DisplayName": "mediaserver_video_4.mp4",
+        "URLs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/video/mediaserver_video_4.mp4"],
+        "ThumbnailURIs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/video/mediaserver_video_4.mp4"],
+        "MIMEType": "video/x-msvideo",
+        "Rating": 0,
+        "Size": 3662871,
+        "Duration": 69,
+        "Album": "Unknown",
+        "Artists": ["Unknown"],
+        "Width": 640,
+        "Height": 480
+    },{
+        "Type": "video",
+        "Path": "/video/mediaserver_video_3.mp4",
+        "DisplayName": "mediaserver_video_3.mp4",
+        "URLs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/video/mediaserver_video_3.mp4"],
+        "ThumbnailURIs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/video/mediaserver_video_3.mp4"],
+        "MIMEType": "video/x-msvideo",
+        "Rating": 0,
+        "Size": 494102,
+        "Duration": 10,
+        "Album": "Unknown",
+        "Artists": ["The artist name"],
+        "Width": 320,
+        "Height": 240
+    },{
+        "Type": "audio",
+        "Path": "/audio/mediaserver_audio_1.mp3",
+        "DisplayName": "mediaserver_audio_1.mp3",
+        "MIMEType": "audio/x-msaudio",
+        "URLs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/audio/mediaserver_audio_1.mp3"],
+        "ThumbnailURIs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/audio/mediaserver_audio_1.mp3"],
+        "Size": 6272,
+        "Rating": 0,
+        "Album": "Unknown",
+        "Artists": ["Unknown"],
+        "SampleRate": 138240,
+        "Duration": 352000
+    },{
+        "Type": "audio",
+        "Path": "/audio/mediaserver_audio_2.mp3",
+        "DisplayName": "mediaserver_audio_2.mp3",
+        "MIMEType": "audio/x-msaudio",
+        "URLs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/audio/mediaserver_audio_2.mp3"],
+        "ThumbnailURIs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/audio/mediaserver_audio_2.mp3"],
+        "Size": 6272,
+        "Rating": 0,
+        "Album": "Unknown",
+        "Artists": ["Unknown"],
+        "SampleRate": 138240,
+        "Duration": 352000
+    },{
+        "Type": "audio",
+        "Path": "/audio/mediaserver_audio_3.mp3",
+        "DisplayName": "mediaserver_audio_3.mp3",
+        "MIMEType": "audio/x-msaudio",
+        "URLs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/audio/mediaserver_audio_3.mp3"],
+        "ThumbnailURIs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/audio/mediaserver_audio_3.mp3"],
+        "Size": 2047320,
+        "Rating": 0,
+        "Album": "Unknown",
+        "Artists": ["Unknown"],
+        "SampleRate": 0,
+        "Duration": 0
+    },{
+        "Type": "image",
+        "Path": "/images/mediaserver_img_1.jpg",
+        "DisplayName": "mediaserver_img_1.jpg",
+        "URLs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/images/mediaserver_img_1.jpg"],
+        "MIMEType": "image/jpg",
+        "Size": 7958,
+        "Width": 274,
+        "Height": 248
+    },{
+        "Type": "image",
+        "Path": "/images/mediaserver_img_2.jpg",
+        "DisplayName": "mediaserver_img_2.jpg",
+        "URLs": ["file:///opt/usr/media/tct-mediaserver-tizen-tests/images/mediaserver_img_2.jpg"],
+        "MIMEType": "image/jpg",
+        "Size": 11947,
+        "Width": 274,
+        "Height": 248
+    }],
+    "containers": [{
+        "id": "0d185b21-967e-4b4d-a50f-6dd07cd56d8b",
+        "Path": "/",
+        "Type": "container",
+        "DisplayName": "home"
+    },{
+        "id": "b88b4e37-2e11-4674-8747-9015bdf2a4f0",
+        "Path": "/audio/",
+        "Type": "container",
+        "DisplayName": "audio"
+    },{
+        "id": "58a1a38b-4d78-4204-8c0e-73d0d7e08b76",
+        "Path": "/video/",
+        "Type": "container",
+        "DisplayName": "video"
+    },{
+        "id": "8c1ab914-7366-49dd-98cc-389d12dfb7ce",
+        "Path": "/images/",
+        "Type": "container",
+        "DisplayName": "images"
+    }]
+}
