@@ -44,6 +44,8 @@ module.exports = {
         "OpenLayers.js",
         "underscore-min.js",
         "async.js",
-        "redblack/redblack.js"
+        "redblack/redblack.js",
+        "mespeak/mespeak.js",
+        "mespeak/mespeakinit.js"
     ]
 };
