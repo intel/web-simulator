@@ -23,6 +23,10 @@
             <size>92225</size>
             <rating>0</rating>
 
+            <album>Unknown</album>
+            <artists>
+                <i>Unknown</i>
+            </artists>
             <duration>5005</duration>
             <width>80</width>
             <height>128</height>

@@ -18,6 +18,7 @@
     <head>
         <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
         <link href="#URL_PREFIX#ripple.css" type="text/css" rel="stylesheet" />
+        <link href="#URL_PREFIX#images/web-simulator.png" type="image/png" rel="icon" sizes="128x128" />
         <title>Web Simulator</title>
     </head>
     <body>
@@ -88,7 +89,7 @@
             <section id="left" class="left sortable main" style="position: relative;"></section>
             </div>
             <div id="middle_div">
-                <section class="middle">
+                <section class="middle" style="overflow-x: hidden;">
                     <table id="device-layout" style="padding:0;">
                         <tr><td style="padding-bottom:0; padding-left:43px; padding-right:44px;">
                             <div id="deviceTitleBar"style="background-color:#dddddd; height:25px; width:100%; border-width:1px;border-style:solid; border-color:#888888;"><span style="margin-top:3px; margin-left:20px;float:left;" id="deviceTitle"></span><span style="margin-top:7px;background-color:#55555; background:url(images/menuDraggerIcon.png) no-repeat;display:block;width:12px;height:8px;margin-right:10px;float:right;"></span></div>
@@ -119,13 +120,12 @@
             <section class="error-window"></section>
             <section class="error-dialog main ui-corner-all">
                 <section class="error-text">
-
-                    <h1>Unsupported Browser</h1>
-		  <p><img style="float:left; padding:0px 10px 75px" src="images/dontPanic.png" />Currently only Chrome and Chromium based browsers are 
-		    supported by the Web Simulator. </p>
-		  <p>You can download Chrome from 
-		    <a href="https://www.google.com/chrome">https://www.google.com/chrome</a></p>
-                    
+                        <h1>Timeout occurred</h1>
+                        <p><img style="float:left; padding:0px 10px 75px" src="images/dontPanic.png" />
+                            A request was not fulfilled in a predetermined length of time. The application failed to be loaded.</p>
+                        <ul style="text-align: left;"><li>A wrong URL is contained in the application.</li>
+                        <li>A communication error occurred.</li>
+                        <li>Internet connection timed out or website cannot be connected.</li></ul>
                 </section>
             </section>
 
