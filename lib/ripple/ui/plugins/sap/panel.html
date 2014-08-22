@@ -39,86 +39,92 @@
                         </select>
                     </td>
                     <td>
-                        <button id="sap-device-attach" class="PanelButtonStyle">Detach</button>
+                        <button id="sap-device-detach" class="PanelButtonStyle">Detach</button>
                     </td>
                 </tr>
             </table>
         </div>
 
         <h3 class="PanelSectionTitle">Host Application</h3>
-        <div style="border-radius: 5px; border: 1px solid #BBBBBB; padding: 0 5px 5px 5px;">
+        <div id="sap-host-app" style="border-radius: 5px; border: 1px solid #BBBBBB; padding: 0 5px 5px 5px;">
             <h3 class="PanelSectionTitle">Peer Agent</h3>
             <div id="sap-host-app-info">
-            <table>
-                <tr>
-                    <td><label class="ui-text-label">appName</label></td>
-                    <td>#appName</td>
-                </tr><tr>
-                    <td><label class="ui-text-label">peerId</label></td>
-                    <td>#peerId</td>
-                </tr><tr>
-                    <td><label class="ui-text-label">maxAllowedDataSize</label></td>
-                    <td>#maxAllowedDataSize</td>
-                </tr><tr>
-                    <td><label class="ui-text-label">profileVersion</label></td>
-                    <td>#profileVersion</td>
-                </tr>
-            </table>
-            <hr>
-            <h3 class="PanelSectionTitle">peer Accessory</h3>
-            <table>
-                <tr>
-                    <td><label class="ui-text-label">deviceAddress</label></td>
-                    <td>#deviceAddress</td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">deviceName</label></td>
-                    <td>#deviceName</td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">productId</label></td>
-                    <td>#productId</td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">transportType</label></td>
-                    <td>#transportType</td>
-                </tr>
-                <tr>
-                    <td><label class="ui-text-label">vendorId</label></td>
-                    <td>#vendorId</td>
-                </tr>
-            </table>
-            </div>
-            <hr>
-            <h3 class="PanelSectionTitle">Wearable --> Host</h3>
-            <div id="sap-service-connection-request">
-                <p>No Any Request(s).</p>
-                <button id="sap-service-connection-accept" class="PanelButtonStyle">Accept</button>
-                <button id="sap-service-connection-reject" class="PanelButtonStyle">Reject</button>
-                <div id="sap-gear-host-data-receiving" style="border: 1px solid #DCDCDC; border-radius: 5px; height: 50px; background: #E6e6e6; padding: 5px; margin: 5px 0 5px 0;">
-                    Receiving wearable data...
-                </div>
-                <div id="sap-gear-host-file-receiving" style="border: 1px solid #DCDCDC; border-radius: 5px; height: 30px; background: #E6e6e6; padding: 5px; margin: 5px 0 5px 0;">
-                    Receiving wearable file...
-                </div>
-            </div>
-            <hr>
-            <h3 class="PanelSectionTitle">Host --> Wearable</h3>
-            <div id="sap-android-service-connection-request">
-                <p>No Any Connection(s).</p>
-                <button id="sap-android-service-connection-requests" class="PanelButtonStyle">Request</button>
-                <table style="width: 100%;">
+                <table>
                     <tr>
-                        <!--{"count":2, "list":[{"id":123, "name": "wangjun", "image": ""},{"id":456, "name": "junwang", "image": ""}]}-->
-                        <td><textarea id="sap-host-gear-data-sending" class="ui-state-default ui-corner-all" cols="25" rows="5">Enter sending data...</textarea></td>
-                        <td align="right"><button id="sap-host-gear-data-send" class="PanelButtonStyle">Send</button></td>
+                        <td><label class="ui-text-label">appName</label></td>
+                        <td>#appName</td>
+                    </tr><tr>
+                        <td><label class="ui-text-label">peerId</label></td>
+                        <td>#peerId</td>
+                    </tr><tr>
+                        <td><label class="ui-text-label">maxAllowedDataSize</label></td>
+                        <td>#maxAllowedDataSize</td>
+                    </tr><tr>
+                        <td><label class="ui-text-label">profileVersion</label></td>
+                        <td>#profileVersion</td>
+                    </tr>
+                </table>
+                <hr>
+                <h3 class="PanelSectionTitle">peer Accessory</h3>
+                <table>
+                    <tr>
+                        <td><label class="ui-text-label">deviceAddress</label></td>
+                        <td>#deviceAddress</td>
                     </tr>
                     <tr>
-                        <td><input type="text" id="sap-host-gear-file-sending" class="ui-state-default ui-corner-all" style="width: 190px;" value="Enter transfering file path..." /></td>
-                        <td align="right"><button id="sap-host-gear-file-send" class="PanelButtonStyle">Send</button></td>
+                        <td><label class="ui-text-label">deviceName</label></td>
+                        <td>#deviceName</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">productId</label></td>
+                        <td>#productId</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">transportType</label></td>
+                        <td>#transportType</td>
+                    </tr>
+                    <tr>
+                        <td><label class="ui-text-label">vendorId</label></td>
+                        <td>#vendorId</td>
                     </tr>
                 </table>
             </div>
-        </div>
+            <div class="ui-accordion-content" style="padding: 0;">
+                <div id="sap-sending-receiving" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+                    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                        <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#sap-service-connection-receiving">Receiving</a></li>
+                        <li class="ui-state-default ui-corner-top"><a href="#sap-service-connection-sending">Sending</a></li>
+                    </ul>
+                    <div id="sap-service-connection-sending" class="ui-tabs-panel ui-widget-content clearfix ui-corner-bottom">
+                        <h3 class="PanelSectionTitle">Host --> Wearable</h3>
+                        <div id="sap-android-service-connection-request">
+                            <p class="messaging">No Any Connection(s).</p>
+                            <p><button id="sap-android-service-connection-requests" class="PanelButtonStyle" style="width: 265px;">Request Connection(s)</button></p>
+                            <input type="radio" id="sap-send-1" name="sap-send" class="ui-state-default ui-corner-all" checked value="1" />
+                            <label for="sap-send-1" class="ui-text-label">Sending Data</label>
+                            <textarea id="sap-host-gear-data-sending" class="ui-state-default ui-corner-all" cols="32" rows="5"> </textarea>
+                            <input type="radio" id="sap-send-2" name="sap-send" class="ui-state-default ui-corner-all" value="2" />
+                            <label for="sap-send-2" class="ui-text-label">Tranferring File Path</label>
+                            <input type="text" id="sap-host-gear-file-sending" class="ui-state-default ui-corner-all" style="width: 240px;" value="" />
+                            <button id="sap-host-gear-sending" class="PanelButtonStyle" style="width: 265px; margin-top: 5px;">Send</button>
+                        </div>
+                    </div>
+                    <div id="sap-service-connection-receiving" class="ui-tabs-panel ui-widget-content clearfix ui-corner-bottom ui-tabs-hide">
+                            <h3 class="PanelSectionTitle">Wearable --> Host</h3>
+                            <div id="sap-service-connection-request">
+                                <p class="messaging">No Any Request(s).</p>
+                                <p><button id="sap-service-connection-accept" class="PanelButtonStyle" style="width: 131px;">Accept</button>
+                                <button id="sap-service-connection-reject" class="PanelButtonStyle" style="width: 131px;">Reject</button></p>
+                                <div id="sap-gear-host-data-receiving" class="ui-state-default ui-corner-all" style="height: 50px; padding: 5px;">
+                                    Receiving wearable data...
+                                </div>
+                                <div id="sap-gear-host-file-receiving" class="ui-state-default ui-corner-all" style="height: 30px; padding: 5px; margin-top: 5px;">
+                                    Receiving wearable file...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </section>
 </section>
