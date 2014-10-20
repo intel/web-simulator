@@ -1800,6 +1800,62 @@ textarea {
     height: 20px;
 }
 
+#preview-window-popup {
+    display: none;
+    width: 806px;
+    padding: 16px 8px 10px 8px;
+    position: absolute;
+    top: 60px;
+    left: 200px;
+    z-index: 1001;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 12px;
+    background-color: #f3f3f3;
+    -moz-box-shadow: 0 10px 15px #555555; /* Firefox 3.6 and earlier */
+    box-shadow: 0 10px 15px #555555;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    -moz-border-radius: 7px 7px 7px 7px;
+    border-radius: 7px 7px 7px 7px;
+}
+
+#preview-window-container-div {
+    z-index: 0;
+    padding:0;
+    background-color: #ffffff;
+    border-top:1px solid #a1a1a1;
+    border-left:1px solid #888888;
+    border-right:1px solid #888888;
+    border-bottom:1px solid #888888;
+    width:792px;
+    height:500px;
+    overflow: auto;
+    position: relative;
+}
+
+#preview-window-container-div table {
+    margin: 0;
+    position: absolute;
+}
+
+.preview-window-title-div {
+    font-size:15px;
+    font-weight:bold;
+    background-color: #c6c6c6;
+    color: #444444;
+    width:802px;
+    height:32px;
+    padding: 5px 0 0 0;
+    text-align:center;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+#preview-window-close-btn {
+    font-size: 12px;
+    width: 24px;
+    height: 20px;
+}
+
 #configure-window-popup {
     display: none;
     width: 806px;
