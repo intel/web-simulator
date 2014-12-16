@@ -1,0 +1,57 @@
+<!--
+ *  Copyright 2014 Intel Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<section id="secureElement-container" class="ui-box ui-state-default">
+    <section class="h2 info-header">
+        <section class="collapse-handle">
+            <span class="ui-box-TitleImage ui-box-TitleImageClosed"></span>Secure Element
+        </section>
+        <section class="drag-handle">
+            <span><img src="images/menuDraggerIcon.png" /></span>
+        </section>
+    </section>
+    <section id="secureElement" class="info ui-widget-content ui-corner-all" style="display: none;">
+        <table class="panel-table">
+            <tr>
+                <td><label class="ui-text-label">UICC and SIM</label></td>
+                <td>
+                    <div id="us-radio">
+                        <input type="radio" id="us-radio1" name="radio-us" />
+                        <label id="us-radio1-label" for="us-radio1">Insert</label>
+                        <input type="radio" id="us-radio2" name="radio-us" />
+                        <label id="us-radio2-label" for="us-radio2">Eject</label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="panel-table">
+            <tr>
+                <td colspan="2"><hr></td>
+            </tr>
+            <tr>
+                <td><label class="ui-text-label">Secure SD Card</label></td>
+                <td>
+                    <div id="sc-radio">
+                        <input type="radio" id="sc-radio1" name="radio-sc" />
+                        <label id="sc-radio1-label" for="sc-radio1">Insert</label>
+                        <input type="radio" id="sc-radio2" name="radio-sc" />
+                        <label id="sc-radio2-label" for="sc-radio2">Eject</label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </section>
+</section>
