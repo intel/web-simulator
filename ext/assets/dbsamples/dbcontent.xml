@@ -10,19 +10,23 @@
                 <i>geolocation</i>
             </editableAttributes>
             <id>525AFEE8-1355-4F48-97B7-8C4E7640D94E</id>
-            <name>webapi-tizen-content-test_video.mp4</name>
+            <name>tct-content-tizen-tests_video.mp4</name>
             <type>VIDEO</type>
             <mimeType>video/x-msvideo</mimeType>
-            <title>webapi-tizen-content-test_video</title>
-            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/webapi-tizen-content-test_video.mp4</contentURI>
+            <title>tct-content-tizen-tests_video</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_video.mp4</contentURI>
             <thumbnailURIs>
-                <i>desktop/webapi-tizen-content-test_video.lnk</i>
+                <i>desktop/tct-content-tizen-tests_video.lnk</i>
             </thumbnailURIs>
             <releaseDate>2013-08-30 15:30:00</releaseDate>
             <modifiedDate>2013-08-30 15:30:00</modifiedDate>
             <size>92225</size>
             <rating>0</rating>
 
+            <album>Unknown</album>
+            <artists>
+                <i>Unknown</i>
+            </artists>
             <duration>5005</duration>
             <width>80</width>
             <height>128</height>
@@ -35,13 +39,13 @@
                 <i>geolocation</i>
             </editableAttributes>
             <id>BD0EF737-AD0A-494D-810C-332CF339696E</id>
-            <name>red-green.avi</name>
+            <name>tct-content-tizen-tests_video_tagged.mp4</name>
             <type>VIDEO</type>
             <mimeType>video/x-msvideo</mimeType>
-            <title>red-green</title>
-            <contentURI>file:///opt/usr/media/Videos/red-green.avi</contentURI>
+            <title>tct-content-tizen-tests_video_tagged</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_video_tagged.mp4</contentURI>
             <thumbnailURIs>
-                <i>desktop/red-green.lnk</i>
+                <i>desktop/tct-content-tizen-tests_video_tagged.lnk</i>
             </thumbnailURIs>
             <releaseDate>2013-08-30 15:30:00</releaseDate>
             <modifiedDate>2013-08-30 15:30:00</modifiedDate>
@@ -49,7 +53,7 @@
             <description>Universe View</description>
             <rating>5</rating>
 
-            <album>red-green</album>
+            <album>galaxy</album>
             <artists>
                 <i>David</i>
             </artists>
@@ -62,45 +66,15 @@
                 <i>name</i>
                 <i>description</i>
                 <i>rating</i>
-                <i>geolocation</i>
-            </editableAttributes>
-            <id>A9209D42-A1A5-480B-96E3-DE4F777D8035</id>
-            <name>galaxy.rmvb</name>
-            <type>VIDEO</type>
-            <mimeType>video/x-msvideo</mimeType>
-            <title>Galaxy</title>
-            <contentURI>file:///opt/storage/sdcard/Videos/galaxy.rmvb</contentURI>
-            <thumbnailURIs>
-                <i>desktop/galaxy.lnk</i>
-            </thumbnailURIs>
-            <releaseDate>2013-08-30 15:30:00</releaseDate>
-            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
-            <size>4236078</size>
-            <description>Universe View</description>
-            <rating>5</rating>
-
-            <album>galaxy</album>
-            <artists>
-                <i>David</i>
-            </artists>
-            <duration>156000</duration>
-            <width>220</width>
-            <height>180</height>
-        </i>
-        <i>
-            <editableAttributes>
-                <i>name</i>
-                <i>description</i>
-                <i>rating</i>
             </editableAttributes>
             <id>CFCE0D3B-6446-42BF-A2DC-E23DD4221676</id>
-            <name>webapi-tizen-content-test_audio.mp3</name>
+            <name>tct-content-tizen-tests_audio_default.mp3</name>
             <type>AUDIO</type>
             <mimeType>audio/x-msaudio</mimeType>
-            <title>Over the horizon</title>
-            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/webapi-tizen-content-test_audio.mp3</contentURI>
+            <title>tct-content-tizen-tests_audio_default</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_audio_default.mp3</contentURI>
             <thumbnailURIs>
-                <i>desktop/webapi-tizen-content-test_audio.lnk</i>
+                <i>desktop/tct-content-tizen-tests_audio_default.lnk</i>
             </thumbnailURIs>
             <releaseDate>2013-08-30 15:30:00</releaseDate>
             <modifiedDate>2013-08-30 15:30:00</modifiedDate>
@@ -126,37 +100,37 @@
                 <i>rating</i>
             </editableAttributes>
             <id>8F83F3EB-6DAA-4C95-A4A8-E39B0D4EE87C</id>
-            <name>My Heart Will Go On.mp3</name>
+            <name>tct-content-tizen-tests_audio_lyrics.mp3</name>
             <type>AUDIO</type>
             <mimeType>audio/x-msaudio</mimeType>
-            <title>My Heart Will Go On</title>
-            <contentURI>file:///opt/usr/media/Sounds/My Heart Will Go On.mp3</contentURI>
+            <title>tct-content-tizen-tests_audio_lyrics</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_audio_lyrics.mp3</contentURI>
             <thumbnailURIs>
-                <i>desktop/My Heart Will Go On.lnk</i>
+                <i>desktop/tct-content-tizen-tests_audio_lyrics.lnk</i>
             </thumbnailURIs>
             <releaseDate>2013-08-30 15:30:00</releaseDate>
             <modifiedDate>2013-08-30 15:30:00</modifiedDate>
             <size>5662312</size>
-            <description>Creative mp3</description>
+            <description>Creative music</description>
             <rating>3</rating>
 
-            <album>My Heart Will Go On</album>
+            <album>Samsung</album>
             <genres>
-                <i>pop music</i>
+                <i>New Area</i>
             </genres>
             <artists>
-                <i>Geline Dion</i>
+                <i>Samsung</i>
             </artists>
             <composers>
-                <i>James Horner</i>
+                <i>Samsung</i>
             </composers>
             <lyrics>
                 <type>UNSYNCHRONIZED</type>
                 <texts>
-                    <i>Once more you open the door. And you're here in my heart. And my heart will go on and on.</i>
+                    <i>New area of Samsung.</i>
                 </texts>
             </lyrics>
-            <copyright>J and J Studio</copyright>
+            <copyright>Samsung</copyright>
             <bitrate>138240</bitrate>
             <trackNumber>1</trackNumber>
             <duration>352000</duration>
@@ -168,13 +142,13 @@
                 <i>rating</i>
             </editableAttributes>
             <id>0FE5262E-3FDD-4465-A61E-267A5A44A2A7</id>
-            <name>rock.mp3</name>
+            <name>tct-content-tizen-tests_audio_no_tag.mp3</name>
             <type>AUDIO</type>
             <mimeType>audio/x-msaudio</mimeType>
-            <title>Rock</title>
-            <contentURI>file:///opt/storage/sdcard/Sounds/rock.mp3</contentURI>
+            <title>tct-content-tizen-tests_audio_no_tag</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_audio_no_tag.mp3</contentURI>
             <thumbnailURIs>
-                <i>desktop/rock.lnk</i>
+                <i>desktop/tct-content-tizen-tests_audio_no_tag.lnk</i>
             </thumbnailURIs>
             <releaseDate>2013-08-30 15:30:00</releaseDate>
             <modifiedDate>2013-08-30 15:30:00</modifiedDate>
@@ -206,13 +180,13 @@
                 <i>orientation</i>
             </editableAttributes>
             <id>1553F420-4FFC-4B6E-AD86-A9DEB3625375</id>
-            <name>seagull.gif</name>
+            <name>tct-content-tizen-tests_image_default.jpg</name>
             <type>IMAGE</type>
-            <mimeType>image/gif</mimeType>
-            <title>Seagull</title>
-            <contentURI>file:///opt/usr/media/Images/seagull.gif</contentURI>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_default</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_default.jpg</contentURI>
             <thumbnailURIs>
-                <i>desktop/seagull.lnk</i>
+                <i>desktop/tct-content-tizen-tests_image_default.lnk</i>
             </thumbnailURIs>
             <releaseDate>2013-08-30 15:30:00</releaseDate>
             <modifiedDate>2013-08-30 15:30:00</modifiedDate>
@@ -233,13 +207,225 @@
                 <i>orientation</i>
             </editableAttributes>
             <id>291C723B-7DFB-471F-8FF1-5E8A224BB7C5</id>
-            <name>webapi-tizen-content-test_image.png</name>
+            <name>tct-content-tizen-tests_image_geolocation.jpg</name>
             <type>IMAGE</type>
-            <mimeType>image/png</mimeType>
-            <title>webapi-tizen-content-test_image</title>
-            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/webapi-tizen-content-test_image.png</contentURI>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_geolocation</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_geolocation.jpg</contentURI>
             <thumbnailURIs>
-                <i>desktop/webapi-tizen-content-test_image.lnk</i>
+                <i>desktop/tct-content-tizen-tests_image_geolocation.lnk</i>
+            </thumbnailURIs>
+            <releaseDate>2013-08-30 15:30:00</releaseDate>
+            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
+            <size>116454</size>
+            <rating>0</rating>
+
+            <geolocation>
+                <latitude>37.5</latitude>
+                <longitude>127</longitude>
+            </geolocation>
+            <width>320</width>
+            <height>240</height>
+            <orientation>NORMAL</orientation>
+        </i>
+        <i>
+            <editableAttributes>
+                <i>name</i>
+                <i>description</i>
+                <i>rating</i>
+                <i>geolocation</i>
+                <i>orientation</i>
+            </editableAttributes>
+            <id>5334BEE4-28C2-49D4-AEF7-0E7CDC642630</id>
+            <name>tct-content-tizen-tests_image_orientation_1.jpg</name>
+            <type>IMAGE</type>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_orientation_1</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_orientation_1.jpg</contentURI>
+            <thumbnailURIs>
+                <i>desktop/tct-content-tizen-tests_image_orientation_1.lnk</i>
+            </thumbnailURIs>
+            <releaseDate>2013-08-30 15:30:00</releaseDate>
+            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
+            <size>116454</size>
+            <rating>0</rating>
+
+            <width>320</width>
+            <height>240</height>
+            <orientation>NORMAL</orientation>
+        </i>
+        <i>
+            <editableAttributes>
+                <i>name</i>
+                <i>description</i>
+                <i>rating</i>
+                <i>geolocation</i>
+                <i>orientation</i>
+            </editableAttributes>
+            <id>291C723B-7DFB-471F-8FF1-5E8A334BB7C5</id>
+            <name>tct-content-tizen-tests_image_orientation_2.jpg</name>
+            <type>IMAGE</type>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_orientation_2</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_orientation_2.jpg</contentURI>
+            <thumbnailURIs>
+                <i>desktop/tct-content-tizen-tests_image_orientation_2.lnk</i>
+            </thumbnailURIs>
+            <releaseDate>2013-08-30 15:30:00</releaseDate>
+            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
+            <size>116454</size>
+            <rating>0</rating>
+
+            <width>320</width>
+            <height>240</height>
+            <orientation>NORMAL</orientation>
+        </i>
+        <i>
+            <editableAttributes>
+                <i>name</i>
+                <i>description</i>
+                <i>rating</i>
+                <i>geolocation</i>
+                <i>orientation</i>
+            </editableAttributes>
+            <id>5C242098-7436-4FD1-8136-36037ED0B113</id>
+            <name>tct-content-tizen-tests_image_orientation_3.jpg</name>
+            <type>IMAGE</type>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_orientation_3</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_orientation_3.jpg</contentURI>
+            <thumbnailURIs>
+                <i>desktop/tct-content-tizen-tests_image_orientation_3.lnk</i>
+            </thumbnailURIs>
+            <releaseDate>2013-08-30 15:30:00</releaseDate>
+            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
+            <size>116454</size>
+            <rating>0</rating>
+
+            <width>320</width>
+            <height>240</height>
+            <orientation>NORMAL</orientation>
+        </i>
+        <i>
+            <editableAttributes>
+                <i>name</i>
+                <i>description</i>
+                <i>rating</i>
+                <i>geolocation</i>
+                <i>orientation</i>
+            </editableAttributes>
+            <id>6825C74D-AF33-4808-B7C9-2AB07A0461E0</id>
+            <name>tct-content-tizen-tests_image_orientation_4.jpg</name>
+            <type>IMAGE</type>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_orientation_4</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_orientation_4.jpg</contentURI>
+            <thumbnailURIs>
+                <i>desktop/tct-content-tizen-tests_image_orientation_4.lnk</i>
+            </thumbnailURIs>
+            <releaseDate>2013-08-30 15:30:00</releaseDate>
+            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
+            <size>116454</size>
+            <rating>0</rating>
+
+            <width>320</width>
+            <height>240</height>
+            <orientation>NORMAL</orientation>
+        </i>
+        <i>
+            <editableAttributes>
+                <i>name</i>
+                <i>description</i>
+                <i>rating</i>
+                <i>geolocation</i>
+                <i>orientation</i>
+            </editableAttributes>
+            <id>22A95DE6-6271-427E-9AB3-8A42EBB9F763</id>
+            <name>tct-content-tizen-tests_image_orientation_5.jpg</name>
+            <type>IMAGE</type>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_orientation_5</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_orientation_5.jpg</contentURI>
+            <thumbnailURIs>
+                <i>desktop/tct-content-tizen-tests_image_orientation_5.lnk</i>
+            </thumbnailURIs>
+            <releaseDate>2013-08-30 15:30:00</releaseDate>
+            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
+            <size>116454</size>
+            <rating>0</rating>
+
+            <width>320</width>
+            <height>240</height>
+            <orientation>NORMAL</orientation>
+        </i>
+        <i>
+            <editableAttributes>
+                <i>name</i>
+                <i>description</i>
+                <i>rating</i>
+                <i>geolocation</i>
+                <i>orientation</i>
+            </editableAttributes>
+            <id>CCAC37EF-00C0-4A5A-946F-0FB09C7D1CB5</id>
+            <name>tct-content-tizen-tests_image_orientation_6.jpg</name>
+            <type>IMAGE</type>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_orientation_6</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_orientation_6.jpg</contentURI>
+            <thumbnailURIs>
+                <i>desktop/tct-content-tizen-tests_image_orientation_6.lnk</i>
+            </thumbnailURIs>
+            <releaseDate>2013-08-30 15:30:00</releaseDate>
+            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
+            <size>116454</size>
+            <rating>0</rating>
+
+            <width>320</width>
+            <height>240</height>
+            <orientation>NORMAL</orientation>
+        </i>
+        <i>
+            <editableAttributes>
+                <i>name</i>
+                <i>description</i>
+                <i>rating</i>
+                <i>geolocation</i>
+                <i>orientation</i>
+            </editableAttributes>
+            <id>26D0CC8C-F260-44F1-AB32-8AEF2F6D84C8</id>
+            <name>tct-content-tizen-tests_image_orientation_7.jpg</name>
+            <type>IMAGE</type>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_orientation_7</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_orientation_7.jpg</contentURI>
+            <thumbnailURIs>
+                <i>desktop/tct-content-tizen-tests_image_orientation_7.lnk</i>
+            </thumbnailURIs>
+            <releaseDate>2013-08-30 15:30:00</releaseDate>
+            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
+            <size>116454</size>
+            <rating>0</rating>
+
+            <width>320</width>
+            <height>240</height>
+            <orientation>NORMAL</orientation>
+        </i>
+        <i>
+            <editableAttributes>
+                <i>name</i>
+                <i>description</i>
+                <i>rating</i>
+                <i>geolocation</i>
+                <i>orientation</i>
+            </editableAttributes>
+            <id>B59F121C-E743-4D54-9AE8-38C5708EAFAA</id>
+            <name>tct-content-tizen-tests_image_orientation_8.jpg</name>
+            <type>IMAGE</type>
+            <mimeType>image/jpg</mimeType>
+            <title>tct-content-tizen-tests_image_orientation_8</title>
+            <contentURI>file:///opt/usr/media/tct-content-tizen-tests/tct-content-tizen-tests_image_orientation_8.jpg</contentURI>
+            <thumbnailURIs>
+                <i>desktop/tct-content-tizen-tests_image_orientation_8.lnk</i>
             </thumbnailURIs>
             <releaseDate>2013-08-30 15:30:00</releaseDate>
             <modifiedDate>2013-08-30 15:30:00</modifiedDate>
@@ -252,6 +438,13 @@
         </i>
     </contents>
     <directories>
+        <i>
+            <id>55CB28E5-CF6D-454F-B634-E4D94F0755F8</id>
+            <directoryURI>/opt/usr/media/tct-content-tizen-tests/</directoryURI>
+            <title>Tests</title>
+            <storageType>INTERNAL</storageType>
+            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
+        </i>
         <i>
             <id>E718584C-B72E-4E85-917B-DDDA95A18B0B</id>
             <directoryURI>/opt/usr/media/Images/</directoryURI>
@@ -270,13 +463,6 @@
             <id>F71CE175-3345-4BC9-9AAB-23335A1DCC6F</id>
             <directoryURI>/opt/usr/media/Videos/</directoryURI>
             <title>Videos</title>
-            <storageType>INTERNAL</storageType>
-            <modifiedDate>2013-08-30 15:30:00</modifiedDate>
-        </i>
-        <i>
-            <id>55CB28E5-CF6D-454F-B634-E4D94F0755F8</id>
-            <directoryURI>/opt/usr/media/tct-content-tizen-tests/</directoryURI>
-            <title>Tests</title>
             <storageType>INTERNAL</storageType>
             <modifiedDate>2013-08-30 15:30:00</modifiedDate>
         </i>

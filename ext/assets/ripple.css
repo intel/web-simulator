@@ -1800,6 +1800,62 @@ textarea {
     height: 20px;
 }
 
+#preview-window-popup {
+    display: none;
+    width: 806px;
+    padding: 16px 8px 10px 8px;
+    position: absolute;
+    top: 60px;
+    left: 200px;
+    z-index: 1001;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 12px;
+    background-color: #f3f3f3;
+    -moz-box-shadow: 0 10px 15px #555555; /* Firefox 3.6 and earlier */
+    box-shadow: 0 10px 15px #555555;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    -moz-border-radius: 7px 7px 7px 7px;
+    border-radius: 7px 7px 7px 7px;
+}
+
+#preview-window-container-div {
+    z-index: 0;
+    padding:0;
+    background-color: #ffffff;
+    border-top:1px solid #a1a1a1;
+    border-left:1px solid #888888;
+    border-right:1px solid #888888;
+    border-bottom:1px solid #888888;
+    width:792px;
+    height:500px;
+    overflow: auto;
+    position: relative;
+}
+
+#preview-window-container-div table {
+    margin: 0;
+    position: absolute;
+}
+
+.preview-window-title-div {
+    font-size:15px;
+    font-weight:bold;
+    background-color: #c6c6c6;
+    color: #444444;
+    width:802px;
+    height:32px;
+    padding: 5px 0 0 0;
+    text-align:center;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+#preview-window-close-btn {
+    font-size: 12px;
+    width: 24px;
+    height: 20px;
+}
+
 #configure-window-popup {
     display: none;
     width: 806px;
@@ -2160,6 +2216,136 @@ textarea {
      clip: rect(1px,1px,1px,1px);
  }
 
+/* ------------------------------>
+    Vehicle Management Panel */
+
+#vehicle-container .ui-accordion .ui-accordion-content {
+    padding: 0 5px 0 5px;
+}
+
+#vehicle-container .vehicle-property-header {
+    font-weight: bold;
+    background-color: #DCDCDC;
+    height: 25px;
+    padding-left: 5px;
+    border-radius: 10px;
+}
+
+#vehicle-container .vehicle-property-label {
+    padding-left: 10px;
+}
+
+#vehicle-container .vehicle-property-value {
+    text-align: right;
+    height: 25px;
+    padding-right: 10px;
+}
+
+#vehicle-container .vehicle-property-value input {
+    width: 120px;
+    border-radius: 10px;
+}
+
+#vehicle-container .vehicle-property-value select {
+    width: 135px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+}
+
+/*configuration*/
+#vehicle-container .vehicle-configuration-switch label {
+    margin-left: 5px;
+}
+
+#vehicle-container .vehicle-configuration-switch select {
+    margin-left: 90px;
+    border-radius: 5px;
+    width: 35%;
+}
+
+#vehicle-container #vehicle-configuration-show {
+    width: 100%;
+}
+
+/*supported*/
+#vehicle-container #vehicle-supported-query {
+    width: 85%;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+
+#vehicle-container #vehicle-supported-show {
+    width: 100%;
+    margin: 5px 5px 5px 0;
+}
+
+#vehicle-container #vehicle-supported-show td {
+    border: 0;
+    height: 25px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 33%;
+    word-break: break-all;
+}
+
+#vehicle-container .vehicle-property-supported {
+    background-color: #8ADA8A;
+}
+
+#vehicle-container .vehicle-property-unsupported {
+    background-color: #DCDCDC;
+}
+
+/*auto*/
+#vehicle-container #vehicle-running-auto {
+    border-radius: 10px;
+    border: 1px solid #CDCDCD;
+    height: 25px;
+    width: 120px;
+    cursor: pointer;
+    margin: 5px 0 5px 10px;
+    padding: 5px 0 0 30px;
+}
+
+#vehicle-container #vehicle-running-show {
+    width: 100%;
+}
+
+#vehicle-container .vehicle-property-arrayItem {
+    margin-left: 70px;
+}
+
+#vehicle-container .vehicle-property-array button {
+    width: 60px;
+    border-radius: 8px;
+}
+
+#vehicle-container .vehicle-property-array .vehicle-property-arrayOk {
+    width: 100px;
+    margin-left: 155px;
+}
+
+#vehicle-container .vehicle-property-array input {
+    width: 100px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#vehicle-container .vehicle-properties-noSet {
+    width: 100%;
+    height: 85%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.6;
+    background-color: #EBE9E9;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 90px;
+    text-align: center;
+}
 
 /* ------------------------------>
     UI.Battery */

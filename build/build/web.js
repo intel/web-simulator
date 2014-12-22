@@ -63,6 +63,7 @@ module.exports = function (src, baton) {
                           .replace(/#DIALOG_VIEWS#/g, src.dialogs)
                           .replace(/#PANEL_VIEWS#/g, src.panels)
                           .replace(/#CONFIG_WINDOW#/g, src.configWindow)
+                          .replace(/#PREVIEW_WINDOW#/g, src.previewWindow)
                           .replace(/#HWKEYS_PANEL#/g, src.hwkeysPanel);
 
         fs.writeFileSync(cssDeploy, fs.readFileSync(css, "utf-8") + src.skins);
