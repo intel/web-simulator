@@ -1,0 +1,46 @@
+<!--
+ *  Copyright 2014 Intel Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<section id="preview-window">
+    <div id="preview-window-popup">
+       <table style="border-collapse: collapse; border-spacing:0px;">
+            <tr>
+                <td colspan="2" style="border-width:0px; padding: 0px;">
+                    <span class="preview-window-title-div">
+                        <label style="float:left; margin-left:320px; margin-top:3px;">Preview All Resolutions</label>
+                        <button id="preview-window-close-btn" style="float:right; margin-right:15px;">x</button>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="background-color: #c6c6c6; padding:4px 4px 4px 4px; height:300px; border-width:0px; position: relative;">
+                    <div id="preview-window-container-div">
+                    </div>
+                    <div id="preview-window-container-bar" style="position: absolute; top: 5px; right: 5px; height: 498px;">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border-width:0px; padding: 0px; background: #C6C6C6;">
+                    <label class="preview-window-scale-num" for="preview-window-scale-range" style="position: absolute; margin-top: 7px; margin-left: 10px; margin-right: 5px;">100%</label>
+                    <input id="preview-window-scale-range" type="range" value="100" min="10" max="150" step="10" class="ui-state-default ui-corner-all" style="margin-left: 60px; width: 400px;">
+                    <!--<button class="configuration-window-done-button" style="float:right; margin-right:15px;">Done</button>-->
+                    <button id="preview-window-preview-btn" class="configuration-window-done-button" style="float:right; margin-right:15px;">Preview</button>
+                    <button id="preview-window-back-btn" class="configuration-window-done-button" style="float:right; margin-right:15px;">Cancel</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
