@@ -5,8 +5,8 @@
     },
     "items": [{
         "type": "video",
-        "Path": "/videos/mediaserver_video_1.mp4",
-        "DisplayName": "mediaserver_video_1.mp4",
+        "id": "/videos/mediaserver_video_1.mp4",
+        "title": "mediaserver_video_1.mp4",
         "MIMEType": "video/x-msvideo",
         "Rating": 22050,
         "Size": 3662871,
@@ -17,8 +17,8 @@
         "Height": 480
     },{
         "type": "audio",
-        "Path": "/audio/mediaserver_audio_1.mp3",
-        "DisplayName": "mediaserver_audio_1.mp3",
+        "id": "/audio/mediaserver_audio_1.mp3",
+        "title": "mediaserver_audio_1.mp3",
         "MIMEType": "audio/x-msaudio",
         "Size": 2047320,
         "Rating": 0,
@@ -28,8 +28,8 @@
         "Duration": 0
     },{
         "type": "audio",
-        "Path": "/audio/mediaserver_audio_2.mp3",
-        "DisplayName": "mediaserver_audio_2.mp3",
+        "id": "/audio/mediaserver_audio_2.mp3",
+        "title": "mediaserver_audio_2.mp3",
         "MIMEType": "audio/x-msaudio",
         "Size": 9891422,
         "Rating": 0,
@@ -39,8 +39,8 @@
         "Duration": 0
     },{
         "type": "audio",
-        "Path": "/audio/mediaserver_audio_3.mp3",
-        "DisplayName": "mediaserver_audio_3.mp3",
+        "id": "/audio/mediaserver_audio_3.mp3",
+        "title": "mediaserver_audio_3.mp3",
         "MIMEType": "audio/x-msaudio",
         "Size": 6146928,
         "Rating": 0,
@@ -50,16 +50,16 @@
         "Duration": 0
     },{
         "type": "image",
-        "Path": "/images/mediaserver_img_1.jpg",
-        "DisplayName": "mediaserver_img_1.jpg",
+        "id": "/images/mediaserver_img_1.jpg",
+        "title": "mediaserver_img_1.jpg",
         "MIMEType": "image/jpg",
         "Size": 13811,
         "Width": 527,
         "Height": 400
     },{
         "type": "image",
-        "Path": "/images/mediaserver_img_2.png",
-        "DisplayName": "mediaserver_img_2.png",
+        "id": "/images/mediaserver_img_2.png",
+        "title": "mediaserver_img_2.png",
         "MIMEType": "image/png",
         "Size": 21869,
         "Width": 275,
@@ -67,23 +67,23 @@
     }],
     "containers": [{
         "id": "0d185b21-967e-4b4d-a50f-6dd07cd56d8b",
-        "Path": "/",
         "type": "container",
-        "DisplayName": "home"
+        "title": "home"
     },{
-        "id": "b88b4e37-2e11-4674-8747-9015bdf2a4f0",
-        "Path": "/audio/",
+        "id": "/",
         "type": "container",
-        "DisplayName": "audio"
+        "title": "all media"
     },{
-        "id": "58a1a38b-4d78-4204-8c0e-73d0d7e08b76",
-        "Path": "/video/",
+        "id": "/audio",
         "type": "container",
-        "DisplayName": "video"
+        "title": "audio"
     },{
-        "id": "8c1ab914-7366-49dd-98cc-389d12dfb7ce",
-        "Path": "/images/",
+        "id": "/video",
         "type": "container",
-        "DisplayName": "images"
+        "title": "video"
+    },{
+        "id": "/images",
+        "type": "container",
+        "title": "images"
     }]
 }
