@@ -6,9 +6,11 @@
         "ClimateControl", "Sunroof", "ConvertibleRoof",
         "Identification", "SizeConfiguration", "FuelConfiguration",
         "TransmissionConfiguration", "Odometer", "BatteryStatus", "ParkingBrake",
-        "AntilockBrakingSystem", "TractionControlSystem",
-        "AirbagStatus", "NightMode", "DrivingMode",
-        "ButtonEvent", "SteeringWheel", "ThrottlePosition", "EngineCoolant"],
+        "AntilockBrakingSystem", "TractionControlSystem", "Door",
+        "AirbagStatus", "NightMode", "DrivingMode", "ChildSafetyLock",
+        "ButtonEvent", "SteeringWheel", "ThrottlePosition", "EngineCoolant",
+        "Tire", "Seat", "WasherFluid", "BrakeMaintenance", "WiperStatus", "TopSpeedLimit",
+        "SideWindow", "Defrost"],
     "newestHistory": null,
     "currentConfiguration": 0,
     "configurationData": [
@@ -19,7 +21,8 @@
     "settingData": [
         0, 0, true, 0, false, false, false, false, false, false, false, false, false, false, false, false,
         0x04, 0, 0, false, false, false, false, false, false, 0, 0, "closed", "inactive", true, true,
-        false, false, false, 10, 80],
+        false, false, false, false, 10, 80, "closed", false, 5, 0, false, false, "pin", "adult", 0, false,
+        0, false, 0, false, "off", 400, false, 100, false, false],
     "autoRunningData": [
         [0,   0,   0,    0, 0,  0,  0,  100, 20, 59, 10, 15, 100, 5,  0,  0,  9, 0, 1500, 10, -90, 0,  10, 40],
         [10,  10,  100,  3, 10, 10, 10, 99,  20, 59, 10, 15, 99,  10, 20, 5,  4, 0, 1600, 10, -80, 2,  10, 41],
